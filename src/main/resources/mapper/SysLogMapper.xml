@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.SysLogMapper">
+
+    <!-- 通用查询结果列-->
+    <sql id="Base_Column_List">
+        id, login_name AS loginName, role_name AS roleName, opt_content AS optContent, client_ip AS clientIp, create_time AS createTime
+    </sql>
+
+    <select id="selectSysLogList" resultType="SysLog">
+        select
+        <include refid="Base_Column_List" />
+        from sys_log ORDER BY create_time DESC
+    </select>
+
+</mapper>

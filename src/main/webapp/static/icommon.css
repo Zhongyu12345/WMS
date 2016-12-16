@@ -1,0 +1,53 @@
+.i_accordion_menu {
+    color: #F7F6C3;
+}
+
+.i_accordion_menu .panel-with-icon {
+    padding-left: 0px;
+}
+
+.i_accordion_menu .accordion-header-selected {
+    background: #F7F6C3;
+}
+
+.i_accordion_menu .nav-item {
+    padding: 5px 0px 5px 10px;
+    margin: 5px 6px 10px 6px;
+    cursor: pointer;
+}
+
+.i_accordion_menu .nav-item:hover {
+    background: rgba(0, 0, 255, 0.20);
+    border-radius: 6px;
+}
+
+.i_accordion_menu .nav-item:hover a {
+    display: block;
+    color: #00f;
+}
+
+.i_accordion_menu .nav-item a {
+    color: #0697da;
+    text-decoration: none;
+}
+
+.menu_icon_datadeal {
+    border: 0px;
+    padding: 2px 8px;
+    margin-right: 5px;
+    width: 0px;
+
+    background: url(tabicons.gif) no-repeat -380px -60px;
+}
+
+.menu_icon_service{
+    border: 0px;
+    padding:2px 8px;
+    margin-right:5px;
+    width:0px;
+
+    background: url(tabicons.gif)  no-repeat -100px -480px;
+}
+
+
+

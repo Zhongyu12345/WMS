@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-lazy-init="true">
+
+    <!--安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--设置自定义Realm-->
+        <property name="realm" ref="shiroDbRealm"/>
+        <!--将缓存管理器，交给安全管理器-->
+        <property name="cacheManager" ref="shiroEhcacheManager"/>
+        <!-- 记住密码管理 -->
+        <property name="rememberMeManager" ref="rememberMeManager"/>
+    </bean>
+
+    <!-- 項目自定义的Realm -->
+    <bean id="shiroDbRealm" class="com.wms.commons.shiro.ShiroDbRealm"/>
+
+    <!-- 记住密码Cookie -->
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="rememberMe"/>
+        <property name="httpOnly" value="true"/>
+        <!-- 7天,采用spring el计算方便修改[细节决定成败]！ -->
+        <property name="maxAge" value="#{7 * 24 * 60 * 60}"/>
+    </bean>
+
+    <!-- rememberMe管理器,cipherKey生成见{@code Base64Test.java} -->
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('5aaC5qKm5oqA5pyvAAAAAA==')}"/>
+        <property name="cookie" ref="rememberMeCookie"/>
+    </bean>
+
+    <!-- Shiro Filter -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!-- 安全管理器 -->
+        <property name="securityManager" ref="securityManager"/>
+        <!-- 默认的登陆访问url -->
+        <property name="loginUrl" value="/login"/>
+        <!-- 登陆成功后跳转的url -->
+        <property name="successUrl" value="/index"/>
+        <!-- 没有权限跳转的url -->
+        <property name="unauthorizedUrl" value="/unauth"/>
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 
+                    anon  不需要认证
+                    authc 需要认证
+                    user  验证通过或RememberMe登录的都可以
+                -->
+                /commons/** = anon
+                /static/** = anon
+                /login = anon
+                /** = user
+            </value>
+        </property>
+    </bean>
+
+    <!-- 用户授权信息Cache, 采用EhCache -->
+    <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/>
+    </bean>
+
+    <!-- 在方法中 注入  securityManager ，进行代理控制 -->
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod" value="org.apache.shiro.SecurityUtils.setSecurityManager"/>
+        <property name="arguments" ref="securityManager"/>
+    </bean>
+
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!-- AOP式方法级权限检查  -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+
+    <!-- 启用shrio授权注解拦截方式 -->
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+</beans>

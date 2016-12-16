@@ -1,0 +1,21 @@
+*{font-size:12px;}
+body {font-family:helvetica,tahoma,verdana,sans-serif;padding:20px;font-size:13px;margin:0;}
+h2 {font-size:18px;font-weight:bold;margin:0;margin-bottom:15px;}
+
+.grid {border: 1px solid #eeeeee;font: 12px arial,helvetica,sans-serif;}
+.grid td {font: 100% arial,helvetica,sans-serif;height: 24px;padding: 5px;}
+.grid {border-collapse: collapse;width: 100%;}
+.grid th {background: none repeat scroll 0 0 #E7F3FE;border: 1px solid #eeeeee;height: 27px;line-height: 27px;padding-left: 5px;}
+.grid td {border: 1px solid #eeeeee;padding-left: 5px;}
+
+/*#layout_west_tree li ul li div{padding:5px 5px 3px 5px;}*/
+#layout_west_tree li div{padding:5px 5px 3px 10px;}
+
+#header{overflow:hidden;height:50px;background:#fff ;line-height:50px;color:#fff;font-family:Verdana,微软雅黑,黑体}
+.header{background: url(../images/logo.jpg) no-repeat left; width: 285px; height: 50px; float: left;}
+#common_b{overflow:hidden;height:70px;line-height:70px;color:#fff;font-family:Verdana,微软雅黑,黑体}
+#common{overflow:hidden;height:60px;background:#eee;line-height:60px;color:#fff;font-family:Verdana,微软雅黑,黑体}
+
+.light-info{background:#FFFEE6;color:#8F5700;padding:12px;}
+.light-tip{width:16px;height:16px;margin-right:8px;float:left;}
+ 

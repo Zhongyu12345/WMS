@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.RoleMapper">
+
+    <!-- 通用查询结果列-->
+    <sql id="Base_Column_List">
+        id, name, seq, description, status
+    </sql>
+
+    <select id="selectAll" resultType="Role">
+        select
+        <include refid="Base_Column_List"/>
+        from role order by seq
+    </select>
+
+    <select id="selectResourceIdListByRoleId" resultType="java.lang.Long" parameterType="java.lang.Long">
+        SELECT
+            e.resource_id AS id
+        FROM
+            role r
+        LEFT JOIN role_resource e ON r.id = e.role_id
+        WHERE
+            r.id = #{id}
+    </select>
+
+    <select id="selectResourceIdListByRoleIdAndType" resultType="Resource"
+            parameterType="java.lang.Long">
+        SELECT
+            s.id AS id,
+            s. NAME AS 'name',
+            s.url AS url,
+            s.description AS description,
+            s.icon AS icon,
+            s.pid AS pid,
+            s.seq AS seq,
+            s. STATUS AS 'status',
+            s.resource_type AS resource_type,
+            s.create_time AS create_time
+        FROM
+            role r
+        LEFT JOIN role_resource e ON r.id = e.role_id
+        LEFT JOIN resource s ON e.resource_id = s.id
+        WHERE
+            r.id = #{id}
+        AND s.resource_type = 0
+    </select>
+
+    <select id="selectResourceListByRoleId" resultType="java.util.HashMap" parameterType="java.lang.Long">
+        SELECT
+            e.id AS id,
+            s.url AS url
+        FROM
+            role r
+        LEFT JOIN role_resource e ON r.id = e.role_id
+        LEFT JOIN resource s ON e.resource_id = s.id
+        WHERE
+            r.id = #{id}
+    </select>
+
+    <select id="selectRoleList" resultType="Role">
+        select
+        <include refid="Base_Column_List"/>
+        from role
+        order by ${sort} ${order}
+    </select>
+
+</mapper>

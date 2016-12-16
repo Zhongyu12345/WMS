@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.UserMapper">
+
+    <resultMap id="userVoResultMap" type="com.wms.bean.vo.UserVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="login_name" property="loginName" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+        <result column="age" property="age" jdbcType="TINYINT"/>
+        <result column="user_type" property="userType" jdbcType="TINYINT"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="organization_id" property="organizationId" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+
+        <collection property="rolesList" ofType="Role">
+            <id column="roleId" property="id"/>
+            <result column="roleName" property="name"/>
+        </collection>
+    </resultMap>
+
+    <!-- 通用查询结果列-->
+    <sql id="Base_Column_List">
+        id, login_name AS loginName, name, password, sex, age, phone, user_type AS userType, status, organization_id AS organizationId, create_time AS createTime
+    </sql>
+
+    <select id="selectUserVoById" resultMap="userVoResultMap" parameterType="java.lang.Long">
+        SELECT
+        t.id,
+        login_name,
+        t.`name`,
+        `password`,
+        sex,
+        age,
+        user_type,
+        t.`status`,
+        t.create_time,
+        phone,
+        o.id AS roleId,
+        o.`name` AS roleName
+        FROM
+        user t
+        LEFT JOIN user_role r ON t.id = r.user_id
+        LEFT JOIN role o ON r.role_id = o.id
+        <where>
+            t.id = #{id}
+        </where>
+    </select>
+
+    <select id="selectUserVoPage" resultMap="userVoResultMap">
+        SELECT
+        t.id,
+        login_name,
+        t.`name`,
+        `password`,
+        sex,
+        age,
+        user_type,
+        t.`status`,
+        t.create_time,
+        phone,
+        o.id AS roleId,
+        o.`name` AS roleName
+        FROM
+        user t
+        LEFT JOIN user_role r ON t.id = r.user_id
+        LEFT JOIN role o ON r.role_id = o.id
+        <where>
+            <if test=" name != null and name != '' ">
+                t.name = #{name}
+            </if>
+            <if test=" organizationId != null ">
+                t.organization_id = #{organizationId}
+            </if>
+            <if test=" startTime != null ">
+                <![CDATA[ and t.create_time >= #{startTime} ]]>
+            </if>
+            <if test=" endTime != null ">
+                <![CDATA[ and t.create_time <= #{endTime} ]]>
+            </if>
+        </where>
+    </select>
+
+</mapper>
