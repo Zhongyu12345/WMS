@@ -20,6 +20,7 @@ public class User implements Serializable {
      * 主键id
      */
     @TableId(type = IdType.AUTO)
+    @TableField(value = "id")
     private Long id;
 
     /**
@@ -31,26 +32,31 @@ public class User implements Serializable {
     /**
      * 用户名
      */
+    @TableField(value = "name")
     private String name;
 
     /**
      * 密码
      */
+    @TableField(value = "password")
     private String password;
 
     /**
      * 性别
      */
+    @TableField(value = "sex")
     private Integer sex;
 
     /**
      * 年龄
      */
+    @TableField(value = "age")
     private Integer age;
 
     /**
      * 手机号
      */
+    @TableField(value = "phone")
     private String phone;
 
     /**
@@ -62,6 +68,7 @@ public class User implements Serializable {
     /**
      * 用户状态
      */
+    @TableField(value = "status")
     private Integer status;
 
     /**

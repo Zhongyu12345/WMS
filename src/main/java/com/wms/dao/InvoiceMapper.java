@@ -1,7 +1,10 @@
 package com.wms.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.wms.bean.Invoice;
 
+@Repository
 public interface InvoiceMapper {
     int deleteByPrimaryKey(Integer inId);
 

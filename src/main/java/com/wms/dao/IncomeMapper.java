@@ -1,7 +1,10 @@
 package com.wms.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.wms.bean.Income;
 
+@Repository
 public interface IncomeMapper {
     int deleteByPrimaryKey(Integer iId);
 

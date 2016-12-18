@@ -1,7 +1,10 @@
 package com.wms.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.wms.bean.GiveBack;
 
+@Repository
 public interface GiveBackMapper {
     int deleteByPrimaryKey(Integer gbId);
 

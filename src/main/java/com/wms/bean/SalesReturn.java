@@ -2,29 +2,47 @@ package com.wms.bean;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotations.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 public class SalesReturn {
+	
+	@TableId(type = IdType.AUTO)
+    @TableField(value = "sr_id")
     private Integer srId;
 
+	@TableField(value = "sr_name")
     private String srName;
 
+	@TableField(value = "sr_sipping")
     private String srSipping;
 
+	@TableField(value = "sr_storerid")
     private Integer srStorerid;
 
+	@TableField(value = "sr_phone")
     private String srPhone;
 
+	@TableField(value = "sr_names")
     private String srNames;
 
+	@TableField(value = "sr_SKUmodel")
     private String srSkumodel;
 
+	@TableField(value = "sr_num")
     private Double srNum;
 
+	@TableField(value = "sr_cause")
     private String srCause;
 
+	@TableField(value = "sr_time")
     private Date srTime;
 
+	@TableField(value = "sr_whid")
     private Integer srWhid;
 
+	@TableField(value = "sr_volume")
     private Double srVolume;
 
     public Integer getSrId() {

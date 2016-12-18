@@ -1,7 +1,10 @@
 package com.wms.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.wms.bean.Cargo;
 
+@Repository
 public interface CargoMapper {
     int deleteByPrimaryKey(Integer cId);
 

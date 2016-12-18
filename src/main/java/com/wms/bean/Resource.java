@@ -21,42 +21,49 @@ public class Resource implements Serializable {
      * 主键
      */
     @TableId(type = IdType.AUTO)
+    @TableField(value = "id")
     private Long id;
 
     /**
      * 资源名称
      */
+    @TableField(value = "name")
     private String name;
 
     /**
      * 资源路径
      */
+    @TableField(value = "url")
     private String url;
 
     /**
      * 资源介绍
      */
+    @TableField(value = "description")
     private String description;
 
     /**
      * 资源图标
      */
-    @JsonProperty("iconCls")
+    @JsonProperty("icon")
     private String icon;
 
     /**
      * 父级资源id
      */
+    @TableField(value = "pid")
     private Long pid;
 
     /**
      * 排序
      */
+    @TableField(value = "seq")
     private Integer seq;
 
     /**
      * 状态
      */
+    @TableField(value = "status")
     private Integer status;
 
     /**

@@ -2,33 +2,53 @@ package com.wms.bean;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotations.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 public class Receiving {
+	
+	@TableId(type = IdType.AUTO)
+	@TableField(value = "r_id")
     private Integer rId;
 
+	@TableField(value = "r_name")
     private String rName;
 
+	@TableField(value = "r_storerid")
     private String rStorerid;
 
+	@TableField(value = "r_phone")
     private String rPhone;
 
+	@TableField(value = "r_supplierid")
     private String rSupplierid;
 
+	@TableField(value = "r_sippingNO")
     private String rSippingno;
 
+	@TableField(value = "r_whid")
     private String rWhid;
 
+	@TableField(value = "r_num")
     private Double rNum;
 
+	@TableField(value = "r_crossflag")
     private String rCrossflag;
 
+	@TableField(value = "r_directflag")
     private String rDirectflag;
 
+	@TableField(value = "r_time")
     private Date rTime;
 
+	@TableField(value = "r_adminid")
     private Integer rAdminid;
 
+	@TableField(value = "r_partflag")
     private Integer rPartflag;
 
+	@TableField(value = "r_SKUmodel")
     private String rSkumodel;
 
     public Integer getrId() {

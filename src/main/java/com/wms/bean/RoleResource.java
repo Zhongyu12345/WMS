@@ -21,6 +21,7 @@ public class RoleResource implements Serializable {
      * 主键id
      */
     @TableId(type = IdType.AUTO)
+    @TableField(value = "id")
     private Long id;
 
     /**

@@ -1,7 +1,10 @@
 package com.wms.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.wms.bean.CrossDatabase;
 
+@Repository
 public interface CrossDatabaseMapper {
     int deleteByPrimaryKey(Integer cdId);
 

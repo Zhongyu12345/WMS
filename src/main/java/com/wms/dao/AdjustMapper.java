@@ -1,7 +1,10 @@
 package com.wms.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.wms.bean.Adjust;
 
+@Repository
 public interface AdjustMapper {
     int deleteByPrimaryKey(Integer jId);
 

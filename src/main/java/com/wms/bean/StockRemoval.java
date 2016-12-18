@@ -2,25 +2,41 @@ package com.wms.bean;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotations.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 public class StockRemoval {
+	
+	@TableId(type = IdType.AUTO)
+    @TableField(value = "s_id")
     private Integer sId;
 
+	@TableField(value = "s_storerid")
     private String sStorerid;
 
+	@TableField(value = "s_time")
     private Date sTime;
 
+	@TableField(value = "s_phone")
     private String sPhone;
 
+	@TableField(value = "sh_sippingNO")
     private String shSippingno;
 
+	@TableField(value = "s_whid")
     private String sWhid;
 
+	@TableField(value = "s_client")
     private String sClient;
 
+	@TableField(value = "s_SKUmodel")
     private String sSkumodel;
 
+	@TableField(value = "s_name")
     private String sName;
 
+	@TableField(value = "s_num")
     private Double sNum;
 
     public Integer getsId() {

@@ -1,7 +1,10 @@
 package com.wms.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.wms.bean.CompayAccounts;
 
+@Repository
 public interface CompayAccountsMapper {
     int deleteByPrimaryKey(Integer caId);
 

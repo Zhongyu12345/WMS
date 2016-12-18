@@ -2,21 +2,35 @@ package com.wms.bean;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotations.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 public class Invoice {
+	
+	@TableId(type = IdType.AUTO)
+	@TableField(value = "in_id")
     private Integer inId;
 
+	@TableField(value = "in_name")
     private String inName;
 
+	@TableField(value = "in_SKUmodel")
     private String inSkumodel;
 
+	@TableField(value = "in_num")
     private Double inNum;
 
+	@TableField(value = "in_whid")
     private String inWhid;
 
+	@TableField(value = "in_oddnumber")
     private String inOddnumber;
 
+	@TableField(value = "in_time")
     private Date inTime;
 
+	@TableField(value = "in_volume")
     private Double inVolume;
 
     public Integer getInId() {

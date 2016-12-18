@@ -1,7 +1,10 @@
 package com.wms.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.wms.bean.Allotout;
 
+@Repository
 public interface AllotoutMapper {
     int deleteByPrimaryKey(Integer aoId);
 

@@ -22,6 +22,7 @@ public class SysLog implements Serializable {
      * 主键id
      */
     @TableId(type = IdType.AUTO)
+    @TableField(value = "id")
     private Long id;
 
     /**

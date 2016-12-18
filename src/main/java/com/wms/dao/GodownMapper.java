@@ -1,7 +1,10 @@
 package com.wms.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.wms.bean.Godown;
 
+@Repository
 public interface GodownMapper {
     int deleteByPrimaryKey(Integer goId);
 

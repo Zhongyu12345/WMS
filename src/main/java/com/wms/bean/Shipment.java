@@ -2,29 +2,47 @@ package com.wms.bean;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotations.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 public class Shipment {
+	
+	@TableId(type = IdType.AUTO)
+    @TableField(value = "sh_id")
     private Integer shId;
 
+    @TableField(value = "sh_storeid")
     private String shStoreid;
-
+	
+    @TableField(value = "sh_time")
     private Date shTime;
 
+    @TableField(value = "sh_phone")
     private String shPhone;
 
+    @TableField(value = "sh_sippingNO")
     private String shSippingno;
 
+    @TableField(value = "sh_whid")
     private String shWhid;
 
+    @TableField(value = "sh_damage")
     private Integer shDamage;
 
+    @TableField(value = "sh_cause")
     private String shCause;
 
+    @TableField(value = "sh_SKUmodel")
     private String shSkumodel;
 
+    @TableField(value = "sh_shnum")
     private Double shShnum;
-
+    
+    @TableField(value = "sh_totalweigh")
     private Double shTotalweigh;
 
+    @TableField(value = "sh_totalvolume")
     private Double shTotalvolume;
 
     public Integer getShId() {

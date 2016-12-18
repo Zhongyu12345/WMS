@@ -1,7 +1,10 @@
 package com.wms.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.wms.bean.SalesReturn;
 
+@Repository
 public interface SalesReturnMapper {
     int deleteByPrimaryKey(Integer srId);
 

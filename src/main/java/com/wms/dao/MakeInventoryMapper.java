@@ -1,7 +1,10 @@
 package com.wms.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.wms.bean.MakeInventory;
 
+@Repository
 public interface MakeInventoryMapper {
     int deleteByPrimaryKey(Integer miId);
 

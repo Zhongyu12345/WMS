@@ -1,7 +1,10 @@
 package com.wms.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.wms.bean.Receiving;
 
+@Repository
 public interface ReceivingMapper {
     int deleteByPrimaryKey(Integer rId);
 
