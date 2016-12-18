@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.StockRemovalMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.StockRemoval">
+    <id column="s_id" jdbcType="INTEGER" property="sId" />
+    <result column="s_storerid" jdbcType="VARCHAR" property="sStorerid" />
+    <result column="s_time" jdbcType="TIMESTAMP" property="sTime" />
+    <result column="s_phone" jdbcType="VARCHAR" property="sPhone" />
+    <result column="sh_sippingNO" jdbcType="VARCHAR" property="shSippingno" />
+    <result column="s_whid" jdbcType="VARCHAR" property="sWhid" />
+    <result column="s_client" jdbcType="VARCHAR" property="sClient" />
+    <result column="s_SKUmodel" jdbcType="VARCHAR" property="sSkumodel" />
+    <result column="s_name" jdbcType="VARCHAR" property="sName" />
+    <result column="s_num" jdbcType="DOUBLE" property="sNum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    s_id, s_storerid, s_time, s_phone, sh_sippingNO, s_whid, s_client, s_SKUmodel, s_name, 
+    s_num
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stock_removal
+    where s_id = #{sId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from stock_removal
+    where s_id = #{sId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.StockRemoval">
+    insert into stock_removal (s_id, s_storerid, s_time, 
+      s_phone, sh_sippingNO, s_whid, 
+      s_client, s_SKUmodel, s_name, 
+      s_num)
+    values (#{sId,jdbcType=INTEGER}, #{sStorerid,jdbcType=VARCHAR}, #{sTime,jdbcType=TIMESTAMP}, 
+      #{sPhone,jdbcType=VARCHAR}, #{shSippingno,jdbcType=VARCHAR}, #{sWhid,jdbcType=VARCHAR}, 
+      #{sClient,jdbcType=VARCHAR}, #{sSkumodel,jdbcType=VARCHAR}, #{sName,jdbcType=VARCHAR}, 
+      #{sNum,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.StockRemoval">
+    insert into stock_removal
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sId != null">
+        s_id,
+      </if>
+      <if test="sStorerid != null">
+        s_storerid,
+      </if>
+      <if test="sTime != null">
+        s_time,
+      </if>
+      <if test="sPhone != null">
+        s_phone,
+      </if>
+      <if test="shSippingno != null">
+        sh_sippingNO,
+      </if>
+      <if test="sWhid != null">
+        s_whid,
+      </if>
+      <if test="sClient != null">
+        s_client,
+      </if>
+      <if test="sSkumodel != null">
+        s_SKUmodel,
+      </if>
+      <if test="sName != null">
+        s_name,
+      </if>
+      <if test="sNum != null">
+        s_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sId != null">
+        #{sId,jdbcType=INTEGER},
+      </if>
+      <if test="sStorerid != null">
+        #{sStorerid,jdbcType=VARCHAR},
+      </if>
+      <if test="sTime != null">
+        #{sTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sPhone != null">
+        #{sPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shSippingno != null">
+        #{shSippingno,jdbcType=VARCHAR},
+      </if>
+      <if test="sWhid != null">
+        #{sWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="sClient != null">
+        #{sClient,jdbcType=VARCHAR},
+      </if>
+      <if test="sSkumodel != null">
+        #{sSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="sName != null">
+        #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sNum != null">
+        #{sNum,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.StockRemoval">
+    update stock_removal
+    <set>
+      <if test="sStorerid != null">
+        s_storerid = #{sStorerid,jdbcType=VARCHAR},
+      </if>
+      <if test="sTime != null">
+        s_time = #{sTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sPhone != null">
+        s_phone = #{sPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shSippingno != null">
+        sh_sippingNO = #{shSippingno,jdbcType=VARCHAR},
+      </if>
+      <if test="sWhid != null">
+        s_whid = #{sWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="sClient != null">
+        s_client = #{sClient,jdbcType=VARCHAR},
+      </if>
+      <if test="sSkumodel != null">
+        s_SKUmodel = #{sSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="sName != null">
+        s_name = #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sNum != null">
+        s_num = #{sNum,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.StockRemoval">
+    update stock_removal
+    set s_storerid = #{sStorerid,jdbcType=VARCHAR},
+      s_time = #{sTime,jdbcType=TIMESTAMP},
+      s_phone = #{sPhone,jdbcType=VARCHAR},
+      sh_sippingNO = #{shSippingno,jdbcType=VARCHAR},
+      s_whid = #{sWhid,jdbcType=VARCHAR},
+      s_client = #{sClient,jdbcType=VARCHAR},
+      s_SKUmodel = #{sSkumodel,jdbcType=VARCHAR},
+      s_name = #{sName,jdbcType=VARCHAR},
+      s_num = #{sNum,jdbcType=DOUBLE}
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.ReceivingMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.Receiving">
+    <id column="r_id" jdbcType="INTEGER" property="rId" />
+    <result column="r_name" jdbcType="VARCHAR" property="rName" />
+    <result column="r_storerid" jdbcType="VARCHAR" property="rStorerid" />
+    <result column="r_phone" jdbcType="VARCHAR" property="rPhone" />
+    <result column="r_supplierid" jdbcType="VARCHAR" property="rSupplierid" />
+    <result column="r_sippingNO" jdbcType="VARCHAR" property="rSippingno" />
+    <result column="r_whid" jdbcType="VARCHAR" property="rWhid" />
+    <result column="r_num" jdbcType="DOUBLE" property="rNum" />
+    <result column="r_crossflag" jdbcType="VARCHAR" property="rCrossflag" />
+    <result column="r_directflag" jdbcType="VARCHAR" property="rDirectflag" />
+    <result column="r_time" jdbcType="TIMESTAMP" property="rTime" />
+    <result column="r_adminid" jdbcType="INTEGER" property="rAdminid" />
+    <result column="r_partflag" jdbcType="INTEGER" property="rPartflag" />
+    <result column="r_SKUmodel" jdbcType="VARCHAR" property="rSkumodel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    r_id, r_name, r_storerid, r_phone, r_supplierid, r_sippingNO, r_whid, r_num, r_crossflag, 
+    r_directflag, r_time, r_adminid, r_partflag, r_SKUmodel
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from receiving
+    where r_id = #{rId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from receiving
+    where r_id = #{rId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.Receiving">
+    insert into receiving (r_id, r_name, r_storerid, 
+      r_phone, r_supplierid, r_sippingNO, 
+      r_whid, r_num, r_crossflag, 
+      r_directflag, r_time, r_adminid, 
+      r_partflag, r_SKUmodel)
+    values (#{rId,jdbcType=INTEGER}, #{rName,jdbcType=VARCHAR}, #{rStorerid,jdbcType=VARCHAR}, 
+      #{rPhone,jdbcType=VARCHAR}, #{rSupplierid,jdbcType=VARCHAR}, #{rSippingno,jdbcType=VARCHAR}, 
+      #{rWhid,jdbcType=VARCHAR}, #{rNum,jdbcType=DOUBLE}, #{rCrossflag,jdbcType=VARCHAR}, 
+      #{rDirectflag,jdbcType=VARCHAR}, #{rTime,jdbcType=TIMESTAMP}, #{rAdminid,jdbcType=INTEGER}, 
+      #{rPartflag,jdbcType=INTEGER}, #{rSkumodel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.Receiving">
+    insert into receiving
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rId != null">
+        r_id,
+      </if>
+      <if test="rName != null">
+        r_name,
+      </if>
+      <if test="rStorerid != null">
+        r_storerid,
+      </if>
+      <if test="rPhone != null">
+        r_phone,
+      </if>
+      <if test="rSupplierid != null">
+        r_supplierid,
+      </if>
+      <if test="rSippingno != null">
+        r_sippingNO,
+      </if>
+      <if test="rWhid != null">
+        r_whid,
+      </if>
+      <if test="rNum != null">
+        r_num,
+      </if>
+      <if test="rCrossflag != null">
+        r_crossflag,
+      </if>
+      <if test="rDirectflag != null">
+        r_directflag,
+      </if>
+      <if test="rTime != null">
+        r_time,
+      </if>
+      <if test="rAdminid != null">
+        r_adminid,
+      </if>
+      <if test="rPartflag != null">
+        r_partflag,
+      </if>
+      <if test="rSkumodel != null">
+        r_SKUmodel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rId != null">
+        #{rId,jdbcType=INTEGER},
+      </if>
+      <if test="rName != null">
+        #{rName,jdbcType=VARCHAR},
+      </if>
+      <if test="rStorerid != null">
+        #{rStorerid,jdbcType=VARCHAR},
+      </if>
+      <if test="rPhone != null">
+        #{rPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="rSupplierid != null">
+        #{rSupplierid,jdbcType=VARCHAR},
+      </if>
+      <if test="rSippingno != null">
+        #{rSippingno,jdbcType=VARCHAR},
+      </if>
+      <if test="rWhid != null">
+        #{rWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="rNum != null">
+        #{rNum,jdbcType=DOUBLE},
+      </if>
+      <if test="rCrossflag != null">
+        #{rCrossflag,jdbcType=VARCHAR},
+      </if>
+      <if test="rDirectflag != null">
+        #{rDirectflag,jdbcType=VARCHAR},
+      </if>
+      <if test="rTime != null">
+        #{rTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rAdminid != null">
+        #{rAdminid,jdbcType=INTEGER},
+      </if>
+      <if test="rPartflag != null">
+        #{rPartflag,jdbcType=INTEGER},
+      </if>
+      <if test="rSkumodel != null">
+        #{rSkumodel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Receiving">
+    update receiving
+    <set>
+      <if test="rName != null">
+        r_name = #{rName,jdbcType=VARCHAR},
+      </if>
+      <if test="rStorerid != null">
+        r_storerid = #{rStorerid,jdbcType=VARCHAR},
+      </if>
+      <if test="rPhone != null">
+        r_phone = #{rPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="rSupplierid != null">
+        r_supplierid = #{rSupplierid,jdbcType=VARCHAR},
+      </if>
+      <if test="rSippingno != null">
+        r_sippingNO = #{rSippingno,jdbcType=VARCHAR},
+      </if>
+      <if test="rWhid != null">
+        r_whid = #{rWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="rNum != null">
+        r_num = #{rNum,jdbcType=DOUBLE},
+      </if>
+      <if test="rCrossflag != null">
+        r_crossflag = #{rCrossflag,jdbcType=VARCHAR},
+      </if>
+      <if test="rDirectflag != null">
+        r_directflag = #{rDirectflag,jdbcType=VARCHAR},
+      </if>
+      <if test="rTime != null">
+        r_time = #{rTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rAdminid != null">
+        r_adminid = #{rAdminid,jdbcType=INTEGER},
+      </if>
+      <if test="rPartflag != null">
+        r_partflag = #{rPartflag,jdbcType=INTEGER},
+      </if>
+      <if test="rSkumodel != null">
+        r_SKUmodel = #{rSkumodel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where r_id = #{rId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.Receiving">
+    update receiving
+    set r_name = #{rName,jdbcType=VARCHAR},
+      r_storerid = #{rStorerid,jdbcType=VARCHAR},
+      r_phone = #{rPhone,jdbcType=VARCHAR},
+      r_supplierid = #{rSupplierid,jdbcType=VARCHAR},
+      r_sippingNO = #{rSippingno,jdbcType=VARCHAR},
+      r_whid = #{rWhid,jdbcType=VARCHAR},
+      r_num = #{rNum,jdbcType=DOUBLE},
+      r_crossflag = #{rCrossflag,jdbcType=VARCHAR},
+      r_directflag = #{rDirectflag,jdbcType=VARCHAR},
+      r_time = #{rTime,jdbcType=TIMESTAMP},
+      r_adminid = #{rAdminid,jdbcType=INTEGER},
+      r_partflag = #{rPartflag,jdbcType=INTEGER},
+      r_SKUmodel = #{rSkumodel,jdbcType=VARCHAR}
+    where r_id = #{rId,jdbcType=INTEGER}
+  </update>
+</mapper>

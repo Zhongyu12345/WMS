@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.AllotputMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.Allotput">
+    <id column="ap_id" jdbcType="INTEGER" property="apId" />
+    <result column="ap_name" jdbcType="VARCHAR" property="apName" />
+    <result column="ap_SKUmodel" jdbcType="VARCHAR" property="apSkumodel" />
+    <result column="ap_num" jdbcType="DOUBLE" property="apNum" />
+    <result column="ap_whid" jdbcType="VARCHAR" property="apWhid" />
+    <result column="ap_sipping" jdbcType="VARCHAR" property="apSipping" />
+    <result column="ap_time" jdbcType="TIMESTAMP" property="apTime" />
+    <result column="ap_volume" jdbcType="DOUBLE" property="apVolume" />
+    <result column="ap_address" jdbcType="VARCHAR" property="apAddress" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ap_id, ap_name, ap_SKUmodel, ap_num, ap_whid, ap_sipping, ap_time, ap_volume, ap_address
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from allotput
+    where ap_id = #{apId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from allotput
+    where ap_id = #{apId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.Allotput">
+    insert into allotput (ap_id, ap_name, ap_SKUmodel, 
+      ap_num, ap_whid, ap_sipping, 
+      ap_time, ap_volume, ap_address
+      )
+    values (#{apId,jdbcType=INTEGER}, #{apName,jdbcType=VARCHAR}, #{apSkumodel,jdbcType=VARCHAR}, 
+      #{apNum,jdbcType=DOUBLE}, #{apWhid,jdbcType=VARCHAR}, #{apSipping,jdbcType=VARCHAR}, 
+      #{apTime,jdbcType=TIMESTAMP}, #{apVolume,jdbcType=DOUBLE}, #{apAddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.Allotput">
+    insert into allotput
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="apId != null">
+        ap_id,
+      </if>
+      <if test="apName != null">
+        ap_name,
+      </if>
+      <if test="apSkumodel != null">
+        ap_SKUmodel,
+      </if>
+      <if test="apNum != null">
+        ap_num,
+      </if>
+      <if test="apWhid != null">
+        ap_whid,
+      </if>
+      <if test="apSipping != null">
+        ap_sipping,
+      </if>
+      <if test="apTime != null">
+        ap_time,
+      </if>
+      <if test="apVolume != null">
+        ap_volume,
+      </if>
+      <if test="apAddress != null">
+        ap_address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="apId != null">
+        #{apId,jdbcType=INTEGER},
+      </if>
+      <if test="apName != null">
+        #{apName,jdbcType=VARCHAR},
+      </if>
+      <if test="apSkumodel != null">
+        #{apSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="apNum != null">
+        #{apNum,jdbcType=DOUBLE},
+      </if>
+      <if test="apWhid != null">
+        #{apWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="apSipping != null">
+        #{apSipping,jdbcType=VARCHAR},
+      </if>
+      <if test="apTime != null">
+        #{apTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="apVolume != null">
+        #{apVolume,jdbcType=DOUBLE},
+      </if>
+      <if test="apAddress != null">
+        #{apAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Allotput">
+    update allotput
+    <set>
+      <if test="apName != null">
+        ap_name = #{apName,jdbcType=VARCHAR},
+      </if>
+      <if test="apSkumodel != null">
+        ap_SKUmodel = #{apSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="apNum != null">
+        ap_num = #{apNum,jdbcType=DOUBLE},
+      </if>
+      <if test="apWhid != null">
+        ap_whid = #{apWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="apSipping != null">
+        ap_sipping = #{apSipping,jdbcType=VARCHAR},
+      </if>
+      <if test="apTime != null">
+        ap_time = #{apTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="apVolume != null">
+        ap_volume = #{apVolume,jdbcType=DOUBLE},
+      </if>
+      <if test="apAddress != null">
+        ap_address = #{apAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ap_id = #{apId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.Allotput">
+    update allotput
+    set ap_name = #{apName,jdbcType=VARCHAR},
+      ap_SKUmodel = #{apSkumodel,jdbcType=VARCHAR},
+      ap_num = #{apNum,jdbcType=DOUBLE},
+      ap_whid = #{apWhid,jdbcType=VARCHAR},
+      ap_sipping = #{apSipping,jdbcType=VARCHAR},
+      ap_time = #{apTime,jdbcType=TIMESTAMP},
+      ap_volume = #{apVolume,jdbcType=DOUBLE},
+      ap_address = #{apAddress,jdbcType=VARCHAR}
+    where ap_id = #{apId,jdbcType=INTEGER}
+  </update>
+</mapper>

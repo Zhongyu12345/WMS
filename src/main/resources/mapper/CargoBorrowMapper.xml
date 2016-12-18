@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.CargoBorrowMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.CargoBorrow">
+    <id column="cb_id" jdbcType="INTEGER" property="cbId" />
+    <result column="cb_name" jdbcType="VARCHAR" property="cbName" />
+    <result column="cb_SKUmodel" jdbcType="VARCHAR" property="cbSkumodel" />
+    <result column="cb_num" jdbcType="DOUBLE" property="cbNum" />
+    <result column="cb_cause" jdbcType="VARCHAR" property="cbCause" />
+    <result column="cb_names" jdbcType="VARCHAR" property="cbNames" />
+    <result column="cb_time" jdbcType="TIMESTAMP" property="cbTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    cb_id, cb_name, cb_SKUmodel, cb_num, cb_cause, cb_names, cb_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_borrow
+    where cb_id = #{cbId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cargo_borrow
+    where cb_id = #{cbId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.CargoBorrow">
+    insert into cargo_borrow (cb_id, cb_name, cb_SKUmodel, 
+      cb_num, cb_cause, cb_names, 
+      cb_time)
+    values (#{cbId,jdbcType=INTEGER}, #{cbName,jdbcType=VARCHAR}, #{cbSkumodel,jdbcType=VARCHAR}, 
+      #{cbNum,jdbcType=DOUBLE}, #{cbCause,jdbcType=VARCHAR}, #{cbNames,jdbcType=VARCHAR}, 
+      #{cbTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.CargoBorrow">
+    insert into cargo_borrow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cbId != null">
+        cb_id,
+      </if>
+      <if test="cbName != null">
+        cb_name,
+      </if>
+      <if test="cbSkumodel != null">
+        cb_SKUmodel,
+      </if>
+      <if test="cbNum != null">
+        cb_num,
+      </if>
+      <if test="cbCause != null">
+        cb_cause,
+      </if>
+      <if test="cbNames != null">
+        cb_names,
+      </if>
+      <if test="cbTime != null">
+        cb_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cbId != null">
+        #{cbId,jdbcType=INTEGER},
+      </if>
+      <if test="cbName != null">
+        #{cbName,jdbcType=VARCHAR},
+      </if>
+      <if test="cbSkumodel != null">
+        #{cbSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="cbNum != null">
+        #{cbNum,jdbcType=DOUBLE},
+      </if>
+      <if test="cbCause != null">
+        #{cbCause,jdbcType=VARCHAR},
+      </if>
+      <if test="cbNames != null">
+        #{cbNames,jdbcType=VARCHAR},
+      </if>
+      <if test="cbTime != null">
+        #{cbTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.CargoBorrow">
+    update cargo_borrow
+    <set>
+      <if test="cbName != null">
+        cb_name = #{cbName,jdbcType=VARCHAR},
+      </if>
+      <if test="cbSkumodel != null">
+        cb_SKUmodel = #{cbSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="cbNum != null">
+        cb_num = #{cbNum,jdbcType=DOUBLE},
+      </if>
+      <if test="cbCause != null">
+        cb_cause = #{cbCause,jdbcType=VARCHAR},
+      </if>
+      <if test="cbNames != null">
+        cb_names = #{cbNames,jdbcType=VARCHAR},
+      </if>
+      <if test="cbTime != null">
+        cb_time = #{cbTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where cb_id = #{cbId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.CargoBorrow">
+    update cargo_borrow
+    set cb_name = #{cbName,jdbcType=VARCHAR},
+      cb_SKUmodel = #{cbSkumodel,jdbcType=VARCHAR},
+      cb_num = #{cbNum,jdbcType=DOUBLE},
+      cb_cause = #{cbCause,jdbcType=VARCHAR},
+      cb_names = #{cbNames,jdbcType=VARCHAR},
+      cb_time = #{cbTime,jdbcType=TIMESTAMP}
+    where cb_id = #{cbId,jdbcType=INTEGER}
+  </update>
+</mapper>

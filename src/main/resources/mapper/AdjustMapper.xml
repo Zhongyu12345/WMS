@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.AdjustMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.Adjust">
+    <id column="j_id" jdbcType="INTEGER" property="jId" />
+    <result column="j_name" jdbcType="VARCHAR" property="jName" />
+    <result column="j_SKUmodel" jdbcType="VARCHAR" property="jSkumodel" />
+    <result column="j_num" jdbcType="DOUBLE" property="jNum" />
+    <result column="j_names" jdbcType="VARCHAR" property="jNames" />
+    <result column="j_cause" jdbcType="VARCHAR" property="jCause" />
+    <result column="j_time" jdbcType="TIMESTAMP" property="jTime" />
+    <result column="j_whid" jdbcType="VARCHAR" property="jWhid" />
+    <result column="j_volum" jdbcType="DOUBLE" property="jVolum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    j_id, j_name, j_SKUmodel, j_num, j_names, j_cause, j_time, j_whid, j_volum
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from adjust
+    where j_id = #{jId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from adjust
+    where j_id = #{jId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.Adjust">
+    insert into adjust (j_id, j_name, j_SKUmodel, 
+      j_num, j_names, j_cause, 
+      j_time, j_whid, j_volum
+      )
+    values (#{jId,jdbcType=INTEGER}, #{jName,jdbcType=VARCHAR}, #{jSkumodel,jdbcType=VARCHAR}, 
+      #{jNum,jdbcType=DOUBLE}, #{jNames,jdbcType=VARCHAR}, #{jCause,jdbcType=VARCHAR}, 
+      #{jTime,jdbcType=TIMESTAMP}, #{jWhid,jdbcType=VARCHAR}, #{jVolum,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.Adjust">
+    insert into adjust
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jId != null">
+        j_id,
+      </if>
+      <if test="jName != null">
+        j_name,
+      </if>
+      <if test="jSkumodel != null">
+        j_SKUmodel,
+      </if>
+      <if test="jNum != null">
+        j_num,
+      </if>
+      <if test="jNames != null">
+        j_names,
+      </if>
+      <if test="jCause != null">
+        j_cause,
+      </if>
+      <if test="jTime != null">
+        j_time,
+      </if>
+      <if test="jWhid != null">
+        j_whid,
+      </if>
+      <if test="jVolum != null">
+        j_volum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jId != null">
+        #{jId,jdbcType=INTEGER},
+      </if>
+      <if test="jName != null">
+        #{jName,jdbcType=VARCHAR},
+      </if>
+      <if test="jSkumodel != null">
+        #{jSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="jNum != null">
+        #{jNum,jdbcType=DOUBLE},
+      </if>
+      <if test="jNames != null">
+        #{jNames,jdbcType=VARCHAR},
+      </if>
+      <if test="jCause != null">
+        #{jCause,jdbcType=VARCHAR},
+      </if>
+      <if test="jTime != null">
+        #{jTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jWhid != null">
+        #{jWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="jVolum != null">
+        #{jVolum,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Adjust">
+    update adjust
+    <set>
+      <if test="jName != null">
+        j_name = #{jName,jdbcType=VARCHAR},
+      </if>
+      <if test="jSkumodel != null">
+        j_SKUmodel = #{jSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="jNum != null">
+        j_num = #{jNum,jdbcType=DOUBLE},
+      </if>
+      <if test="jNames != null">
+        j_names = #{jNames,jdbcType=VARCHAR},
+      </if>
+      <if test="jCause != null">
+        j_cause = #{jCause,jdbcType=VARCHAR},
+      </if>
+      <if test="jTime != null">
+        j_time = #{jTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jWhid != null">
+        j_whid = #{jWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="jVolum != null">
+        j_volum = #{jVolum,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where j_id = #{jId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.Adjust">
+    update adjust
+    set j_name = #{jName,jdbcType=VARCHAR},
+      j_SKUmodel = #{jSkumodel,jdbcType=VARCHAR},
+      j_num = #{jNum,jdbcType=DOUBLE},
+      j_names = #{jNames,jdbcType=VARCHAR},
+      j_cause = #{jCause,jdbcType=VARCHAR},
+      j_time = #{jTime,jdbcType=TIMESTAMP},
+      j_whid = #{jWhid,jdbcType=VARCHAR},
+      j_volum = #{jVolum,jdbcType=DOUBLE}
+    where j_id = #{jId,jdbcType=INTEGER}
+  </update>
+</mapper>

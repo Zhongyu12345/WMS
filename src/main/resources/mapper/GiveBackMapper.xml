@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.GiveBackMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.GiveBack">
+    <id column="gb_id" jdbcType="INTEGER" property="gbId" />
+    <result column="gb_name" jdbcType="VARCHAR" property="gbName" />
+    <result column="gb_SKUmodel" jdbcType="VARCHAR" property="gbSkumodel" />
+    <result column="gb_num" jdbcType="DOUBLE" property="gbNum" />
+    <result column="gb_cause" jdbcType="VARCHAR" property="gbCause" />
+    <result column="gb_status" jdbcType="INTEGER" property="gbStatus" />
+    <result column="gb_time" jdbcType="TIMESTAMP" property="gbTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    gb_id, gb_name, gb_SKUmodel, gb_num, gb_cause, gb_status, gb_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from give_back
+    where gb_id = #{gbId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from give_back
+    where gb_id = #{gbId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.GiveBack">
+    insert into give_back (gb_id, gb_name, gb_SKUmodel, 
+      gb_num, gb_cause, gb_status, 
+      gb_time)
+    values (#{gbId,jdbcType=INTEGER}, #{gbName,jdbcType=VARCHAR}, #{gbSkumodel,jdbcType=VARCHAR}, 
+      #{gbNum,jdbcType=DOUBLE}, #{gbCause,jdbcType=VARCHAR}, #{gbStatus,jdbcType=INTEGER}, 
+      #{gbTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.GiveBack">
+    insert into give_back
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gbId != null">
+        gb_id,
+      </if>
+      <if test="gbName != null">
+        gb_name,
+      </if>
+      <if test="gbSkumodel != null">
+        gb_SKUmodel,
+      </if>
+      <if test="gbNum != null">
+        gb_num,
+      </if>
+      <if test="gbCause != null">
+        gb_cause,
+      </if>
+      <if test="gbStatus != null">
+        gb_status,
+      </if>
+      <if test="gbTime != null">
+        gb_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gbId != null">
+        #{gbId,jdbcType=INTEGER},
+      </if>
+      <if test="gbName != null">
+        #{gbName,jdbcType=VARCHAR},
+      </if>
+      <if test="gbSkumodel != null">
+        #{gbSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="gbNum != null">
+        #{gbNum,jdbcType=DOUBLE},
+      </if>
+      <if test="gbCause != null">
+        #{gbCause,jdbcType=VARCHAR},
+      </if>
+      <if test="gbStatus != null">
+        #{gbStatus,jdbcType=INTEGER},
+      </if>
+      <if test="gbTime != null">
+        #{gbTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.GiveBack">
+    update give_back
+    <set>
+      <if test="gbName != null">
+        gb_name = #{gbName,jdbcType=VARCHAR},
+      </if>
+      <if test="gbSkumodel != null">
+        gb_SKUmodel = #{gbSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="gbNum != null">
+        gb_num = #{gbNum,jdbcType=DOUBLE},
+      </if>
+      <if test="gbCause != null">
+        gb_cause = #{gbCause,jdbcType=VARCHAR},
+      </if>
+      <if test="gbStatus != null">
+        gb_status = #{gbStatus,jdbcType=INTEGER},
+      </if>
+      <if test="gbTime != null">
+        gb_time = #{gbTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where gb_id = #{gbId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.GiveBack">
+    update give_back
+    set gb_name = #{gbName,jdbcType=VARCHAR},
+      gb_SKUmodel = #{gbSkumodel,jdbcType=VARCHAR},
+      gb_num = #{gbNum,jdbcType=DOUBLE},
+      gb_cause = #{gbCause,jdbcType=VARCHAR},
+      gb_status = #{gbStatus,jdbcType=INTEGER},
+      gb_time = #{gbTime,jdbcType=TIMESTAMP}
+    where gb_id = #{gbId,jdbcType=INTEGER}
+  </update>
+</mapper>

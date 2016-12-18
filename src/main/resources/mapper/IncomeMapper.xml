@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.IncomeMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.Income">
+    <id column="i_id" jdbcType="INTEGER" property="iId" />
+    <result column="i_income" jdbcType="DECIMAL" property="iIncome" />
+    <result column="i_pay" jdbcType="DECIMAL" property="iPay" />
+    <result column="i_time" jdbcType="TIMESTAMP" property="iTime" />
+    <result column="i_caid" jdbcType="INTEGER" property="iCaid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    i_id, i_income, i_pay, i_time, i_caid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from income
+    where i_id = #{iId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from income
+    where i_id = #{iId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.Income">
+    insert into income (i_id, i_income, i_pay, 
+      i_time, i_caid)
+    values (#{iId,jdbcType=INTEGER}, #{iIncome,jdbcType=DECIMAL}, #{iPay,jdbcType=DECIMAL}, 
+      #{iTime,jdbcType=TIMESTAMP}, #{iCaid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.Income">
+    insert into income
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="iId != null">
+        i_id,
+      </if>
+      <if test="iIncome != null">
+        i_income,
+      </if>
+      <if test="iPay != null">
+        i_pay,
+      </if>
+      <if test="iTime != null">
+        i_time,
+      </if>
+      <if test="iCaid != null">
+        i_caid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="iId != null">
+        #{iId,jdbcType=INTEGER},
+      </if>
+      <if test="iIncome != null">
+        #{iIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="iPay != null">
+        #{iPay,jdbcType=DECIMAL},
+      </if>
+      <if test="iTime != null">
+        #{iTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iCaid != null">
+        #{iCaid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Income">
+    update income
+    <set>
+      <if test="iIncome != null">
+        i_income = #{iIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="iPay != null">
+        i_pay = #{iPay,jdbcType=DECIMAL},
+      </if>
+      <if test="iTime != null">
+        i_time = #{iTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iCaid != null">
+        i_caid = #{iCaid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where i_id = #{iId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.Income">
+    update income
+    set i_income = #{iIncome,jdbcType=DECIMAL},
+      i_pay = #{iPay,jdbcType=DECIMAL},
+      i_time = #{iTime,jdbcType=TIMESTAMP},
+      i_caid = #{iCaid,jdbcType=INTEGER}
+    where i_id = #{iId,jdbcType=INTEGER}
+  </update>
+</mapper>

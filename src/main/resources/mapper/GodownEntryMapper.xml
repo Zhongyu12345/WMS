@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.GodownEntryMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.GodownEntry">
+    <id column="g_id" jdbcType="INTEGER" property="gId" />
+    <result column="g_name" jdbcType="VARCHAR" property="gName" />
+    <result column="g_storerid" jdbcType="VARCHAR" property="gStorerid" />
+    <result column="g_phone" jdbcType="VARCHAR" property="gPhone" />
+    <result column="g_supplierid" jdbcType="VARCHAR" property="gSupplierid" />
+    <result column="g_sippingNO" jdbcType="VARCHAR" property="gSippingno" />
+    <result column="g_whid" jdbcType="VARCHAR" property="gWhid" />
+    <result column="g_num" jdbcType="DOUBLE" property="gNum" />
+    <result column="g_crossflag" jdbcType="VARCHAR" property="gCrossflag" />
+    <result column="g_directflag" jdbcType="VARCHAR" property="gDirectflag" />
+    <result column="g_time" jdbcType="TIMESTAMP" property="gTime" />
+    <result column="g_adminid" jdbcType="INTEGER" property="gAdminid" />
+    <result column="g_SKUmodel" jdbcType="VARCHAR" property="gSkumodel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    g_id, g_name, g_storerid, g_phone, g_supplierid, g_sippingNO, g_whid, g_num, g_crossflag, 
+    g_directflag, g_time, g_adminid, g_SKUmodel
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from godown_entry
+    where g_id = #{gId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from godown_entry
+    where g_id = #{gId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.GodownEntry">
+    insert into godown_entry (g_id, g_name, g_storerid, 
+      g_phone, g_supplierid, g_sippingNO, 
+      g_whid, g_num, g_crossflag, 
+      g_directflag, g_time, g_adminid, 
+      g_SKUmodel)
+    values (#{gId,jdbcType=INTEGER}, #{gName,jdbcType=VARCHAR}, #{gStorerid,jdbcType=VARCHAR}, 
+      #{gPhone,jdbcType=VARCHAR}, #{gSupplierid,jdbcType=VARCHAR}, #{gSippingno,jdbcType=VARCHAR}, 
+      #{gWhid,jdbcType=VARCHAR}, #{gNum,jdbcType=DOUBLE}, #{gCrossflag,jdbcType=VARCHAR}, 
+      #{gDirectflag,jdbcType=VARCHAR}, #{gTime,jdbcType=TIMESTAMP}, #{gAdminid,jdbcType=INTEGER}, 
+      #{gSkumodel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.GodownEntry">
+    insert into godown_entry
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gId != null">
+        g_id,
+      </if>
+      <if test="gName != null">
+        g_name,
+      </if>
+      <if test="gStorerid != null">
+        g_storerid,
+      </if>
+      <if test="gPhone != null">
+        g_phone,
+      </if>
+      <if test="gSupplierid != null">
+        g_supplierid,
+      </if>
+      <if test="gSippingno != null">
+        g_sippingNO,
+      </if>
+      <if test="gWhid != null">
+        g_whid,
+      </if>
+      <if test="gNum != null">
+        g_num,
+      </if>
+      <if test="gCrossflag != null">
+        g_crossflag,
+      </if>
+      <if test="gDirectflag != null">
+        g_directflag,
+      </if>
+      <if test="gTime != null">
+        g_time,
+      </if>
+      <if test="gAdminid != null">
+        g_adminid,
+      </if>
+      <if test="gSkumodel != null">
+        g_SKUmodel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gId != null">
+        #{gId,jdbcType=INTEGER},
+      </if>
+      <if test="gName != null">
+        #{gName,jdbcType=VARCHAR},
+      </if>
+      <if test="gStorerid != null">
+        #{gStorerid,jdbcType=VARCHAR},
+      </if>
+      <if test="gPhone != null">
+        #{gPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="gSupplierid != null">
+        #{gSupplierid,jdbcType=VARCHAR},
+      </if>
+      <if test="gSippingno != null">
+        #{gSippingno,jdbcType=VARCHAR},
+      </if>
+      <if test="gWhid != null">
+        #{gWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="gNum != null">
+        #{gNum,jdbcType=DOUBLE},
+      </if>
+      <if test="gCrossflag != null">
+        #{gCrossflag,jdbcType=VARCHAR},
+      </if>
+      <if test="gDirectflag != null">
+        #{gDirectflag,jdbcType=VARCHAR},
+      </if>
+      <if test="gTime != null">
+        #{gTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gAdminid != null">
+        #{gAdminid,jdbcType=INTEGER},
+      </if>
+      <if test="gSkumodel != null">
+        #{gSkumodel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.GodownEntry">
+    update godown_entry
+    <set>
+      <if test="gName != null">
+        g_name = #{gName,jdbcType=VARCHAR},
+      </if>
+      <if test="gStorerid != null">
+        g_storerid = #{gStorerid,jdbcType=VARCHAR},
+      </if>
+      <if test="gPhone != null">
+        g_phone = #{gPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="gSupplierid != null">
+        g_supplierid = #{gSupplierid,jdbcType=VARCHAR},
+      </if>
+      <if test="gSippingno != null">
+        g_sippingNO = #{gSippingno,jdbcType=VARCHAR},
+      </if>
+      <if test="gWhid != null">
+        g_whid = #{gWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="gNum != null">
+        g_num = #{gNum,jdbcType=DOUBLE},
+      </if>
+      <if test="gCrossflag != null">
+        g_crossflag = #{gCrossflag,jdbcType=VARCHAR},
+      </if>
+      <if test="gDirectflag != null">
+        g_directflag = #{gDirectflag,jdbcType=VARCHAR},
+      </if>
+      <if test="gTime != null">
+        g_time = #{gTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gAdminid != null">
+        g_adminid = #{gAdminid,jdbcType=INTEGER},
+      </if>
+      <if test="gSkumodel != null">
+        g_SKUmodel = #{gSkumodel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where g_id = #{gId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.GodownEntry">
+    update godown_entry
+    set g_name = #{gName,jdbcType=VARCHAR},
+      g_storerid = #{gStorerid,jdbcType=VARCHAR},
+      g_phone = #{gPhone,jdbcType=VARCHAR},
+      g_supplierid = #{gSupplierid,jdbcType=VARCHAR},
+      g_sippingNO = #{gSippingno,jdbcType=VARCHAR},
+      g_whid = #{gWhid,jdbcType=VARCHAR},
+      g_num = #{gNum,jdbcType=DOUBLE},
+      g_crossflag = #{gCrossflag,jdbcType=VARCHAR},
+      g_directflag = #{gDirectflag,jdbcType=VARCHAR},
+      g_time = #{gTime,jdbcType=TIMESTAMP},
+      g_adminid = #{gAdminid,jdbcType=INTEGER},
+      g_SKUmodel = #{gSkumodel,jdbcType=VARCHAR}
+    where g_id = #{gId,jdbcType=INTEGER}
+  </update>
+</mapper>

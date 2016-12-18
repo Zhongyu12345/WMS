@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.SalesReturnMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.SalesReturn">
+    <id column="sr_id" jdbcType="INTEGER" property="srId" />
+    <result column="sr_name" jdbcType="VARCHAR" property="srName" />
+    <result column="sr_sipping" jdbcType="VARCHAR" property="srSipping" />
+    <result column="sr_storerid" jdbcType="INTEGER" property="srStorerid" />
+    <result column="sr_phone" jdbcType="VARCHAR" property="srPhone" />
+    <result column="sr_names" jdbcType="VARCHAR" property="srNames" />
+    <result column="sr_SKUmodel" jdbcType="VARCHAR" property="srSkumodel" />
+    <result column="sr_num" jdbcType="DOUBLE" property="srNum" />
+    <result column="sr_cause" jdbcType="VARCHAR" property="srCause" />
+    <result column="sr_time" jdbcType="TIMESTAMP" property="srTime" />
+    <result column="sr_whid" jdbcType="INTEGER" property="srWhid" />
+    <result column="sr_volume" jdbcType="DOUBLE" property="srVolume" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sr_id, sr_name, sr_sipping, sr_storerid, sr_phone, sr_names, sr_SKUmodel, sr_num, 
+    sr_cause, sr_time, sr_whid, sr_volume
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sales_return
+    where sr_id = #{srId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sales_return
+    where sr_id = #{srId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.SalesReturn">
+    insert into sales_return (sr_id, sr_name, sr_sipping, 
+      sr_storerid, sr_phone, sr_names, 
+      sr_SKUmodel, sr_num, sr_cause, 
+      sr_time, sr_whid, sr_volume
+      )
+    values (#{srId,jdbcType=INTEGER}, #{srName,jdbcType=VARCHAR}, #{srSipping,jdbcType=VARCHAR}, 
+      #{srStorerid,jdbcType=INTEGER}, #{srPhone,jdbcType=VARCHAR}, #{srNames,jdbcType=VARCHAR}, 
+      #{srSkumodel,jdbcType=VARCHAR}, #{srNum,jdbcType=DOUBLE}, #{srCause,jdbcType=VARCHAR}, 
+      #{srTime,jdbcType=TIMESTAMP}, #{srWhid,jdbcType=INTEGER}, #{srVolume,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.SalesReturn">
+    insert into sales_return
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="srId != null">
+        sr_id,
+      </if>
+      <if test="srName != null">
+        sr_name,
+      </if>
+      <if test="srSipping != null">
+        sr_sipping,
+      </if>
+      <if test="srStorerid != null">
+        sr_storerid,
+      </if>
+      <if test="srPhone != null">
+        sr_phone,
+      </if>
+      <if test="srNames != null">
+        sr_names,
+      </if>
+      <if test="srSkumodel != null">
+        sr_SKUmodel,
+      </if>
+      <if test="srNum != null">
+        sr_num,
+      </if>
+      <if test="srCause != null">
+        sr_cause,
+      </if>
+      <if test="srTime != null">
+        sr_time,
+      </if>
+      <if test="srWhid != null">
+        sr_whid,
+      </if>
+      <if test="srVolume != null">
+        sr_volume,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="srId != null">
+        #{srId,jdbcType=INTEGER},
+      </if>
+      <if test="srName != null">
+        #{srName,jdbcType=VARCHAR},
+      </if>
+      <if test="srSipping != null">
+        #{srSipping,jdbcType=VARCHAR},
+      </if>
+      <if test="srStorerid != null">
+        #{srStorerid,jdbcType=INTEGER},
+      </if>
+      <if test="srPhone != null">
+        #{srPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="srNames != null">
+        #{srNames,jdbcType=VARCHAR},
+      </if>
+      <if test="srSkumodel != null">
+        #{srSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="srNum != null">
+        #{srNum,jdbcType=DOUBLE},
+      </if>
+      <if test="srCause != null">
+        #{srCause,jdbcType=VARCHAR},
+      </if>
+      <if test="srTime != null">
+        #{srTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="srWhid != null">
+        #{srWhid,jdbcType=INTEGER},
+      </if>
+      <if test="srVolume != null">
+        #{srVolume,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.SalesReturn">
+    update sales_return
+    <set>
+      <if test="srName != null">
+        sr_name = #{srName,jdbcType=VARCHAR},
+      </if>
+      <if test="srSipping != null">
+        sr_sipping = #{srSipping,jdbcType=VARCHAR},
+      </if>
+      <if test="srStorerid != null">
+        sr_storerid = #{srStorerid,jdbcType=INTEGER},
+      </if>
+      <if test="srPhone != null">
+        sr_phone = #{srPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="srNames != null">
+        sr_names = #{srNames,jdbcType=VARCHAR},
+      </if>
+      <if test="srSkumodel != null">
+        sr_SKUmodel = #{srSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="srNum != null">
+        sr_num = #{srNum,jdbcType=DOUBLE},
+      </if>
+      <if test="srCause != null">
+        sr_cause = #{srCause,jdbcType=VARCHAR},
+      </if>
+      <if test="srTime != null">
+        sr_time = #{srTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="srWhid != null">
+        sr_whid = #{srWhid,jdbcType=INTEGER},
+      </if>
+      <if test="srVolume != null">
+        sr_volume = #{srVolume,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where sr_id = #{srId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.SalesReturn">
+    update sales_return
+    set sr_name = #{srName,jdbcType=VARCHAR},
+      sr_sipping = #{srSipping,jdbcType=VARCHAR},
+      sr_storerid = #{srStorerid,jdbcType=INTEGER},
+      sr_phone = #{srPhone,jdbcType=VARCHAR},
+      sr_names = #{srNames,jdbcType=VARCHAR},
+      sr_SKUmodel = #{srSkumodel,jdbcType=VARCHAR},
+      sr_num = #{srNum,jdbcType=DOUBLE},
+      sr_cause = #{srCause,jdbcType=VARCHAR},
+      sr_time = #{srTime,jdbcType=TIMESTAMP},
+      sr_whid = #{srWhid,jdbcType=INTEGER},
+      sr_volume = #{srVolume,jdbcType=DOUBLE}
+    where sr_id = #{srId,jdbcType=INTEGER}
+  </update>
+</mapper>

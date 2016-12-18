@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.CrossDatabaseMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.CrossDatabase">
+    <id column="cd_id" jdbcType="INTEGER" property="cdId" />
+    <result column="cd_name" jdbcType="VARCHAR" property="cdName" />
+    <result column="cd_SKUmodel" jdbcType="VARCHAR" property="cdSkumodel" />
+    <result column="cd_num" jdbcType="DOUBLE" property="cdNum" />
+    <result column="cd_whid" jdbcType="VARCHAR" property="cdWhid" />
+    <result column="cd_oddnumbers" jdbcType="VARCHAR" property="cdOddnumbers" />
+    <result column="cd_time" jdbcType="TIMESTAMP" property="cdTime" />
+    <result column="cd_volume" jdbcType="DOUBLE" property="cdVolume" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    cd_id, cd_name, cd_SKUmodel, cd_num, cd_whid, cd_oddnumbers, cd_time, cd_volume
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cross_database
+    where cd_id = #{cdId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cross_database
+    where cd_id = #{cdId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.CrossDatabase">
+    insert into cross_database (cd_id, cd_name, cd_SKUmodel, 
+      cd_num, cd_whid, cd_oddnumbers, 
+      cd_time, cd_volume)
+    values (#{cdId,jdbcType=INTEGER}, #{cdName,jdbcType=VARCHAR}, #{cdSkumodel,jdbcType=VARCHAR}, 
+      #{cdNum,jdbcType=DOUBLE}, #{cdWhid,jdbcType=VARCHAR}, #{cdOddnumbers,jdbcType=VARCHAR}, 
+      #{cdTime,jdbcType=TIMESTAMP}, #{cdVolume,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.CrossDatabase">
+    insert into cross_database
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cdId != null">
+        cd_id,
+      </if>
+      <if test="cdName != null">
+        cd_name,
+      </if>
+      <if test="cdSkumodel != null">
+        cd_SKUmodel,
+      </if>
+      <if test="cdNum != null">
+        cd_num,
+      </if>
+      <if test="cdWhid != null">
+        cd_whid,
+      </if>
+      <if test="cdOddnumbers != null">
+        cd_oddnumbers,
+      </if>
+      <if test="cdTime != null">
+        cd_time,
+      </if>
+      <if test="cdVolume != null">
+        cd_volume,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cdId != null">
+        #{cdId,jdbcType=INTEGER},
+      </if>
+      <if test="cdName != null">
+        #{cdName,jdbcType=VARCHAR},
+      </if>
+      <if test="cdSkumodel != null">
+        #{cdSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="cdNum != null">
+        #{cdNum,jdbcType=DOUBLE},
+      </if>
+      <if test="cdWhid != null">
+        #{cdWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="cdOddnumbers != null">
+        #{cdOddnumbers,jdbcType=VARCHAR},
+      </if>
+      <if test="cdTime != null">
+        #{cdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cdVolume != null">
+        #{cdVolume,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.CrossDatabase">
+    update cross_database
+    <set>
+      <if test="cdName != null">
+        cd_name = #{cdName,jdbcType=VARCHAR},
+      </if>
+      <if test="cdSkumodel != null">
+        cd_SKUmodel = #{cdSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="cdNum != null">
+        cd_num = #{cdNum,jdbcType=DOUBLE},
+      </if>
+      <if test="cdWhid != null">
+        cd_whid = #{cdWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="cdOddnumbers != null">
+        cd_oddnumbers = #{cdOddnumbers,jdbcType=VARCHAR},
+      </if>
+      <if test="cdTime != null">
+        cd_time = #{cdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cdVolume != null">
+        cd_volume = #{cdVolume,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where cd_id = #{cdId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.CrossDatabase">
+    update cross_database
+    set cd_name = #{cdName,jdbcType=VARCHAR},
+      cd_SKUmodel = #{cdSkumodel,jdbcType=VARCHAR},
+      cd_num = #{cdNum,jdbcType=DOUBLE},
+      cd_whid = #{cdWhid,jdbcType=VARCHAR},
+      cd_oddnumbers = #{cdOddnumbers,jdbcType=VARCHAR},
+      cd_time = #{cdTime,jdbcType=TIMESTAMP},
+      cd_volume = #{cdVolume,jdbcType=DOUBLE}
+    where cd_id = #{cdId,jdbcType=INTEGER}
+  </update>
+</mapper>

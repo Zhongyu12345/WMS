@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.MakeInventoryMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.MakeInventory">
+    <id column="mi_id" jdbcType="INTEGER" property="miId" />
+    <result column="mi_name" jdbcType="VARCHAR" property="miName" />
+    <result column="mi_SKUmodel" jdbcType="VARCHAR" property="miSkumodel" />
+    <result column="mi_num" jdbcType="DOUBLE" property="miNum" />
+    <result column="mi_names" jdbcType="VARCHAR" property="miNames" />
+    <result column="mi_whid" jdbcType="INTEGER" property="miWhid" />
+    <result column="mi_time" jdbcType="TIMESTAMP" property="miTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    mi_id, mi_name, mi_SKUmodel, mi_num, mi_names, mi_whid, mi_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from make_inventory
+    where mi_id = #{miId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from make_inventory
+    where mi_id = #{miId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.MakeInventory">
+    insert into make_inventory (mi_id, mi_name, mi_SKUmodel, 
+      mi_num, mi_names, mi_whid, 
+      mi_time)
+    values (#{miId,jdbcType=INTEGER}, #{miName,jdbcType=VARCHAR}, #{miSkumodel,jdbcType=VARCHAR}, 
+      #{miNum,jdbcType=DOUBLE}, #{miNames,jdbcType=VARCHAR}, #{miWhid,jdbcType=INTEGER}, 
+      #{miTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.MakeInventory">
+    insert into make_inventory
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="miId != null">
+        mi_id,
+      </if>
+      <if test="miName != null">
+        mi_name,
+      </if>
+      <if test="miSkumodel != null">
+        mi_SKUmodel,
+      </if>
+      <if test="miNum != null">
+        mi_num,
+      </if>
+      <if test="miNames != null">
+        mi_names,
+      </if>
+      <if test="miWhid != null">
+        mi_whid,
+      </if>
+      <if test="miTime != null">
+        mi_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="miId != null">
+        #{miId,jdbcType=INTEGER},
+      </if>
+      <if test="miName != null">
+        #{miName,jdbcType=VARCHAR},
+      </if>
+      <if test="miSkumodel != null">
+        #{miSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="miNum != null">
+        #{miNum,jdbcType=DOUBLE},
+      </if>
+      <if test="miNames != null">
+        #{miNames,jdbcType=VARCHAR},
+      </if>
+      <if test="miWhid != null">
+        #{miWhid,jdbcType=INTEGER},
+      </if>
+      <if test="miTime != null">
+        #{miTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.MakeInventory">
+    update make_inventory
+    <set>
+      <if test="miName != null">
+        mi_name = #{miName,jdbcType=VARCHAR},
+      </if>
+      <if test="miSkumodel != null">
+        mi_SKUmodel = #{miSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="miNum != null">
+        mi_num = #{miNum,jdbcType=DOUBLE},
+      </if>
+      <if test="miNames != null">
+        mi_names = #{miNames,jdbcType=VARCHAR},
+      </if>
+      <if test="miWhid != null">
+        mi_whid = #{miWhid,jdbcType=INTEGER},
+      </if>
+      <if test="miTime != null">
+        mi_time = #{miTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where mi_id = #{miId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.MakeInventory">
+    update make_inventory
+    set mi_name = #{miName,jdbcType=VARCHAR},
+      mi_SKUmodel = #{miSkumodel,jdbcType=VARCHAR},
+      mi_num = #{miNum,jdbcType=DOUBLE},
+      mi_names = #{miNames,jdbcType=VARCHAR},
+      mi_whid = #{miWhid,jdbcType=INTEGER},
+      mi_time = #{miTime,jdbcType=TIMESTAMP}
+    where mi_id = #{miId,jdbcType=INTEGER}
+  </update>
+</mapper>

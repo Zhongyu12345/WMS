@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.InvoiceMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.Invoice">
+    <id column="in_id" jdbcType="INTEGER" property="inId" />
+    <result column="in_name" jdbcType="VARCHAR" property="inName" />
+    <result column="in_SKUmodel" jdbcType="VARCHAR" property="inSkumodel" />
+    <result column="in_num" jdbcType="DOUBLE" property="inNum" />
+    <result column="in_whid" jdbcType="VARCHAR" property="inWhid" />
+    <result column="in_oddnumber" jdbcType="VARCHAR" property="inOddnumber" />
+    <result column="in_time" jdbcType="TIMESTAMP" property="inTime" />
+    <result column="in_volume" jdbcType="DOUBLE" property="inVolume" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    in_id, in_name, in_SKUmodel, in_num, in_whid, in_oddnumber, in_time, in_volume
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from invoice
+    where in_id = #{inId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from invoice
+    where in_id = #{inId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.Invoice">
+    insert into invoice (in_id, in_name, in_SKUmodel, 
+      in_num, in_whid, in_oddnumber, 
+      in_time, in_volume)
+    values (#{inId,jdbcType=INTEGER}, #{inName,jdbcType=VARCHAR}, #{inSkumodel,jdbcType=VARCHAR}, 
+      #{inNum,jdbcType=DOUBLE}, #{inWhid,jdbcType=VARCHAR}, #{inOddnumber,jdbcType=VARCHAR}, 
+      #{inTime,jdbcType=TIMESTAMP}, #{inVolume,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.Invoice">
+    insert into invoice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="inId != null">
+        in_id,
+      </if>
+      <if test="inName != null">
+        in_name,
+      </if>
+      <if test="inSkumodel != null">
+        in_SKUmodel,
+      </if>
+      <if test="inNum != null">
+        in_num,
+      </if>
+      <if test="inWhid != null">
+        in_whid,
+      </if>
+      <if test="inOddnumber != null">
+        in_oddnumber,
+      </if>
+      <if test="inTime != null">
+        in_time,
+      </if>
+      <if test="inVolume != null">
+        in_volume,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="inId != null">
+        #{inId,jdbcType=INTEGER},
+      </if>
+      <if test="inName != null">
+        #{inName,jdbcType=VARCHAR},
+      </if>
+      <if test="inSkumodel != null">
+        #{inSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="inNum != null">
+        #{inNum,jdbcType=DOUBLE},
+      </if>
+      <if test="inWhid != null">
+        #{inWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="inOddnumber != null">
+        #{inOddnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="inTime != null">
+        #{inTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inVolume != null">
+        #{inVolume,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Invoice">
+    update invoice
+    <set>
+      <if test="inName != null">
+        in_name = #{inName,jdbcType=VARCHAR},
+      </if>
+      <if test="inSkumodel != null">
+        in_SKUmodel = #{inSkumodel,jdbcType=VARCHAR},
+      </if>
+      <if test="inNum != null">
+        in_num = #{inNum,jdbcType=DOUBLE},
+      </if>
+      <if test="inWhid != null">
+        in_whid = #{inWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="inOddnumber != null">
+        in_oddnumber = #{inOddnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="inTime != null">
+        in_time = #{inTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inVolume != null">
+        in_volume = #{inVolume,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where in_id = #{inId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.Invoice">
+    update invoice
+    set in_name = #{inName,jdbcType=VARCHAR},
+      in_SKUmodel = #{inSkumodel,jdbcType=VARCHAR},
+      in_num = #{inNum,jdbcType=DOUBLE},
+      in_whid = #{inWhid,jdbcType=VARCHAR},
+      in_oddnumber = #{inOddnumber,jdbcType=VARCHAR},
+      in_time = #{inTime,jdbcType=TIMESTAMP},
+      in_volume = #{inVolume,jdbcType=DOUBLE}
+    where in_id = #{inId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.CargoMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.Cargo">
+    <id column="c_id" jdbcType="INTEGER" property="cId" />
+    <result column="c_name" jdbcType="VARCHAR" property="cName" />
+    <result column="c_storerid" jdbcType="VARCHAR" property="cStorerid" />
+    <result column="c_supplierid" jdbcType="VARCHAR" property="cSupplierid" />
+    <result column="c_shippingNO" jdbcType="VARCHAR" property="cShippingno" />
+    <result column="c_whid" jdbcType="VARCHAR" property="cWhid" />
+    <result column="c_num" jdbcType="INTEGER" property="cNum" />
+    <result column="c_totalweight" jdbcType="DOUBLE" property="cTotalweight" />
+    <result column="c_totalvolume" jdbcType="DOUBLE" property="cTotalvolume" />
+    <result column="c_receivedate" jdbcType="TIMESTAMP" property="cReceivedate" />
+    <result column="c_SKUmodel" jdbcType="VARCHAR" property="cSkumodel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    c_id, c_name, c_storerid, c_supplierid, c_shippingNO, c_whid, c_num, c_totalweight, 
+    c_totalvolume, c_receivedate, c_SKUmodel
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cargo
+    where c_id = #{cId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cargo
+    where c_id = #{cId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.Cargo">
+    insert into cargo (c_id, c_name, c_storerid, 
+      c_supplierid, c_shippingNO, c_whid, 
+      c_num, c_totalweight, c_totalvolume, 
+      c_receivedate, c_SKUmodel)
+    values (#{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cStorerid,jdbcType=VARCHAR}, 
+      #{cSupplierid,jdbcType=VARCHAR}, #{cShippingno,jdbcType=VARCHAR}, #{cWhid,jdbcType=VARCHAR}, 
+      #{cNum,jdbcType=INTEGER}, #{cTotalweight,jdbcType=DOUBLE}, #{cTotalvolume,jdbcType=DOUBLE}, 
+      #{cReceivedate,jdbcType=TIMESTAMP}, #{cSkumodel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.Cargo">
+    insert into cargo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        c_id,
+      </if>
+      <if test="cName != null">
+        c_name,
+      </if>
+      <if test="cStorerid != null">
+        c_storerid,
+      </if>
+      <if test="cSupplierid != null">
+        c_supplierid,
+      </if>
+      <if test="cShippingno != null">
+        c_shippingNO,
+      </if>
+      <if test="cWhid != null">
+        c_whid,
+      </if>
+      <if test="cNum != null">
+        c_num,
+      </if>
+      <if test="cTotalweight != null">
+        c_totalweight,
+      </if>
+      <if test="cTotalvolume != null">
+        c_totalvolume,
+      </if>
+      <if test="cReceivedate != null">
+        c_receivedate,
+      </if>
+      <if test="cSkumodel != null">
+        c_SKUmodel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="cName != null">
+        #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cStorerid != null">
+        #{cStorerid,jdbcType=VARCHAR},
+      </if>
+      <if test="cSupplierid != null">
+        #{cSupplierid,jdbcType=VARCHAR},
+      </if>
+      <if test="cShippingno != null">
+        #{cShippingno,jdbcType=VARCHAR},
+      </if>
+      <if test="cWhid != null">
+        #{cWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="cNum != null">
+        #{cNum,jdbcType=INTEGER},
+      </if>
+      <if test="cTotalweight != null">
+        #{cTotalweight,jdbcType=DOUBLE},
+      </if>
+      <if test="cTotalvolume != null">
+        #{cTotalvolume,jdbcType=DOUBLE},
+      </if>
+      <if test="cReceivedate != null">
+        #{cReceivedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cSkumodel != null">
+        #{cSkumodel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Cargo">
+    update cargo
+    <set>
+      <if test="cName != null">
+        c_name = #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cStorerid != null">
+        c_storerid = #{cStorerid,jdbcType=VARCHAR},
+      </if>
+      <if test="cSupplierid != null">
+        c_supplierid = #{cSupplierid,jdbcType=VARCHAR},
+      </if>
+      <if test="cShippingno != null">
+        c_shippingNO = #{cShippingno,jdbcType=VARCHAR},
+      </if>
+      <if test="cWhid != null">
+        c_whid = #{cWhid,jdbcType=VARCHAR},
+      </if>
+      <if test="cNum != null">
+        c_num = #{cNum,jdbcType=INTEGER},
+      </if>
+      <if test="cTotalweight != null">
+        c_totalweight = #{cTotalweight,jdbcType=DOUBLE},
+      </if>
+      <if test="cTotalvolume != null">
+        c_totalvolume = #{cTotalvolume,jdbcType=DOUBLE},
+      </if>
+      <if test="cReceivedate != null">
+        c_receivedate = #{cReceivedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cSkumodel != null">
+        c_SKUmodel = #{cSkumodel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.Cargo">
+    update cargo
+    set c_name = #{cName,jdbcType=VARCHAR},
+      c_storerid = #{cStorerid,jdbcType=VARCHAR},
+      c_supplierid = #{cSupplierid,jdbcType=VARCHAR},
+      c_shippingNO = #{cShippingno,jdbcType=VARCHAR},
+      c_whid = #{cWhid,jdbcType=VARCHAR},
+      c_num = #{cNum,jdbcType=INTEGER},
+      c_totalweight = #{cTotalweight,jdbcType=DOUBLE},
+      c_totalvolume = #{cTotalvolume,jdbcType=DOUBLE},
+      c_receivedate = #{cReceivedate,jdbcType=TIMESTAMP},
+      c_SKUmodel = #{cSkumodel,jdbcType=VARCHAR}
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+</mapper>
