@@ -48,7 +48,6 @@ public class LoginController extends BaseController {
      * @return {String}
      */
     @GetMapping("/login")
-    @CsrfToken(create = true)
     public String login() {
         logger.info("GET请求登录");
         if (SecurityUtils.getSubject().isAuthenticated()) {
@@ -65,7 +64,6 @@ public class LoginController extends BaseController {
      * @return
      */
     @PostMapping("/login")
-    @CsrfToken(remove = true)
     @ResponseBody
     public Object loginPost(String username, String password) {
         logger.info("POST请求登录");
