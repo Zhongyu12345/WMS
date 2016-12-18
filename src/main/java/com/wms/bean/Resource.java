@@ -27,13 +27,11 @@ public class Resource implements Serializable {
     /**
      * 资源名称
      */
-    @TableField(value = "name")
     private String name;
 
     /**
      * 资源路径
      */
-    @TableField(value = "url")
     private String url;
 
     /**
@@ -51,19 +49,16 @@ public class Resource implements Serializable {
     /**
      * 父级资源id
      */
-    @TableField(value = "pid")
     private Long pid;
 
     /**
      * 排序
      */
-    @TableField(value = "seq")
     private Integer seq;
 
     /**
      * 状态
      */
-    @TableField(value = "status")
     private Integer status;
 
     /**

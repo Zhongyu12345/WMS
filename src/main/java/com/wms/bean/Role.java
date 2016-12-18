@@ -19,31 +19,26 @@ public class Role implements Serializable {
      * 主键id
      */
     @TableId(type = IdType.AUTO)
-    @TableField(value = "id")
     private Long id;
 
     /**
      * 角色名
      */
-    @TableField(value = "name")
     private String name;
 
     /**
      * 排序号
      */
-    @TableField(value = "seq")
     private Integer seq;
 
     /**
      * 简介
      */
-    @TableField(value = "description")
     private String description;
 
     /**
      * 状态
      */
-    @TableField(value = "status")
     private Integer status;
 
     public Long getId() {
