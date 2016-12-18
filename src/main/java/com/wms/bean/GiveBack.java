@@ -2,19 +2,32 @@ package com.wms.bean;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotations.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 public class GiveBack {
+	
+	@TableId(type = IdType.AUTO)
+	@TableField(value = "gb_id")
     private Integer gbId;
 
+	@TableField(value = "gb_name")
     private String gbName;
 
+	@TableField(value = "gb_SKUmodel")
     private String gbSkumodel;
 
+	@TableField(value = "gb_num")
     private Double gbNum;
 
+	@TableField(value = "gb_cause")
     private String gbCause;
 
+	@TableField(value = "gb_status")
     private Integer gbStatus;
 
+	@TableField(value = "gb_time")
     private Date gbTime;
 
     public Integer getGbId() {

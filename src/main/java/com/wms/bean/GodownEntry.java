@@ -2,31 +2,50 @@ package com.wms.bean;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotations.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 public class GodownEntry {
+	
+	@TableId(type = IdType.AUTO)
+	@TableField(value = "g_id")
     private Integer gId;
 
+	@TableField(value = "g_name")
     private String gName;
 
+	@TableField(value = "g_storerid")
     private String gStorerid;
 
+	@TableField(value = "g_phone")
     private String gPhone;
 
+	@TableField(value = "g_supplierid")
     private String gSupplierid;
 
+	@TableField(value = "g_sippingNO")
     private String gSippingno;
 
+	@TableField(value = "g_whid")
     private String gWhid;
 
+	@TableField(value = "g_num")
     private Double gNum;
 
+	@TableField(value = "g_crossflag")
     private String gCrossflag;
 
+	@TableField(value = "g_directflag")
     private String gDirectflag;
 
+	@TableField(value = "g_time")
     private Date gTime;
 
+	@TableField(value = "g_adminid")
     private Integer gAdminid;
 
+	@TableField(value = "g_SKUmodel")
     private String gSkumodel;
 
     public Integer getgId() {

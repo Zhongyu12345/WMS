@@ -2,27 +2,44 @@ package com.wms.bean;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotations.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 public class Cargo {
+	
+	@TableId(type = IdType.AUTO)
+	@TableField(value = "c_id")
     private Integer cId;
 
+	@TableField(value = "c_name")
     private String cName;
 
+	@TableField(value = "c_storerid")
     private String cStorerid;
 
+	@TableField(value = "c_supplierid")
     private String cSupplierid;
 
+	@TableField(value = "c_shippingNO")
     private String cShippingno;
 
+	@TableField(value = "c_whid")
     private String cWhid;
 
+	@TableField(value = "c_num")
     private Integer cNum;
 
+	@TableField(value = "c_totalweight")
     private Double cTotalweight;
 
+	@TableField(value = "c_totalvolume")
     private Double cTotalvolume;
 
+	@TableField(value = "c_receivedate")
     private Date cReceivedate;
 
+	@TableField(value = "c_SKUmodel")
     private String cSkumodel;
 
     public Integer getcId() {

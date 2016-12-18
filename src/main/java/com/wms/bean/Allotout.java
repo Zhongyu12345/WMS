@@ -2,84 +2,98 @@ package com.wms.bean;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotations.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 public class Allotout {
-    private Integer aoId;
 
-    private String aoName;
+	@TableId(type = IdType.AUTO)
+	@TableField(value = "ao_id")
+	private Integer aoId;
 
-    private String aoSkumodel;
+	@TableField(value = "ao_name")
+	private String aoName;
 
-    private Integer aoNum;
+	@TableField(value = "ao_SKUmodel")
+	private String aoSkumodel;
 
-    private String aoWhid;
+	@TableField(value = "ao_num")
+	private Integer aoNum;
 
-    private String aoSippingno;
+	@TableField(value = "ao_whid")
+	private String aoWhid;
 
-    private Date aoTime;
+	@TableField(value = "ao_sippingNO")
+	private String aoSippingno;
 
-    private Double aoVolume;
+	@TableField(value = "ao_time")
+	private Date aoTime;
 
-    public Integer getAoId() {
-        return aoId;
-    }
+	@TableField(value = "ao_volume")
+	private Double aoVolume;
 
-    public void setAoId(Integer aoId) {
-        this.aoId = aoId;
-    }
+	public Integer getAoId() {
+		return aoId;
+	}
 
-    public String getAoName() {
-        return aoName;
-    }
+	public void setAoId(Integer aoId) {
+		this.aoId = aoId;
+	}
 
-    public void setAoName(String aoName) {
-        this.aoName = aoName == null ? null : aoName.trim();
-    }
+	public String getAoName() {
+		return aoName;
+	}
 
-    public String getAoSkumodel() {
-        return aoSkumodel;
-    }
+	public void setAoName(String aoName) {
+		this.aoName = aoName == null ? null : aoName.trim();
+	}
 
-    public void setAoSkumodel(String aoSkumodel) {
-        this.aoSkumodel = aoSkumodel == null ? null : aoSkumodel.trim();
-    }
+	public String getAoSkumodel() {
+		return aoSkumodel;
+	}
 
-    public Integer getAoNum() {
-        return aoNum;
-    }
+	public void setAoSkumodel(String aoSkumodel) {
+		this.aoSkumodel = aoSkumodel == null ? null : aoSkumodel.trim();
+	}
 
-    public void setAoNum(Integer aoNum) {
-        this.aoNum = aoNum;
-    }
+	public Integer getAoNum() {
+		return aoNum;
+	}
 
-    public String getAoWhid() {
-        return aoWhid;
-    }
+	public void setAoNum(Integer aoNum) {
+		this.aoNum = aoNum;
+	}
 
-    public void setAoWhid(String aoWhid) {
-        this.aoWhid = aoWhid == null ? null : aoWhid.trim();
-    }
+	public String getAoWhid() {
+		return aoWhid;
+	}
 
-    public String getAoSippingno() {
-        return aoSippingno;
-    }
+	public void setAoWhid(String aoWhid) {
+		this.aoWhid = aoWhid == null ? null : aoWhid.trim();
+	}
 
-    public void setAoSippingno(String aoSippingno) {
-        this.aoSippingno = aoSippingno == null ? null : aoSippingno.trim();
-    }
+	public String getAoSippingno() {
+		return aoSippingno;
+	}
 
-    public Date getAoTime() {
-        return aoTime;
-    }
+	public void setAoSippingno(String aoSippingno) {
+		this.aoSippingno = aoSippingno == null ? null : aoSippingno.trim();
+	}
 
-    public void setAoTime(Date aoTime) {
-        this.aoTime = aoTime;
-    }
+	public Date getAoTime() {
+		return aoTime;
+	}
 
-    public Double getAoVolume() {
-        return aoVolume;
-    }
+	public void setAoTime(Date aoTime) {
+		this.aoTime = aoTime;
+	}
 
-    public void setAoVolume(Double aoVolume) {
-        this.aoVolume = aoVolume;
-    }
+	public Double getAoVolume() {
+		return aoVolume;
+	}
+
+	public void setAoVolume(Double aoVolume) {
+		this.aoVolume = aoVolume;
+	}
 }

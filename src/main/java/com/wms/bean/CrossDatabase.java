@@ -2,21 +2,36 @@ package com.wms.bean;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotations.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 public class CrossDatabase {
+	
+
+	@TableId(type = IdType.AUTO)
+	@TableField(value = "cd_id")
     private Integer cdId;
 
+	@TableField(value = "cd_name")
     private String cdName;
 
+	@TableField(value = "cd_SKUmodel")
     private String cdSkumodel;
 
+	@TableField(value = "cd_num")
     private Double cdNum;
 
+	@TableField(value = "cd_whid")
     private String cdWhid;
 
+	@TableField(value = "cd_oddnumbers")
     private String cdOddnumbers;
 
+	@TableField(value = "cd_time")
     private Date cdTime;
 
+	@TableField(value = "cd_volume")
     private Double cdVolume;
 
     public Integer getCdId() {

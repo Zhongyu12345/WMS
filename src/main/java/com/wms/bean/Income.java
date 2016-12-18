@@ -2,15 +2,26 @@ package com.wms.bean;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotations.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 public class Income {
+	
+	@TableId(type = IdType.AUTO)
+	@TableField(value = "i_id")
     private Integer iId;
 
+	@TableField(value = "i_income")
     private Long iIncome;
 
+	@TableField(value = "i_pay")
     private Long iPay;
 
+	@TableField(value = "i_time")
     private Date iTime;
 
+	@TableField(value = "i_caid")
     private Integer iCaid;
 
     public Integer getiId() {

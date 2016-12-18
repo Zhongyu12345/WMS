@@ -1,16 +1,28 @@
 package com.wms.bean;
 
+import com.baomidou.mybatisplus.annotations.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+
 public class Godown {
+	
+	@TableId(type = IdType.AUTO)
+	@TableField(value = "go_id")
     private Integer goId;
 
+	@TableField(value = "go_whid")
     private String goWhid;
 
+	@TableField(value = "go_p")
     private String goP;
 
+	@TableField(value = "go_volume")
     private Double goVolume;
 
+	@TableField(value = "go_usevolume")
     private Double goUsevolume;
 
+	@TableField(value = "go_rdvolume")
     private Double goRdvolume;
 
     public Integer getGoId() {
