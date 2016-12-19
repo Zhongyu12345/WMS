@@ -4,6 +4,9 @@ import org.springframework.stereotype.Repository;
 
 import com.wms.bean.CompayAccounts;
 
+/**
+ * compay_accounts 公司账户表
+ */
 @Repository
 public interface CompayAccountsMapper {
     int deleteByPrimaryKey(Integer caId);

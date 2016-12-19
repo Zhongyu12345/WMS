@@ -4,6 +4,9 @@ import org.springframework.stereotype.Repository;
 
 import com.wms.bean.Income;
 
+/**
+ * income 收/入财务表
+ */
 @Repository
 public interface IncomeMapper {
     int deleteByPrimaryKey(Integer iId);

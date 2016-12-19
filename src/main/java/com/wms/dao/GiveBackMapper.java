@@ -4,6 +4,9 @@ import org.springframework.stereotype.Repository;
 
 import com.wms.bean.GiveBack;
 
+/**
+ * give_back 货品归还表
+ */
 @Repository
 public interface GiveBackMapper {
     int deleteByPrimaryKey(Integer gbId);

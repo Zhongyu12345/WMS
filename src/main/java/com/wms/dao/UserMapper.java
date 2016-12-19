@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * User 表数据库控制层接口
+ * user 用户表
  */
 @Repository
 public interface UserMapper extends AutoMapper<User> {
