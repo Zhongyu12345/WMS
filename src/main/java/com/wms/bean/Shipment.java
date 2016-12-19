@@ -1,20 +1,23 @@
 package com.wms.bean;
 
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+import java.util.Date;
+
+/**
+ * 实际出库表
+ */
 public class Shipment {
-	
-	@TableId(type = IdType.AUTO)
+
+    @TableId(type = IdType.AUTO)
     @TableField(value = "sh_id")
     private Integer shId;
 
     @TableField(value = "sh_storeid")
     private String shStoreid;
-	
+
     @TableField(value = "sh_time")
     private Date shTime;
 
@@ -38,7 +41,7 @@ public class Shipment {
 
     @TableField(value = "sh_shnum")
     private Double shShnum;
-    
+
     @TableField(value = "sh_totalweigh")
     private Double shTotalweigh;
 
@@ -139,5 +142,23 @@ public class Shipment {
 
     public void setShTotalvolume(Double shTotalvolume) {
         this.shTotalvolume = shTotalvolume;
+    }
+
+    @Override
+    public String toString() {
+        return "Shipment{" +
+                "shId=" + shId +
+                ", shStoreid='" + shStoreid + '\'' +
+                ", shTime=" + shTime +
+                ", shPhone='" + shPhone + '\'' +
+                ", shSippingno='" + shSippingno + '\'' +
+                ", shWhid='" + shWhid + '\'' +
+                ", shDamage=" + shDamage +
+                ", shCause='" + shCause + '\'' +
+                ", shSkumodel='" + shSkumodel + '\'' +
+                ", shShnum=" + shShnum +
+                ", shTotalweigh=" + shTotalweigh +
+                ", shTotalvolume=" + shTotalvolume +
+                '}';
     }
 }

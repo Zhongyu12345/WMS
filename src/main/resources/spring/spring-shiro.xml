@@ -51,7 +51,7 @@
                 /commons/** = anon
                 /static/** = anon
                 /login = anon
-                /** = user
+                /** = anon
             </value>
         </property>
     </bean>

@@ -1,177 +1,190 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wms.dao.ShipmentMapper">
-  <resultMap id="BaseResultMap" type="com.wms.bean.Shipment">
-    <id column="sh_id" jdbcType="INTEGER" property="shId" />
-    <result column="sh_storeid" jdbcType="VARCHAR" property="shStoreid" />
-    <result column="sh_time" jdbcType="TIMESTAMP" property="shTime" />
-    <result column="sh_phone" jdbcType="VARCHAR" property="shPhone" />
-    <result column="sh_sippingNO" jdbcType="VARCHAR" property="shSippingno" />
-    <result column="sh_whid" jdbcType="VARCHAR" property="shWhid" />
-    <result column="sh_damage" jdbcType="INTEGER" property="shDamage" />
-    <result column="sh_cause" jdbcType="VARCHAR" property="shCause" />
-    <result column="sh_SKUmodel" jdbcType="VARCHAR" property="shSkumodel" />
-    <result column="sh_shnum" jdbcType="DOUBLE" property="shShnum" />
-    <result column="sh_totalweigh" jdbcType="DOUBLE" property="shTotalweigh" />
-    <result column="sh_totalvolume" jdbcType="DOUBLE" property="shTotalvolume" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    sh_id, sh_storeid, sh_time, sh_phone, sh_sippingNO, sh_whid, sh_damage, sh_cause, 
-    sh_SKUmodel, sh_shnum, sh_totalweigh, sh_totalvolume
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from shipment
-    where sh_id = #{shId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from shipment
-    where sh_id = #{shId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.wms.bean.Shipment">
-    insert into shipment (sh_id, sh_storeid, sh_time, 
-      sh_phone, sh_sippingNO, sh_whid, 
-      sh_damage, sh_cause, sh_SKUmodel, 
-      sh_shnum, sh_totalweigh, sh_totalvolume
-      )
-    values (#{shId,jdbcType=INTEGER}, #{shStoreid,jdbcType=VARCHAR}, #{shTime,jdbcType=TIMESTAMP}, 
-      #{shPhone,jdbcType=VARCHAR}, #{shSippingno,jdbcType=VARCHAR}, #{shWhid,jdbcType=VARCHAR}, 
-      #{shDamage,jdbcType=INTEGER}, #{shCause,jdbcType=VARCHAR}, #{shSkumodel,jdbcType=VARCHAR}, 
-      #{shShnum,jdbcType=DOUBLE}, #{shTotalweigh,jdbcType=DOUBLE}, #{shTotalvolume,jdbcType=DOUBLE}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.wms.bean.Shipment">
-    insert into shipment
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="shId != null">
-        sh_id,
-      </if>
-      <if test="shStoreid != null">
-        sh_storeid,
-      </if>
-      <if test="shTime != null">
-        sh_time,
-      </if>
-      <if test="shPhone != null">
-        sh_phone,
-      </if>
-      <if test="shSippingno != null">
-        sh_sippingNO,
-      </if>
-      <if test="shWhid != null">
-        sh_whid,
-      </if>
-      <if test="shDamage != null">
-        sh_damage,
-      </if>
-      <if test="shCause != null">
-        sh_cause,
-      </if>
-      <if test="shSkumodel != null">
-        sh_SKUmodel,
-      </if>
-      <if test="shShnum != null">
-        sh_shnum,
-      </if>
-      <if test="shTotalweigh != null">
-        sh_totalweigh,
-      </if>
-      <if test="shTotalvolume != null">
-        sh_totalvolume,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="shId != null">
-        #{shId,jdbcType=INTEGER},
-      </if>
-      <if test="shStoreid != null">
-        #{shStoreid,jdbcType=VARCHAR},
-      </if>
-      <if test="shTime != null">
-        #{shTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="shPhone != null">
-        #{shPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="shSippingno != null">
-        #{shSippingno,jdbcType=VARCHAR},
-      </if>
-      <if test="shWhid != null">
-        #{shWhid,jdbcType=VARCHAR},
-      </if>
-      <if test="shDamage != null">
-        #{shDamage,jdbcType=INTEGER},
-      </if>
-      <if test="shCause != null">
-        #{shCause,jdbcType=VARCHAR},
-      </if>
-      <if test="shSkumodel != null">
-        #{shSkumodel,jdbcType=VARCHAR},
-      </if>
-      <if test="shShnum != null">
-        #{shShnum,jdbcType=DOUBLE},
-      </if>
-      <if test="shTotalweigh != null">
-        #{shTotalweigh,jdbcType=DOUBLE},
-      </if>
-      <if test="shTotalvolume != null">
-        #{shTotalvolume,jdbcType=DOUBLE},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Shipment">
-    update shipment
-    <set>
-      <if test="shStoreid != null">
-        sh_storeid = #{shStoreid,jdbcType=VARCHAR},
-      </if>
-      <if test="shTime != null">
+    <resultMap id="BaseResultMap" type="com.wms.bean.Shipment">
+        <id column="sh_id" jdbcType="INTEGER" property="shId"/>
+        <result column="sh_storeid" jdbcType="VARCHAR" property="shStoreid"/>
+        <result column="sh_time" jdbcType="TIMESTAMP" property="shTime"/>
+        <result column="sh_phone" jdbcType="VARCHAR" property="shPhone"/>
+        <result column="sh_sippingNO" jdbcType="VARCHAR" property="shSippingno"/>
+        <result column="sh_whid" jdbcType="VARCHAR" property="shWhid"/>
+        <result column="sh_damage" jdbcType="INTEGER" property="shDamage"/>
+        <result column="sh_cause" jdbcType="VARCHAR" property="shCause"/>
+        <result column="sh_SKUmodel" jdbcType="VARCHAR" property="shSkumodel"/>
+        <result column="sh_shnum" jdbcType="DOUBLE" property="shShnum"/>
+        <result column="sh_totalweigh" jdbcType="DOUBLE" property="shTotalweigh"/>
+        <result column="sh_totalvolume" jdbcType="DOUBLE" property="shTotalvolume"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        sh_id, sh_storeid, sh_time, sh_phone, sh_sippingNO, sh_whid, sh_damage, sh_cause,
+        sh_SKUmodel, sh_shnum, sh_totalweigh, sh_totalvolume
+    </sql>
+    <!-- 查询所有不带条件 -->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from shipment
+    </select>
+    <!-- 根据ID查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from shipment
+        where sh_id = #{shId,jdbcType=INTEGER}
+    </select>
+    <select id="selectShipmentPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from shipment
+    </select>
+    <!-- 根据ID删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from shipment
+        where sh_id = #{shId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.wms.bean.Shipment">
+        insert into shipment (sh_id, sh_storeid, sh_time,
+        sh_phone, sh_sippingNO, sh_whid,
+        sh_damage, sh_cause, sh_SKUmodel,
+        sh_shnum, sh_totalweigh, sh_totalvolume
+        )
+        values (#{shId,jdbcType=INTEGER}, #{shStoreid,jdbcType=VARCHAR}, #{shTime,jdbcType=TIMESTAMP},
+        #{shPhone,jdbcType=VARCHAR}, #{shSippingno,jdbcType=VARCHAR}, #{shWhid,jdbcType=VARCHAR},
+        #{shDamage,jdbcType=INTEGER}, #{shCause,jdbcType=VARCHAR}, #{shSkumodel,jdbcType=VARCHAR},
+        #{shShnum,jdbcType=DOUBLE}, #{shTotalweigh,jdbcType=DOUBLE}, #{shTotalvolume,jdbcType=DOUBLE}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.wms.bean.Shipment">
+        insert into shipment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shId != null">
+                sh_id,
+            </if>
+            <if test="shStoreid != null">
+                sh_storeid,
+            </if>
+            <if test="shTime != null">
+                sh_time,
+            </if>
+            <if test="shPhone != null">
+                sh_phone,
+            </if>
+            <if test="shSippingno != null">
+                sh_sippingNO,
+            </if>
+            <if test="shWhid != null">
+                sh_whid,
+            </if>
+            <if test="shDamage != null">
+                sh_damage,
+            </if>
+            <if test="shCause != null">
+                sh_cause,
+            </if>
+            <if test="shSkumodel != null">
+                sh_SKUmodel,
+            </if>
+            <if test="shShnum != null">
+                sh_shnum,
+            </if>
+            <if test="shTotalweigh != null">
+                sh_totalweigh,
+            </if>
+            <if test="shTotalvolume != null">
+                sh_totalvolume,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shId != null">
+                #{shId,jdbcType=INTEGER},
+            </if>
+            <if test="shStoreid != null">
+                #{shStoreid,jdbcType=VARCHAR},
+            </if>
+            <if test="shTime != null">
+                #{shTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="shPhone != null">
+                #{shPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="shSippingno != null">
+                #{shSippingno,jdbcType=VARCHAR},
+            </if>
+            <if test="shWhid != null">
+                #{shWhid,jdbcType=VARCHAR},
+            </if>
+            <if test="shDamage != null">
+                #{shDamage,jdbcType=INTEGER},
+            </if>
+            <if test="shCause != null">
+                #{shCause,jdbcType=VARCHAR},
+            </if>
+            <if test="shSkumodel != null">
+                #{shSkumodel,jdbcType=VARCHAR},
+            </if>
+            <if test="shShnum != null">
+                #{shShnum,jdbcType=DOUBLE},
+            </if>
+            <if test="shTotalweigh != null">
+                #{shTotalweigh,jdbcType=DOUBLE},
+            </if>
+            <if test="shTotalvolume != null">
+                #{shTotalvolume,jdbcType=DOUBLE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Shipment">
+        update shipment
+        <set>
+            <if test="shStoreid != null">
+                sh_storeid = #{shStoreid,jdbcType=VARCHAR},
+            </if>
+            <if test="shTime != null">
+                sh_time = #{shTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="shPhone != null">
+                sh_phone = #{shPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="shSippingno != null">
+                sh_sippingNO = #{shSippingno,jdbcType=VARCHAR},
+            </if>
+            <if test="shWhid != null">
+                sh_whid = #{shWhid,jdbcType=VARCHAR},
+            </if>
+            <if test="shDamage != null">
+                sh_damage = #{shDamage,jdbcType=INTEGER},
+            </if>
+            <if test="shCause != null">
+                sh_cause = #{shCause,jdbcType=VARCHAR},
+            </if>
+            <if test="shSkumodel != null">
+                sh_SKUmodel = #{shSkumodel,jdbcType=VARCHAR},
+            </if>
+            <if test="shShnum != null">
+                sh_shnum = #{shShnum,jdbcType=DOUBLE},
+            </if>
+            <if test="shTotalweigh != null">
+                sh_totalweigh = #{shTotalweigh,jdbcType=DOUBLE},
+            </if>
+            <if test="shTotalvolume != null">
+                sh_totalvolume = #{shTotalvolume,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where sh_id = #{shId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wms.bean.Shipment">
+        update shipment
+        set sh_storeid = #{shStoreid,jdbcType=VARCHAR},
         sh_time = #{shTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="shPhone != null">
         sh_phone = #{shPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="shSippingno != null">
         sh_sippingNO = #{shSippingno,jdbcType=VARCHAR},
-      </if>
-      <if test="shWhid != null">
         sh_whid = #{shWhid,jdbcType=VARCHAR},
-      </if>
-      <if test="shDamage != null">
         sh_damage = #{shDamage,jdbcType=INTEGER},
-      </if>
-      <if test="shCause != null">
         sh_cause = #{shCause,jdbcType=VARCHAR},
-      </if>
-      <if test="shSkumodel != null">
         sh_SKUmodel = #{shSkumodel,jdbcType=VARCHAR},
-      </if>
-      <if test="shShnum != null">
         sh_shnum = #{shShnum,jdbcType=DOUBLE},
-      </if>
-      <if test="shTotalweigh != null">
         sh_totalweigh = #{shTotalweigh,jdbcType=DOUBLE},
-      </if>
-      <if test="shTotalvolume != null">
-        sh_totalvolume = #{shTotalvolume,jdbcType=DOUBLE},
-      </if>
-    </set>
-    where sh_id = #{shId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.wms.bean.Shipment">
-    update shipment
-    set sh_storeid = #{shStoreid,jdbcType=VARCHAR},
-      sh_time = #{shTime,jdbcType=TIMESTAMP},
-      sh_phone = #{shPhone,jdbcType=VARCHAR},
-      sh_sippingNO = #{shSippingno,jdbcType=VARCHAR},
-      sh_whid = #{shWhid,jdbcType=VARCHAR},
-      sh_damage = #{shDamage,jdbcType=INTEGER},
-      sh_cause = #{shCause,jdbcType=VARCHAR},
-      sh_SKUmodel = #{shSkumodel,jdbcType=VARCHAR},
-      sh_shnum = #{shShnum,jdbcType=DOUBLE},
-      sh_totalweigh = #{shTotalweigh,jdbcType=DOUBLE},
-      sh_totalvolume = #{shTotalvolume,jdbcType=DOUBLE}
-    where sh_id = #{shId,jdbcType=INTEGER}
-  </update>
+        sh_totalvolume = #{shTotalvolume,jdbcType=DOUBLE}
+        where sh_id = #{shId,jdbcType=INTEGER}
+    </update>
 </mapper>
