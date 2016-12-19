@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+/**
+ * godown 仓库表
+ */
 public class Godown {
 	
 	@TableId(type = IdType.AUTO)

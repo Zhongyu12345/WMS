@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+/**
+ * receiving 实际入库表
+ */
 public class Receiving {
 	
 	@TableId(type = IdType.AUTO)

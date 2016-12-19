@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+/**
+ * godown_entry入库计划单
+ */
 public class GodownEntry {
 	
 	@TableId(type = IdType.AUTO)

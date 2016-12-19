@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+/**
+ * income 收/入财务表
+ */
 public class Income {
 	
 	@TableId(type = IdType.AUTO)

@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import java.util.Date;
 
+/**
+ * adjust 调整入库/出库单
+ */
 public class Adjust {
 
     @TableId(type = IdType.AUTO)

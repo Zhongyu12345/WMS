@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+/**
+ * cross_database 越库出货单
+ */
 public class CrossDatabase {
-	
 
 	@TableId(type = IdType.AUTO)
 	@TableField(value = "cd_id")

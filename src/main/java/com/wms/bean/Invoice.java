@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+/**
+ * Invoice 直接发货单
+ */
 public class Invoice {
 	
 	@TableId(type = IdType.AUTO)

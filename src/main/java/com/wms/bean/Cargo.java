@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+/**
+ * cargo 货物表
+ */
 public class Cargo {
 	
 	@TableId(type = IdType.AUTO)

@@ -4,9 +4,6 @@ import org.springframework.stereotype.Repository;
 
 import com.wms.bean.GodownEntry;
 
-/**
- * godown_entry入库计划单
- */
 @Repository
 public interface GodownEntryMapper {
     int deleteByPrimaryKey(Integer gId);

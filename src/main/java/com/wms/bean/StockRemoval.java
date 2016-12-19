@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+/**
+ * stock_removal出库计划单表
+ */
 public class StockRemoval {
 	
 	@TableId(type = IdType.AUTO)

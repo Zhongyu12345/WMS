@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 
 import com.wms.bean.Shipment;
 
-
 /**
  * shipment实际出库表
  */

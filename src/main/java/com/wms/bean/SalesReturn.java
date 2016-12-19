@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+/**
+ * sales_return 退货入库表
+ */
 public class SalesReturn {
 	
 	@TableId(type = IdType.AUTO)

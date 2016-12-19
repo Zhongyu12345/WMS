@@ -1,12 +1,8 @@
 package com.wms.dao;
 
 import org.springframework.stereotype.Repository;
-
 import com.wms.bean.Adjust;
 
-/**
- * adjust 调整入库/出库单
- */
 @Repository
 public interface AdjustMapper {
     int deleteByPrimaryKey(Integer jId);

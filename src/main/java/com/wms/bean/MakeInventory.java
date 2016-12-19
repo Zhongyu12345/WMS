@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+/**
+ * make_inventory物料盘点表
+ */
 public class MakeInventory {
 	
 	@TableId(type = IdType.AUTO)

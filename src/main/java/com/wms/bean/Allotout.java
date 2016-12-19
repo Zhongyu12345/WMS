@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+/**
+ * allotout 调拨出库单
+ */
 public class Allotout {
 
 	@TableId(type = IdType.AUTO)

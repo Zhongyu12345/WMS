@@ -4,9 +4,6 @@ import org.springframework.stereotype.Repository;
 
 import com.wms.bean.Invoice;
 
-/**
- * Invoice 直接发货单
- */
 @Repository
 public interface InvoiceMapper {
     int deleteByPrimaryKey(Integer inId);

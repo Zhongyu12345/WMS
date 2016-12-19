@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+/**
+ * give_back 货品归还表
+ */
 public class GiveBack {
 	
 	@TableId(type = IdType.AUTO)

@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+/**
+ * cargo_borrow 货品借用表
+ */
 public class CargoBorrow {
 	
 	@TableId(type = IdType.AUTO)

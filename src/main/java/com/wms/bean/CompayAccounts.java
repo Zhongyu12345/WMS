@@ -4,18 +4,17 @@ import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
+/**
+ * compay_accounts 公司账户表
+ */
 public class CompayAccounts {
 	
 	@TableId(type = IdType.AUTO)
 	@TableField(value = "ao_id")
     private Integer caId;
-
-	
 	
 	@TableField(value = "ca_accounts")
     private Integer caAccounts;
-
-	
 
 	@TableField(value = "ca_name")
     private String caName;

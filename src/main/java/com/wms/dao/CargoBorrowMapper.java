@@ -1,12 +1,8 @@
 package com.wms.dao;
 
 import org.springframework.stereotype.Repository;
-
 import com.wms.bean.CargoBorrow;
 
-/**
- * cargo_borrow 货品借用表
- */
 @Repository
 public interface CargoBorrowMapper {
     int deleteByPrimaryKey(Integer cbId);

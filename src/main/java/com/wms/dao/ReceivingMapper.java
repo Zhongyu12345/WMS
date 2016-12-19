@@ -4,9 +4,6 @@ import org.springframework.stereotype.Repository;
 
 import com.wms.bean.Receiving;
 
-/**
- * receiving 实际入库表
- */
 @Repository
 public interface ReceivingMapper {
     int deleteByPrimaryKey(Integer rId);
