@@ -22,7 +22,7 @@
         <logger name="org.springframework" level="INFO"/>
 
         <!-- 业务debug日志 -->
-        <logger name="com.wms" level="DEBUG"/>
+        <logger name="com.wms" level="INFO"/>
 
         <Root level="debug">
             <AppenderRef ref="Console"/>

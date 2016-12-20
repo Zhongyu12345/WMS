@@ -36,6 +36,7 @@ public class Shipment {
     @TableField(value = "sh_cause")
     private String shCause;
 
+    //货物型号
     @TableField(value = "sh_SKUmodel")
     private String shSkumodel;
 

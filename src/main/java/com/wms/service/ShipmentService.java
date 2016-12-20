@@ -14,5 +14,11 @@ public interface ShipmentService {
 
     void selectDataGrid(PageInfo pageInfo);
 
+    Shipment selectById(Integer id);
+
     int addShipment(Shipment shipment);
+
+    int deleteById(Integer id);
+
+    int updateShipment(Shipment shipment);
 }

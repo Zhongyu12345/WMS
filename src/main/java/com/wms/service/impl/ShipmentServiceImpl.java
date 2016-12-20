@@ -33,8 +33,35 @@ public class ShipmentServiceImpl implements ShipmentService {
     }
 
     @Override
+    public Shipment selectById(Integer id) {
+        return shipmentMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public int addShipment(Shipment shipment) {
         return shipmentMapper.insert(shipment);
+    }
+
+    @Override
+    public int deleteById(Integer id) {
+        Shipment shipment = selectById(id);
+        if (shipment != null) {
+            return shipmentMapper.deleteByPrimaryKey(id);
+        } else {
+            //没有此ID
+            return 0;
+        }
+    }
+
+    /**
+     * Selective 为动态SQL
+     *
+     * @param shipment
+     * @return
+     */
+    @Override
+    public int updateShipment(Shipment shipment) {
+        return shipmentMapper.updateByPrimaryKeySelective(shipment);
     }
 
 }

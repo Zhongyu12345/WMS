@@ -1,14 +1,13 @@
 package com.wms.controller;
 
 import com.wms.bean.Shipment;
+import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.PageInfo;
 import com.wms.service.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +22,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "shipment")
-public class ShipmentController {
+public class ShipmentController extends BaseController {
 
     @Autowired
     private ShipmentService shipmentService;
@@ -68,24 +67,81 @@ public class ShipmentController {
     /**
      * 添加操作
      *
-     * @param shipment 添加地址
+     * @param shipment 提交内容
      * @param addtime  添加时间
      * @return
      */
     @ResponseBody
     @PostMapping(value = "shipment")
     public int addShipment(Shipment shipment, String addtime) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        if (null != addtime) {
-            try {
-                Date date = format.parse(addtime);
-                shipment.setShTime(date);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println(shipment);
+        shipment.setShTime(updateTime(addtime));
         return shipmentService.addShipment(shipment);
+    }
+
+    /**
+     * 删除操作
+     *
+     * @param id 编号
+     * @return
+     */
+    @ResponseBody
+    @PostMapping(value = "shipment/delete")
+    public Object deleteById(Integer id) {
+        int result = shipmentService.deleteById(id);
+        if (result > 0) {
+            return renderSuccess("删除成功!");
+        } else {
+            return renderError("删除失败!");
+        }
+    }
+
+    /**
+     * 进入编辑页面
+     *
+     * @return
+     */
+    @GetMapping(value = "getEditPage")
+    public String editPage(Model model, @RequestParam(value = "id") Integer id) {
+        logger.info("进入编辑页面...");
+        Shipment shipment = shipmentService.selectById(id);
+        model.addAttribute("shipment", shipment);
+        return "outbound/shipmentEdit";
+    }
+
+    /**
+     * 更新操作
+     *
+     * @param shipment
+     * @param addtime
+     * @return
+     */
+    @ResponseBody
+    @PostMapping(value = "shipment/update")
+    public Object updateShipment(Shipment shipment, String addtime) {
+        shipment.setShTime(updateTime(addtime));
+        int result = shipmentService.updateShipment(shipment);
+        if (result > 0) {
+            return renderSuccess("更新成功!");
+        } else {
+            return renderError("更新失败!");
+        }
+    }
+
+    /**
+     * 把字符串时间转成Date类型
+     *
+     * @param time
+     * @return
+     */
+    public Date updateTime(String time) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = format.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 
 }
