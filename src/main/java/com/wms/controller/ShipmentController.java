@@ -64,6 +64,11 @@ public class ShipmentController extends BaseController {
         return shipmentService.queryAll();
     }
 
+    @GetMapping("shipmentAdd")
+    public String getAddShipmentPage() {
+        return "outbound/shipmentAdd";
+    }
+
     /**
      * 添加操作
      *
@@ -73,9 +78,14 @@ public class ShipmentController extends BaseController {
      */
     @ResponseBody
     @PostMapping(value = "shipment")
-    public int addShipment(Shipment shipment, String addtime) {
+    public Object addShipment(Shipment shipment, String addtime) {
         shipment.setShTime(updateTime(addtime));
-        return shipmentService.addShipment(shipment);
+        int result = shipmentService.addShipment(shipment);
+        if (result > 0) {
+            return renderSuccess("添加成功!");
+        } else {
+            return renderError("添加失败!");
+        }
     }
 
     /**
