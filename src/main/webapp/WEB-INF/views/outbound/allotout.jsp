@@ -6,7 +6,7 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>出货管理</title>
+    <title>调拨出库管理</title>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
 <div data-options="region:'center',border:true,title:'出货单列表'">
@@ -14,7 +14,8 @@
 </div>
 <div id="toolbar" style="display: none;">
     <shiro:hasPermission name="/shipment/insert">
-        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">手动添加</a>
+        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
+           data-options="plain:true,iconCls:'icon-add'">手动添加</a>
     </shiro:hasPermission>
 </div>
 <script src="${path }/static/js/formatTime.js"></script>
@@ -22,7 +23,7 @@
     var dataGrid;
     $(function () {
         dataGrid = $('#dataGrid').datagrid({
-            url: '${path }/shipment/dataGrid',
+            url: '${path }/allotout/dataGrid',
             fit: true,
             striped: true,
             rownumbers: true,
@@ -30,70 +31,50 @@
             singleSelect: true,
             height: '25',
             idField: 'id',
-            sortName: 'shTime',
+            sortName: 'aoId',
             sortOrder: 'asc',
             pageSize: 20,
             pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
             columns: [[{
-                width: '70',
-                title: '出货单编号',
-                field: 'shId',
+                width: '100',
+                title: '单号',
+                field: 'aoId',
                 sortable: true
             }, {
-                width: '80',
-                title: '货主',
-                field: 'shStoreid',
+                width: '150',
+                title: '货物名称',
+                field: 'aoName',
                 sortable: true
             }, {
-                width: '80',
-                title: '实际出货时间',
-                field: 'shTime',
+                width: '150',
+                title: '货物型号',
+                field: 'aoSkumodel',
+                sortable: true
+            }, {
+                width: '100',
+                title: '调拨数量',
+                field: 'aoNum',
+                sortable: true
+            }, {
+                width: '100',
+                title: '仓库编号',
+                field: 'aoWhid',
+                sortable: true
+            }, {
+                width: '150',
+                title: '调拨单号',
+                field: 'aoSippingno',
+                sortable: true
+            }, {
+                width: '100',
+                title: '调拨时间',
+                field: 'aoTime',
                 sortable: true,
                 formatter: formatDatebox
             }, {
                 width: '100',
-                title: '号码',
-                field: 'shPhone',
-                sortable: true
-            }, {
-                width: '100',
-                title: '客户托单号',
-                field: 'shSippingno',
-                sortable: true
-            }, {
-                width: '80',
-                title: '仓库编码',
-                field: 'shWhid',
-                sortable: true
-            }, {
-                width: '60',
-                title: '损坏数量',
-                field: 'shDamage',
-                sortable: true
-            }, {
-                width: '115',
-                title: '损坏原因',
-                field: 'shCause',
-                sortable: true
-            }, {
-                width: '79',
-                title: '型号',
-                field: 'shSkumodel',
-                sortable: true
-            }, {
-                width: '79',
-                title: '实际出货数量',
-                field: 'shShnum',
-                sortable: true
-            }, {
-                width: '79',
-                title: '发货毛重',
-                field: 'shTotalweigh',
-                sortable: true
-            }, {
-                width: '79',
-                title: '发货体积',
-                field: 'shTotalvolume',
+                title: '货物体积',
+                field: 'aoVolume',
                 sortable: true
             }, {
                 field: 'action',
@@ -102,11 +83,11 @@
                 formatter: function (value, row, index) {
                     var str = '';
                     <shiro:hasPermission name="/shipment/update">
-                    str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.shId);
+                    str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.aoId);
                     </shiro:hasPermission>
                     <shiro:hasPermission name="/shipment/delete">
                     str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-                    str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.shId);
+                    str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.aoId);
                     </shiro:hasPermission>
                     return str;
                 }
@@ -122,18 +103,18 @@
     <!-- \\\\\\\\\\ 添加操作 \\\\\\\\\\ -->
     function addFun() {
         parent.$.modalDialog({
-            title : '添加',
+            title: '添加',
             width: 500,
             height: 325,
-            href : '${path }/shipment/shipment/insert',
-            buttons : [ {
-                text : '添加',
-                handler : function() {
+            href: '${path }/shipment/shipment/insert',
+            buttons: [{
+                text: '添加',
+                handler: function () {
                     parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find('#shipmentAddForm');
                     f.submit();
                 }
-            } ]
+            }]
         });
     }
 
@@ -145,10 +126,10 @@
         } else {//点击操作里面的删除图标会触发这个
             dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
         }
-        parent.$.messager.confirm('询问', '您是否要删除当前用户？', function (b) {
+        parent.$.messager.confirm('询问', '您是否要删除当前记录单号?', function (b) {
             if (b) {
                 progressLoad();
-                $.post('${path }/shipment/shipment/delete', {
+                $.post('${path }/allotout/allotout/delete', {
                     id: id
                 }, function (result) {
                     if (result.success) {

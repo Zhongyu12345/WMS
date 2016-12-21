@@ -48,6 +48,7 @@ public class ShipmentController extends BaseController {
     @ResponseBody
     @PostMapping("dataGrid")
     public Object dataGrid(Shipment shipment, Integer page, Integer rows, String sort, String order) {
+        //TODO:此处待搜索查询
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<String, Object>();
         pageInfo.setCondition(condition);
@@ -64,7 +65,7 @@ public class ShipmentController extends BaseController {
         return shipmentService.queryAll();
     }
 
-    @GetMapping("shipmentAdd")
+    @GetMapping("shipment/insert")
     public String getAddShipmentPage() {
         return "outbound/shipmentAdd";
     }
@@ -112,7 +113,6 @@ public class ShipmentController extends BaseController {
      */
     @GetMapping(value = "getEditPage")
     public String editPage(Model model, @RequestParam(value = "id") Integer id) {
-        logger.info("进入编辑页面...");
         Shipment shipment = shipmentService.selectById(id);
         model.addAttribute("shipment", shipment);
         return "outbound/shipmentEdit";

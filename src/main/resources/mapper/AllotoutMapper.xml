@@ -1,120 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wms.dao.AllotoutMapper">
-  <resultMap id="BaseResultMap" type="com.wms.bean.Allotout">
-    <id column="ao_id" jdbcType="INTEGER" property="aoId" />
-    <result column="ao_name" jdbcType="VARCHAR" property="aoName" />
-    <result column="ao_SKUmodel" jdbcType="VARCHAR" property="aoSkumodel" />
-    <result column="ao_num" jdbcType="INTEGER" property="aoNum" />
-    <result column="ao_whid" jdbcType="VARCHAR" property="aoWhid" />
-    <result column="ao_sippingNO" jdbcType="VARCHAR" property="aoSippingno" />
-    <result column="ao_time" jdbcType="TIMESTAMP" property="aoTime" />
-    <result column="ao_volume" jdbcType="DOUBLE" property="aoVolume" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    ao_id, ao_name, ao_SKUmodel, ao_num, ao_whid, ao_sippingNO, ao_time, ao_volume
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from allotout
-    where ao_id = #{aoId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from allotout
-    where ao_id = #{aoId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.wms.bean.Allotout">
-    insert into allotout (ao_id, ao_name, ao_SKUmodel, 
-      ao_num, ao_whid, ao_sippingNO, 
-      ao_time, ao_volume)
-    values (#{aoId,jdbcType=INTEGER}, #{aoName,jdbcType=VARCHAR}, #{aoSkumodel,jdbcType=VARCHAR}, 
-      #{aoNum,jdbcType=INTEGER}, #{aoWhid,jdbcType=VARCHAR}, #{aoSippingno,jdbcType=VARCHAR}, 
-      #{aoTime,jdbcType=TIMESTAMP}, #{aoVolume,jdbcType=DOUBLE})
-  </insert>
-  <insert id="insertSelective" parameterType="com.wms.bean.Allotout">
-    insert into allotout
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="aoId != null">
-        ao_id,
-      </if>
-      <if test="aoName != null">
-        ao_name,
-      </if>
-      <if test="aoSkumodel != null">
-        ao_SKUmodel,
-      </if>
-      <if test="aoNum != null">
-        ao_num,
-      </if>
-      <if test="aoWhid != null">
-        ao_whid,
-      </if>
-      <if test="aoSippingno != null">
-        ao_sippingNO,
-      </if>
-      <if test="aoTime != null">
-        ao_time,
-      </if>
-      <if test="aoVolume != null">
-        ao_volume,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="aoId != null">
-        #{aoId,jdbcType=INTEGER},
-      </if>
-      <if test="aoName != null">
-        #{aoName,jdbcType=VARCHAR},
-      </if>
-      <if test="aoSkumodel != null">
-        #{aoSkumodel,jdbcType=VARCHAR},
-      </if>
-      <if test="aoNum != null">
-        #{aoNum,jdbcType=INTEGER},
-      </if>
-      <if test="aoWhid != null">
-        #{aoWhid,jdbcType=VARCHAR},
-      </if>
-      <if test="aoSippingno != null">
-        #{aoSippingno,jdbcType=VARCHAR},
-      </if>
-      <if test="aoTime != null">
-        #{aoTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="aoVolume != null">
-        #{aoVolume,jdbcType=DOUBLE},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Allotout">
-    update allotout
-    <set>
-      <if test="aoName != null">
-        ao_name = #{aoName,jdbcType=VARCHAR},
-      </if>
-      <if test="aoSkumodel != null">
-        ao_SKUmodel = #{aoSkumodel,jdbcType=VARCHAR},
-      </if>
-      <if test="aoNum != null">
-        ao_num = #{aoNum,jdbcType=INTEGER},
-      </if>
-      <if test="aoWhid != null">
-        ao_whid = #{aoWhid,jdbcType=VARCHAR},
-      </if>
-      <if test="aoSippingno != null">
-        ao_sippingNO = #{aoSippingno,jdbcType=VARCHAR},
-      </if>
-      <if test="aoTime != null">
-        ao_time = #{aoTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="aoVolume != null">
-        ao_volume = #{aoVolume,jdbcType=DOUBLE},
-      </if>
-    </set>
-    where ao_id = #{aoId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.wms.bean.Allotout">
+    <resultMap id="BaseResultMap" type="com.wms.bean.Allotout">
+        <id column="ao_id" jdbcType="INTEGER" property="aoId"/>
+        <result column="ao_name" jdbcType="VARCHAR" property="aoName"/>
+        <result column="ao_SKUmodel" jdbcType="VARCHAR" property="aoSkumodel"/>
+        <result column="ao_num" jdbcType="INTEGER" property="aoNum"/>
+        <result column="ao_whid" jdbcType="VARCHAR" property="aoWhid"/>
+        <result column="ao_sippingNO" jdbcType="VARCHAR" property="aoSippingno"/>
+        <result column="ao_time" jdbcType="TIMESTAMP" property="aoTime"/>
+        <result column="ao_volume" jdbcType="DOUBLE" property="aoVolume"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+      ao_id, ao_name, ao_SKUmodel, ao_num, ao_whid, ao_sippingNO, ao_time, ao_volume
+    </sql>
+    <!-- 根据ID查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from allotout
+        where ao_id = #{aoId,jdbcType=INTEGER}
+    </select>
+    <!-- 分页查询 -->
+    <select id="selectAllotoutPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from allotout
+    </select>
+    <!-- 根据ID删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from allotout
+        where ao_id = #{aoId,jdbcType=INTEGER}
+    </delete>
+    <!-- 添加插入 -->
+    <insert id="insert" parameterType="com.wms.bean.Allotout">
+        insert into allotout (ao_id, ao_name, ao_SKUmodel,
+          ao_num, ao_whid, ao_sippingNO,
+          ao_time, ao_volume)
+        values (#{aoId,jdbcType=INTEGER}, #{aoName,jdbcType=VARCHAR}, #{aoSkumodel,jdbcType=VARCHAR},
+          #{aoNum,jdbcType=INTEGER}, #{aoWhid,jdbcType=VARCHAR}, #{aoSippingno,jdbcType=VARCHAR},
+          #{aoTime,jdbcType=TIMESTAMP}, #{aoVolume,jdbcType=DOUBLE})
+    </insert>
+    <insert id="insertSelective" parameterType="com.wms.bean.Allotout">
+        insert into allotout
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="aoId != null">
+                ao_id,
+            </if>
+            <if test="aoName != null">
+                ao_name,
+            </if>
+            <if test="aoSkumodel != null">
+                ao_SKUmodel,
+            </if>
+            <if test="aoNum != null">
+                ao_num,
+            </if>
+            <if test="aoWhid != null">
+                ao_whid,
+            </if>
+            <if test="aoSippingno != null">
+                ao_sippingNO,
+            </if>
+            <if test="aoTime != null">
+                ao_time,
+            </if>
+            <if test="aoVolume != null">
+                ao_volume,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="aoId != null">
+                #{aoId,jdbcType=INTEGER},
+            </if>
+            <if test="aoName != null">
+                #{aoName,jdbcType=VARCHAR},
+            </if>
+            <if test="aoSkumodel != null">
+                #{aoSkumodel,jdbcType=VARCHAR},
+            </if>
+            <if test="aoNum != null">
+                #{aoNum,jdbcType=INTEGER},
+            </if>
+            <if test="aoWhid != null">
+                #{aoWhid,jdbcType=VARCHAR},
+            </if>
+            <if test="aoSippingno != null">
+                #{aoSippingno,jdbcType=VARCHAR},
+            </if>
+            <if test="aoTime != null">
+                #{aoTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="aoVolume != null">
+                #{aoVolume,jdbcType=DOUBLE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Allotout">
+        update allotout
+        <set>
+            <if test="aoName != null">
+                ao_name = #{aoName,jdbcType=VARCHAR},
+            </if>
+            <if test="aoSkumodel != null">
+                ao_SKUmodel = #{aoSkumodel,jdbcType=VARCHAR},
+            </if>
+            <if test="aoNum != null">
+                ao_num = #{aoNum,jdbcType=INTEGER},
+            </if>
+            <if test="aoWhid != null">
+                ao_whid = #{aoWhid,jdbcType=VARCHAR},
+            </if>
+            <if test="aoSippingno != null">
+                ao_sippingNO = #{aoSippingno,jdbcType=VARCHAR},
+            </if>
+            <if test="aoTime != null">
+                ao_time = #{aoTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="aoVolume != null">
+                ao_volume = #{aoVolume,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where ao_id = #{aoId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wms.bean.Allotout">
     update allotout
     set ao_name = #{aoName,jdbcType=VARCHAR},
       ao_SKUmodel = #{aoSkumodel,jdbcType=VARCHAR},
