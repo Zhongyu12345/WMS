@@ -1,0 +1,237 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<%@ include file="/commons/global.jsp" %>
+<%@ include file="/commons/basejs.jsp" %>
+
+<meta http-equiv="X-UA-Compatible" content="edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>用户管理</title>
+    <script type="text/javascript">
+
+    var dataGrid;
+    $(function() {
+       		dataGrid = $('#dataGrid').datagrid({
+            url : '${path }/receiving/select',
+            fit : true,
+            striped : true,
+            rownumbers : true,
+            pagination : true,
+            singleSelect : true,
+            height : '27',
+            idField : 'id',
+            sortName : 'id',
+            sortOrder : 'asc',
+            pageSize : 20,
+            pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
+            columns : [ [ {
+                width : '80',
+                title : '货物名称',
+                field : 'rName',
+                sortable : true
+            }, {
+                width : '80',
+                title : '货物型号',
+                field : 'rSkumodel',
+                sortable : true
+            },   {
+                width : '80',
+                title : '货主',
+                field : 'rStorerid',
+                sortable : true
+            },{
+                width : '100',
+                title : '货主号码',
+                field : 'rPhone',
+                sortable : true
+            },  {
+                width : '100',
+                title : '供应商',
+                field : 'rSupplierid',
+                sortable : true,
+            }, {
+                width : '80',
+                title : '客户托单号',
+                field : 'rSippingno',
+                sortable : true
+            },{
+                width : '80',
+                title : '仓库编码',
+                field : 'rWhid',
+                sortable : true
+            }, {
+                width : '60',
+                title : '入库体积',
+                field : 'rNum',
+                sortable : true
+            }, {
+                width : '60',
+                title : '是否越库',
+                field : 'rCrossflag',
+                sortable : true,
+                formatter : function(value, row, index) {
+                    switch (value) {
+                    case '0':
+                        return '越库';
+                    case '1':
+                        return '不越库';
+                    }
+                }
+            },  {
+                width : '60',
+                title : '是否整进',
+                field : 'rDirectflag',
+                sortable : true,
+                formatter : function(value, row, index) {
+                    switch (value) {
+                    case '0':
+                        return "整进";
+                    case '1':
+                        return "不整进";
+                    }
+                }
+            },  {
+                width : '100',
+                title : '入库时间',
+                field : 'rTime',
+                sortable : true
+            },  {
+                width : '80',
+                title : '管理员编号',
+                field : 'rAdminid',
+                sortable : true
+            },   {
+                field : 'action',
+                title : '操作',
+                width : '150',
+                formatter : function(value, row, index) {
+                    var str = '';
+                        <shiro:hasPermission name="/receiving/update">
+                            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.rId);
+                        </shiro:hasPermission>
+                        <shiro:hasPermission name="/receiving/delete">
+                            str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
+                            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.rId);
+                        </shiro:hasPermission>
+                    return str;
+                }
+            }] ],
+            onLoadSuccess:function(data){
+                $('.user-easyui-linkbutton-edit').linkbutton({text:'编辑',plain:true,iconCls:'icon-edit'});
+                $('.user-easyui-linkbutton-del').linkbutton({text:'删除',plain:true,iconCls:'icon-del'});
+            },
+            toolbar : '#toolbar'
+        });
+    }); 
+    
+   
+    function deleteFun(id) {
+        if (id == undefined) {//点击右键菜单才会触发这个
+            var rows = dataGrid.datagrid('getSelections');
+            id = rows[0].id;
+        } else {//点击操作里面的删除图标会触发这个
+            dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
+        }
+        parent.$.messager.confirm('询问', '您是否要删除当前记录？', function(b) {
+            if (b) {
+                var currentUserId = '${sessionInfo.id}';/*当前登录用户的ID*/
+                if (currentUserId != id) {
+                    progressLoad();
+                    $.post('${path }/receiving/delete', {
+                        id : id
+                    }, function(result) {
+                        if (result.success) {
+                            parent.$.messager.alert('提示', result.msg, 'info');
+                            dataGrid.datagrid('reload');
+                        }
+                        progressClose();
+                    }, 'JSON');
+                } else {
+                    parent.$.messager.show({
+                        title : '提示',
+                        msg : '不可以删除自己！'
+                    });
+                }
+            }
+        });
+    }
+    
+    function editFun(id) {
+        if (id == undefined) {
+            var rows = dataGrid.datagrid('getSelections');
+            id = rows[0].id;
+        } else {
+            dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
+        }
+        parent.$.modalDialog({
+            title : '编辑',
+            width : 540,
+            height : 350,
+            href : '${path }/receiving/editPage?id=' + id,
+            buttons : [ {
+                text : '确定',
+                handler : function() {
+                    parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+                    var f = parent.$.modalDialog.handler.find('#receivingEditForm');
+                    f.submit();
+                }
+            } ]
+        });
+    }
+    
+    function searchFun() {
+        dataGrid.datagrid('load',  $.serializeObject($('#searchForm')));
+    }
+    function cleanFun() {
+        $('#searchForm input').val('');
+        dataGrid.datagrid('load', {});
+        $('#rDirectflag').val('3');
+    }
+    </script>
+</head>
+<body class="easyui-layout" data-options="fit:true,border:false">
+    <div data-options="region:'north',border:true" style="height: 90px; overflow: hidden;background-color: #fff">
+        <form id="searchForm">
+            <table>
+                <tr>
+                    <th>货物名称:</th>
+                    <td><input name="rName" placeholder="请输入货物名称"/></td>
+                    <th>货物型号:</th>
+                    <td><input name="rSkumodel" placeholder="请输入货物型号"/></td>
+                    <th>创建时间:</th>
+                    <td>
+	                    <input name="createdateStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />至<input  name="createdateEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />
+                    </td>
+                </tr>
+                 <tr>
+                    <th>供应商:</th>
+                    <td><input name="rSupplierid" placeholder="请输入供应商名称"/></td>
+                    <th>是否越库:</th>
+                    <td>
+                    	<select id="rDirectflag"  name="rCrossflag" class="easyui-combobox" data-options="width:80,height:29,editable:false,panelHeight:'auto'">
+                    		<option value="3" selected="selected" >请选择</option>
+                            <option value="0">越库</option>
+                            <option value="1">不越库</option>
+                    	</select>
+                    </td>
+                    <th>是否整进:</th>
+                    <td>
+                    	<select id="rDirectflag" name="rDirectflag" class="easyui-combobox" data-options="width:80,height:29,editable:false,panelHeight:'auto'">
+                    		<option value=" " selected="selected">请选择</option>
+                            <option value="0">整进</option>
+                            <option value="1">不整进</option>
+                    	</select>
+                    	<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
+                    	<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div data-options="region:'center',border:true,title:'货单列表'" >
+        <table id="dataGrid" data-options="fit:true,border:true"></table>
+    </div>
+    
+</body>
+</html>

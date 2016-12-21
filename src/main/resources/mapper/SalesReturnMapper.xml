@@ -19,6 +19,13 @@
     sr_id, sr_name, sr_sipping, sr_storerid, sr_phone, sr_names, sr_SKUmodel, sr_num, 
     sr_cause, sr_time, sr_whid, sr_volume
   </sql>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from sales_return
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

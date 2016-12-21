@@ -53,7 +53,10 @@ public class Receiving {
 
 	@TableField(value = "r_SKUmodel")
     private String rSkumodel;
-
+	
+    private Date createdateStart;
+    private Date createdateEnd;
+	
     public Integer getrId() {
         return rId;
     }
@@ -165,4 +168,23 @@ public class Receiving {
     public void setrSkumodel(String rSkumodel) {
         this.rSkumodel = rSkumodel == null ? null : rSkumodel.trim();
     }
+
+	public Date getCreatedateStart() {
+		return createdateStart;
+	}
+
+	public void setCreatedateStart(Date createdateStart) {
+		this.createdateStart = createdateStart;
+	}
+
+	public Date getCreatedateEnd() {
+		return createdateEnd;
+	}
+
+	public void setCreatedateEnd(Date createdateEnd) {
+		this.createdateEnd = createdateEnd;
+	}
+
+
+
 }

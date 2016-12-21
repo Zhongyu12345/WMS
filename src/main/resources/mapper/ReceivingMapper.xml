@@ -21,6 +21,36 @@
     r_id, r_name, r_storerid, r_phone, r_supplierid, r_sippingNO, r_whid, r_num, r_crossflag, 
     r_directflag, r_time, r_adminid, r_partflag, r_SKUmodel
   </sql>
+  
+  <select id="selectAll"  resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from receiving
+    <where>
+           <if test=" rname != null and rname != '' ">
+               r_name like #{rname}
+           </if>
+           <if test=" rskumodel != null and rskumodel != '' ">
+               r_SKUmodel = #{rskumodel}
+           </if>
+           <if test=" rSupplierid != null and rSupplierid != '' ">
+               r_supplierid = #{rSupplierid}
+           </if>
+           <if test=" rCrossflag != null and rCrossflag != '' ">
+               r_crossflag = #{rCrossflag}
+           </if>
+           <if test=" rDirectflag != null and rDirectflag != '' ">
+               r_directflag = #{rDirectflag}
+           </if>
+           <if test=" startTime != null ">
+               <![CDATA[  r_time >= #{startTime} ]]>
+           </if>
+           <if test=" endTime != null ">
+               <![CDATA[ and r_time <= #{endTime} ]]>
+           </if>
+     </where>
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
