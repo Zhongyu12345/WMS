@@ -19,6 +19,11 @@
     from cargo_borrow
     where cb_id = #{cbId,jdbcType=INTEGER}
   </select>
+  <select id="select" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cargo_borrow
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cargo_borrow
     where cb_id = #{cbId,jdbcType=INTEGER}

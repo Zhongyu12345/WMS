@@ -1,15 +1,17 @@
-package com.wms.dao;
+package com.wms.service;
 
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
-import org.springframework.stereotype.Repository;
 import com.wms.bean.Adjust;
+import com.wms.commons.utils.PageInfo;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-@Repository
-public interface AdjustMapper {
+/**
+ * Created by DengMin on 2016/12/20.
+ */
+public interface AdjustService {
     int deleteByPrimaryKey(Integer jId);
 
     int insert(Adjust record);
@@ -18,7 +20,7 @@ public interface AdjustMapper {
 
     List<Adjust> selectByPrimaryKey(Integer jId);
 
-    List<Adjust> select(Pagination page,Map<String,Object> map);
+    void select(PageInfo pageinfo);
 
     int updateByPrimaryKeySelective(Adjust record);
 

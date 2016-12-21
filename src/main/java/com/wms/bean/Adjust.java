@@ -38,6 +38,10 @@ public class Adjust {
     @TableField(value = "j_volum")
     private Double jVolum;
 
+    private Date createdateStart;
+
+    private Date createdateEnd;
+
     public Integer getjId() {
         return jId;
     }
@@ -108,5 +112,21 @@ public class Adjust {
 
     public void setjVolum(Double jVolum) {
         this.jVolum = jVolum;
+    }
+
+    public Date getCreatedateStart() {
+        return createdateStart;
+    }
+
+    public void setCreatedateStart(Date createdateStart) {
+        this.createdateStart = createdateStart;
+    }
+
+    public Date getCreatedateEnd() {
+        return createdateEnd;
+    }
+
+    public void setCreatedateEnd(Date createdateEnd) {
+        this.createdateEnd = createdateEnd;
     }
 }

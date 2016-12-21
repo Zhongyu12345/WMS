@@ -21,6 +21,22 @@
     from adjust
     where j_id = #{jId,jdbcType=INTEGER}
   </select>
+  <select id="select" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from adjust
+    <where>
+      <if test="num != null and num != ''">
+        j_SKUmodel = #{num}
+      </if>
+      <if test="startTime != null">
+        <![CDATA[  j_time >= #{startTime} ]]>
+      </if>
+      <if test="endTime != null">
+        <![CDATA[ and j_time <= #{endTime} ]]>
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from adjust
     where j_id = #{jId,jdbcType=INTEGER}
