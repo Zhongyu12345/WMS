@@ -85,7 +85,7 @@ public class ReceivingController extends BaseController {
 		if(a>0){
 			return renderSuccess("修改成功");
 		}
-		return renderSuccess("修改失败");
+		return renderError("修改失败");
 	}
 	
 	@PostMapping("/delete")
@@ -95,7 +95,7 @@ public class ReceivingController extends BaseController {
 		if(a>0){
 			return renderSuccess("删除成功");
 		}
-		return renderSuccess("删除失败");
+		return renderError("删除失败");
 	}
 	
 	 /**
