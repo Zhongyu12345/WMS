@@ -5,8 +5,6 @@ import com.wms.commons.result.Result;
 import com.wms.commons.shiro.ShiroUser;
 import com.wms.commons.utils.StringEscapeEditor;
 import com.wms.service.IUserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -20,9 +18,6 @@ import java.util.Date;
  * 基础 controller
  */
 public abstract class BaseController {
-
-    //控制器本来就是单例，这样似乎更加合理
-    protected Logger logger = LogManager.getLogger(getClass());
 
     @Autowired
     private IUserService userService;

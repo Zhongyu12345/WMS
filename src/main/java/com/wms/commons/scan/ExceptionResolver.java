@@ -3,8 +3,8 @@ package com.wms.commons.scan;
 import com.wms.commons.result.Result;
 import com.wms.commons.utils.BeanUtils;
 import com.wms.commons.utils.WebUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -20,12 +20,13 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @SuppressWarnings("unchecked")
 public class ExceptionResolver implements HandlerExceptionResolver {
-    private static final Logger LOGGER = LogManager.getLogger(ExceptionResolver.class);
+
+    private static Logger logger = LoggerFactory.getLogger(ExceptionResolver.class);
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) {
         //og记录异常
-        LOGGER.error(e.getMessage(), e);
+        logger.error(e.getMessage(), e);
         //非控制器请求照成的异常
         if (!(handler instanceof HandlerMethod)) {
             return new ModelAndView("error/500");
