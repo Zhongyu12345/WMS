@@ -33,6 +33,10 @@ public class CargoBorrow {
 	@TableField(value = "cb_time")
     private Date cbTime;
 
+	private Date createdateStart;
+
+	private Date createdateEnd;
+
     public Integer getCbId() {
         return cbId;
     }
@@ -87,5 +91,21 @@ public class CargoBorrow {
 
     public void setCbTime(Date cbTime) {
         this.cbTime = cbTime;
+    }
+
+    public Date getCreatedateStart() {
+        return createdateStart;
+    }
+
+    public void setCreatedateStart(Date createdateStart) {
+        this.createdateStart = createdateStart;
+    }
+
+    public Date getCreatedateEnd() {
+        return createdateEnd;
+    }
+
+    public void setCreatedateEnd(Date createdateEnd) {
+        this.createdateEnd = createdateEnd;
     }
 }

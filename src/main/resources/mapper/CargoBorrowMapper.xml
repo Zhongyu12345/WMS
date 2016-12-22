@@ -23,6 +23,17 @@
     select
     <include refid="Base_Column_List" />
     from cargo_borrow
+    <where>
+      <if test="CBSK != null and CBSK != ''">
+        cb_SKUmodel = #{CBSK}
+      </if>
+      <if test="startTime != null">
+        <![CDATA[  cb_time >= #{startTime} ]]>
+      </if>
+      <if test="endTime != null">
+        <![CDATA[ and cb_time <= #{endTime} ]]>
+      </if>
+    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cargo_borrow

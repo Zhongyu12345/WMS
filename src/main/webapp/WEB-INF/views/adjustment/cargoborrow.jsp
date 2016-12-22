@@ -15,7 +15,7 @@
         $(function() {
 
             dataGrid = $('#dataGrid').datagrid({
-                url : '${path }/user/dataGrid',
+                url : '${path }/borrow/selectByPage',
                 fit : true,
                 striped : true,
                 rownumbers : true,
@@ -23,88 +23,41 @@
                 singleSelect : true,
                 height : '27',
                 idField : 'id',
-                sortName : 'createTime',
+                sortName : 'id',
                 sortOrder : 'asc',
                 pageSize : 20,
                 pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
                 columns : [ [ {
-                    width : '80',
-                    title : '登录名',
-                    field : 'loginName',
+                    width : '100',
+                    title : '货物名称',
+                    field : 'cbName',
                     sortable : true
                 }, {
-                    width : '80',
-                    title : '姓名',
-                    field : 'name',
+                    width : '100',
+                    title : '货物型号',
+                    field : 'cbSkumodel',
                     sortable : true
                 },{
-                    width : '130',
-                    title : '创建时间',
-                    field : 'createTime',
+                    width : '80',
+                    title : '数量',
+                    field : 'cbNum',
                     sortable : true
                 },  {
-                    width : '40',
-                    title : '性别',
-                    field : 'sex',
-                    sortable : true,
-                    formatter : function(value, row, index) {
-                        switch (value) {
-                            case 0:
-                                return '男';
-                            case 1:
-                                return '女';
-                        }
-                    }
+                    width : '180',
+                    title : '原因',
+                    field : 'cbCause',
+                    sortable : true
                 }, {
-                    width : '40',
-                    title : '年龄',
-                    field : 'age',
+                    width : '70',
+                    title : '借用人',
+                    field : 'cbNames',
                     sortable : true
                 },{
-                    width : '120',
-                    title : '电话',
-                    field : 'phone',
+                    width : '150',
+                    title : '时间',
+                    field : 'cbTime',
                     sortable : true
-                },
-                    {
-                        width : '200',
-                        title : '角色',
-                        field : 'rolesList',
-                        sortable : true,
-                        formatter : function(value, row, index) {
-                            var roles = [];
-                            for(var i = 0; i< value.length; i++) {
-                                roles.push(value[i].name);
-                            }
-                            return(roles.join('\n'));
-                        }
-                    }, {
-                        width : '60',
-                        title : '用户类型',
-                        field : 'userType',
-                        sortable : true,
-                        formatter : function(value, row, index) {
-                            if(value == 0) {
-                                return "管理员";
-                            }else if(value == 1) {
-                                return "用户";
-                            }
-                            return "未知类型";
-                        }
-                    },{
-                        width : '60',
-                        title : '状态',
-                        field : 'status',
-                        sortable : true,
-                        formatter : function(value, row, index) {
-                            switch (value) {
-                                case 0:
-                                    return '正常';
-                                case 1:
-                                    return '停用';
-                            }
-                        }
-                    } , {
+                }, {
                         field : 'action',
                         title : '操作',
                         width : 130,
@@ -119,7 +72,7 @@
                             </shiro:hasPermission>
                             return str;
                         }
-                    }] ],
+                }] ],
                 onLoadSuccess:function(data){
                     $('.user-easyui-linkbutton-edit').linkbutton({text:'编辑',plain:true,iconCls:'icon-edit'});
                     $('.user-easyui-linkbutton-del').linkbutton({text:'删除',plain:true,iconCls:'icon-del'});
@@ -130,15 +83,15 @@
 
         function addFun() {
             parent.$.modalDialog({
-                title : '添加',
+                title : '新增货物借出单',
                 width : 500,
                 height : 300,
-                href : '${path }/user/addPage',
+                href : '${path }/borrow/borrowaddpage',
                 buttons : [ {
                     text : '添加',
                     handler : function() {
                         parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find('#userAddForm');
+                        var f = parent.$.modalDialog.handler.find('#cargoborrwAddForm');
                         f.submit();
                     }
                 } ]
@@ -213,8 +166,8 @@
     <form id="searchForm">
         <table>
             <tr>
-                <th>姓名:</th>
-                <td><input name="name" placeholder="请输入用户姓名"/></td>
+                <th>货物型号:</th>
+                <td><input name="cbSkumodel" placeholder="请输入货物型号"/></td>
                 <th>创建时间:</th>
                 <td>
                     <input name="createdateStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />至<input  name="createdateEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />
@@ -224,12 +177,12 @@
         </table>
     </form>
 </div>
-<div data-options="region:'center',border:true,title:'用户列表'" >
+<div data-options="region:'center',border:true,title:'货品借出登记表'" >
     <table id="dataGrid" data-options="fit:true,border:false"></table>
 </div>
 <div id="toolbar" style="display: none;">
-    <shiro:hasPermission name="/user/add">
-        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加</a>
+    <shiro:hasPermission name="/borrow/add">
+        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">新增货物借出单</a>
     </shiro:hasPermission>
 </div>
 </body>
