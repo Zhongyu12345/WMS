@@ -24,6 +24,20 @@
   	select 
     <include refid="Base_Column_List" />
     from sales_return
+    <where>
+           <if test=" srname != null and srname != '' ">
+               sr_name like #{srname}
+           </if>
+           <if test=" srsipping != null and srsipping != '' ">
+               sr_sipping = #{srsipping}
+           </if>
+           <if test=" startTime != null ">
+               <![CDATA[  sr_time >= #{startTime} ]]>
+           </if>
+           <if test=" endTime != null ">
+               <![CDATA[ and sr_time <= #{endTime} ]]>
+           </if>
+     </where>
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

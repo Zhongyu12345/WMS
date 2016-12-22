@@ -72,7 +72,7 @@
                  <tr>
                     <td>入库时间</td>
                     <td>
-                    <input name="time" style="whith:100%" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd '})"  value="<fmt:formatDate pattern="yyyy-MM-dd " value="${user.rTime}" />" readonly="readonly" />
+                    <input name="time" style="whith:100%" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${user.rTime}" />" readonly="readonly" />
                     <td>管理员编号</td>
                     <td><input name="rAdminid" type="text" placeholder="请输入货主号码" class="easyui-validatebox" data-options="required:true" value="${user.rAdminid}"></td>
                 </tr>

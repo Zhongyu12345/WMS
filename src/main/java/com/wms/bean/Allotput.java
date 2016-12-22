@@ -38,6 +38,9 @@ public class Allotput {
 
 	@TableField(value = "ap_address")
     private String apAddress;
+	
+    private Date createdateStart;
+    private Date createdateEnd;
 
     public Integer getApId() {
         return apId;
@@ -110,4 +113,20 @@ public class Allotput {
     public void setApAddress(String apAddress) {
         this.apAddress = apAddress == null ? null : apAddress.trim();
     }
+
+	public Date getCreatedateStart() {
+		return createdateStart;
+	}
+
+	public void setCreatedateStart(Date createdateStart) {
+		this.createdateStart = createdateStart;
+	}
+
+	public Date getCreatedateEnd() {
+		return createdateEnd;
+	}
+
+	public void setCreatedateEnd(Date createdateEnd) {
+		this.createdateEnd = createdateEnd;
+	}
 }

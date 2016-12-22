@@ -4,7 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.wms.bean.SalesReturn;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.PageInfo;
+import com.wms.commons.utils.StringUtils;
 import com.wms.service.SalesReturnService;
 
 @Controller
@@ -36,6 +39,16 @@ public class SalesReturnController extends BaseController {
 		return "putstorage/salesreturnPage";
 	}
 	
+	@PostMapping("/save")
+	@ResponseBody
+	public Object save(SalesReturn salesreturn, String time){
+		salesreturn.setSrTime(updateTime(time));
+		int a = salesReturnService.insert(salesreturn);
+		if(a>0){
+			return renderSuccess("添加成功");
+		}
+		return renderSuccess("添加失败");
+	}
 	
 	@GetMapping("/editPage")
     public String editPage(Integer id, Model model) {
@@ -49,8 +62,23 @@ public class SalesReturnController extends BaseController {
 	
 	@PostMapping("/select")
 	@ResponseBody
-	public Object select(Integer page, Integer rows){
+	public Object select(SalesReturn sales, Integer page, Integer rows){
 		 PageInfo pageInfo = new PageInfo(page, rows);
+		 Map<String, Object> condition = new HashMap<String, Object>();
+	        if (StringUtils.isNotBlank(sales.getSrName())) {
+	        	String str = "%"+sales.getSrName()+"%";
+	            condition.put("srname",str );
+	        }
+	        if(StringUtils.isNotBlank(sales.getSrSipping())){
+	        	condition.put("srsipping", sales.getSrSipping());
+	        }
+	        if (sales.getCreatedateStart() != null) {
+	            condition.put("startTime", sales.getCreatedateStart());
+	        }
+	        if (sales.getCreatedateEnd() != null) {
+	            condition.put("endTime", sales.getCreatedateEnd());
+	        }
+	     pageInfo.setCondition(condition);
 		 salesReturnService.selectAll(pageInfo);
 	     return pageInfo;
 	}
