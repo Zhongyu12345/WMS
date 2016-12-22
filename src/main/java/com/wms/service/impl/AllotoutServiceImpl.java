@@ -46,4 +46,9 @@ public class AllotoutServiceImpl implements AllotoutService {
             return 0;
         }
     }
+
+    @Override
+    public int updateAllotout(Allotout allotout) {
+        return allotoutMapper.updateByPrimaryKey(allotout);
+    }
 }

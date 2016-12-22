@@ -13,9 +13,8 @@
     <table id="dataGrid" data-options="fit:true,border:false"></table>
 </div>
 <div id="toolbar" style="display: none;">
-    <shiro:hasPermission name="/shipment/insert">
-        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton"
-           data-options="plain:true,iconCls:'icon-add'">手动添加</a>
+    <shiro:hasPermission name="/allotout/insert">
+        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">手动添加</a>
     </shiro:hasPermission>
 </div>
 <script src="${path }/static/js/formatTime.js"></script>
@@ -82,10 +81,10 @@
                 width: 130,
                 formatter: function (value, row, index) {
                     var str = '';
-                    <shiro:hasPermission name="/shipment/update">
+                    <shiro:hasPermission name="/allotout/update">
                     str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.aoId);
                     </shiro:hasPermission>
-                    <shiro:hasPermission name="/shipment/delete">
+                    <shiro:hasPermission name="/allotout/delete">
                     str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
                     str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.aoId);
                     </shiro:hasPermission>
@@ -105,13 +104,13 @@
         parent.$.modalDialog({
             title: '添加',
             width: 500,
-            height: 325,
-            href: '${path }/shipment/shipment/insert',
+            height: 222,
+            href: '${path }/allotout/insert',
             buttons: [{
                 text: '添加',
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                    var f = parent.$.modalDialog.handler.find('#shipmentAddForm');
+                    var f = parent.$.modalDialog.handler.find('#allotoutAddForm');
                     f.submit();
                 }
             }]
@@ -153,13 +152,13 @@
         parent.$.modalDialog({
             title: '编辑',
             width: 500,
-            height: 390,
+            height: 222,
             href: '${path }/allotout/getEditPage?id=' + id,
             buttons: [{
                 text: '确定',
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                    var f = parent.$.modalDialog.handler.find('#shipmentEditForm');
+                    var f = parent.$.modalDialog.handler.find('#allotoutEditForm');
                     f.submit();
                 }
             }]

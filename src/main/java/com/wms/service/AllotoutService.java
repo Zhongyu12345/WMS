@@ -22,4 +22,6 @@ public interface AllotoutService {
 
     int deleteAllotout(Integer id);
 
+    int updateAllotout(Allotout allotout);
+
 }

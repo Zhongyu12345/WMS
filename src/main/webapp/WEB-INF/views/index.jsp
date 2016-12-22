@@ -175,7 +175,7 @@
                 </div>
             </div>
         </div>
-        <div data-options="region:'south',border:false" style="height: 30px;line-height:30px; overflow: hidden;text-align: center;background-color: #eee" >Copyright © 2016 power by <a href="http://www.baidu.com" target="_blank">www.wms.com</a></div>
+        <div data-options="region:'south',border:false" style="height: 30px;line-height:30px; overflow: hidden;text-align: center;background-color: #eee" >Copyright © 2017 技术支持 <a href="http://www.htit-china.com/" target="_blank">宏图软件教育</a></div>
     </div>
 
     <!--[if lte IE 7]>

@@ -3,8 +3,11 @@ package com.wms.controller;
 import com.wms.bean.Allotout;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.PageInfo;
+import com.wms.commons.utils.TimeUtils;
 import com.wms.service.AllotoutService;
 import org.apache.ibatis.annotations.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,12 +24,21 @@ import java.util.Map;
 @RequestMapping(value = "allotout")
 public class AllotoutController extends BaseController {
 
+    private static Logger logger = LoggerFactory.getLogger(AllotoutController.class);
+
     @Autowired
     private AllotoutService allotoutService;
 
+    /** 调拨单管理页面 */
     @GetMapping(value = "allotout.html")
     public String getAllotoutPage() {
         return "outbound/allotout";
+    }
+
+    /** 调拨单添加页面 */
+    @GetMapping(value = "insert")
+    public String getAdd(){
+        return "outbound/allotoutAdd";
     }
 
     @ResponseBody
@@ -34,6 +46,7 @@ public class AllotoutController extends BaseController {
     public Object dataGrid(Allotout allotout, Integer page, Integer rows, String sort, String order) {
         //TODO:此处待搜索查询
         PageInfo pageInfo = new PageInfo(page, rows);
+        logger.info("");
         Map<String, Object> condition = new HashMap<String, Object>();
         pageInfo.setCondition(condition);
         allotoutService.selectDataGrid(pageInfo);
@@ -43,7 +56,8 @@ public class AllotoutController extends BaseController {
     /** 添加调拨单 */
     @ResponseBody
     @PostMapping(value = "allotout")
-    public Object addAllotout(Allotout allotout) {
+    public Object addAllotout(Allotout allotout, String byTime) {
+        allotout.setAoTime(TimeUtils.updateTime(byTime));
         int result = allotoutService.addAllotout(allotout);
         if (result > 0) {
             return renderSuccess("添加成功!");
@@ -54,8 +68,23 @@ public class AllotoutController extends BaseController {
 
     /** 进入编辑页面 */
     @GetMapping(value = "getEditPage")
-    public String editPage(Model model, @RequestParam(value = "id") Integer id){
+    public String editPage(Model model, @RequestParam(value = "id") Integer id) {
+        Allotout allotout = allotoutService.queryById(id);
+        model.addAttribute("allotout", allotout);
         return "outbound/allotoutEdit";
+    }
+
+    /** 更新调拨单 */
+    @ResponseBody
+    @PostMapping("allotout/update")
+    public Object updateAllotout(@ModelAttribute Allotout allotout, String byTime) {
+        allotout.setAoTime(TimeUtils.updateTime(byTime));
+        int result = allotoutService.updateAllotout(allotout);
+        if (result > 0) {
+            return renderSuccess("更新成功!");
+        } else {
+            return renderError("更新失败!");
+        }
     }
 
     /** 删除调拨单 */
