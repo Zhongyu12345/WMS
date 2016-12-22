@@ -66,7 +66,7 @@ public class GodownEntryController extends BaseController {
 		if(a>0 && b>0){
 			return renderSuccess("添加成功");
 		}
-		return renderSuccess("添加失败");
+		return renderError("添加失败");
 	}
 
 }
