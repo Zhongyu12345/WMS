@@ -125,7 +125,7 @@
             } ]
         });
     }
-
+    
 </script>
 </head>
 <body>
@@ -142,7 +142,15 @@
 	                </shiro:hasPermission>&nbsp;&nbsp;
 	                <a href="javascript:void(0)" onclick="logout()" class="easyui-linkbutton" plain="true" icon="icon-clear">安全退出</a>
                 </span>
-                <span class="header"></span>
+                <div>
+                	<span class="header"></span>
+                </div>
+                <div style="width:700px;float:left;padding-top:5px;">
+			    	<marquee vspace="5px" direction="left" width="100%" onmouseout="this.start()" onmouseover="this.stop()" scrollamount="4" scrolldelay="1" style="font:bold 20px '黑体';color:red;">
+			    		<img src="${staticPath }/static/style/images/b143f09fd2aa8bbc5462805be70cf44e.gif" style="height:35px;"/>&nbsp;
+			    		2016-12-21 最新公告:  水平滚动字幕内容
+			    	</marquee>
+			    </div>
             </div>
         </div>
         <div data-options="region:'west',split:true" title="菜单" style="width:200px; overflow: hidden;overflow-y:auto; padding:0px">
@@ -167,7 +175,7 @@
                 </div>
             </div>
         </div>
-        <div data-options="region:'south',border:false" style="height: 30px;line-height:30px; overflow: hidden;text-align: center;background-color: #eee" >Copyright © 2015 power by <a href="http://www.baidu.com" target="_blank">www.wms.com</a></div>
+        <div data-options="region:'south',border:false" style="height: 30px;line-height:30px; overflow: hidden;text-align: center;background-color: #eee" >Copyright © 2016 power by <a href="http://www.baidu.com" target="_blank">www.wms.com</a></div>
     </div>
 
     <!--[if lte IE 7]>

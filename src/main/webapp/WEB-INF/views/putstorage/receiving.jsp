@@ -91,31 +91,40 @@
 	                    <th>货物名称:</th>
 	                    <td><input type="text" id="gName" name="gName" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true"/></td>
 	                    <th>供应商:</th>
-	                    <td><input type="text" id="gSupplierid" name="gSupplierid" /></td>
+	                    <td><input type="text" id="gSupplierid" name="gSupplierid" placeholder="请输入供应商" class="easyui-validatebox" data-options="required:true"/></td>
 	                    <th>客户托单号:</th>
-	                    <td><input type="text" id="gSippingno" name="gSippingno" /></td>
+	                    <td><input type="text" id="gSippingno" name="gSippingno" placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true"/></td>
 	                    <th>入库编码:</th>
-	                    <td><input type="text" id="gWhid" name="gWhid" /></td>
+	                    <td><input type="text" id="gWhid" name="gWhid" placeholder="请输入入库编码" class="easyui-validatebox" data-options="required:true"/></td>
 	                </tr>
 	                <tr>
 	                	<th>货主:</th>
-	                	<td><input type="text"  id="gStorerid"  name="gStorerid" /></td>
+	                	<td><input type="text"  id="gStorerid"  name="gStorerid" placeholder="请输入货主姓名" class="easyui-validatebox" data-options="required:true"/></td>
 	                	<th>入库体积:</th>
-	                    <td><input type="text"  id="gNum" name="gNum" /></td>
+	                    <td><input type="text"  id="gNum" name="gNum" placeholder="请输入入库体积" class="easyui-validatebox" data-options="required:true"/></td>
 	                    <th>是否越库:</th>
-	                    <td><input type="text"  id="gCrossflag" name="gCrossflag" /></td>
+	                    <td>
+	                    	<select id="gCrossflag" name="gCrossflag"  class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+	                            <option value="0">越库</option>
+	                            <option value="1">不越库</option>
+                   			 </select></td>
 	                    <th>是否整进整出:</th>
-	                    <td><input type="text"  id="gDirectflag" name="gDirectflag" /></td>
+	                    <td>
+	                    	<select id="gDirectflag" name="gDirectflag"  class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+	                            <option value="0">整进</option>
+	                            <option value="1">不整进</option>
+                   			 </select>
+                   		</td>
 	                </tr>
 	                <tr>
 	                	<th>号码:</th>
-	                	<td><input type="text" id="gPhone" name="gPhone" /></td>
+	                	<td><input type="text" id="gPhone" name="gPhone" placeholder="请输入号码" class="easyui-validatebox" data-options="required:true"/></td>
 	                	<th>入库计划时间:</th>
-	                    <td><input class="easyui-datetimebox" id="gTime" name="gTime" /></td>
+	                    <td><input id="gTime" name="gTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss '})"   readonly="readonly" /></td>
 	                    <th>管理员编号:</th>
-	                    <td><input type="text" id="gAdminid" name="gAdminid" /></td>
+	                    <td><input type="text" id="gAdminid" name="gAdminid" placeholder="请输入管理员编号" class="easyui-validatebox" data-options="required:true" /></td>
 	                    <th>货物型号:</th>
-	                    <td><input type="text"  id="gSkumodel" name="gSkumodel" /></td>
+	                    <td><input type="text"  id="gSkumodel" name="gSkumodel" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true"/></td>
 	                </tr>
 	            </table>
 	        </form>
@@ -129,37 +138,42 @@
 	            <table>
 	                <tr>
 	                    <th>货物名称:</th>
-	                    <td><input type="text" id="rName"  name="rName" placeholder="请输入货物名称"/></td>
+	                    <td><input type="text" id="rName"  name="rName" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true"/></td>
 	                    <th>供应商:</th>
-	                    <td><input type="text"  id="rSupplierid"  name="rSupplierid" /></td>
+	                    <td><input type="text"  id="rSupplierid"  name="rSupplierid" placeholder="请输入供应商" class="easyui-validatebox" data-options="required:true"/></td>
 	                    <th>客户托单号:</th>
-	                    <td><input type="text"  id="rSippingno"  name="rSippingno" /></td>
+	                    <td><input type="text"  id="rSippingno"  name="rSippingno" placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true"/></td>
 	                    <th>入库编码:</th>
-	                    <td><input type="text"  id="rWhid"  name="rWhid" /></td>
+	                    <td><input type="text"  id="rWhid"  name="rWhid" placeholder="请输入入库编码" class="easyui-validatebox" data-options="required:true"/></td>
 	                </tr>
 	                <tr>
 	                	<th>货主:</th>
-	                	<td><input type="text"  id="rStorerid" name="rStorerid" /></td>
+	                	<td><input type="text"  id="rStorerid" name="rStorerid" placeholder="请输入货主姓名" class="easyui-validatebox" data-options="required:true"/></td>
 	                	<th>入库体积:</th>
-	                    <td><input type="text"  id="rNum" name="rNum" /></td>
+	                    <td><input type="text"  id="rNum" name="rNum" placeholder="请输入入库体积" class="easyui-validatebox" data-options="required:true"/></td>
 	                    <th>是否越库:</th>
-	                    <td><input type="text"  id="rCrossflag"  name="rCrossflag" /></td>
+	                    <td>
+	                    	<select id="rCrossflag" name="rCrossflag"  class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+	                            <option value="0">越库</option>
+	                            <option value="1">不越库</option>
+                   			 </select></td>
 	                    <th>是否整进整出:</th>
-	                    <td><input type="text"  id="rDirectflag"  name="rDirectflag" /></td>
+	                    <td>
+	                    	<select id="rDirectflag" name="rDirectflag"  class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+	                            <option value="0">整进</option>
+	                            <option value="1">不整进</option>
+                   			 </select>
+                   		</td>
 	                </tr>
 	                <tr>
 	                	<th>号码:</th>
-	                	<td><input type="text"  id="rPhone" name="rPhone" /></td>
+	                	<td><input type="text"  id="rPhone" name="rPhone" placeholder="请输入号码" class="easyui-validatebox" data-options="required:true"/></td>
 	                	<th>入库时间:</th>
-	                    <td><input class="easyui-datetimebox"  id="rTime" name="rTime" /></td>
+	                    <td><input id="rTime" name="rTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss '})"   readonly="readonly" /></td>
 	                    <th>管理员编号:</th>
-	                    <td><input type="text"  id="rAdminid" name="rAdminid" /></td>
+	                    <td><input type="text"  id="rAdminid" name="rAdminid" placeholder="请输入管理员编号" class="easyui-validatebox" data-options="required:true" /></td>
 	                    <th>货物型号:</th>
-	                    <td><input type="text"  id="rSkumodel"  name="rSkumodel" /></td>
-	                </tr>
-	                <tr>
-	                	<th>是否全部到货:</th>
-	                	<td><input type="text"  id="rPartflag"  name="rPartflag" /></td>
+	                    <td><input type="text"  id="rSkumodel"  name="rSkumodel" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true"/></td>
 	                </tr>
 	            </table>
 	        </form>

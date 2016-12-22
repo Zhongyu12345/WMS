@@ -20,6 +20,20 @@
   	select 
     <include refid="Base_Column_List" />
     from allotput
+    <where>
+           <if test=" apname != null and apname != '' ">
+               ap_name like #{apname}
+           </if>
+           <if test=" apsipping != null and apsipping != '' ">
+               ap_sipping = #{apsipping}
+           </if>
+           <if test=" startTime != null ">
+               <![CDATA[  sr_time >= #{startTime} ]]>
+           </if>
+           <if test=" endTime != null ">
+               <![CDATA[ and sr_time <= #{endTime} ]]>
+           </if>
+     </where>
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

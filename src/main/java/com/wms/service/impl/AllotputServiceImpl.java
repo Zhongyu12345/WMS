@@ -40,7 +40,7 @@ public class AllotputServiceImpl implements AllotputService {
 	@Override
 	public void selectAll(PageInfo pageinfo) {
 		Page<Allotput> page  = new Page<Allotput>(pageinfo.getNowpage(),pageinfo.getPagesize());
-		List<Allotput> list = allotput.selectAll(page);
+		List<Allotput> list = allotput.selectAll(page,pageinfo.getCondition());
 		pageinfo.setRows(list);
 		pageinfo.setTotal(page.getTotal());
 	}

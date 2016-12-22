@@ -4,7 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.wms.bean.Allotput;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.PageInfo;
+import com.wms.commons.utils.StringUtils;
 import com.wms.service.AllotputService;
 
 @Controller
@@ -43,8 +46,23 @@ public class AllotputController extends BaseController {
 	
 	@PostMapping("/select")
 	@ResponseBody
-	public Object select(Integer page, Integer rows){
+	public Object select(Allotput allo, Integer page, Integer rows){
 		 PageInfo pageInfo = new PageInfo(page, rows);
+		 Map<String, Object> condition = new HashMap<String, Object>();
+	        if (StringUtils.isNotBlank(allo.getApName())) {
+	        	String str = "%"+allo.getApName()+"%";
+	            condition.put("apname",str );
+	        }
+	        if(StringUtils.isNotBlank(allo.getApSipping())){
+	        	condition.put("apsipping", allo.getApSipping());
+	        }
+	        if (allo.getCreatedateStart() != null) {
+	            condition.put("startTime", allo.getCreatedateStart());
+	        }
+	        if (allo.getCreatedateEnd() != null) {
+	            condition.put("endTime", allo.getCreatedateEnd());
+	        }
+	     pageInfo.setCondition(condition);
 		 allotputService.selectAll(pageInfo);
 	     return pageInfo;
 	}

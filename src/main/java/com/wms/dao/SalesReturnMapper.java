@@ -1,10 +1,11 @@
 package com.wms.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.wms.bean.SalesReturn;
 
 @Repository
@@ -17,7 +18,7 @@ public interface SalesReturnMapper {
 
     SalesReturn selectByPrimaryKey(Integer srId);
     
-    List<SalesReturn> selectAll(Page<SalesReturn> page);
+    List<SalesReturn> selectAll(Pagination page, Map<String, Object> params);
 
     int updateByPrimaryKeySelective(SalesReturn record);
 

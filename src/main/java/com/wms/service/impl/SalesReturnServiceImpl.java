@@ -40,7 +40,7 @@ public class SalesReturnServiceImpl implements SalesReturnService {
 	@Override
 	public void selectAll(PageInfo pageinfo) {
 		Page<SalesReturn> page  = new Page<SalesReturn>(pageinfo.getNowpage(),pageinfo.getPagesize());
-		List<SalesReturn> list = salesReturn.selectAll(page);
+		List<SalesReturn> list = salesReturn.selectAll(page,pageinfo.getCondition());
 		pageinfo.setRows(list);
 		pageinfo.setTotal(page.getTotal());
 	}

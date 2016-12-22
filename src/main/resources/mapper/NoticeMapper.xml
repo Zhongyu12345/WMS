@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.NoticeMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.Notice">
+    <id column="nid" jdbcType="INTEGER" property="nid" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="ntime" jdbcType="TIMESTAMP" property="ntime" />
+    <result column="nstatus" jdbcType="INTEGER" property="nstatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    nid, text, userid, ntime, nstatus
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from notice
+    where nid = #{nid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from notice
+    where nid = #{nid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.Notice">
+    insert into notice (text, userid, 
+      ntime, nstatus
+      )
+    values (#{text,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, 
+    		#{ntime,jdbcType=TIMESTAMP}, #{nstatus,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.Notice">
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="text != null">
+        text,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="ntime != null">
+        ntime,
+      </if>
+      <if test="nstatus != null">
+        nstatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="text != null">
+        #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="ntime != null">
+        #{ntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nstatus != null">
+        #{nstatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Notice">
+    update notice
+    <set>
+     <if test="text != null">
+        #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="ntime != null">
+        #{ntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nstatus != null">
+        #{nstatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where nid = #{nid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.Notice">
+    update notice
+    set text = #{jName,jdbcType=VARCHAR},
+      userid = #{jSkumodel,jdbcType=INTEGER},
+      ntime = #{jTime,jdbcType=TIMESTAMP},
+      nstatus = #{nstatus,jdbcType=INTEGER},
+    where nid = #{nid,jdbcType=INTEGER}
+  </update>
+</mapper>

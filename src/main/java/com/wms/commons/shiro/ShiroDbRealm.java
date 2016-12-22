@@ -5,13 +5,13 @@ import com.wms.bean.vo.UserVo;
 import com.wms.commons.utils.StringUtils;
 import com.wms.service.IRoleService;
 import com.wms.service.IUserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
@@ -24,7 +24,7 @@ import java.util.Set;
  */
 public class ShiroDbRealm extends AuthorizingRealm {
 
-    private static final Logger LOGGER = LogManager.getLogger(ShiroDbRealm.class);
+    private static Logger logger = LoggerFactory.getLogger(ShiroDbRealm.class);
 
     @Autowired
     private IUserService userService;
@@ -37,7 +37,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(
             AuthenticationToken authcToken) throws AuthenticationException {
-        LOGGER.info("Shiro开始登录认证");
+        logger.info("Shiro开始登录认证");
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
         UserVo uservo = new UserVo();
         uservo.setLoginName(token.getUsername());

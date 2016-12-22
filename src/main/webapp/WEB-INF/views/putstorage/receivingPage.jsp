@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/commons/global.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="/commons/global.jsp" %>
 <%@ include file="/commons/basejs.jsp" %>
-
 <meta http-equiv="X-UA-Compatible" content="edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>用户管理</title>
+<title>收货单管理</title>
     <script type="text/javascript">
 
     var dataGrid;
@@ -92,19 +91,19 @@
                     }
                 }
             },  {
-                width : '100',
+                width : '120',
                 title : '入库时间',
                 field : 'rTime',
                 sortable : true
             },  {
-                width : '80',
+                width : '70',
                 title : '管理员编号',
                 field : 'rAdminid',
                 sortable : true
             },   {
                 field : 'action',
                 title : '操作',
-                width : '150',
+                width : 130,
                 formatter : function(value, row, index) {
                     var str = '';
                         <shiro:hasPermission name="/receiving/update">

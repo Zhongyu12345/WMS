@@ -1,10 +1,11 @@
 package com.wms.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.wms.bean.Allotput;
 
 @Repository
@@ -17,7 +18,7 @@ public interface AllotputMapper {
 
     Allotput selectByPrimaryKey(Integer apId);
     
-    List<Allotput>selectAll(Page<Allotput> page);
+    List<Allotput>selectAll(Pagination page, Map<String, Object> params);
 
     int updateByPrimaryKeySelective(Allotput record);
 

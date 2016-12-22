@@ -7,10 +7,8 @@ import com.wms.service.AllotoutService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,12 +40,7 @@ public class AllotoutController extends BaseController {
         return pageInfo;
     }
 
-    /**
-     * 添加调拨单
-     *
-     * @param allotout
-     * @return
-     */
+    /** 添加调拨单 */
     @ResponseBody
     @PostMapping(value = "allotout")
     public Object addAllotout(Allotout allotout) {
@@ -59,6 +52,13 @@ public class AllotoutController extends BaseController {
         }
     }
 
+    /** 进入编辑页面 */
+    @GetMapping(value = "getEditPage")
+    public String editPage(Model model, @RequestParam(value = "id") Integer id){
+        return "outbound/allotoutEdit";
+    }
+
+    /** 删除调拨单 */
     @ResponseBody
     @PostMapping("allotout/delete")
     public Object deleteAllotout(@Param("id") Integer id) {

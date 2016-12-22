@@ -52,7 +52,7 @@
                  <tr>
                     <td>调拨时间</td>
                     <td>
-                    <input name="time" style="whith:100%" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd '})"  value="<fmt:formatDate pattern="yyyy-MM-dd " value="${allotput.apTime}" />" readonly="readonly" />
+                    <input name="time" style="whith:100%" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss '})"  value="<fmt:formatDate pattern="yyyy-MM-dd  HH:mm:ss" value="${allotput.apTime}" />" readonly="readonly" />
                 </tr>
             </table>
         </form>

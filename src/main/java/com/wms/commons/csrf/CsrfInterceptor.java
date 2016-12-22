@@ -1,9 +1,8 @@
 package com.wms.commons.csrf;
 
-import com.wms.commons.scan.ExceptionResolver;
 import com.wms.commons.utils.WebUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,7 +16,8 @@ import java.io.IOException;
  * Csrf拦截器，用来生成或去除CsrfToken
  */
 public class CsrfInterceptor extends HandlerInterceptorAdapter {
-    private static final Logger logger = LogManager.getLogger(ExceptionResolver.class);
+
+    private static Logger logger = LoggerFactory.getLogger(CsrfInterceptor.class);
 
     @Autowired
     private CsrfTokenRepository csrfTokenRepository;

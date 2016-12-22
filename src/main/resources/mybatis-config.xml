@@ -8,6 +8,5 @@
         <setting name="cacheEnabled" value="false"/>
         <setting name="lazyLoadingEnabled" value="false"/>
         <setting name="aggressiveLazyLoading" value="true"/>
-        <setting name="logImpl" value="LOG4J2"/>
     </settings>
 </configuration> 

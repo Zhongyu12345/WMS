@@ -58,7 +58,7 @@
                 field : 'apSipping',
                 sortable : true
             },{
-                width : '100',
+                width : '120',
                 title : '调拨时间',
                 field : 'apTime',
                 sortable : true
@@ -167,12 +167,14 @@
     </script>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
-    <div data-options="region:'north',border:false" style="height: 30px; overflow: hidden;background-color: #fff">
+    <div data-options="region:'north',border:true" style="height: 30px; overflow: hidden;background-color: #fff">
         <form id="searchForm">
             <table>
                 <tr>
-                    <th>姓名:</th>
-                    <td><input name="name" placeholder="请输入用户姓名"/></td>
+                    <th>货物名称:</th>
+                    <td><input name="apName" placeholder="请输入货物名称"/></td>
+                    <th>调拨单号:</th>
+                    <td><input name="apSipping" placeholder="请输调拨号"/></td>
                     <th>创建时间:</th>
                     <td>
                     <input name="createdateStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />至<input  name="createdateEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />
@@ -182,7 +184,7 @@
             </table>
         </form>
     </div>
-    <div data-options="region:'center',border:true,title:'用户列表'" >
+    <div data-options="region:'center',border:true,title:'调拨列表'" >
         <table id="dataGrid" data-options="fit:true,border:false"></table>
     </div>
     <div id="toolbar" style="display: none;">

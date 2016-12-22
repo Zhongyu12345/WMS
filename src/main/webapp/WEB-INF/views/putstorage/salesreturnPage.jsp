@@ -27,12 +27,12 @@
             pageSize : 20,
             pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
             columns : [ [ {
-                width : '80',
+                width : '100',
                 title : '货物名称',
                 field : 'srName',
                 sortable : true
             }, {
-                width : '80',
+                width : '100',
                 title : '客户托单号',
                 field : 'srSipping',
                 sortable : true
@@ -47,7 +47,7 @@
                 field : 'srPhone',
                 sortable : true
             } ,{
-                width : '80',
+                width : '100',
                 title : '货物型号',
                 field : 'srSkumodel',
                 sortable : true
@@ -67,12 +67,12 @@
                 field : 'srVolume',
                 sortable : true
             } ,  {
-                width : '80',
+                width : '100',
                 title : '退货原因',
                 field : 'srCause',
                 sortable : true
             } ,   {
-                width : '80',
+                width : '120',
                 title : '退货时间',
                 field : 'srTime',
                 sortable : true
@@ -181,12 +181,14 @@
     </script>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
-    <div data-options="region:'north',border:false" style="height: 30px; overflow: hidden;background-color: #fff">
+    <div data-options="region:'north',border:true" style="height: 30px; overflow: hidden;background-color: #fff">
         <form id="searchForm">
             <table>
                 <tr>
-                    <th>姓名:</th>
-                    <td><input name="name" placeholder="请输入用户姓名"/></td>
+                    <th>货物名称:</th>
+                    <td><input name="srName" placeholder="请输入货物名称"/></td>
+                    <th>客户托单号:</th>
+                    <td><input name="srSipping" placeholder="请输入托单号"/></td>
                     <th>创建时间:</th>
                     <td>
                     <input name="createdateStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />至<input  name="createdateEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />
@@ -196,7 +198,7 @@
             </table>
         </form>
     </div>
-    <div data-options="region:'center',border:true,title:'用户列表'" >
+    <div data-options="region:'center',border:true,title:'退货列表'" >
         <table id="dataGrid" data-options="fit:true,border:false"></table>
     </div>
     <div id="toolbar" style="display: none;">

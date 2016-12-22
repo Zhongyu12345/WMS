@@ -3,10 +3,10 @@ body {font-family:helvetica,tahoma,verdana,sans-serif;padding:20px;font-size:13p
 h2 {font-size:18px;font-weight:bold;margin:0;margin-bottom:15px;}
 
 .grid {border: 1px solid #eeeeee;font: 12px arial,helvetica,sans-serif;}
-.grid td {font: 100% arial,helvetica,sans-serif;height: 24px;padding: 5px;}
+.grid td {font: 100% arial,helvetica,sans-serif;height: 24px;padding: 4px;}
 .grid {border-collapse: collapse;width: 100%;}
-.grid th {background: none repeat scroll 0 0 #E7F3FE;border: 1px solid #eeeeee;height: 27px;line-height: 27px;padding-left: 5px;}
-.grid td {border: 1px solid #eeeeee;padding-left: 5px;}
+.grid th {background: none repeat scroll 0 0 #E7F3FE;border: 1px solid #eeeeee;height: 26px;line-height: 26px;padding-left: 5px;}
+.grid td {border: 0px solid #eeeeee;padding-left: 5px;}
 
 /*#layout_west_tree li ul li div{padding:5px 5px 3px 5px;}*/
 #layout_west_tree li div{padding:5px 5px 3px 10px;}

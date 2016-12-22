@@ -154,7 +154,7 @@
             title: '编辑',
             width: 500,
             height: 390,
-            href: '${path }/shipment/getEditPage?id=' + id,
+            href: '${path }/allotout/getEditPage?id=' + id,
             buttons: [{
                 text: '确定',
                 handler: function () {

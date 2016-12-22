@@ -1430,6 +1430,7 @@
   background: linear-gradient(to bottom,#F9F9F9 0,#efefef 100%);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#F9F9F9,endColorstr=#efefef,GradientType=0);
+  height:25px;
 }
 .datagrid-cell-rownumber {
   color: #000000;
