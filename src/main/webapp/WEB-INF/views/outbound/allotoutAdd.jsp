@@ -7,7 +7,7 @@
             url: '${path }/allotout/allotout',
             onSubmit: function () {
                 progressLoad();
-                var isValid = $(this).form('validate');
+                var isValid = $(this).form('enableValidation').form('validate');
                 if (!isValid) {
                     progressClose();
                 }
