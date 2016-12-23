@@ -6,7 +6,7 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>用户管理</title>
+    <title>货品借出登记</title>
     <script type="text/javascript">
 
         var dataGrid;
@@ -63,18 +63,14 @@
                         width : 130,
                         formatter : function(value, row, index) {
                             var str = '';
-                            <shiro:hasPermission name="/user/edit">
-                            str += $.formatString('<a style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.id);
-                            </shiro:hasPermission>
                             <shiro:hasPermission name="/user/delete">
-                            str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
+                            str += '&nbsp;&nbsp;';
                             str += $.formatString('<a style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
                             </shiro:hasPermission>
                             return str;
                         }
                 }] ],
                 onLoadSuccess:function(data){
-                    $('.user-easyui-linkbutton-edit').linkbutton({text:'编辑',plain:true,iconCls:'icon-edit'});
                     $('.user-easyui-linkbutton-del').linkbutton({text:'删除',plain:true,iconCls:'icon-del'});
                 },
                 toolbar : '#toolbar'
@@ -126,29 +122,6 @@
                         });
                     }
                 }
-            });
-        }
-
-        function editFun(id) {
-            if (id == undefined) {
-                var rows = dataGrid.datagrid('getSelections');
-                id = rows[0].id;
-            } else {
-                dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
-            }
-            parent.$.modalDialog({
-                title : '编辑',
-                width : 500,
-                height : 300,
-                href : '${path }/user/editPage?id=' + id,
-                buttons : [ {
-                    text : '确定',
-                    handler : function() {
-                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find('#userEditForm');
-                        f.submit();
-                    }
-                } ]
             });
         }
 

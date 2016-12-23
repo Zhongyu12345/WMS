@@ -2,15 +2,23 @@ package com.wms.controller;
 
 import com.wms.bean.Adjust;
 import com.wms.commons.base.BaseController;
+import com.wms.commons.utils.ExcelToDisk;
 import com.wms.commons.utils.PageInfo;
+import com.wms.commons.utils.ReadXls;
 import com.wms.service.AdjustService;
+import org.apache.commons.fileupload.util.Streams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileOutputStream;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -71,5 +79,4 @@ public class AdjustController extends BaseController{
         }
         return renderError("删除失败");
     }
-
 }
