@@ -33,6 +33,9 @@ public class Cargo {
 	@TableField(value = "c_num")
     private Integer cNum;
 
+	/**
+	 * 不要
+	 */
 	@TableField(value = "c_totalweight")
     private Double cTotalweight;
 

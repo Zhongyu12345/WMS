@@ -20,7 +20,7 @@
 			var srPhone = $("#srPhone").val();
 			var srNum = $("#srNum").val();
 			var srCause = $("#srCause").val();
-			var srTime = $("#srTime").datetimebox("getValue");
+			var srTime = $("#srTime").val();
 			$.post('${path }/salesreturn/save', {
 				"srName" : srName,
 				"srSipping":srSipping,
@@ -74,7 +74,7 @@
 	                	<th>号码:</th>
 	                	<td><input type="text" id="srPhone" name="srPhone" /></td>
 	                	<th>退货时间:</th>
-	                    <td><input class="easyui-datetimebox" id="srTime" name="srTime" /></td>
+	                    <td><input placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss '})"   readonly="readonly" id="srTime" name="srTime" /></td>
 	                    <th>退货数量:</th>
 	                    <td><input type="text" id="srNum" name="srNum" /></td>
 	                    <th>退货原因:</th>

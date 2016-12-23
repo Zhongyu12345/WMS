@@ -61,6 +61,16 @@
                 sortable : true
             }, {
                 width : '60',
+                title : '入库数量',
+                field : 'rNumber',
+                sortable : true
+            }, {
+                width : '60',
+                title : '入库重量',
+                field : 'rHeavy',
+                sortable : true
+            }, {
+                width : '60',
                 title : '入库体积',
                 field : 'rNum',
                 sortable : true

@@ -50,8 +50,30 @@ public class GodownEntry {
 
 	@TableField(value = "g_SKUmodel")
     private String gSkumodel;
+	
+	@TableField(value = "g_number")
+    private int gNumber;
+	
+	@TableField(value = "g_heavy")
+    private double gHeavy;
 
-    public Integer getgId() {
+    public int getgNumber() {
+		return gNumber;
+	}
+
+	public void setgNumber(int gNumber) {
+		this.gNumber = gNumber;
+	}
+
+	public double getgHeavy() {
+		return gHeavy;
+	}
+
+	public void setgHeavy(double gHeavy) {
+		this.gHeavy = gHeavy;
+	}
+
+	public Integer getgId() {
         return gId;
     }
 
