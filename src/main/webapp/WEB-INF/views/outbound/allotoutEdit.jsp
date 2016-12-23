@@ -33,33 +33,25 @@
                 <tr>
                     <td>货物名称</td>
                     <input name="aoId" type="hidden" value="${allotout.aoId}">
-                    <td><input name="aoName" type="text" placeholder="请输入货物名称" class="easyui-validatebox"
-                               data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoName}"></td>
+                    <td><input name="aoName" type="text" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoName}"></td>
                     <td>货物型号</td>
-                    <td><input name="aoSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox"
-                               data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoSkumodel}"></td>
+                    <td><input name="aoSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoSkumodel}"></td>
                 </tr>
                 <tr>
                     <td>调拨数量</td>
-                    <td><input name="aoNum" type="text" placeholder="请输入调拨数量" class="easyui-validatebox"
-                               data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoNum}"></td>
+                    <td><input name="aoNum" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoNum}"></td>
                     <td>仓库编号</td>
-                    <td><input name="aoWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox"
-                               data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoWhid}"></td>
+                    <td><input name="aoWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoWhid}"></td>
                 </tr>
                 <tr>
                     <td>调拨单号</td>
-                    <td><input name="aoSippingno" type="text" placeholder="请输入调拨数量" class="easyui-validatebox"
-                               data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoSippingno}"></td>
+                    <td><input name="aoSippingno" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoSippingno}"></td>
                     <td>调拨时间</td>
-                    <td><input name="byTime" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly"
-                               value="<fmt:formatDate pattern="yyyy-MM-dd" value="${allotout.aoTime}" />"/></td>
+                    <td><input name="byTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${allotout.aoTime}" />"/></td>
                 </tr>
                 <tr>
                     <td>货物体积</td>
-                    <td><input name="aoVolume" type="text" placeholder="请输入货物体积" class="easyui-validatebox"
-                               data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoVolume}"></td>
+                    <td><input name="aoVolume" type="text" placeholder="请输入货物体积" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoVolume}"></td>
                 </tr>
             </table>
         </form>
