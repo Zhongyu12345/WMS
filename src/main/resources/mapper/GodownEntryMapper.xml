@@ -15,10 +15,12 @@
     <result column="g_time" jdbcType="TIMESTAMP" property="gTime" />
     <result column="g_adminid" jdbcType="INTEGER" property="gAdminid" />
     <result column="g_SKUmodel" jdbcType="VARCHAR" property="gSkumodel" />
+    <result column="g_number" jdbcType="INTEGER" property="gNumber" />
+    <result column="g_heavy" jdbcType="DOUBLE" property="gHeavy"/>
   </resultMap>
   <sql id="Base_Column_List">
     g_id, g_name, g_storerid, g_phone, g_supplierid, g_sippingNO, g_whid, g_num, g_crossflag, 
-    g_directflag, g_time, g_adminid, g_SKUmodel
+    g_directflag, g_time, g_adminid, g_SKUmodel,g_number,g_heavy
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -35,12 +37,12 @@
       g_phone, g_supplierid, g_sippingNO, 
       g_whid, g_num, g_crossflag, 
       g_directflag, g_time, g_adminid, 
-      g_SKUmodel)
+      g_SKUmodel,g_number,g_heavy)
     values (#{gId,jdbcType=INTEGER}, #{gName,jdbcType=VARCHAR}, #{gStorerid,jdbcType=VARCHAR}, 
       #{gPhone,jdbcType=VARCHAR}, #{gSupplierid,jdbcType=VARCHAR}, #{gSippingno,jdbcType=VARCHAR}, 
       #{gWhid,jdbcType=VARCHAR}, #{gNum,jdbcType=DOUBLE}, #{gCrossflag,jdbcType=VARCHAR}, 
       #{gDirectflag,jdbcType=VARCHAR}, #{gTime,jdbcType=TIMESTAMP}, #{gAdminid,jdbcType=INTEGER}, 
-      #{gSkumodel,jdbcType=VARCHAR})
+      #{gSkumodel,jdbcType=VARCHAR},#{gNumber,jdbcType=INTEGER},#{gHeavy,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.wms.bean.GodownEntry">
     insert into godown_entry
@@ -182,7 +184,9 @@
       g_directflag = #{gDirectflag,jdbcType=VARCHAR},
       g_time = #{gTime,jdbcType=TIMESTAMP},
       g_adminid = #{gAdminid,jdbcType=INTEGER},
-      g_SKUmodel = #{gSkumodel,jdbcType=VARCHAR}
+      g_SKUmodel = #{gSkumodel,jdbcType=VARCHAR},
+      g_number = #{gNumber,jdbcType=INTEGER},
+      g_heavy = #{gHeavy,jdbcType=DOUBLE}
     where g_id = #{gId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -3,8 +3,8 @@
 <script type="text/javascript" src="${staticPath }/static/My97DatePicker/WdatePicker.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function () {
-        $('#allotoutAddForm').form({
-            url: '${path }/allotout/allotout',
+        $('#invoiceAddForm').form({
+            url: '${path }/invoice/invoice',
             onSubmit: function () {
                 progressLoad();
                 var isValid = $(this).form('enableValidation').form('validate');
@@ -29,29 +29,29 @@
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
-        <form id="allotoutAddForm" method="post">
+        <form id="invoiceAddForm" method="post">
             <table class="grid">
                 <tr>
                     <td>货物名称</td>
-                    <td><input name="aoName" type="text" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"/></td>
+                    <td><input name="inName" type="text" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"/></td>
                     <td>货物型号</td>
-                    <td><input name="aoSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"/></td>
+                    <td><input name="inSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"/></td>
                 </tr>
                 <tr>
-                    <td>调拨数量</td>
-                    <td><input name="aoNum" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
+                    <td>发货数量</td>
+                    <td><input name="inNum" type="text" placeholder="请输入发货数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                     <td>仓库编号</td>
-                    <td><input name="aoWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"/></td>
+                    <td><input name="inWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"/></td>
                 </tr>
                 <tr>
-                    <td>调拨单号</td>
-                    <td><input name="aoSippingno" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"/></td>
-                    <td>调拨时间</td>
+                    <td>发货单号</td>
+                    <td><input name="inOddnumber" type="text" placeholder="请输入发货单号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"/></td>
+                    <td>发货时间</td>
                     <td><input name="byTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly"/></td>
                 </tr>
                 <tr>
                     <td>货物体积</td>
-                    <td><input name="aoVolume" type="text" placeholder="请输入货物体积" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
+                    <td><input name="inVolume" type="text" placeholder="请输入货物体积" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                 </tr>
             </table>
         </form>

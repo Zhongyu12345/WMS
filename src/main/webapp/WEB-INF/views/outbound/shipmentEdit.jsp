@@ -7,7 +7,7 @@
             url: '${path }/shipment/shipment/update',
             onSubmit: function () {
                 progressLoad();
-                var isValid = $(this).form('validate');
+                var isValid = $(this).form('enableValidation').form('validate');
                 if (!isValid) {
                     progressClose();
                 }

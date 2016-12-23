@@ -61,6 +61,16 @@
                 sortable : true
             }, {
                 width : '60',
+                title : '入库数量',
+                field : 'rNumber',
+                sortable : true
+            }, {
+                width : '60',
+                title : '入库重量',
+                field : 'rHeavy',
+                sortable : true
+            }, {
+                width : '60',
                 title : '入库体积',
                 field : 'rNum',
                 sortable : true
@@ -107,11 +117,11 @@
                 formatter : function(value, row, index) {
                     var str = '';
                         <shiro:hasPermission name="/receiving/update">
-                            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.rId);
+                            str += $.formatString('<a  style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.rId);
                         </shiro:hasPermission>
                         <shiro:hasPermission name="/receiving/delete">
                             str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-                            str += $.formatString('<a href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.rId);
+                            str += $.formatString('<a style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.rId);
                         </shiro:hasPermission>
                     return str;
                 }
@@ -183,29 +193,28 @@
         dataGrid.datagrid('load',  $.serializeObject($('#searchForm')));
     }
     function cleanFun() {
-        $('#searchForm input').val('');
+        $('#a ').val(''); 
         dataGrid.datagrid('load', {});
-        $('#rDirectflag').val('3');
     }
     </script>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
-    <div data-options="region:'north',border:true" style="height: 90px; overflow: hidden;background-color: #fff">
+    <div data-options="region:'north',border:true" style="height: 70px; overflow: hidden;background-color: #fff">
         <form id="searchForm">
             <table>
                 <tr>
                     <th>货物名称:</th>
-                    <td><input name="rName" placeholder="请输入货物名称"/></td>
+                    <td><input id="a" name="rName" placeholder="请输入货物名称"/></td>
                     <th>货物型号:</th>
-                    <td><input name="rSkumodel" placeholder="请输入货物型号"/></td>
+                    <td><input id="a" name="rSkumodel" placeholder="请输入货物型号"/></td>
                     <th>创建时间:</th>
                     <td>
-	                    <input name="createdateStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />至<input  name="createdateEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />
+	                    <input id="a" name="createdateStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />至<input id="a"  name="createdateEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />
                     </td>
                 </tr>
                  <tr>
                     <th>供应商:</th>
-                    <td><input name="rSupplierid" placeholder="请输入供应商名称"/></td>
+                    <td><input id="a" name="rSupplierid" placeholder="请输入供应商名称"/></td>
                     <th>是否越库:</th>
                     <td>
                     	<select id="rDirectflag"  name="rCrossflag" class="easyui-combobox" data-options="width:80,height:29,editable:false,panelHeight:'auto'">
@@ -217,7 +226,7 @@
                     <th>是否整进:</th>
                     <td>
                     	<select id="rDirectflag" name="rDirectflag" class="easyui-combobox" data-options="width:80,height:29,editable:false,panelHeight:'auto'">
-                    		<option value=" " selected="selected">请选择</option>
+                    		<option value="3" selected="selected">请选择</option>
                             <option value="0">整进</option>
                             <option value="1">不整进</option>
                     	</select>

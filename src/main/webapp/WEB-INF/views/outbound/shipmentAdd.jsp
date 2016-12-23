@@ -7,7 +7,7 @@
             url: '${path }/shipment/shipment',
             onSubmit : function() {
                 progressLoad();
-                var isValid = $(this).form('validate');
+                var isValid = $(this).form('enableValidation').form('validate');
                 if (!isValid) {
                     progressClose();
                 }
@@ -33,48 +33,37 @@
             <table class="grid">
                 <tr>
                     <td>货主</td>
-                    <td><input name="shStoreid" type="text" placeholder="请输入货主" class="easyui-validatebox"
-                               data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
+                    <td><input name="shStoreid" type="text" placeholder="请输入货主" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                     <td>实际出货时间</td>
-                    <td><input name="addtime" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly"/></td>
+                    <td><input name="addtime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly"/></td>
                 </tr>
                 <tr>
                     <td>号码</td>
-                    <td><input name="shPhone" type="text" placeholder="请输入号码" class="easyui-validatebox"
-                               data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
+                    <td><input name="shPhone" type="text" placeholder="请输入号码" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                     <td>客户托单号</td>
-                    <td><input name="shSippingno" type="text" placeholder="请输入客户托单号" class="easyui-validatebox"
-                               data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
+                    <td><input name="shSippingno" type="text" placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                 </tr>
                 <tr>
                     <td>仓库编码</td>
-                    <td><input name="shWhid" type="text" placeholder="请输入仓库编码" class="easyui-validatebox"
-                               data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
+                    <td><input name="shWhid" type="text" placeholder="请输入仓库编码" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                     <td>损坏数量</td>
-                    <td><input name="shDamage" type="number" placeholder="请输入损坏数量" class="easyui-validatebox"
-                               data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
+                    <td><input name="shDamage" type="number" placeholder="请输入损坏数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                 </tr>
                 <tr>
                     <td>损坏原因</td>
-                    <td colspan="3"><textarea rows="3" cols="40" name="shCause"
-                                              style="width: 397px;height: 50px;"></textarea></td>
+                    <td colspan="3"><textarea rows="3" cols="40" name="shCause" style="width: 397px;height: 50px;"></textarea></td>
                 </tr>
                 <tr>
                     <td>型号</td>
-                    <td><input name="shSkumodel" type="text" placeholder="请输入型号" class="easyui-validatebox"
-                               data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
+                    <td><input name="shSkumodel" type="text" placeholder="请输入型号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                     <td>实际出货数量</td>
-                    <td><input name="shShnum" type="text" placeholder="请输入实际出货数量" class="easyui-validatebox"
-                               data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
+                    <td><input name="shShnum" type="text" placeholder="请输入实际出货数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                 </tr>
                 <tr>
                     <td>发货毛重</td>
-                    <td><input name="shTotalweigh" type="text" placeholder="请输入发货毛重" class="easyui-validatebox"
-                               data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
+                    <td><input name="shTotalweigh" type="text" placeholder="请输入发货毛重" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                     <td>发货体积</td>
-                    <td><input name="shTotalvolume" type="text" placeholder="请输入发货体积" class="easyui-validatebox"
-                               data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
+                    <td><input name="shTotalvolume" type="text" placeholder="请输入发货体积" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                 </tr>
             </table>
         </form>

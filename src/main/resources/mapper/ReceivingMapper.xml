@@ -16,10 +16,12 @@
     <result column="r_adminid" jdbcType="INTEGER" property="rAdminid" />
     <result column="r_partflag" jdbcType="INTEGER" property="rPartflag" />
     <result column="r_SKUmodel" jdbcType="VARCHAR" property="rSkumodel" />
+    <result column="r_number" jdbcType="INTEGER" property="rNumber" />
+    <result column="r_heavy" jdbcType="DOUBLE" property="rHeavy"/>
   </resultMap>
   <sql id="Base_Column_List">
     r_id, r_name, r_storerid, r_phone, r_supplierid, r_sippingNO, r_whid, r_num, r_crossflag, 
-    r_directflag, r_time, r_adminid, r_partflag, r_SKUmodel
+    r_directflag, r_time, r_adminid, r_partflag, r_SKUmodel,r_number,r_heavy
   </sql>
   
   <select id="selectAll"  resultMap="BaseResultMap">
@@ -66,12 +68,12 @@
       r_phone, r_supplierid, r_sippingNO, 
       r_whid, r_num, r_crossflag, 
       r_directflag, r_time, r_adminid, 
-      r_partflag, r_SKUmodel)
+      r_partflag, r_SKUmodel,r_number,r_heavy)
     values (#{rId,jdbcType=INTEGER}, #{rName,jdbcType=VARCHAR}, #{rStorerid,jdbcType=VARCHAR}, 
       #{rPhone,jdbcType=VARCHAR}, #{rSupplierid,jdbcType=VARCHAR}, #{rSippingno,jdbcType=VARCHAR}, 
       #{rWhid,jdbcType=VARCHAR}, #{rNum,jdbcType=DOUBLE}, #{rCrossflag,jdbcType=VARCHAR}, 
       #{rDirectflag,jdbcType=VARCHAR}, #{rTime,jdbcType=TIMESTAMP}, #{rAdminid,jdbcType=INTEGER}, 
-      #{rPartflag,jdbcType=INTEGER}, #{rSkumodel,jdbcType=VARCHAR})
+      #{rPartflag,jdbcType=INTEGER}, #{rSkumodel,jdbcType=VARCHAR} ,#{rNumber,jdbcType=INTEGER},#{rHeavy,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.wms.bean.Receiving">
     insert into receiving
@@ -206,6 +208,12 @@
       <if test="rSkumodel != null">
         r_SKUmodel = #{rSkumodel,jdbcType=VARCHAR},
       </if>
+      <if test="rNumber != null">
+        r_number = #{rNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rSkumodel != null">
+        r_heavy = #{rHeavy,jdbcType=DOUBLE},
+      </if>
     </set>
     where r_id = #{rId,jdbcType=INTEGER}
   </update>
@@ -223,7 +231,9 @@
       r_time = #{rTime,jdbcType=TIMESTAMP},
       r_adminid = #{rAdminid,jdbcType=INTEGER},
       r_partflag = #{rPartflag,jdbcType=INTEGER},
-      r_SKUmodel = #{rSkumodel,jdbcType=VARCHAR}
+      r_SKUmodel = #{rSkumodel,jdbcType=VARCHAR},
+      r_number = #{rNumber,jdbcType=INTEGER},
+      r_heavy = #{rHeavy,jdbcType=DOUBLE}
     where r_id = #{rId,jdbcType=INTEGER}
   </update>
 </mapper>

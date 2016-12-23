@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.wms.bean.Cargo;
 import com.wms.bean.GodownEntry;
 import com.wms.bean.Receiving;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.ReadXls;
+import com.wms.service.CargoService;
 import com.wms.service.GodownEntryService;
 import com.wms.service.ReceivingService;
 /**
@@ -34,6 +36,9 @@ public class GodownEntryController extends BaseController {
 	
 	@Autowired
 	private ReceivingService receivingService;
+	
+	@Autowired
+	private CargoService cargoService;
 
 	
 	@RequestMapping("/receiving")
@@ -63,7 +68,19 @@ public class GodownEntryController extends BaseController {
 	public Object save(GodownEntry godownEntry,Receiving receiving){
 		int a = godownEntryService.insert(godownEntry);
 		int b = receivingService.insert(receiving);
-		if(a>0 && b>0){
+		Cargo g = new Cargo();
+		g.setcName(receiving.getrName());
+		g.setcReceivedate(receiving.getrTime());
+		g.setcShippingno(receiving.getrSippingno());
+		g.setcSkumodel(receiving.getrSkumodel());
+		g.setcStorerid(receiving.getrStorerid());
+		g.setcSupplierid(receiving.getrSupplierid());
+		g.setcTotalvolume(receiving.getrNum());
+		g.setcWhid(receiving.getrWhid());
+		g.setcNum(receiving.getrNumber());
+		g.setcTotalweight(receiving.getrHeavy());
+		int c = cargoService.insert(g);
+		if(a>0 && b>0 && c>0){
 			return renderSuccess("添加成功");
 		}
 		return renderError("添加失败");

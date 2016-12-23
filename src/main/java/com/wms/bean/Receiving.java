@@ -54,7 +54,29 @@ public class Receiving {
 	@TableField(value = "r_SKUmodel")
     private String rSkumodel;
 	
-    private Date createdateStart;
+	@TableField(value = "r_number")
+    private int rNumber;
+	
+	@TableField(value = "r_heavy")
+    private double rHeavy;
+	
+    public int getrNumber() {
+		return rNumber;
+	}
+
+	public void setrNumber(int rNumber) {
+		this.rNumber = rNumber;
+	}
+
+	public double getrHeavy() {
+		return rHeavy;
+	}
+
+	public void setrHeavy(double rHeavy) {
+		this.rHeavy = rHeavy;
+	}
+
+	private Date createdateStart;
     private Date createdateEnd;
 	
     public Integer getrId() {
