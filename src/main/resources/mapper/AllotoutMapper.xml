@@ -26,6 +26,11 @@
         select
         <include refid="Base_Column_List"/>
         from allotout
+        <where>
+            <if test=" name != null and name != '' ">
+                ao_name like #{name}
+            </if>
+        </where>
     </select>
     <!-- 根据ID删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
