@@ -32,10 +32,16 @@
         from shipment
         where sh_id = #{shId,jdbcType=INTEGER}
     </select>
+    <!-- 分页查询 -->
     <select id="selectShipmentPage" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from shipment
+        <where>
+            <if test=" name != null and name != '' ">
+                sh_storeid like #{name}
+            </if>
+        </where>
     </select>
     <!-- 根据ID删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

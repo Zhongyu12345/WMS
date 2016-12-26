@@ -14,17 +14,25 @@
     <sql id="Base_Column_List">
       in_id, in_name, in_SKUmodel, in_num, in_whid, in_oddnumber, in_time, in_volume
     </sql>
+    <!-- 根据ID查询 -->
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from invoice
         where in_id = #{inId,jdbcType=INTEGER}
     </select>
+    <!-- 分页查询 -->
     <select id="selectInvoicePage" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from invoice
+        <where>
+            <if test=" name != null and name != '' ">
+                in_name like #{name}
+            </if>
+        </where>
     </select>
+    <!-- 根据ID删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from invoice
         where in_id = #{inId,jdbcType=INTEGER}
