@@ -52,12 +52,12 @@
             sortOrder: 'asc',
             pageSize: 20,
             pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
-            columns: [[{
+            columns: [[/*{
                 width: '100',
                 title: '调拨单号',
                 field: 'aoSippingno',
                 sortable: true
-            }, {
+            },*/ {
                 width: '150',
                 title: '货物名称',
                 field: 'aoName',
@@ -78,7 +78,7 @@
                 field: 'aoWhid',
                 sortable: true
             }, {
-                width: '150',
+                width: '250',
                 title: '调拨单号',
                 field: 'aoSippingno',
                 sortable: true
