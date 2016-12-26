@@ -9,6 +9,21 @@
     <title>直接发货单</title>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
+<div data-options="region:'north',border:false" style="height: 30px; overflow: hidden;background-color: #fff">
+    <form id="searchForm">
+        <table>
+            <tr>
+                <th>货物名称:</th>
+                <td><input name="inName" placeholder="请输入货物名称"/></td>
+                <th>调整时间:</th>
+                <td>
+                    <input name="startTime" placeholder="点击选择时间" class="easyui-datetimebox"/>至<input name="endTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly"/>
+                    <a href="javascript:void(0);" class="easyui-linkbutton" required data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 <div data-options="region:'center',border:true,title:'直接发货单列表'">
     <table id="dataGrid" data-options="fit:true,border:false"></table>
 </div>
@@ -163,6 +178,17 @@
                 }
             }]
         });
+    }
+
+    <!-- \\\\\\\\\\ 搜索操作 \\\\\\\\\\ -->
+    function searchFun() {
+        dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
+    }
+
+    <!-- \\\\\\\\\\ 清理操作 \\\\\\\\\\ -->
+    function cleanFun() {
+        $('#searchForm input').val('');
+        dataGrid.datagrid('load', {});
     }
 </script>
 </body>
