@@ -2,6 +2,7 @@ package com.wms.controller;
 
 import com.wms.bean.Invoice;
 import com.wms.commons.base.BaseController;
+import com.wms.commons.bean.Search;
 import com.wms.commons.utils.PageInfo;
 import com.wms.commons.utils.StringUtils;
 import com.wms.commons.utils.TimeUtils;
@@ -39,11 +40,12 @@ public class InvoiceController extends BaseController {
     /** 分页查询 */
     @ResponseBody
     @PostMapping("dataGrid")
-    public Object dataGrid(Invoice invoice, Integer page, Integer rows, String sort, String order) {
+    public Object dataGrid(Search search, Integer page, Integer rows, String sort, String order) {
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<String, Object>();
-        if (StringUtils.isNotBlank(invoice.getInName())) {
-            String str = "%" + invoice.getInName() + "%";
+        if (StringUtils.isNotBlank(search.getName())) {
+            logger.getName().toString();
+            String str = "%" + search.getName() + "%";
             condition.put("name", str);
         }
         pageInfo.setCondition(condition);
