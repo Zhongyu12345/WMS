@@ -344,7 +344,7 @@ INSERT INTO `resource` VALUES ('22', '打印空白盘点单', null, '打印空�
 INSERT INTO `resource` VALUES ('23', '新增调拨单', null, '新增调拨单', 'menu_icon_datadeal', '3', '0', '0', '0', '2016-12-15 11:26:28');
 INSERT INTO `resource` VALUES ('25', '出货单管理', null, '出货单管理', 'menu_icon_datadeal', '4', '0', '0', '0', '2016-12-15 11:27:29');
 INSERT INTO `resource` VALUES ('27', '调拨出库单管理', null, '调拨出库单管理', 'menu_icon_datadeal', '4', '0', '0', '0', '2016-12-15 11:28:50');
-INSERT INTO `resource` VALUES ('29', '越货出库单管理', null, '越货出库单管理', 'menu_icon_datadeal', '4', '0', '0', '0', '2016-12-15 11:30:35');
+INSERT INTO `resource` VALUES ('29', '越库出货单管理', null, '越库出货单管理', 'menu_icon_datadeal', '4', '0', '0', '0', '2016-12-15 11:30:35');
 INSERT INTO `resource` VALUES ('31', '直接出库单管理', null, '直接出库单管理', 'menu_icon_datadeal', '4', '0', '0', '0', '2016-12-15 11:31:47');
 INSERT INTO `resource` VALUES ('32', '新增货品加工BOM方案', null, '新增货品加工BOM方案', 'menu_icon_datadeal', '5', '0', '0', '0', '2016-12-15 11:32:38');
 INSERT INTO `resource` VALUES ('33', '加工方案管理', null, '加工方案管理', 'menu_icon_datadeal', '5', '0', '0', '0', '2016-12-15 11:33:55');
