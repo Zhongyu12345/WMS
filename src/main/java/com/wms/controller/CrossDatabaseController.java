@@ -3,6 +3,7 @@ package com.wms.controller;
 import com.wms.bean.CrossDatabase;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.PageInfo;
+import com.wms.commons.utils.StringUtils;
 import com.wms.commons.utils.TimeUtils;
 import com.wms.service.CrossDatabaseService;
 import org.slf4j.Logger;
@@ -39,10 +40,12 @@ public class CrossDatabaseController extends BaseController {
     @ResponseBody
     @PostMapping("dataGrid")
     public Object dataGrid(CrossDatabase crossDatabase, Integer page, Integer rows, String sort, String order) {
-        //TODO:此处待搜索查询
-        logger.info("分页查询");
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<String, Object>();
+        if (StringUtils.isNotBlank(crossDatabase.getCdName())) {
+            String str = "%" + crossDatabase.getCdName() + "%";
+            condition.put("name", str);
+        }
         pageInfo.setCondition(condition);
         crossDatabaseService.selectDataGrid(pageInfo);
         return pageInfo;

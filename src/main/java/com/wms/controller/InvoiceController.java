@@ -3,6 +3,7 @@ package com.wms.controller;
 import com.wms.bean.Invoice;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.PageInfo;
+import com.wms.commons.utils.StringUtils;
 import com.wms.commons.utils.TimeUtils;
 import com.wms.service.InvoiceService;
 import org.slf4j.Logger;
@@ -39,10 +40,12 @@ public class InvoiceController extends BaseController {
     @ResponseBody
     @PostMapping("dataGrid")
     public Object dataGrid(Invoice invoice, Integer page, Integer rows, String sort, String order) {
-        //TODO:此处待搜索查询
-        logger.info("直接发货分页查询");
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<String, Object>();
+        if (StringUtils.isNotBlank(invoice.getInName())) {
+            String str = "%" + invoice.getInName() + "%";
+            condition.put("name", str);
+        }
         pageInfo.setCondition(condition);
         invoiceService.selectDataGrid(pageInfo);
         return pageInfo;

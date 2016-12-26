@@ -3,6 +3,7 @@ package com.wms.controller;
 import com.wms.bean.Shipment;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.PageInfo;
+import com.wms.commons.utils.StringUtils;
 import com.wms.commons.utils.TimeUtils;
 import com.wms.service.ShipmentService;
 import org.slf4j.Logger;
@@ -39,10 +40,12 @@ public class ShipmentController extends BaseController {
     @ResponseBody
     @PostMapping("dataGrid")
     public Object dataGrid(Shipment shipment, Integer page, Integer rows, String sort, String order) {
-        //TODO:此处待搜索查询
-        logger.info("分页查询");
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<String, Object>();
+        if (StringUtils.isNotBlank(shipment.getShStoreid())) {
+            String str = "%" + shipment.getShStoreid() + "%";
+            condition.put("name", str);
+        }
         pageInfo.setCondition(condition);
         shipmentService.selectDataGrid(pageInfo);
         return pageInfo;

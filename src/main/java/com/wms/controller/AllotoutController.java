@@ -46,11 +46,9 @@ public class AllotoutController extends BaseController {
     @ResponseBody
     @PostMapping("dataGrid")
     public Object dataGrid(Allotout allotout, Integer page, Integer rows, String startTime) {
-        System.out.println(startTime);
-        //TODO:此处待搜索查询
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<String, Object>();
-        if (StringUtils.isNotBlank(allotout.getAoName())){
+        if (StringUtils.isNotBlank(allotout.getAoName())) {
             String str = "%" + allotout.getAoName() + "%";
             condition.put("name", str);
         }
