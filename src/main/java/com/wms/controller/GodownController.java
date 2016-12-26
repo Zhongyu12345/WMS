@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,16 +26,16 @@ public class GodownController {
     /** 仓库EasyUI下拉框 */
     @ResponseBody
     @GetMapping("godownComboBox")
-    public List<Godown> listComboBox4EasyUi() {
-        List<ComboBox4EasyUI> comboBox4EasyUIS = 
+    public List<ComboBox4EasyUI> listComboBox4EasyUi() {
+        List<ComboBox4EasyUI> comboBox4EasyUIS = new ArrayList<>();
         List<Godown> godowns = godownService.godownComboBox();
         for (Godown godown : godowns) {
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
             comboBox4EasyUI.setId(String.valueOf(godown.getGoId()));
             comboBox4EasyUI.setText(godown.getGoWhid());
-            listComboBox4EasyUi().add(comboBox4EasyUI);
+            comboBox4EasyUIS.add(comboBox4EasyUI);
         }
-        return null;
+        return comboBox4EasyUIS;
     }
 
 }
