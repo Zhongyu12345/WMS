@@ -1,18 +1,15 @@
 package com.wms.dao;
 
-import org.springframework.stereotype.Repository;
-
 import com.wms.bean.Income;
 
-@Repository
 public interface IncomeMapper {
-    int deleteByPrimaryKey(Integer iId);
+    int deleteByPrimaryKey(Integer iid);
 
     int insert(Income record);
 
     int insertSelective(Income record);
 
-    Income selectByPrimaryKey(Integer iId);
+    Income selectByPrimaryKey(Integer iid);
 
     int updateByPrimaryKeySelective(Income record);
 
