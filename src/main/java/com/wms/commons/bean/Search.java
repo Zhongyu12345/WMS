@@ -17,6 +17,9 @@ public class Search {
     /** 结束时间 */
     private Date endTime;
 
+    /** 单号 */
+    private String orderNo;
+
     public String getName() {
         return name;
     }
@@ -39,5 +42,13 @@ public class Search {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 }

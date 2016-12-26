@@ -1,106 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wms.dao.GodownMapper">
-  <resultMap id="BaseResultMap" type="com.wms.bean.Godown">
-    <id column="go_id" jdbcType="INTEGER" property="goId" />
-    <result column="go_whid" jdbcType="VARCHAR" property="goWhid" />
-    <result column="go_p" jdbcType="VARCHAR" property="goP" />
-    <result column="go_volume" jdbcType="DOUBLE" property="goVolume" />
-    <result column="go_usevolume" jdbcType="DOUBLE" property="goUsevolume" />
-    <result column="go_rdvolume" jdbcType="DOUBLE" property="goRdvolume" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    go_id, go_whid, go_p, go_volume, go_usevolume, go_rdvolume
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from godown
-    where go_id = #{goId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from godown
-    where go_id = #{goId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.wms.bean.Godown">
-    insert into godown (go_id, go_whid, go_p, 
-      go_volume, go_usevolume, go_rdvolume
+    <resultMap id="BaseResultMap" type="com.wms.bean.Godown">
+        <id column="go_id" jdbcType="INTEGER" property="goId"/>
+        <result column="go_whid" jdbcType="VARCHAR" property="goWhid"/>
+        <result column="go_p" jdbcType="VARCHAR" property="goP"/>
+        <result column="go_volume" jdbcType="DOUBLE" property="goVolume"/>
+        <result column="go_usevolume" jdbcType="DOUBLE" property="goUsevolume"/>
+        <result column="go_rdvolume" jdbcType="DOUBLE" property="goRdvolume"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      go_id, go_whid, go_p, go_volume, go_usevolume, go_rdvolume
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from godown
+        where go_id = #{goId,jdbcType=INTEGER}
+    </select>
+
+    <!-- 查询仓库EasyUI下拉框 -->
+    <select id="findByComboBox4EasyUi" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List"/>
+        from godown
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from godown
+        where go_id = #{goId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.wms.bean.Godown">
+        insert into godown (go_id, go_whid, go_p,
+          go_volume, go_usevolume, go_rdvolume
+          )
+        values (#{goId,jdbcType=INTEGER}, #{goWhid,jdbcType=VARCHAR}, #{goP,jdbcType=VARCHAR},
+          #{goVolume,jdbcType=DOUBLE}, #{goUsevolume,jdbcType=DOUBLE}, #{goRdvolume,jdbcType=DOUBLE}
       )
-    values (#{goId,jdbcType=INTEGER}, #{goWhid,jdbcType=VARCHAR}, #{goP,jdbcType=VARCHAR}, 
-      #{goVolume,jdbcType=DOUBLE}, #{goUsevolume,jdbcType=DOUBLE}, #{goRdvolume,jdbcType=DOUBLE}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.wms.bean.Godown">
-    insert into godown
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="goId != null">
-        go_id,
-      </if>
-      <if test="goWhid != null">
-        go_whid,
-      </if>
-      <if test="goP != null">
-        go_p,
-      </if>
-      <if test="goVolume != null">
-        go_volume,
-      </if>
-      <if test="goUsevolume != null">
-        go_usevolume,
-      </if>
-      <if test="goRdvolume != null">
-        go_rdvolume,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="goId != null">
-        #{goId,jdbcType=INTEGER},
-      </if>
-      <if test="goWhid != null">
-        #{goWhid,jdbcType=VARCHAR},
-      </if>
-      <if test="goP != null">
-        #{goP,jdbcType=VARCHAR},
-      </if>
-      <if test="goVolume != null">
-        #{goVolume,jdbcType=DOUBLE},
-      </if>
-      <if test="goUsevolume != null">
-        #{goUsevolume,jdbcType=DOUBLE},
-      </if>
-      <if test="goRdvolume != null">
-        #{goRdvolume,jdbcType=DOUBLE},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Godown">
-    update godown
-    <set>
-      <if test="goWhid != null">
-        go_whid = #{goWhid,jdbcType=VARCHAR},
-      </if>
-      <if test="goP != null">
-        go_p = #{goP,jdbcType=VARCHAR},
-      </if>
-      <if test="goVolume != null">
-        go_volume = #{goVolume,jdbcType=DOUBLE},
-      </if>
-      <if test="goUsevolume != null">
-        go_usevolume = #{goUsevolume,jdbcType=DOUBLE},
-      </if>
-      <if test="goRdvolume != null">
-        go_rdvolume = #{goRdvolume,jdbcType=DOUBLE},
-      </if>
-    </set>
-    where go_id = #{goId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.wms.bean.Godown">
-    update godown
-    set go_whid = #{goWhid,jdbcType=VARCHAR},
-      go_p = #{goP,jdbcType=VARCHAR},
-      go_volume = #{goVolume,jdbcType=DOUBLE},
-      go_usevolume = #{goUsevolume,jdbcType=DOUBLE},
-      go_rdvolume = #{goRdvolume,jdbcType=DOUBLE}
-    where go_id = #{goId,jdbcType=INTEGER}
-  </update>
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.wms.bean.Godown">
+        insert into godown
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goId != null">
+                go_id,
+            </if>
+            <if test="goWhid != null">
+                go_whid,
+            </if>
+            <if test="goP != null">
+                go_p,
+            </if>
+            <if test="goVolume != null">
+                go_volume,
+            </if>
+            <if test="goUsevolume != null">
+                go_usevolume,
+            </if>
+            <if test="goRdvolume != null">
+                go_rdvolume,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goId != null">
+                #{goId,jdbcType=INTEGER},
+            </if>
+            <if test="goWhid != null">
+                #{goWhid,jdbcType=VARCHAR},
+            </if>
+            <if test="goP != null">
+                #{goP,jdbcType=VARCHAR},
+            </if>
+            <if test="goVolume != null">
+                #{goVolume,jdbcType=DOUBLE},
+            </if>
+            <if test="goUsevolume != null">
+                #{goUsevolume,jdbcType=DOUBLE},
+            </if>
+            <if test="goRdvolume != null">
+                #{goRdvolume,jdbcType=DOUBLE},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Godown">
+        update godown
+        <set>
+            <if test="goWhid != null">
+                go_whid = #{goWhid,jdbcType=VARCHAR},
+            </if>
+            <if test="goP != null">
+                go_p = #{goP,jdbcType=VARCHAR},
+            </if>
+            <if test="goVolume != null">
+                go_volume = #{goVolume,jdbcType=DOUBLE},
+            </if>
+            <if test="goUsevolume != null">
+                go_usevolume = #{goUsevolume,jdbcType=DOUBLE},
+            </if>
+            <if test="goRdvolume != null">
+                go_rdvolume = #{goRdvolume,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where go_id = #{goId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.wms.bean.Godown">
+        update godown
+        set go_whid = #{goWhid,jdbcType=VARCHAR},
+          go_p = #{goP,jdbcType=VARCHAR},
+          go_volume = #{goVolume,jdbcType=DOUBLE},
+          go_usevolume = #{goUsevolume,jdbcType=DOUBLE},
+          go_rdvolume = #{goRdvolume,jdbcType=DOUBLE}
+        where go_id = #{goId,jdbcType=INTEGER}
+    </update>
 </mapper>

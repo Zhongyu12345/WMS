@@ -12,7 +12,7 @@ INSERT INTO resource VALUES (null,'出货单删除','/shipment/delete','出货�
 
 INSERT INTO resource VALUES (null,'调拨出库单添加','/allotout/insert','调拨出库单添加','icon-add','27','0','0','1','2016-12-26 00:00:00');
 INSERT INTO resource VALUES (null,'调拨出库单修改','/allotout/update','调拨出库单修改','icon-edit','27','0','0','1','2016-12-26 00:00:00');
-INSERT INTO resource VALUES (null,'调拨出库单删除','/shipment/delete','调拨出库单删除','icon-del','27','0','0','1','2016-12-26 00:00:00');
+INSERT INTO resource VALUES (null,'调拨出库单删除','/allotout/delete','调拨出库单删除','icon-del','27','0','0','1','2016-12-26 00:00:00');
 
 INSERT INTO resource VALUES (null,'越库出货单添加','/crossDatabase/insert','越库出货单添加','icon-add','29','0','0','1','2016-12-26 00:00:00');
 INSERT INTO resource VALUES (null,'越库出货单修改','/crossDatabase/update','越库出货单修改','icon-edit','29','0','0','1','2016-12-26 00:00:00');
