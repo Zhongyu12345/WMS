@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.CompayMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.Compay">
+    <id column="caid" jdbcType="INTEGER" property="caid" />
+    <result column="caaccounts" jdbcType="VARCHAR" property="caaccounts" />
+    <result column="caname" jdbcType="VARCHAR" property="caname" />
+    <result column="camoney" jdbcType="DECIMAL" property="camoney" />
+    <result column="cacount" jdbcType="DECIMAL" property="cacount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    caid, caaccounts, caname, camoney, cacount
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from compay
+    where caid = #{caid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from compay
+    where caid = #{caid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.Compay">
+    insert into compay (caid, caaccounts, caname, 
+      camoney, cacount)
+    values (#{caid,jdbcType=INTEGER}, #{caaccounts,jdbcType=VARCHAR}, #{caname,jdbcType=VARCHAR}, 
+      #{camoney,jdbcType=DECIMAL}, #{cacount,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.Compay">
+    insert into compay
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="caid != null">
+        caid,
+      </if>
+      <if test="caaccounts != null">
+        caaccounts,
+      </if>
+      <if test="caname != null">
+        caname,
+      </if>
+      <if test="camoney != null">
+        camoney,
+      </if>
+      <if test="cacount != null">
+        cacount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="caid != null">
+        #{caid,jdbcType=INTEGER},
+      </if>
+      <if test="caaccounts != null">
+        #{caaccounts,jdbcType=VARCHAR},
+      </if>
+      <if test="caname != null">
+        #{caname,jdbcType=VARCHAR},
+      </if>
+      <if test="camoney != null">
+        #{camoney,jdbcType=DECIMAL},
+      </if>
+      <if test="cacount != null">
+        #{cacount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Compay">
+    update compay
+    <set>
+      <if test="caaccounts != null">
+        caaccounts = #{caaccounts,jdbcType=VARCHAR},
+      </if>
+      <if test="caname != null">
+        caname = #{caname,jdbcType=VARCHAR},
+      </if>
+      <if test="camoney != null">
+        camoney = #{camoney,jdbcType=DECIMAL},
+      </if>
+      <if test="cacount != null">
+        cacount = #{cacount,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where caid = #{caid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.Compay">
+    update compay
+    set caaccounts = #{caaccounts,jdbcType=VARCHAR},
+      caname = #{caname,jdbcType=VARCHAR},
+      camoney = #{camoney,jdbcType=DECIMAL},
+      cacount = #{cacount,jdbcType=DECIMAL}
+    where caid = #{caid,jdbcType=INTEGER}
+  </update>
+</mapper>

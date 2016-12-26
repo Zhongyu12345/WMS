@@ -3,67 +3,77 @@ package com.wms.bean;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotations.IdType;
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
-/**
- * income 收/入财务表
- */
 public class Income {
-	
 	@TableId(type = IdType.AUTO)
-	@TableField(value = "i_id")
-    private Integer iId;
+    private Integer iid;
 
-	@TableField(value = "i_income")
-    private Long iIncome;
+    private String icause;
 
-	@TableField(value = "i_pay")
-    private Long iPay;
+    private Date itime;
 
-	@TableField(value = "i_time")
-    private Date iTime;
+    private String iabout;
 
-	@TableField(value = "i_caid")
-    private Integer iCaid;
+    private Long icount;
 
-    public Integer getiId() {
-        return iId;
+    private Long iincome;
+
+    private Long ibalance;
+
+    public Integer getIid() {
+        return iid;
     }
 
-    public void setiId(Integer iId) {
-        this.iId = iId;
+    public void setIid(Integer iid) {
+        this.iid = iid;
     }
 
-    public Long getiIncome() {
-        return iIncome;
+    public String getIcause() {
+        return icause;
     }
 
-    public void setiIncome(Long iIncome) {
-        this.iIncome = iIncome;
+    public void setIcause(String icause) {
+        this.icause = icause == null ? null : icause.trim();
     }
 
-    public Long getiPay() {
-        return iPay;
+    public Date getItime() {
+        return itime;
     }
 
-    public void setiPay(Long iPay) {
-        this.iPay = iPay;
+    public void setItime(Date itime) {
+        this.itime = itime;
     }
 
-    public Date getiTime() {
-        return iTime;
+    public String getIabout() {
+        return iabout;
     }
 
-    public void setiTime(Date iTime) {
-        this.iTime = iTime;
+    public void setIabout(String iabout) {
+        this.iabout = iabout == null ? null : iabout.trim();
     }
 
-    public Integer getiCaid() {
-        return iCaid;
+    public Long getIcount() {
+        return icount;
     }
 
-    public void setiCaid(Integer iCaid) {
-        this.iCaid = iCaid;
+    public void setIcount(Long icount) {
+        this.icount = icount;
+    }
+
+    public Long getIincome() {
+        return iincome;
+    }
+
+    public void setIincome(Long iincome) {
+        this.iincome = iincome;
+    }
+
+    public Long getIbalance() {
+        return ibalance;
+    }
+
+    public void setIbalance(Long ibalance) {
+        this.ibalance = ibalance;
     }
 }
