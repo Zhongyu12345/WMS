@@ -17,9 +17,9 @@
                 <td><input name="name" placeholder="请输入货物名称"/></td>
                 <th>调整时间:</th>
                 <td>
-                    <input name="startTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly"/>
+                    <input name="startTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/>
                     至
-                    <input name="endTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly"/>
+                    <input name="endTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/>
                     <a href="javascript:void(0);" class="easyui-linkbutton" required data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
                     <a href="javascript:void(0);" class="easyui-linkbutton" required data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
                 </td>
@@ -54,8 +54,8 @@
             pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
             columns: [[{
                 width: '100',
-                title: '单号',
-                field: 'aoId',
+                title: '调拨单号',
+                field: 'aoSippingno',
                 sortable: true
             }, {
                 width: '150',

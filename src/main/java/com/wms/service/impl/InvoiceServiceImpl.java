@@ -2,6 +2,7 @@ package com.wms.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wms.bean.Invoice;
+import com.wms.commons.utils.OrderNumberUtil;
 import com.wms.commons.utils.PageInfo;
 import com.wms.dao.InvoiceMapper;
 import com.wms.service.InvoiceService;
@@ -39,6 +40,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public int addInvoice(Invoice invoice) {
+        invoice.setInOddnumber(OrderNumberUtil.generateOrderNo());
         return invoiceMapper.insert(invoice);
     }
 

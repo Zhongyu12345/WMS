@@ -40,8 +40,6 @@
                 <tr>
                     <td>号码</td>
                     <td><input name="shPhone" type="text" placeholder="请输入号码" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
-                    <td>客户托单号</td>
-                    <td><input name="shSippingno" type="text" placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                 </tr>
                 <tr>
                     <td>仓库编码</td>

@@ -30,6 +30,12 @@
             <if test=" name != null and name != '' ">
                 cd_name like #{name}
             </if>
+            <if test="startTime != null">
+                <![CDATA[  cd_time >= #{startTime} ]]>
+            </if>
+            <if test="endTime != null">
+                <![CDATA[ and cd_time <= #{endTime} ]]>
+            </if>
         </where>
     </select>
     <!-- 根据ID删除 -->

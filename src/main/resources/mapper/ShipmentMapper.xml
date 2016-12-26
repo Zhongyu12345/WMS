@@ -41,6 +41,12 @@
             <if test=" name != null and name != '' ">
                 sh_storeid like #{name}
             </if>
+            <if test="startTime != null">
+                <![CDATA[  sh_time >= #{startTime} ]]>
+            </if>
+            <if test="endTime != null">
+                <![CDATA[ and sh_time <= #{endTime} ]]>
+            </if>
         </where>
     </select>
     <!-- 根据ID删除-->

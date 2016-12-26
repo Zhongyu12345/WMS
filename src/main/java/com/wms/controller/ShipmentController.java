@@ -47,6 +47,12 @@ public class ShipmentController extends BaseController {
             String str = "%" + search.getName() + "%";
             condition.put("name", str);
         }
+        if (search.getStartTime() != null) {
+            condition.put("startTime", search.getStartTime());
+        }
+        if (search.getEndTime() != null) {
+            condition.put("endTime", search.getEndTime());
+        }
         logger.getName();
         pageInfo.setCondition(condition);
         shipmentService.selectDataGrid(pageInfo);
@@ -60,6 +66,7 @@ public class ShipmentController extends BaseController {
         return shipmentService.queryAll();
     }
 
+    /** 进入添加页面 */
     @GetMapping("shipment/insert")
     public String getAddShipmentPage() {
         return "outbound/shipmentAdd";

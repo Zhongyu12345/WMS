@@ -48,6 +48,12 @@ public class InvoiceController extends BaseController {
             String str = "%" + search.getName() + "%";
             condition.put("name", str);
         }
+        if (search.getStartTime() != null) {
+            condition.put("startTime", search.getStartTime());
+        }
+        if (search.getEndTime() != null) {
+            condition.put("endTime", search.getEndTime());
+        }
         pageInfo.setCondition(condition);
         invoiceService.selectDataGrid(pageInfo);
         return pageInfo;

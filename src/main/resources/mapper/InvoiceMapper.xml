@@ -30,6 +30,12 @@
             <if test=" name != null and name != '' ">
                 in_name like #{name}
             </if>
+            <if test="startTime != null">
+                <![CDATA[  in_time >= #{startTime} ]]>
+            </if>
+            <if test="endTime != null">
+                <![CDATA[ and in_time <= #{endTime} ]]>
+            </if>
         </where>
     </select>
     <!-- 根据ID删除 -->
