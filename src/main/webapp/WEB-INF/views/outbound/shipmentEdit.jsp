@@ -24,6 +24,23 @@
                 }
             }
         });
+
+        $("#shWhid").val('${shipment.shWhid}');
+
+        $("#selectCombobox").combobox({
+            url: "${path }/godown/godownComboBox",
+            method: 'get',
+            valueField: 'id',
+            textField: 'text',
+            panelHeight: 'auto',
+            onLoadSuccess: function () {
+                var data = $('#selectCombobox').combobox('getData');
+                if (data.length > 0) {
+                    $("#selectCombobox").combobox('select', data[0].id);
+                }
+            }
+        });
+
     });
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
@@ -33,49 +50,40 @@
                 <tr>
                     <td>货主</td>
                     <input name="shId" type="hidden" value="${shipment.shId}">
-                    <td><input name="shStoreid" type="text" placeholder="请输入货主" class="easyui-validatebox"
-                               data-options="required:true" value="${shipment.shStoreid}"></td>
+                    <td><input name="shStoreid" type="text" placeholder="请输入货主" class="easyui-validatebox" data-options="required:true" value="${shipment.shStoreid}"></td>
                     <td>实际出货时间</td>
-                    <td><input name="addtime" placeholder="点击选择时间"
-                               onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly"
-                               value="<fmt:formatDate pattern="yyyy-MM-dd" value="${shipment.shTime}" />"/></td>
+                    <td><input name="addtime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${shipment.shTime}" />"/></td>
                 </tr>
                 <tr>
                     <td>号码</td>
-                    <td><input name="shPhone" type="text" placeholder="请输入号码" class="easyui-validatebox"
-                               data-options="required:true" value="${shipment.shPhone}"></td>
+                    <td><input name="shPhone" type="text" placeholder="请输入号码" class="easyui-validatebox" data-options="required:true" value="${shipment.shPhone}"></td>
                     <td>客户托单号</td>
-                    <td><input name="shSippingno" type="text" placeholder="请输入客户托单号" class="easyui-validatebox"
-                               data-options="required:true" value="${shipment.shSippingno}"></td>
+                    <td><input name="shSippingno" type="text" placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true" value="${shipment.shSippingno}"></td>
                 </tr>
                 <tr>
                     <td>仓库编码</td>
-                    <td><input name="shWhid" type="text" placeholder="请输入仓库编码" class="easyui-validatebox"
-                               data-options="required:true" value="${shipment.shWhid}"></td>
+                    <td><input name="shWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
+                    <!--
+                    <td><input name="shWhid" type="text" placeholder="请输入仓库编码" class="easyui-validatebox" data-options="required:true" value="${shipment.shWhid}"></td>
+                    -->
                     <td>损坏数量</td>
-                    <td><input name="shDamage" type="text" placeholder="请输入损坏数量" class="easyui-validatebox"
-                               data-options="required:true" value="${shipment.shDamage}"></td>
+                    <td><input name="shDamage" type="text" placeholder="请输入损坏数量" class="easyui-validatebox" data-options="required:true" value="${shipment.shDamage}"></td>
                 </tr>
                 <tr>
                     <td>损坏原因</td>
-                    <td colspan="3"><textarea rows="3" cols="40" name="shCause"
-                                              style="width: 397px;height: 50px;">${shipment.shCause}</textarea></td>
+                    <td colspan="3"><textarea rows="3" cols="40" name="shCause" style="width: 397px;height: 50px;">${shipment.shCause}</textarea></td>
                 </tr>
                 <tr>
                     <td>型号</td>
-                    <td><input name="shSkumodel" type="text" placeholder="请输入型号" class="easyui-validatebox"
-                               data-options="required:true" value="${shipment.shSkumodel}"></td>
+                    <td><input name="shSkumodel" type="text" placeholder="请输入型号" class="easyui-validatebox" data-options="required:true" value="${shipment.shSkumodel}"></td>
                     <td>实际出货数量</td>
-                    <td><input name="shShnum" type="text" placeholder="请输入实际出货数量" class="easyui-validatebox"
-                               data-options="required:true" value="${shipment.shShnum}"></td>
+                    <td><input name="shShnum" type="text" placeholder="请输入实际出货数量" class="easyui-validatebox" data-options="required:true" value="${shipment.shShnum}"></td>
                 </tr>
                 <tr>
                     <td>发货毛重</td>
-                    <td><input name="shTotalweigh" type="text" placeholder="请输入发货毛重" class="easyui-validatebox"
-                               data-options="required:true" value="${shipment.shTotalweigh}"></td>
+                    <td><input name="shTotalweigh" type="text" placeholder="请输入发货毛重" class="easyui-validatebox" data-options="required:true" value="${shipment.shTotalweigh}"></td>
                     <td>发货体积</td>
-                    <td><input name="shTotalvolume" type="text" placeholder="请输入发货体积" class="easyui-validatebox"
-                               data-options="required:true" value="${shipment.shTotalvolume}"></td>
+                    <td><input name="shTotalvolume" type="text" placeholder="请输入发货体积" class="easyui-validatebox" data-options="required:true" value="${shipment.shTotalvolume}"></td>
                 </tr>
             </table>
         </form>

@@ -14,6 +14,14 @@
         <result column="sh_shnum" jdbcType="DOUBLE" property="shShnum"/>
         <result column="sh_totalweigh" jdbcType="DOUBLE" property="shTotalweigh"/>
         <result column="sh_totalvolume" jdbcType="DOUBLE" property="shTotalvolume"/>
+        <collection property="godowns" ofType="com.wms.bean.Godown">
+            <id column="go_id" jdbcType="INTEGER" property="goId"/>
+            <result column="go_whid" jdbcType="VARCHAR" property="goWhid"/>
+            <result column="go_p" jdbcType="VARCHAR" property="goP"/>
+            <result column="go_volume" jdbcType="DOUBLE" property="goVolume"/>
+            <result column="go_usevolume" jdbcType="DOUBLE" property="goUsevolume"/>
+            <result column="go_rdvolume" jdbcType="DOUBLE" property="goRdvolume"/>
+        </collection>
     </resultMap>
     <sql id="Base_Column_List">
         sh_id, sh_storeid, sh_time, sh_phone, sh_sippingNO, sh_whid, sh_damage, sh_cause,
@@ -34,6 +42,16 @@
     </select>
     <!-- 分页查询 -->
     <select id="selectShipmentPage" resultMap="BaseResultMap">
+        SELECT
+            sh.sh_id, sh.sh_storeid, sh.sh_time, sh.sh_phone, sh.sh_sippingNO, sh.sh_whid, sh.sh_damage, sh.sh_cause, sh.sh_SKUmodel, sh.sh_shnum, sh.sh_totalweigh, sh.sh_totalvolume,
+            g.*
+        FROM
+            shipment sh,
+            godown g
+        WHERE
+          sh.sh_whid = g.go_id
+    </select>
+    <!--<select id="selectShipmentPage" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from shipment
@@ -48,7 +66,7 @@
                 <![CDATA[ and sh_time <= #{endTime} ]]>
             </if>
         </where>
-    </select>
+    </select>-->
     <!-- 根据ID删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from shipment

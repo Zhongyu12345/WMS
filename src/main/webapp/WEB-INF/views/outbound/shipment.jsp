@@ -80,9 +80,16 @@
                 sortable: true
             }, {
                 width: '80',
-                title: '仓库编码',
-                field: 'shWhid',
-                sortable: true
+                title: '仓库',
+                field: 'godowns',
+                sortable: true,
+                formatter: function (value) {
+                    var roles = [];
+                    for(var i = 0; i< value.length; i++) {
+                        roles.push(value[i].goWhid);
+                    }
+                    return(roles.join('\n'));
+                }
             }, {
                 width: '60',
                 title: '损坏数量',
@@ -212,6 +219,10 @@
     function cleanFun() {
         $('#searchForm input').val('');
         dataGrid.datagrid('load', {});
+    }
+
+    function goWhid(value) {
+        return value.goWhid;
     }
 </script>
 </body>
