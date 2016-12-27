@@ -14,17 +14,31 @@
     <sql id="Base_Column_List">
       cd_id, cd_name, cd_SKUmodel, cd_num, cd_whid, cd_oddnumbers, cd_time, cd_volume
     </sql>
+    <!-- 根据ID查询 -->
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from cross_database
         where cd_id = #{cdId,jdbcType=INTEGER}
     </select>
+    <!-- 分页查询 -->
     <select id="selectCrossDatabasePage" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from cross_database
+        <where>
+            <if test=" name != null and name != '' ">
+                cd_name like #{name}
+            </if>
+            <if test="startTime != null">
+                <![CDATA[  cd_time >= #{startTime} ]]>
+            </if>
+            <if test="endTime != null">
+                <![CDATA[ and cd_time <= #{endTime} ]]>
+            </if>
+        </where>
     </select>
+    <!-- 根据ID删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from cross_database
         where cd_id = #{cdId,jdbcType=INTEGER}

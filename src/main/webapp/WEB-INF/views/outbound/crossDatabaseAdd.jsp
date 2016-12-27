@@ -44,12 +44,8 @@
                     <td><input name="cdWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"/></td>
                 </tr>
                 <tr>
-                    <td>发货单号</td>
-                    <td><input name="cdOddnumbers" type="text" placeholder="请输入发货单号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"/></td>
                     <td>发货时间</td>
                     <td><input name="byTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly"/></td>
-                </tr>
-                <tr>
                     <td>货物体积</td>
                     <td><input name="cdVolume" type="text" placeholder="请输入货物体积" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                 </tr>

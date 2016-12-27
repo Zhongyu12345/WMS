@@ -2,6 +2,7 @@ package com.wms.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wms.bean.CrossDatabase;
+import com.wms.commons.utils.OrderNumberUtil;
 import com.wms.commons.utils.PageInfo;
 import com.wms.dao.CrossDatabaseMapper;
 import com.wms.service.CrossDatabaseService;
@@ -39,6 +40,7 @@ public class CrossDatabaseServiceImpl implements CrossDatabaseService {
 
     @Override
     public int addCrossDatabase(CrossDatabase crossDatabase) {
+        crossDatabase.setCdOddnumbers(OrderNumberUtil.generateOrderNo());
         return crossDatabaseMapper.insert(crossDatabase);
     }
 

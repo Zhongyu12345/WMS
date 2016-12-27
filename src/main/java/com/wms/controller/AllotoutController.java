@@ -2,7 +2,9 @@ package com.wms.controller;
 
 import com.wms.bean.Allotout;
 import com.wms.commons.base.BaseController;
+import com.wms.commons.bean.Search;
 import com.wms.commons.utils.PageInfo;
+import com.wms.commons.utils.StringUtils;
 import com.wms.commons.utils.TimeUtils;
 import com.wms.service.AllotoutService;
 import org.apache.ibatis.annotations.Param;
@@ -41,13 +43,22 @@ public class AllotoutController extends BaseController {
         return "outbound/allotoutAdd";
     }
 
+    /** 分页查询 模糊查询 */
     @ResponseBody
     @PostMapping("dataGrid")
-    public Object dataGrid(Allotout allotout, Integer page, Integer rows, String sort, String order) {
-        //TODO:此处待搜索查询
+    public Object dataGrid(Search search, Integer page, Integer rows, String startTime) {
         PageInfo pageInfo = new PageInfo(page, rows);
-        logger.info("");
         Map<String, Object> condition = new HashMap<String, Object>();
+        if (StringUtils.isNotBlank(search.getName())) {
+            String str = "%" + search.getName() + "%";
+            condition.put("name", str);
+        }
+        if (search.getStartTime() != null) {
+            condition.put("startTime", search.getStartTime());
+        }
+        if (search.getEndTime() != null) {
+            condition.put("endTime", search.getEndTime());
+        }
         pageInfo.setCondition(condition);
         allotoutService.selectDataGrid(pageInfo);
         return pageInfo;

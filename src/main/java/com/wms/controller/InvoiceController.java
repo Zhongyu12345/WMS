@@ -2,7 +2,9 @@ package com.wms.controller;
 
 import com.wms.bean.Invoice;
 import com.wms.commons.base.BaseController;
+import com.wms.commons.bean.Search;
 import com.wms.commons.utils.PageInfo;
+import com.wms.commons.utils.StringUtils;
 import com.wms.commons.utils.TimeUtils;
 import com.wms.service.InvoiceService;
 import org.slf4j.Logger;
@@ -38,11 +40,20 @@ public class InvoiceController extends BaseController {
     /** 分页查询 */
     @ResponseBody
     @PostMapping("dataGrid")
-    public Object dataGrid(Invoice invoice, Integer page, Integer rows, String sort, String order) {
-        //TODO:此处待搜索查询
-        logger.info("直接发货分页查询");
+    public Object dataGrid(Search search, Integer page, Integer rows, String sort, String order) {
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<String, Object>();
+        if (StringUtils.isNotBlank(search.getName())) {
+            logger.getName().toString();
+            String str = "%" + search.getName() + "%";
+            condition.put("name", str);
+        }
+        if (search.getStartTime() != null) {
+            condition.put("startTime", search.getStartTime());
+        }
+        if (search.getEndTime() != null) {
+            condition.put("endTime", search.getEndTime());
+        }
         pageInfo.setCondition(condition);
         invoiceService.selectDataGrid(pageInfo);
         return pageInfo;

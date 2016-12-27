@@ -26,6 +26,17 @@
         select
         <include refid="Base_Column_List"/>
         from allotout
+        <where>
+            <if test=" name != null and name != '' ">
+                ao_name like #{name}
+            </if>
+            <if test="startTime != null">
+                <![CDATA[  ao_time >= #{startTime} ]]>
+            </if>
+            <if test="endTime != null">
+                <![CDATA[ and ao_time <= #{endTime} ]]>
+            </if>
+        </where>
     </select>
     <!-- 根据ID删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

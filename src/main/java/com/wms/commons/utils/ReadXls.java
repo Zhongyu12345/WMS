@@ -20,6 +20,7 @@ public class ReadXls {
 	@SuppressWarnings("resource")
 	public static List<List<String>> readxls(String path) throws Exception{
 		InputStream is = new FileInputStream(path);
+
 		String name = path.substring(path.lastIndexOf(".")+1);
 		if(name.equals("xls")){
 			HSSFWorkbook hssfWorkbook = new HSSFWorkbook(is);//HSSFWorkbook表示整个excel

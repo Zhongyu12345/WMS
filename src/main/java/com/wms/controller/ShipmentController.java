@@ -2,7 +2,9 @@ package com.wms.controller;
 
 import com.wms.bean.Shipment;
 import com.wms.commons.base.BaseController;
+import com.wms.commons.bean.Search;
 import com.wms.commons.utils.PageInfo;
+import com.wms.commons.utils.StringUtils;
 import com.wms.commons.utils.TimeUtils;
 import com.wms.service.ShipmentService;
 import org.slf4j.Logger;
@@ -38,11 +40,20 @@ public class ShipmentController extends BaseController {
     /** 分页查询 */
     @ResponseBody
     @PostMapping("dataGrid")
-    public Object dataGrid(Shipment shipment, Integer page, Integer rows, String sort, String order) {
-        //TODO:此处待搜索查询
-        logger.info("分页查询");
+    public Object dataGrid(Search search, Integer page, Integer rows) {
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<String, Object>();
+        if (StringUtils.isNotBlank(search.getName())) {
+            String str = "%" + search.getName() + "%";
+            condition.put("name", str);
+        }
+        if (search.getStartTime() != null) {
+            condition.put("startTime", search.getStartTime());
+        }
+        if (search.getEndTime() != null) {
+            condition.put("endTime", search.getEndTime());
+        }
+        logger.getName();
         pageInfo.setCondition(condition);
         shipmentService.selectDataGrid(pageInfo);
         return pageInfo;
@@ -55,6 +66,7 @@ public class ShipmentController extends BaseController {
         return shipmentService.queryAll();
     }
 
+    /** 进入添加页面 */
     @GetMapping("shipment/insert")
     public String getAddShipmentPage() {
         return "outbound/shipmentAdd";

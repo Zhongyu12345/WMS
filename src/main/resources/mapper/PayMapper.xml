@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.PayMapper">
+  <resultMap id="BaseResultMap" type="com.wms.bean.Pay">
+    <id column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="pcause" jdbcType="VARCHAR" property="pcause" />
+    <result column="ptime" jdbcType="TIMESTAMP" property="ptime" />
+    <result column="pabout" jdbcType="VARCHAR" property="pabout" />
+    <result column="pcount" jdbcType="DECIMAL" property="pcount" />
+    <result column="ppay" jdbcType="DECIMAL" property="ppay" />
+    <result column="punexpense" jdbcType="DECIMAL" property="punexpense" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pid, pcause, ptime, pabout, pcount, ppay, punexpense
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pay
+    where pid = #{pid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pay
+    where pid = #{pid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.Pay">
+    insert into pay (pid, pcause, ptime, 
+      pabout, pcount, ppay, 
+      punexpense)
+    values (#{pid,jdbcType=INTEGER}, #{pcause,jdbcType=VARCHAR}, #{ptime,jdbcType=TIMESTAMP}, 
+      #{pabout,jdbcType=VARCHAR}, #{pcount,jdbcType=DECIMAL}, #{ppay,jdbcType=DECIMAL}, 
+      #{punexpense,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.Pay">
+    insert into pay
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="pcause != null">
+        pcause,
+      </if>
+      <if test="ptime != null">
+        ptime,
+      </if>
+      <if test="pabout != null">
+        pabout,
+      </if>
+      <if test="pcount != null">
+        pcount,
+      </if>
+      <if test="ppay != null">
+        ppay,
+      </if>
+      <if test="punexpense != null">
+        punexpense,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="pcause != null">
+        #{pcause,jdbcType=VARCHAR},
+      </if>
+      <if test="ptime != null">
+        #{ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pabout != null">
+        #{pabout,jdbcType=VARCHAR},
+      </if>
+      <if test="pcount != null">
+        #{pcount,jdbcType=DECIMAL},
+      </if>
+      <if test="ppay != null">
+        #{ppay,jdbcType=DECIMAL},
+      </if>
+      <if test="punexpense != null">
+        #{punexpense,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Pay">
+    update pay
+    <set>
+      <if test="pcause != null">
+        pcause = #{pcause,jdbcType=VARCHAR},
+      </if>
+      <if test="ptime != null">
+        ptime = #{ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pabout != null">
+        pabout = #{pabout,jdbcType=VARCHAR},
+      </if>
+      <if test="pcount != null">
+        pcount = #{pcount,jdbcType=DECIMAL},
+      </if>
+      <if test="ppay != null">
+        ppay = #{ppay,jdbcType=DECIMAL},
+      </if>
+      <if test="punexpense != null">
+        punexpense = #{punexpense,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.Pay">
+    update pay
+    set pcause = #{pcause,jdbcType=VARCHAR},
+      ptime = #{ptime,jdbcType=TIMESTAMP},
+      pabout = #{pabout,jdbcType=VARCHAR},
+      pcount = #{pcount,jdbcType=DECIMAL},
+      ppay = #{ppay,jdbcType=DECIMAL},
+      punexpense = #{punexpense,jdbcType=DECIMAL}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+</mapper>

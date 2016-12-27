@@ -24,7 +24,20 @@
                 }
             }
         });
-
+        <!-- EasyUI下拉框 -->
+        $("#selectCombobox").combobox({
+            url: "${path }/godown/godownComboBox",
+            method: 'get',
+            valueField: 'id',
+            textField: 'text',
+            panelHeight: 'auto',
+            onLoadSuccess: function () {
+                var data = $('#selectCombobox').combobox('getData');
+                if (data.length > 0) {
+                    $("#selectCombobox").combobox('select', data[0].text);
+                }
+            }
+        });
     });
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
@@ -40,12 +53,11 @@
                 <tr>
                     <td>号码</td>
                     <td><input name="shPhone" type="text" placeholder="请输入号码" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
-                    <td>客户托单号</td>
-                    <td><input name="shSippingno" type="text" placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                 </tr>
                 <tr>
                     <td>仓库编码</td>
-                    <td><input name="shWhid" type="text" placeholder="请输入仓库编码" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
+                    <!-- EasyUI下拉框 -->
+                    <td><input id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
                     <td>损坏数量</td>
                     <td><input name="shDamage" type="number" placeholder="请输入损坏数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                 </tr>

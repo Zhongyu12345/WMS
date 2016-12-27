@@ -9,6 +9,24 @@
     <title>调拨出库管理</title>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
+<div data-options="region:'north',border:false" style="height: 30px; overflow: hidden;background-color: #fff">
+    <form id="searchForm">
+        <table>
+            <tr>
+                <th>货物名称:</th>
+                <td><input name="name" placeholder="请输入货物名称"/></td>
+                <th>调整时间:</th>
+                <td>
+                    <input name="startTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/>
+                    至
+                    <input name="endTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/>
+                    <a href="javascript:void(0);" class="easyui-linkbutton" required data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
+                    <a href="javascript:void(0);" class="easyui-linkbutton" required data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 <div data-options="region:'center',border:true,title:'出货单列表'">
     <table id="dataGrid" data-options="fit:true,border:false"></table>
 </div>
@@ -34,12 +52,12 @@
             sortOrder: 'asc',
             pageSize: 20,
             pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
-            columns: [[{
+            columns: [[/*{
                 width: '100',
-                title: '单号',
-                field: 'aoId',
+                title: '调拨单号',
+                field: 'aoSippingno',
                 sortable: true
-            }, {
+            },*/ {
                 width: '150',
                 title: '货物名称',
                 field: 'aoName',
@@ -60,7 +78,7 @@
                 field: 'aoWhid',
                 sortable: true
             }, {
-                width: '150',
+                width: '250',
                 title: '调拨单号',
                 field: 'aoSippingno',
                 sortable: true
@@ -163,6 +181,17 @@
                 }
             }]
         });
+    }
+
+    <!-- \\\\\\\\\\ 搜索操作 \\\\\\\\\\ -->
+    function searchFun() {
+        dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
+    }
+
+    <!-- \\\\\\\\\\ 清理操作 \\\\\\\\\\ -->
+    function cleanFun() {
+        $('#searchForm input').val('');
+        dataGrid.datagrid('load', {});
     }
 </script>
 </body>

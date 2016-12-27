@@ -9,6 +9,24 @@
     <title>出货管理</title>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
+<div data-options="region:'north',border:false" style="height: 30px; overflow: hidden;background-color: #fff">
+    <form id="searchForm">
+        <table>
+            <tr>
+                <th>货物名称:</th>
+                <td><input name="name" placeholder="请输入货主"/></td>
+                <th>调整时间:</th>
+                <td>
+                    <input name="startTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/>
+                    至
+                    <input name="endTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/>
+                    <a href="javascript:void(0);" class="easyui-linkbutton" required data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
+                    <a href="javascript:void(0);" class="easyui-linkbutton" required data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 <div data-options="region:'center',border:true,title:'出货单列表'">
     <table id="dataGrid" data-options="fit:true,border:false"></table>
 </div>
@@ -29,17 +47,17 @@
             pagination: true,
             singleSelect: true,
             height: '25',
-            idField: 'id',
+            idField: 'shId',
             sortName: 'shTime',
             sortOrder: 'asc',
             pageSize: 20,
             pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
-            columns: [[{
+            columns: [[/*{
                 width: '70',
                 title: '出货单编号',
                 field: 'shId',
                 sortable: true
-            }, {
+            }, */{
                 width: '80',
                 title: '货主',
                 field: 'shStoreid',
@@ -56,7 +74,7 @@
                 field: 'shPhone',
                 sortable: true
             }, {
-                width: '100',
+                width: '150',
                 title: '客户托单号',
                 field: 'shSippingno',
                 sortable: true
@@ -71,7 +89,7 @@
                 field: 'shDamage',
                 sortable: true
             }, {
-                width: '115',
+                width: '130',
                 title: '损坏原因',
                 field: 'shCause',
                 sortable: true
@@ -145,7 +163,7 @@
         } else {//点击操作里面的删除图标会触发这个
             dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
         }
-        parent.$.messager.confirm('询问', '您是否要删除当前用户？', function (b) {
+        parent.$.messager.confirm('询问', '您是否要删除当前单号？', function (b) {
             if (b) {
                 progressLoad();
                 $.post('${path }/shipment/shipment/delete', {
@@ -183,6 +201,17 @@
                 }
             }]
         });
+    }
+
+    <!-- \\\\\\\\\\ 搜索操作 \\\\\\\\\\ -->
+    function searchFun() {
+        dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
+    }
+
+    <!-- \\\\\\\\\\ 清理操作 \\\\\\\\\\ -->
+    function cleanFun() {
+        $('#searchForm input').val('');
+        dataGrid.datagrid('load', {});
     }
 </script>
 </body>

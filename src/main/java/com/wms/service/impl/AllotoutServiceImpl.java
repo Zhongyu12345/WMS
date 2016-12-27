@@ -2,6 +2,7 @@ package com.wms.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wms.bean.Allotout;
+import com.wms.commons.utils.OrderNumberUtil;
 import com.wms.commons.utils.PageInfo;
 import com.wms.dao.AllotoutMapper;
 import com.wms.service.AllotoutService;
@@ -21,6 +22,7 @@ public class AllotoutServiceImpl implements AllotoutService {
 
     @Override
     public int addAllotout(Allotout allotout) {
+        allotout.setAoSippingno(OrderNumberUtil.generateOrderNo());
         return allotoutMapper.insert(allotout);
     }
 
