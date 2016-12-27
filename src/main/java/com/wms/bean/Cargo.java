@@ -1,7 +1,6 @@
 package com.wms.bean;
 
 import java.util.Date;
-
 import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -33,7 +32,11 @@ public class Cargo {
 	@TableField(value = "c_num")
     private Integer cNum;
 
-	/**
+	private Date createdateStart;
+
+	private Date createdateEnd;
+
+    /**
 	 * 不要
 	 */
 	@TableField(value = "c_totalweight")
@@ -134,5 +137,21 @@ public class Cargo {
 
     public void setcSkumodel(String cSkumodel) {
         this.cSkumodel = cSkumodel == null ? null : cSkumodel.trim();
+    }
+
+    public Date getCreatedateStart() {
+        return createdateStart;
+    }
+
+    public void setCreatedateStart(Date createdateStart) {
+        this.createdateStart = createdateStart;
+    }
+
+    public Date getCreatedateEnd() {
+        return createdateEnd;
+    }
+
+    public void setCreatedateEnd(Date createdateEnd) {
+        this.createdateEnd = createdateEnd;
     }
 }

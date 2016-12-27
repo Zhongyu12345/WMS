@@ -1,7 +1,6 @@
 package com.wms.bean;
 
 import java.util.Date;
-
 import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -32,6 +31,12 @@ public class CargoBorrow {
 
 	@TableField(value = "cb_time")
     private Date cbTime;
+
+	@TableField(value = "cb_status")
+	private String cbStatus;
+
+	@TableField(value = "cb_Endtime")
+	private Date cbEndtime;
 
 	private Date createdateStart;
 
@@ -107,5 +112,21 @@ public class CargoBorrow {
 
     public void setCreatedateEnd(Date createdateEnd) {
         this.createdateEnd = createdateEnd;
+    }
+
+    public String getCbStatus() {
+        return cbStatus;
+    }
+
+    public void setCbStatus(String cbStatus) {
+        this.cbStatus = cbStatus;
+    }
+
+    public Date getCbEndtime() {
+        return cbEndtime;
+    }
+
+    public void setCbEndtime(Date cbEndtime) {
+        this.cbEndtime = cbEndtime;
     }
 }

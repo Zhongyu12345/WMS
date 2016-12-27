@@ -33,6 +33,26 @@ public class MakeInventory {
 	@TableField(value = "mi_time")
     private Date miTime;
 
+	private Date createState;
+
+	private Date createEnd;
+
+    public Date getCreateState() {
+        return createState;
+    }
+
+    public void setCreateState(Date createState) {
+        this.createState = createState;
+    }
+
+    public Date getCreateEnd() {
+        return createEnd;
+    }
+
+    public void setCreateEnd(Date createEnd) {
+        this.createEnd = createEnd;
+    }
+
     public Integer getMiId() {
         return miId;
     }

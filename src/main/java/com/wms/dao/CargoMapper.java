@@ -1,7 +1,10 @@
 package com.wms.dao;
 
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import org.springframework.stereotype.Repository;
 import com.wms.bean.Cargo;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface CargoMapper {
@@ -12,6 +15,8 @@ public interface CargoMapper {
     int insertSelective(Cargo record);
 
     Cargo selectByPrimaryKey(Integer cId);
+
+    List<Cargo> select(Pagination page,Map<String,Object> map);
 
     int updateByPrimaryKeySelective(Cargo record);
 

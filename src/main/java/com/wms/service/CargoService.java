@@ -1,6 +1,7 @@
 package com.wms.service;
 
 import com.wms.bean.Cargo;
+import com.wms.commons.utils.PageInfo;
 
 public interface CargoService {
 	 	int deleteByPrimaryKey(Integer cId);
@@ -10,6 +11,8 @@ public interface CargoService {
 	    int insertSelective(Cargo record);
 
 	    Cargo selectByPrimaryKey(Integer cId);
+
+	   void select(PageInfo pageInfo);
 
 	    int updateByPrimaryKeySelective(Cargo record);
 

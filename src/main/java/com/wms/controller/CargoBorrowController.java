@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 货品借出登记
  * Created by DengMin on 2016/12/21.
  */
 @Controller
@@ -49,6 +50,7 @@ public class CargoBorrowController extends BaseController{
     @RequestMapping("/add")
     @ResponseBody
     public Object add(CargoBorrow cargoBorrow){
+        cargoBorrow.setCbStatus("未归还");
         int result = cargoborrowservice.insert(cargoBorrow);
         if(result > 0){
             return renderSuccess("添加成功");

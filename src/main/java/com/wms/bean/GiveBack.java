@@ -33,6 +33,10 @@ public class GiveBack {
 	@TableField(value = "gb_time")
     private Date gbTime;
 
+    private Date createdateStart;
+
+    private Date createdateEnd;
+
     public Integer getGbId() {
         return gbId;
     }
@@ -87,5 +91,21 @@ public class GiveBack {
 
     public void setGbTime(Date gbTime) {
         this.gbTime = gbTime;
+    }
+
+    public Date getCreatedateStart() {
+        return createdateStart;
+    }
+
+    public void setCreatedateStart(Date createdateStart) {
+        this.createdateStart = createdateStart;
+    }
+
+    public Date getCreatedateEnd() {
+        return createdateEnd;
+    }
+
+    public void setCreatedateEnd(Date createdateEnd) {
+        this.createdateEnd = createdateEnd;
     }
 }
