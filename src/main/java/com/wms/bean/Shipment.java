@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 实际出库表
@@ -48,6 +49,8 @@ public class Shipment {
 
     @TableField(value = "sh_totalvolume")
     private Double shTotalvolume;
+
+    private List<Godown> godowns;
 
     public Integer getShId() {
         return shId;
@@ -145,6 +148,14 @@ public class Shipment {
         this.shTotalvolume = shTotalvolume;
     }
 
+    public List<Godown> getGodowns() {
+        return godowns;
+    }
+
+    public void setGodowns(List<Godown> godowns) {
+        this.godowns = godowns;
+    }
+
     @Override
     public String toString() {
         return "Shipment{" +
@@ -160,6 +171,7 @@ public class Shipment {
                 ", shShnum=" + shShnum +
                 ", shTotalweigh=" + shTotalweigh +
                 ", shTotalvolume=" + shTotalvolume +
+                ", godowns=" + godowns +
                 '}';
     }
 }
