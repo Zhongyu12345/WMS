@@ -45,8 +45,7 @@ public class ShipmentController extends BaseController {
         Map<String, Object> condition = new HashMap<String, Object>();
         logger.info("出库表分页查询");
         if (StringUtils.isNotBlank(search.getName())) {
-            String str = "%" + search.getName() + "%";
-            condition.put("name", str);
+            condition.put("name", search.getName());
         }
         if (search.getStartTime() != null) {
             condition.put("startTime", search.getStartTime());

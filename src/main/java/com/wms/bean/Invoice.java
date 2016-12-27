@@ -1,10 +1,11 @@
 package com.wms.bean;
 
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Invoice 直接发货单
@@ -35,6 +36,8 @@ public class Invoice {
 
 	@TableField(value = "in_volume")
     private Double inVolume;
+
+    private List<Godown> godowns;
 
     public Integer getInId() {
         return inId;
@@ -98,5 +101,13 @@ public class Invoice {
 
     public void setInVolume(Double inVolume) {
         this.inVolume = inVolume;
+    }
+
+    public List<Godown> getGodowns() {
+        return godowns;
+    }
+
+    public void setGodowns(List<Godown> godowns) {
+        this.godowns = godowns;
     }
 }

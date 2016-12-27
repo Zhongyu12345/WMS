@@ -45,8 +45,7 @@ public class CrossDatabaseController extends BaseController {
         Map<String, Object> condition = new HashMap<String, Object>();
         if (StringUtils.isNotBlank(search.getName())) {
             logger.getName();
-            String str = "%" + search.getName() + "%";
-            condition.put("name", str);
+            condition.put("name", search.getName());
         }
         if (search.getStartTime() != null) {
             condition.put("startTime", search.getStartTime());
