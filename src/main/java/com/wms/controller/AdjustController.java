@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 库存调整单查询
  * Created by DengMin on 2016/12/20.
  */
 

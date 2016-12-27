@@ -1,11 +1,17 @@
 package com.wms.service.impl;
 
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
+import com.wms.commons.utils.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wms.bean.Cargo;
 import com.wms.dao.CargoMapper;
 import com.wms.service.CargoService;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class CargoServiceImpl implements CargoService {
@@ -15,8 +21,7 @@ public class CargoServiceImpl implements CargoService {
 
 	@Override
 	public int deleteByPrimaryKey(Integer cId) {
-		// TODO Auto-generated method stub
-		return 0;
+		return cargoMapper.deleteByPrimaryKey(cId);
 	}
 
 	@Override
@@ -26,25 +31,29 @@ public class CargoServiceImpl implements CargoService {
 
 	@Override
 	public int insertSelective(Cargo record) {
-		// TODO Auto-generated method stub
-		return 0;
+		return cargoMapper.insertSelective(record);
 	}
 
 	@Override
 	public Cargo selectByPrimaryKey(Integer cId) {
-		// TODO Auto-generated method stub
-		return null;
+		return cargoMapper.selectByPrimaryKey(cId);
+	}
+
+	@Override
+	public void select(PageInfo pageInfo) {
+		Page<Cargo> page = new Page<>(pageInfo.getNowpage(),pageInfo.getSize());
+		List<Cargo> list = cargoMapper.select(page,pageInfo.getCondition());
+		pageInfo.setRows(list);
+		pageInfo.setTotal(page.getTotal());
 	}
 
 	@Override
 	public int updateByPrimaryKeySelective(Cargo record) {
-		// TODO Auto-generated method stub
-		return 0;
+		return cargoMapper.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
 	public int updateByPrimaryKey(Cargo record) {
-		// TODO Auto-generated method stub
-		return 0;
+		return cargoMapper.updateByPrimaryKey(record);
 	}
 }

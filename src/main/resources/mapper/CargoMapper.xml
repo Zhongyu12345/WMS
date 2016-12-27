@@ -24,6 +24,22 @@
     from cargo
     where c_id = #{cId,jdbcType=INTEGER}
   </select>
+  <select id="select" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cargo
+    <where>
+      <if test="SKM != null and SKM != ''">
+        c_SKUmodel = #{SKM}
+      </if>
+      <if test="start != null">
+        <![CDATA[  c_receivedate >= #{start} ]]>
+      </if>
+      <if test="end != null">
+        <![CDATA[ and c_receivedate <= #{end} ]]>
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cargo
     where c_id = #{cId,jdbcType=INTEGER}

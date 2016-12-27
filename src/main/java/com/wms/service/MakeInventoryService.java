@@ -1,13 +1,16 @@
-package com.wms.dao;
+package com.wms.service;
 
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
-import org.springframework.stereotype.Repository;
 import com.wms.bean.MakeInventory;
+import com.wms.commons.utils.PageInfo;
+
 import java.util.List;
 import java.util.Map;
 
-@Repository
-public interface MakeInventoryMapper {
+/**
+ * Created by DengMin on 2016/12/23.
+ */
+public interface MakeInventoryService {
     int deleteByPrimaryKey(Integer miId);
 
     int insert(MakeInventory record);
@@ -16,7 +19,7 @@ public interface MakeInventoryMapper {
 
     MakeInventory selectByPrimaryKey(Integer miId);
 
-    List<MakeInventory> select(Pagination pagination,Map<String,Object> map);
+    void select(PageInfo pageInfo);
 
     int updateByPrimaryKeySelective(MakeInventory record);
 

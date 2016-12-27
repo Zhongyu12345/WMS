@@ -6,7 +6,7 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>货品借出登记</title>
+    <title>货品归还登记</title>
     <script type="text/javascript">
 
         var dataGrid;
@@ -57,43 +57,20 @@
                     title : '时间',
                     field : 'cbTime',
                     sortable : true
-                },{
-                    width : '150',
-                    title : '归还时间',
-                    field : 'cbEndtime',
-                    sortable : true
-                },{
-                    width : '90',
-                    title : '是否归还',
-                    field : 'cbStatus',
-                    sortable : true
-                },{
-                        field : 'action',
-                        title : '操作',
-                        width : 130,
-                        formatter : function(value, row, index) {
-                            var str = '';
-                            if(row.cbEndtime == null){
-                                <shiro:hasPermission name="/user/edit">
-                                str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.cbId);
-                                </shiro:hasPermission>
-                            }
-                            if(row.cbEndtime != null){
-                                <shiro:hasPermission name="/user/delete">
-                                str += '&nbsp;&nbsp;';
-                                str += $.formatString('<a style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.cbId,row.cbEndtime);
-                                </shiro:hasPermission>
-                            }
-                            return str;
-                        }
-                }] ],
-                rowStyler: function(value, row, index){
-                    if (row.cbEndtime == null){
-                        return 'color:red;';
+                }, {
+                    field : 'action',
+                    title : '操作',
+                    width : 130,
+                    formatter : function(value, row, index) {
+                        var str = '';
+                        <shiro:hasPermission name="/user/delete">
+                        str += '&nbsp;&nbsp;';
+                        str += $.formatString('<a style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.id);
+                        </shiro:hasPermission>
+                        return str;
                     }
-                },
+                }] ],
                 onLoadSuccess:function(data){
-                    $('.user-easyui-linkbutton-edit').linkbutton({text:'编辑',plain:true,iconCls:'icon-edit'});
                     $('.user-easyui-linkbutton-del').linkbutton({text:'删除',plain:true,iconCls:'icon-del'});
                 },
                 toolbar : '#toolbar'
@@ -117,24 +94,33 @@
             });
         }
 
-        function deleteFun(id,cbEndtime){
+        function deleteFun(id) {
             if (id == undefined) {//点击右键菜单才会触发这个
                 var rows = dataGrid.datagrid('getSelections');
                 id = rows[0].id;
             } else {//点击操作里面的删除图标会触发这个
                 dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
             }
-            parent.$.messager.confirm('询问', '您是否要删除当前数据？', function(b) {
+            parent.$.messager.confirm('询问', '您是否要删除当前用户？', function(b) {
                 if (b) {
-                    $.post('${path }/borrow/delete', {
-                        id : id
-                    }, function(result) {
-                        if (result.success) {
-                            parent.$.messager.alert('提示', result.msg, 'info');
-                            dataGrid.datagrid('reload');
-                        }
-                        progressClose();
-                    }, 'JSON');
+                    var currentUserId = '${sessionInfo.id}';/*当前登录用户的ID*/
+                    if (currentUserId != id) {
+                        progressLoad();
+                        $.post('${path }/user/delete', {
+                            id : id
+                        }, function(result) {
+                            if (result.success) {
+                                parent.$.messager.alert('提示', result.msg, 'info');
+                                dataGrid.datagrid('reload');
+                            }
+                            progressClose();
+                        }, 'JSON');
+                    } else {
+                        parent.$.messager.show({
+                            title : '提示',
+                            msg : '不可以删除自己！'
+                        });
+                    }
                 }
             });
         }

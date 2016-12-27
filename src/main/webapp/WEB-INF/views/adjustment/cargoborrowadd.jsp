@@ -11,10 +11,10 @@
         });
 
         $('#cargoborrwAddForm').form({
-            url : '${path }/user/add',
+            url : '${path }/borrow/add',
             onSubmit : function() {
                 progressLoad();
-                var isValid = $(this).form('validate');
+                var isValid = $(this).form('enableValidation').form('validate');
                 if (!isValid) {
                     progressClose();
                 }
@@ -40,21 +40,23 @@
             <table class="grid">
                 <tr>
                     <td>货物名称</td>
-                    <td><input name="cbName" type="text" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true" value=""></td>
+                    <td><input name="cbName" type="text" placeholder="请输入货物名称" class="easyui-validatebox"  data-options="required:true,novalidate:true" value=""></td>
                     <td>货物型号</td>
-                    <td><input name="cbSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true" value=""></td>
+                    <td><input name="cbSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""></td>
                 </tr>
                 <tr>
                     <td>数量</td>
-                    <td><input name="cbNum" type="text" placeholder="请输入数量" class="easyui-validatebox" data-options="required:true"></td>
+                    <td><input name="cbNum" type="text" class="easyui-numberbox" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""></td>
                     <td>借用人</td>
-                    <td><input type="text" name="cbNames" class="easyui-numberbox"/></td>
+                    <td><input name="cbNames" type="text" placeholder="请选择借用人姓名" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""/></td>
                 </tr>
                 <tr>
-                    <td>时间</td>
-                    <td><input name="createdateStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" /></td>
+                    <td>日期</td>
+                    <td><input name="cbTime" placeholder="请选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" /></td>
+                </tr>
+                <tr>
                     <td>原因</td>
-                    <td><input name="cbNum" type="text" placeholder="请输入原因" class="easyui-validatebox" data-options="required:true"></td>
+                    <td colspan="3"><textarea rows="3" cols="30" name="cbCause" style="width: 240px;height: 50px;"></textarea></td>
                 </tr>
             </table>
         </form>

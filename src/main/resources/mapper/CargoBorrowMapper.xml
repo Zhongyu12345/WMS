@@ -9,9 +9,11 @@
     <result column="cb_cause" jdbcType="VARCHAR" property="cbCause" />
     <result column="cb_names" jdbcType="VARCHAR" property="cbNames" />
     <result column="cb_time" jdbcType="TIMESTAMP" property="cbTime" />
+    <result column="cb_status" jdbcType="VARCHAR" property="cbStatus"/>
+    <result column="cb_endtime" jdbcType="TIMESTAMP" property="cbEndtime"/>
   </resultMap>
   <sql id="Base_Column_List">
-    cb_id, cb_name, cb_SKUmodel, cb_num, cb_cause, cb_names, cb_time
+    cb_id, cb_name, cb_SKUmodel, cb_num, cb_cause, cb_names, cb_time ,cb_status ,cb_endtime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -41,11 +43,10 @@
   </delete>
   <insert id="insert" parameterType="com.wms.bean.CargoBorrow">
     insert into cargo_borrow (cb_id, cb_name, cb_SKUmodel, 
-      cb_num, cb_cause, cb_names, 
-      cb_time)
+      cb_num, cb_cause, cb_names, cb_time,cb_status)
     values (#{cbId,jdbcType=INTEGER}, #{cbName,jdbcType=VARCHAR}, #{cbSkumodel,jdbcType=VARCHAR}, 
       #{cbNum,jdbcType=DOUBLE}, #{cbCause,jdbcType=VARCHAR}, #{cbNames,jdbcType=VARCHAR}, 
-      #{cbTime,jdbcType=TIMESTAMP})
+      #{cbTime,jdbcType=TIMESTAMP},#{cbStatus,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wms.bean.CargoBorrow">
     insert into cargo_borrow
@@ -71,6 +72,9 @@
       <if test="cbTime != null">
         cb_time,
       </if>
+      <if test="cbStatus != null">
+        cb_status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="cbId != null">
@@ -93,6 +97,9 @@
       </if>
       <if test="cbTime != null">
         #{cbTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cbStatus != null">
+        #{cbStatus,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -117,6 +124,9 @@
       <if test="cbTime != null">
         cb_time = #{cbTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="cbStatus != null">
+        cb_status = #{cbStatus,jdbcType=VARCHAR},
+      </if>
     </set>
     where cb_id = #{cbId,jdbcType=INTEGER}
   </update>
@@ -127,7 +137,8 @@
       cb_num = #{cbNum,jdbcType=DOUBLE},
       cb_cause = #{cbCause,jdbcType=VARCHAR},
       cb_names = #{cbNames,jdbcType=VARCHAR},
-      cb_time = #{cbTime,jdbcType=TIMESTAMP}
+      cb_time = #{cbTime,jdbcType=TIMESTAMP},
+      cb_status = #{cbStatus,jdbcType=VARCHAR}
     where cb_id = #{cbId,jdbcType=INTEGER}
   </update>
 </mapper>
