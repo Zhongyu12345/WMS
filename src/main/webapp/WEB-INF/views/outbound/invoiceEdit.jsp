@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/commons/global.jsp" %>
 <script type="text/javascript" src="${staticPath }/static/My97DatePicker/WdatePicker.js" charset="utf-8"></script>
+<script type="text/javascript" src="${staticPath }/static/js/warehouse.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function () {
         $('#invoiceEditForm').form({
@@ -41,7 +42,10 @@
                     <td>发货数量</td>
                     <td><input name="inNum" type="text" placeholder="请输入发货数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.inNum}"></td>
                     <td>仓库编号</td>
+                    <!--
                     <td><input name="inWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.inWhid}"></td>
+                    -->
+                    <td><input name="inWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
                 </tr>
                 <tr>
                     <td>调拨单号</td>
