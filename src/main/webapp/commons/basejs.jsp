@@ -10,6 +10,7 @@
 <link id="easyuiTheme" rel="stylesheet" type="text/css" href="${staticPath }/static/easyui/themes/bootstrap/easyui.css" />
 <link id="easyuiTheme" rel="stylesheet" type="text/css" href="${staticPath }/static/easyui/themes/icon.css" />
 <script type="text/javascript" src="${staticPath }/static/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="${staticPath }/static/validator.js" charset="utf-8"></script>
 <script type="text/javascript" src="${staticPath }/static/easyui/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 <%-- [扩展JS] --%>
 <script type="text/javascript" src="${staticPath }/static/extJs.js" charset="utf-8"></script>
