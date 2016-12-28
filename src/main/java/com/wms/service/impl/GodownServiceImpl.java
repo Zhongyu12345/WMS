@@ -1,6 +1,8 @@
 package com.wms.service.impl;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.wms.bean.Godown;
+import com.wms.commons.utils.PageInfo;
 import com.wms.dao.GodownMapper;
 import com.wms.service.GodownService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +24,13 @@ public class GodownServiceImpl implements GodownService {
     public List<Godown> godownComboBox() {
         return godownMapper.findByComboBox4EasyUi();
     }
+
+	@Override
+	public void selectDataGrid(PageInfo pageInfo) {
+		Page<Godown> page = new Page<Godown>(pageInfo.getNowpage(), pageInfo.getSize());
+        List<Godown> list = godownMapper.selectDataGrid(page, pageInfo.getCondition());
+        pageInfo.setRows(list);
+        pageInfo.setTotal(page.getTotal());
+	}
 
 }

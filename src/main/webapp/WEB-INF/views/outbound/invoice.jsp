@@ -74,9 +74,16 @@
                 sortable: true
             }, {
                 width: '100',
-                title: '仓库编号',
-                field: 'inWhid',
-                sortable: true
+                title: '仓库',
+                field: 'godowns',
+                sortable: true,
+                formatter: function (value) {
+                    var roles = [];
+                    for(var i = 0; i< value.length; i++) {
+                        roles.push(value[i].goWhid);
+                    }
+                    return(roles.join('\n'));
+                }
             }, {
                 width: '150',
                 title: '发货单号',
@@ -158,7 +165,6 @@
             }
         });
     }
-
     <!-- \\\\\\\\\\ 编辑操作 \\\\\\\\\\ -->
     function editFun(id) {
         if (id == undefined) {

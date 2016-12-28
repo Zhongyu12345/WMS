@@ -1,10 +1,7 @@
 package com.wms.service;
 
-import com.baomidou.mybatisplus.plugins.Page;
 import com.wms.bean.CargoBorrow;
 import com.wms.commons.utils.PageInfo;
-
-import java.util.Map;
 
 /**
  * Created by DengMin on 2016/12/21.

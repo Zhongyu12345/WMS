@@ -1,12 +1,9 @@
 package com.wms.service;
 
-import com.baomidou.mybatisplus.plugins.pagination.Pagination;
+import java.util.List;
+
 import com.wms.bean.Adjust;
 import com.wms.commons.utils.PageInfo;
-import org.springframework.stereotype.Service;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by DengMin on 2016/12/20.

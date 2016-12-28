@@ -1,12 +1,12 @@
 package com.wms.dao;
 
-import com.baomidou.mybatisplus.plugins.pagination.Pagination;
-import com.wms.commons.utils.PageInfo;
-import org.springframework.stereotype.Repository;
-import com.wms.bean.CargoBorrow;
-
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.stereotype.Repository;
+
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
+import com.wms.bean.CargoBorrow;
 
 @Repository
 public interface CargoBorrowMapper {

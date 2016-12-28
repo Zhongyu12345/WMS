@@ -1,12 +1,12 @@
 package com.wms.dao;
 
-import com.baomidou.mybatisplus.plugins.pagination.Pagination;
-import org.springframework.stereotype.Repository;
-import com.wms.bean.Adjust;
-
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.stereotype.Repository;
+
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
+import com.wms.bean.Adjust;
 
 @Repository
 public interface AdjustMapper {

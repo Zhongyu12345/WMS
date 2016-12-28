@@ -1,5 +1,21 @@
 package com.wms.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.wms.bean.Allotout;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.bean.Search;
@@ -7,16 +23,6 @@ import com.wms.commons.utils.PageInfo;
 import com.wms.commons.utils.StringUtils;
 import com.wms.commons.utils.TimeUtils;
 import com.wms.service.AllotoutService;
-import org.apache.ibatis.annotations.Param;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 调拨单管理
@@ -34,6 +40,7 @@ public class AllotoutController extends BaseController {
     /** 调拨单管理页面 */
     @GetMapping(value = "allotout.html")
     public String getAllotoutPage() {
+    	logger.info("调拨单管理页面");
         return "outbound/allotout";
     }
 
@@ -50,8 +57,7 @@ public class AllotoutController extends BaseController {
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<String, Object>();
         if (StringUtils.isNotBlank(search.getName())) {
-            String str = "%" + search.getName() + "%";
-            condition.put("name", str);
+            condition.put("name", search.getName());
         }
         if (search.getStartTime() != null) {
             condition.put("startTime", search.getStartTime());

@@ -1,6 +1,7 @@
 package com.wms.service;
 
 import com.wms.bean.Godown;
+import com.wms.commons.utils.PageInfo;
 
 import java.util.List;
 
@@ -12,5 +13,7 @@ public interface GodownService {
 
     /** 仓库下拉框 */
     List<Godown> godownComboBox();
+    
+    void selectDataGrid(PageInfo pageInfo);
 
 }
