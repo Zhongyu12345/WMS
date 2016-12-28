@@ -36,11 +36,11 @@
             rownumbers : true,
             pagination : true,
             singleSelect : true,
-            height : '50',
+            height : '27',
             idField : 'id',
             sortName : 'id',
             sortOrder : 'asc',
-            pageSize : 20,
+            pageSize : 10,
             pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
             columns : [ [ {
                 width : '90',
@@ -95,6 +95,70 @@
         });
     }
 
+    var SelectUserGrid;
+    function selectUser(){
+        $("#SelectUser").window("open");
+        SelectUserGrid = $('#SelectUserGrid').datagrid({
+            url : '${path }/borrow/user',
+            fit : true,
+            striped : true,
+            rownumbers : true,
+            pagination : true,
+            singleSelect : true,
+            idField : 'id',
+            sortName : 'createTime',
+            sortOrder : 'asc',
+            pageSize : 20,
+            pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
+            columns : [ [ {
+                width : '80',
+                title : '登录名',
+                field : 'loginName',
+                sortable : true
+            },{
+                width : '80',
+                title : '姓名',
+                field : 'name',
+                sortable : true
+            },{
+                width : '40',
+                title : '性别',
+                field : 'sex',
+                sortable : true
+            },{
+                width : '40',
+                title : '年龄',
+                field : 'age',
+                sortable : true
+            },{
+                width : '120',
+                title : '电话',
+                field : 'phone',
+                sortable : true
+            },{
+                field : 'action',
+                title : '操作',
+                width : 60,
+                formatter : function(value, row, index) {
+                    var str = '';
+                    <shiro:hasPermission name="/borrow/edit">
+                    str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-ok\'" onclick="useryes(\'{0}\');" >确定</a>');
+                    </shiro:hasPermission>
+                    return str;
+                }
+            }]],
+            onLoadSuccess:function(data){
+                $('.user-easyui-linkbutton-edit').linkbutton({text:'确定',plain:true});
+            },
+        });
+    }
+
+    function useryes() {
+        var row=$("#SelectUserGrid").datagrid("getSelected");
+        $("#cbNames").val(row.name);
+        $("#SelectUser").window("close");
+    }
+
     function yes() {
         var row=$("#SelectDataGrid").datagrid("getSelected");
         $("#cbName").val(row.cName);
@@ -102,12 +166,24 @@
         $("#selectData").window("close");
     }
 
+    /*货物----------*/
     function searchFun() {
         SelectDataGrid.datagrid('load', $.serializeObject($('#searchForm')));
     }
+
     function cleanFun() {
         $('#searchForm input').val('');
         SelectDataGrid.datagrid('load', {});
+    }
+
+    /*用户--------*/
+    function UsersearchFun() {
+        SelectUserGrid.datagrid('load', $.serializeObject($('#usersearchForm')));
+    }
+
+    function cleanFun() {
+        $('#usersearchForm input').val('');
+        SelectUserGrid.datagrid('load', {});
     }
 
 </script>
@@ -125,7 +201,7 @@
                     <td>数量</td>
                     <td><input name="cbNum" type="text" class="easyui-numberbox" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""></td>
                     <td>借用人</td>
-                    <td><input name="cbNames" type="text" placeholder="请选择借用人姓名" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""/></td>
+                    <td><input id="cbNames" name="cbNames" onclick="selectUser();"  readonly="readonly" type="text" placeholder="请选择借用人姓名" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""/></td>
                 </tr>
                 <tr>
                     <td>日期</td>
@@ -151,5 +227,19 @@
             </tr>
         </table>
     </form>
-    <table id="SelectDataGrid" data-options="fit:true,border:false"></table>
+     <table id="SelectDataGrid" data-options="fit:true,border:false"></table>
+</div>
+<div id="SelectUser" class="easyui-window" style="width:470px;height:300px;" title="用户信息表" data-options="closable:true, closed:true">
+    <form id="usersearchForm">
+        <table>
+            <tr>
+                <th>姓名:</th>
+                <td><input name="name" placeholder="请输入姓名"/></td>
+                <td>
+                    <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="UsersearchFun();">查询</a><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table id="SelectUserGrid" data-options="fit:true,border:false"></table>
 </div>

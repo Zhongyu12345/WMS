@@ -1,9 +1,11 @@
 package com.wms.controller;
 
 import com.wms.bean.CargoBorrow;
+import com.wms.bean.vo.UserVo;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.PageInfo;
 import com.wms.service.CargoBorrowService;
+import com.wms.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,6 +27,9 @@ public class CargoBorrowController extends BaseController{
 
     @Autowired
     private CargoBorrowService cargoborrowservice;
+
+    @Autowired
+    private IUserService iUserService;
 
     /**
      * 跳转到货品借出登记页面
@@ -111,6 +117,22 @@ public class CargoBorrowController extends BaseController{
         pageInfo.setCondition(map);
         cargoborrowservice.select(pageInfo);
         return pageInfo;
+    }
+
+    /**
+     * 普通用户分页查询
+     * @param userVo
+     * @return
+     */
+    @RequestMapping("/user")
+    @ResponseBody
+    public Object SelectUserBytype(UserVo userVo){
+        Map<String,Object> map = new HashMap<>();
+        if(userVo.getName() != null){
+            map.put("name",userVo.getName());
+        }
+        List<UserVo> list = iUserService.selectUserBytype(map);
+        return list;
     }
 
     /**

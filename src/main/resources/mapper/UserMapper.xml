@@ -82,6 +82,16 @@
             </if>
         </where>
     </select>
+
+    <select id="selectUserBytype" resultMap="userVoResultMap">
+        SELECT * from user
+        <where>
+            user_type = 4
+            <if test=" name != null and name != '' ">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
 	<select id="selectByRole" resultMap="userVoResultMap">
 		select name from user
 		<where>
