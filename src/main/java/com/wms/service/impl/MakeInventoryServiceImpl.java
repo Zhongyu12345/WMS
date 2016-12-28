@@ -1,14 +1,15 @@
 package com.wms.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wms.bean.MakeInventory;
 import com.wms.commons.utils.PageInfo;
 import com.wms.dao.MakeInventoryMapper;
 import com.wms.service.MakeInventoryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by DengMin on 2016/12/23.

@@ -19,6 +19,7 @@
                 if (result.success) {
                     parent.$.modalDialog.openner_dataGrid.datagrid('reload');//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
                     parent.$.modalDialog.handler.dialog('close');
+                    parent.$.messager.alert('提示', result.msg, 'info');
                 } else {
                     parent.$.messager.alert('错误', result.msg, 'error');
                 }
@@ -41,28 +42,28 @@
                     <td>货物型号</td>
                     <td><input name="srSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true" value="${salesreturn.srSkumodel}" /></td>
                     <td>货主号码</td>
-                    <td><input name="srPhone" type="text" placeholder="请输入货主号码" class="easyui-validatebox" data-options="required:true" value="${salesreturn.srPhone}"></td>
+                    <td><input name="srPhone" type="text" validtype="mobile" placeholder="请输入货主号码" class="easyui-validatebox" data-options="required:true" value="${salesreturn.srPhone}"></td>
                 </tr>
                 <tr>
                     <td>客户托单号</td>
                     <td><input name="srSipping" type="text" placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true" value="${salesreturn.srSipping}"></td>
+                    <td>退货数量</td>
+                    <td><input name="srNum" type="text" validtype="integer" placeholder="请输入退货数量" class="easyui-validatebox" data-options="required:true" value="${salesreturn.srNum}" /></td>
                 </tr>
                  <tr>
                     <td>仓库编码</td>
-                    <td><input name="srWhid" type="text" placeholder="请输入仓库编码" class="easyui-validatebox" data-options="required:true" value="${salesreturn.srWhid}" /></td>
+                    <td><input name="srWhid" type="text"  placeholder="请输入仓库编码" class="easyui-validatebox" data-options="required:true" value="${salesreturn.srWhid}" /></td>
                     <td>退货体积</td>
-                    <td><input name="srVolume" type="text" placeholder="请输入退货体积" class="easyui-validatebox" data-options="required:true" value="${salesreturn.srVolume}"></td>
-                </tr>
-                 <tr>
-                    <td>退货数量</td>
-                    <td><input name="srNum" type="text" placeholder="请输入退货数量" class="easyui-validatebox" data-options="required:true" value="${salesreturn.srNum}" /></td>
-                    <td>退货原因</td>
-                    <td><input name="srCause" type="text" placeholder="请输入退货原因" class="easyui-validatebox" data-options="required:true" value="${salesreturn.srCause}"></td>
+                    <td><input name="srVolume" type="text" validtype="intOrFloat" placeholder="请输入退货体积" class="easyui-validatebox" data-options="required:true" value="${salesreturn.srVolume}"></td>
                 </tr>
                  <tr>
                     <td>退货时间</td>
                     <td>
                     <input name="time" style="whith:100%" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${salesreturn.srTime}" />" readonly="readonly" />
+                </tr>
+                <tr>
+                 	<td>退货原因</td>
+                    <td colspan="3"><input style="width:100%;height:100%" name="srCause" type="text" validtype="unnormal" class="easyui-textbox" data-options="multiline:true" placeholder="请输入退货原因"  value="${salesreturn.srCause}"></td>
                 </tr>
             </table>
         </form>

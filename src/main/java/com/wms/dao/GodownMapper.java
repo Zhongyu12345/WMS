@@ -2,9 +2,11 @@ package com.wms.dao;
 
 import org.springframework.stereotype.Repository;
 
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.wms.bean.Godown;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface GodownMapper {
@@ -23,4 +25,6 @@ public interface GodownMapper {
     int updateByPrimaryKeySelective(Godown record);
 
     int updateByPrimaryKey(Godown record);
+    
+    List<Godown> selectDataGrid(Pagination page, Map<String, Object> params);
 }

@@ -19,5 +19,7 @@ public interface UserMapper extends AutoMapper<User> {
     UserVo selectUserVoById(@Param("id") Long id);
 
     List<UserVo> selectUserVoPage(Pagination page, Map<String, Object> params);
+    
+    List<UserVo> selectByRole();
 
 }

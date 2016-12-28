@@ -1,5 +1,7 @@
 package com.wms.bean;
 
+import java.util.List;
+
 import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -27,8 +29,18 @@ public class Godown {
 
 	@TableField(value = "go_rdvolume")
     private Double goRdvolume;
+	
+	private List<User> userList;
 
-    public Integer getGoId() {
+    public List<User> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
+	}
+
+	public Integer getGoId() {
         return goId;
     }
 

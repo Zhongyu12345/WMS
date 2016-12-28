@@ -137,7 +137,15 @@ public class GodownEntry {
         this.gNum = gNum;
     }
 
-    public String getgCrossflag() {
+    @Override
+	public String toString() {
+		return "GodownEntry [gId=" + gId + ", gName=" + gName + ", gStorerid=" + gStorerid + ", gPhone=" + gPhone
+				+ ", gSupplierid=" + gSupplierid + ", gSippingno=" + gSippingno + ", gWhid=" + gWhid + ", gNum=" + gNum
+				+ ", gCrossflag=" + gCrossflag + ", gDirectflag=" + gDirectflag + ", gTime=" + gTime + ", gAdminid="
+				+ gAdminid + ", gSkumodel=" + gSkumodel + ", gNumber=" + gNumber + ", gHeavy=" + gHeavy + "]";
+	}
+
+	public String getgCrossflag() {
         return gCrossflag;
     }
 

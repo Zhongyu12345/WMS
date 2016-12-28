@@ -1,10 +1,8 @@
 package com.wms.controller;
 
-import com.wms.bean.Cargo;
-import com.wms.commons.base.BaseController;
-import com.wms.commons.utils.OrderNumberUtil;
-import com.wms.commons.utils.PageInfo;
-import com.wms.service.CargoService;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
+import com.wms.bean.Cargo;
+import com.wms.commons.base.BaseController;
+import com.wms.commons.utils.OrderNumberUtil;
+import com.wms.commons.utils.PageInfo;
+import com.wms.service.CargoService;
 
 /**
  * cargo货物表

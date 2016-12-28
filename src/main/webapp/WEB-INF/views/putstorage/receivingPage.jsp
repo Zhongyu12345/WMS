@@ -24,7 +24,7 @@
             sortOrder : 'asc',
             pageSize : 20,
             pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
-            columns : [ [ {
+            frozenColumns : [ [ {
                 width : '80',
                 title : '货物名称',
                 field : 'rName',
@@ -34,98 +34,100 @@
                 title : '货物型号',
                 field : 'rSkumodel',
                 sortable : true
-            },   {
-                width : '80',
-                title : '货主',
-                field : 'rStorerid',
-                sortable : true
-            },{
-                width : '100',
-                title : '货主号码',
-                field : 'rPhone',
-                sortable : true
-            },  {
-                width : '100',
-                title : '供应商',
-                field : 'rSupplierid',
-                sortable : true,
-            }, {
-                width : '80',
-                title : '客户托单号',
-                field : 'rSippingno',
-                sortable : true
-            },{
-                width : '80',
-                title : '仓库编码',
-                field : 'rWhid',
-                sortable : true
-            }, {
-                width : '60',
-                title : '入库数量',
-                field : 'rNumber',
-                sortable : true
-            }, {
-                width : '60',
-                title : '入库重量',
-                field : 'rHeavy',
-                sortable : true
-            }, {
-                width : '60',
-                title : '入库体积',
-                field : 'rNum',
-                sortable : true
-            }, {
-                width : '60',
-                title : '是否越库',
-                field : 'rCrossflag',
-                sortable : true,
-                formatter : function(value, row, index) {
-                    switch (value) {
-                    case '0':
-                        return '越库';
-                    case '1':
-                        return '不越库';
-                    }
-                }
-            },  {
-                width : '60',
-                title : '是否整进',
-                field : 'rDirectflag',
-                sortable : true,
-                formatter : function(value, row, index) {
-                    switch (value) {
-                    case '0':
-                        return "整进";
-                    case '1':
-                        return "不整进";
-                    }
-                }
-            },  {
-                width : '120',
-                title : '入库时间',
-                field : 'rTime',
-                sortable : true
-            },  {
-                width : '70',
-                title : '管理员编号',
-                field : 'rAdminid',
-                sortable : true
-            },   {
-                field : 'action',
-                title : '操作',
-                width : 130,
-                formatter : function(value, row, index) {
-                    var str = '';
-                        <shiro:hasPermission name="/receiving/update">
-                            str += $.formatString('<a  style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.rId);
-                        </shiro:hasPermission>
-                        <shiro:hasPermission name="/receiving/delete">
-                            str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-                            str += $.formatString('<a style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.rId);
-                        </shiro:hasPermission>
-                    return str;
-                }
-            }] ],
+            },  ] ],
+            columns:[[{
+				    width : '80',
+				    title : '货主',
+				    field : 'rStorerid',
+				    sortable : true
+				},{
+				    width : '100',
+				    title : '货主号码',
+				    field : 'rPhone',
+				    sortable : true
+				},  {
+				    width : '100',
+				    title : '供应商',
+				    field : 'rSupplierid',
+				    sortable : true,
+				}, {
+				    width : '80',
+				    title : '客户托单号',
+				    field : 'rSippingno',
+				    sortable : true
+				},{
+				    width : '80',
+				    title : '仓库编码',
+				    field : 'rWhid',
+				    sortable : true
+				}, {
+				    width : '60',
+				    title : '入库数量',
+				    field : 'rNumber',
+				    sortable : true
+				}, {
+				    width : '60',
+				    title : '入库重量',
+				    field : 'rHeavy',
+				    sortable : true
+				}, {
+				    width : '60',
+				    title : '入库体积',
+				    field : 'rNum',
+				    sortable : true
+				}, {
+				    width : '60',
+				    title : '是否越库',
+				    field : 'rCrossflag',
+				    sortable : true,
+				    formatter : function(value, row, index) {
+				        switch (value) {
+				        case '0':
+				            return '越库';
+				        case '1':
+				            return '不越库';
+				        }
+				    }
+				},  {
+				    width : '60',
+				    title : '是否整进',
+				    field : 'rDirectflag',
+				    sortable : true,
+				    formatter : function(value, row, index) {
+				        switch (value) {
+				        case '0':
+				            return "整进";
+				        case '1':
+				            return "不整进";
+				        }
+				    }
+				},  {
+				    width : '120',
+				    title : '入库时间',
+				    field : 'rTime',
+				    sortable : true
+				},  {
+				    width : '70',
+				    title : '管理员编号',
+				    field : 'rAdminid',
+				    sortable : true
+				},    {
+	                field : 'action',
+	                title : '操作',
+	                width : 130,
+	                formatter : function(value, row, index) {
+	                    var str = '';
+	                        <shiro:hasPermission name="/receiving/update">
+	                            str += $.formatString('<a  style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.rId);
+	                        </shiro:hasPermission>
+	                        <shiro:hasPermission name="/receiving/delete">
+	                            str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
+	                            str += $.formatString('<a style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.rId);
+	                        </shiro:hasPermission>
+	                    return str;
+	                }
+	            }
+            ]],
             onLoadSuccess:function(data){
                 $('.user-easyui-linkbutton-edit').linkbutton({text:'编辑',plain:true,iconCls:'icon-edit'});
                 $('.user-easyui-linkbutton-del').linkbutton({text:'删除',plain:true,iconCls:'icon-del'});
@@ -194,6 +196,8 @@
     }
     function cleanFun() {
         $('#a ').val(''); 
+        $('#b').combobox('setValue'," ");
+        $('#c').combobox('setValue'," ");
         dataGrid.datagrid('load', {});
     }
     </script>
@@ -217,16 +221,16 @@
                     <td><input id="a" name="rSupplierid" placeholder="请输入供应商名称"/></td>
                     <th>是否越库:</th>
                     <td>
-                    	<select id="rDirectflag"  name="rCrossflag" class="easyui-combobox" data-options="width:80,height:29,editable:false,panelHeight:'auto'">
-                    		<option value="3" selected="selected" >请选择</option>
+                    	<select id="b"  name="rCrossflag" class="easyui-combobox" data-options="width:80,height:24,editable:false,panelHeight:'auto'">
+                    		<option value=" " selected="selected" >请选择</option>
                             <option value="0">越库</option>
                             <option value="1">不越库</option>
                     	</select>
                     </td>
                     <th>是否整进:</th>
                     <td>
-                    	<select id="rDirectflag" name="rDirectflag" class="easyui-combobox" data-options="width:80,height:29,editable:false,panelHeight:'auto'">
-                    		<option value="3" selected="selected">请选择</option>
+                    	<select id="c" name="rDirectflag" class="easyui-combobox" data-options="width:80,height:24,editable:false,panelHeight:'auto'">
+                    		<option value=" " selected="selected">请选择</option>
                             <option value="0">整进</option>
                             <option value="1">不整进</option>
                     	</select>
