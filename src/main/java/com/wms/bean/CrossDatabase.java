@@ -1,10 +1,11 @@
 package com.wms.bean;
 
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * cross_database 越库出货单
@@ -35,6 +36,8 @@ public class CrossDatabase {
 
 	@TableField(value = "cd_volume")
     private Double cdVolume;
+
+    private List<Godown> godowns;
 
     public Integer getCdId() {
         return cdId;
@@ -98,5 +101,13 @@ public class CrossDatabase {
 
     public void setCdVolume(Double cdVolume) {
         this.cdVolume = cdVolume;
+    }
+
+    public List<Godown> getGodowns() {
+        return godowns;
+    }
+
+    public void setGodowns(List<Godown> godowns) {
+        this.godowns = godowns;
     }
 }

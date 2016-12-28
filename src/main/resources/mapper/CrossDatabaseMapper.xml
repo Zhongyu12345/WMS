@@ -10,6 +10,14 @@
         <result column="cd_oddnumbers" jdbcType="VARCHAR" property="cdOddnumbers"/>
         <result column="cd_time" jdbcType="TIMESTAMP" property="cdTime"/>
         <result column="cd_volume" jdbcType="DOUBLE" property="cdVolume"/>
+        <collection property="godowns" ofType="com.wms.bean.Godown">
+            <id column="go_id" jdbcType="INTEGER" property="goId"/>
+            <result column="go_whid" jdbcType="VARCHAR" property="goWhid"/>
+            <result column="go_p" jdbcType="VARCHAR" property="goP"/>
+            <result column="go_volume" jdbcType="DOUBLE" property="goVolume"/>
+            <result column="go_usevolume" jdbcType="DOUBLE" property="goUsevolume"/>
+            <result column="go_rdvolume" jdbcType="DOUBLE" property="goRdvolume"/>
+        </collection>
     </resultMap>
     <sql id="Base_Column_List">
       cd_id, cd_name, cd_SKUmodel, cd_num, cd_whid, cd_oddnumbers, cd_time, cd_volume
@@ -24,19 +32,18 @@
     <!-- 分页查询 -->
     <select id="selectCrossDatabasePage" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
-        from cross_database
-        <where>
-            <if test=" name != null and name != '' ">
-                cd_name like #{name}
-            </if>
-            <if test="startTime != null">
-                <![CDATA[  cd_time >= #{startTime} ]]>
-            </if>
-            <if test="endTime != null">
-                <![CDATA[ and cd_time <= #{endTime} ]]>
-            </if>
-        </where>
+          cr.cd_id, cr.cd_name, cr.cd_SKUmodel, cr.cd_num, cr.cd_whid, cr.cd_oddnumbers, cr.cd_time, cr.cd_volume , g.*
+        from cross_database cr, godown g
+        where cr.cd_whid = g.go_id
+        <if test=" name != null and name != '' ">
+            and cd_name like concat('%', #{name}, '%')
+        </if>
+        <if test="startTime != null">
+            <![CDATA[ and cd_time >= #{startTime} ]]>
+        </if>
+        <if test="endTime != null">
+            <![CDATA[ and cd_time <= #{endTime} ]]>
+        </if>
     </select>
     <!-- 根据ID删除 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/commons/global.jsp" %>
 <script type="text/javascript" src="${staticPath }/static/My97DatePicker/WdatePicker.js" charset="utf-8"></script>
+<script type="text/javascript" src="${staticPath }/static/js/warehouse.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function () {
         $('#shipmentAddForm').form({
@@ -24,20 +25,7 @@
                 }
             }
         });
-        <!-- EasyUI下拉框 -->
-        $("#selectCombobox").combobox({
-            url: "${path }/godown/godownComboBox",
-            method: 'get',
-            valueField: 'id',
-            textField: 'text',
-            panelHeight: 'auto',
-            onLoadSuccess: function () {
-                var data = $('#selectCombobox').combobox('getData');
-                if (data.length > 0) {
-                    $("#selectCombobox").combobox('select', data[0].text);
-                }
-            }
-        });
+
     });
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
@@ -55,9 +43,8 @@
                     <td><input name="shPhone" type="text" placeholder="请输入号码" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                 </tr>
                 <tr>
-                    <td>仓库编码</td>
-                    <!-- EasyUI下拉框 -->
-                    <td><input id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
+                    <td>仓库</td>
+                    <td><input name="shWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
                     <td>损坏数量</td>
                     <td><input name="shDamage" type="number" placeholder="请输入损坏数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
                 </tr>

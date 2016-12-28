@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * allotout 调拨出库单
@@ -42,6 +43,8 @@ public class Allotout {
     //货物体积
     @TableField(value = "ao_volume")
     private Double aoVolume;
+
+    private List<Godown> godowns;
 
     public Integer getAoId() {
         return aoId;
@@ -105,5 +108,13 @@ public class Allotout {
 
     public void setAoVolume(Double aoVolume) {
         this.aoVolume = aoVolume;
+    }
+
+    public List<Godown> getGodowns() {
+        return godowns;
+    }
+
+    public void setGodowns(List<Godown> godowns) {
+        this.godowns = godowns;
     }
 }

@@ -43,9 +43,9 @@ public class ShipmentController extends BaseController {
     public Object dataGrid(Search search, Integer page, Integer rows) {
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<String, Object>();
+        logger.info("出库表分页查询");
         if (StringUtils.isNotBlank(search.getName())) {
-            String str = "%" + search.getName() + "%";
-            condition.put("name", str);
+            condition.put("name", search.getName());
         }
         if (search.getStartTime() != null) {
             condition.put("startTime", search.getStartTime());
@@ -53,7 +53,6 @@ public class ShipmentController extends BaseController {
         if (search.getEndTime() != null) {
             condition.put("endTime", search.getEndTime());
         }
-        logger.getName();
         pageInfo.setCondition(condition);
         shipmentService.selectDataGrid(pageInfo);
         return pageInfo;

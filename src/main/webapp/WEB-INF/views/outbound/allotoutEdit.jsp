@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/commons/global.jsp" %>
 <script type="text/javascript" src="${staticPath }/static/My97DatePicker/WdatePicker.js" charset="utf-8"></script>
+<script type="text/javascript" src="${staticPath }/static/js/warehouse.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function () {
         $('#allotoutEditForm').form({
@@ -41,7 +42,10 @@
                     <td>调拨数量</td>
                     <td><input name="aoNum" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoNum}"></td>
                     <td>仓库编号</td>
+                    <!--
                     <td><input name="aoWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoWhid}"></td>
+                    -->
+                    <td><input name="aoWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
                 </tr>
                 <tr>
                     <td>调拨单号</td>
