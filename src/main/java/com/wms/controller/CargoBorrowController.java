@@ -6,6 +6,7 @@ import com.wms.commons.utils.PageInfo;
 import com.wms.service.CargoBorrowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ public class CargoBorrowController extends BaseController{
     private CargoBorrowService cargoborrowservice;
 
     /**
-     * 跳转到cargoborrow页面
+     * 跳转到货品借出登记页面
      * @return
      */
     @GetMapping("/borrowpage")
@@ -34,12 +35,25 @@ public class CargoBorrowController extends BaseController{
     }
 
     /**
-     * 跳转到cargoborrowadd页面
+     * 跳转到添加页面
      * @return
      */
     @GetMapping("/borrowaddpage")
     public String borrowaddpage(){
         return "adjustment/cargoborrowadd";
+    }
+
+    /**
+     * 跳转到修改页面
+     * @param id
+     * @param model
+     * @return
+     */
+    @GetMapping("/editPage")
+    public String editPage(Integer id, Model model){
+        CargoBorrow cargoBorrow = cargoborrowservice.selectByPrimaryKey(id);
+        model.addAttribute("cargoBorrow",cargoBorrow);
+        return "adjustment/cargoborrowedit";
     }
 
     /**
@@ -98,4 +112,21 @@ public class CargoBorrowController extends BaseController{
         cargoborrowservice.select(pageInfo);
         return pageInfo;
     }
+
+    /**
+     * 修改
+     * @param cargoBorrow
+     * @return
+     */
+    @RequestMapping("/edit")
+    @ResponseBody
+    public Object Edit(CargoBorrow cargoBorrow){
+        cargoBorrow.setCbStatus("已归还");
+        int result = cargoborrowservice.updateByPrimaryKey(cargoBorrow);
+        if(result > 0){
+            return renderSuccess("修改成功");
+        }
+        return renderError("修改失败");
+    }
+
 }

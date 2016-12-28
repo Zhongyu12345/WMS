@@ -2,14 +2,6 @@
 <%@ include file="/commons/global.jsp" %>
 <script type="text/javascript">
     $(function() {
-
-        $('#roleIds').combotree({
-            url: '${path }/role/tree',
-            multiple: true,
-            required: true,
-            panelHeight : 'auto'
-        });
-
         $('#cargoborrwAddForm').form({
             url : '${path }/borrow/add',
             onSubmit : function() {
@@ -33,6 +25,91 @@
         });
         
     });
+
+    var SelectDataGrid;
+    function selectData() {
+        $("#selectData").window("open");
+        SelectDataGrid = $('#SelectDataGrid').datagrid({
+            url : '${path }/cargo/select',
+            fit : true,
+            striped : true,
+            rownumbers : true,
+            pagination : true,
+            singleSelect : true,
+            height : '50',
+            idField : 'id',
+            sortName : 'id',
+            sortOrder : 'asc',
+            pageSize : 20,
+            pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
+            columns : [ [ {
+                width : '90',
+                title : '货物名称',
+                field : 'cName',
+                sortable : true
+            },{
+                width : '120',
+                title : '客户托单号',
+                field : 'cShippingno',
+                sortable : true
+            },{
+                width : '70',
+                title : '仓库编码',
+                field : 'cWhid',
+                sortable : true
+            },{
+                width : '60',
+                title : '数量',
+                field : 'cNum',
+                sortable : true
+            },{
+                width : '80',
+                title : '总货毛重',
+                field : 'cTotalweight',
+                sortable : true
+            },{
+                width : '60',
+                title : '总货体积',
+                field : 'cTotalvolume',
+                sortable : true
+            },{
+                width : '70',
+                title : '货物型号',
+                field : 'cSkumodel',
+                sortable : true
+            },{
+                field : 'action',
+                title : '操作',
+                width : 60,
+                formatter : function(value, row, index) {
+                    var str = '';
+                    <shiro:hasPermission name="/borrow/edit">
+                        str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-ok\'" onclick="yes(\'{0}\');" >确定</a>');
+                    </shiro:hasPermission>
+                    return str;
+                }
+            }] ],
+            onLoadSuccess:function(data){
+                $('.user-easyui-linkbutton-edit').linkbutton({text:'确定',plain:true});
+            },
+        });
+    }
+
+    function yes() {
+        var row=$("#SelectDataGrid").datagrid("getSelected");
+        $("#cbName").val(row.cName);
+        $("#cbSkumodel").val(row.cSkumodel);
+        $("#selectData").window("close");
+    }
+
+    function searchFun() {
+        SelectDataGrid.datagrid('load', $.serializeObject($('#searchForm')));
+    }
+    function cleanFun() {
+        $('#searchForm input').val('');
+        SelectDataGrid.datagrid('load', {});
+    }
+
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
@@ -40,9 +117,9 @@
             <table class="grid">
                 <tr>
                     <td>货物名称</td>
-                    <td><input name="cbName" type="text" placeholder="请输入货物名称" class="easyui-validatebox"  data-options="required:true,novalidate:true" value=""></td>
+                    <td><input id="cbName" name="cbName" type="text" onclick="selectData();" readonly="readonly"  placeholder="请输入货物名称" class="easyui-validatebox"  data-options="required:true,novalidate:true" value=""></td>
                     <td>货物型号</td>
-                    <td><input name="cbSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""></td>
+                    <td><input name="cbSkumodel" id="cbSkumodel" type="text" readonly placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""></td>
                 </tr>
                 <tr>
                     <td>数量</td>
@@ -52,13 +129,27 @@
                 </tr>
                 <tr>
                     <td>日期</td>
-                    <td><input name="cbTime" placeholder="请选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" /></td>
+                    <td><input name="cbTime" placeholder="请选择时间" class="easyui-validatebox" data-options="required:true,novalidate:true" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" /></td>
                 </tr>
                 <tr>
                     <td>原因</td>
-                    <td colspan="3"><textarea rows="3" cols="30" name="cbCause" style="width: 240px;height: 50px;"></textarea></td>
+                    <td colspan="3"><textarea rows="3" cols="30" name="cbCause" class="easyui-validatebox" data-options="required:true,novalidate:true" style="width: 240px;height: 50px;"></textarea></td>
                 </tr>
             </table>
         </form>
     </div>
+</div>
+<div id="selectData" class="easyui-window" style="width:660px;height:300px;" title="货品表" data-options="closable:true, closed:true">
+    <form id="searchForm">
+        <table>
+            <tr>
+                <th>货物型号:</th>
+                <td><input name="cSkumodel" placeholder="请输入货物型号"/></td>
+                <td>
+                  <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table id="SelectDataGrid" data-options="fit:true,border:false"></table>
 </div>
