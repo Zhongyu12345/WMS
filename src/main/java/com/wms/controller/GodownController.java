@@ -1,15 +1,9 @@
 package com.wms.controller;
 
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
-import com.wms.bean.Godown;
-import com.wms.bean.vo.UserVo;
-import com.wms.commons.bean.ComboBox4EasyUI;
-import com.wms.commons.utils.PageInfo;
-import com.wms.commons.utils.StringUtils;
-import com.wms.service.GodownService;
-import com.wms.service.IUserService;
-
-import net.sf.json.JSONArray;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,10 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.wms.bean.Godown;
+import com.wms.bean.vo.UserVo;
+import com.wms.commons.bean.ComboBox4EasyUI;
+import com.wms.commons.utils.PageInfo;
+import com.wms.service.GodownService;
+import com.wms.service.IUserService;
+
+import net.sf.json.JSONArray;
 
 /**
  * 描述：仓库表控制器层
@@ -80,7 +78,6 @@ public class GodownController {
 
     @GetMapping("getUser")
     public @ResponseBody Object getUserName(){
-    	System.out.println("11111111111111111111111111");
     	List<UserVo> userList = userService.selectByRole();
     	List<HashMap<String, String>> list = new ArrayList<HashMap<String,String>>();
     	if(userList.size() != 0){
@@ -92,7 +89,6 @@ public class GodownController {
     		}
     	}
     	JSONArray json = JSONArray.fromObject(list);
-    	System.out.println(json.toString());
     	return json;
     }
 }

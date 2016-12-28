@@ -1,17 +1,15 @@
 package com.wms.service.impl;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.plugins.pagination.Pagination;
-import com.wms.commons.utils.PageInfo;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.wms.bean.Cargo;
+import com.wms.commons.utils.PageInfo;
 import com.wms.dao.CargoMapper;
 import com.wms.service.CargoService;
-
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class CargoServiceImpl implements CargoService {

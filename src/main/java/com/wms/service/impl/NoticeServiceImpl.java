@@ -1,14 +1,14 @@
 package com.wms.service.impl;
 
-import com.wms.bean.Notice;
-import com.wms.commons.utils.PageInfo;
-import com.wms.dao.NoticeMapper;
-import com.wms.service.NoticeService;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.wms.bean.Notice;
+import com.wms.commons.utils.PageInfo;
+import com.wms.dao.NoticeMapper;
+import com.wms.service.NoticeService;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
