@@ -8,12 +8,26 @@
         <result column="go_volume" jdbcType="DOUBLE" property="goVolume"/>
         <result column="go_usevolume" jdbcType="DOUBLE" property="goUsevolume"/>
         <result column="go_rdvolume" jdbcType="DOUBLE" property="goRdvolume"/>
+        
+        <collection property="userList" ofType="User">
+	        <id column="userId" property="id"/>
+	        <result column="userName" property="name"/>
+    	</collection>
     </resultMap>
-
+    
     <sql id="Base_Column_List">
       go_id, go_whid, go_p, go_volume, go_usevolume, go_rdvolume
     </sql>
 
+	<select id="selectDataGrid" resultMap="BaseResultMap">
+    	select
+    	<include refid="Base_Column_List"/>,
+    	id as userId,
+        name as userName
+        from godown
+        left join user on id = go_p
+    </select>
+	
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -117,4 +131,5 @@
           go_rdvolume = #{goRdvolume,jdbcType=DOUBLE}
         where go_id = #{goId,jdbcType=INTEGER}
     </update>
+
 </mapper>
