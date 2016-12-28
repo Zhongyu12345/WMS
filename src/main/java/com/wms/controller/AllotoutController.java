@@ -50,8 +50,7 @@ public class AllotoutController extends BaseController {
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<String, Object>();
         if (StringUtils.isNotBlank(search.getName())) {
-            String str = "%" + search.getName() + "%";
-            condition.put("name", str);
+            condition.put("name", search.getName());
         }
         if (search.getStartTime() != null) {
             condition.put("startTime", search.getStartTime());

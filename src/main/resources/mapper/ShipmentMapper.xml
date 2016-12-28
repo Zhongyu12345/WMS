@@ -42,31 +42,19 @@
     </select>
     <!-- 分页查询 -->
     <select id="selectShipmentPage" resultMap="BaseResultMap">
-        SELECT
-            sh.sh_id, sh.sh_storeid, sh.sh_time, sh.sh_phone, sh.sh_sippingNO, sh.sh_whid, sh.sh_damage, sh.sh_cause, sh.sh_SKUmodel, sh.sh_shnum, sh.sh_totalweigh, sh.sh_totalvolume,
-            g.*
-        FROM
-            shipment sh,
-            godown g
-        WHERE
-          sh.sh_whid = g.go_id
+        SELECT sh.sh_id, sh.sh_storeid, sh.sh_time, sh.sh_phone, sh.sh_sippingNO, sh.sh_whid, sh.sh_damage, sh.sh_cause, sh.sh_SKUmodel, sh.sh_shnum, sh.sh_totalweigh, sh.sh_totalvolume, g.*
+        FROM shipment sh, godown g
+        WHERE sh.sh_whid = g.go_id
+        <if test=" name != null and name != '' ">
+            and sh_storeid like concat('%', #{name}, '%')
+        </if>
+        <if test="startTime != null">
+            <![CDATA[ and sh_time >= #{startTime} ]]>
+        </if>
+        <if test="endTime != null">
+            <![CDATA[ and sh_time <= #{endTime} ]]>
+        </if>
     </select>
-    <!--<select id="selectShipmentPage" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from shipment
-        <where>
-            <if test=" name != null and name != '' ">
-                sh_storeid like #{name}
-            </if>
-            <if test="startTime != null">
-                <![CDATA[  sh_time >= #{startTime} ]]>
-            </if>
-            <if test="endTime != null">
-                <![CDATA[ and sh_time <= #{endTime} ]]>
-            </if>
-        </where>
-    </select>-->
     <!-- 根据ID删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from shipment
