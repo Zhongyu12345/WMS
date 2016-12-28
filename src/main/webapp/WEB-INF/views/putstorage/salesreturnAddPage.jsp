@@ -20,6 +20,7 @@
 			var srPhone = $("#srPhone").val();
 			var srNum = $("#srNum").val();
 			var srCause = $("#srCause").val();
+			alert(srCause);
 			var srTime = $("#srTime").val();
 			$.post('${path }/salesreturn/save', {
 				"srName" : srName,
@@ -33,13 +34,15 @@
 				"srCause":srCause,
 				"time":srTime
 			}, function(data) {
-				if (data.success) {
+				if (data.result) {
 					alert("true");
 					$.messager.alert("提示", data.msg, "info", function() {
 						alert("sssss");
 					});
 				} else {
-					$.messger.alert("提示", data.msg, "info");
+					$('#salesreturnForm input').val('');
+					$('#srCause').textbox('setValue','');
+					$.messager.alert('提示','添加成功');
 				}
 			});
 		}
@@ -49,7 +52,7 @@
     </script>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
-	<div id="salesreturn" class="easyui-draggable easyui-resizable" data-options="handle:'#mytitle'" style="width:100%;height:150px;border:2px solid :red">
+	<div id="salesreturn" class="easyui-draggable easyui-resizable" data-options="handle:'#mytitle'" style="width:100%;height:150px;border:2px ;solid :red;">
 		<div id="mytitle" style="background:#ddd;padding:5px;">退货单</div>
 		<div style="padding:20px"><div data-options="region:'center',border:true" style="height: 100%; overflow: hidden;background-color: #fff">
 	        <form id="salesreturnForm" method="post">
@@ -58,35 +61,39 @@
 	                    <th>货物名称:</th>
 	                    <td><input type="text" id="srName" name="srName" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true"/></td>
 	                    <th>客户托单号:</th>
-	                    <td><input type="text" id="srSipping" name="srSipping" /></td>
+	                    <td><input type="text" id="srSipping" name="srSipping" placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true" /></td>
 	                    <th>货物型号:</th>
-	                    <td><input type="text" id="srSkumodel" name="srSkumodel" /></td>
+	                    <td><input type="text" id="srSkumodel" name="srSkumodel" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true" /></td>
 	                </tr>
 	                <tr>
 	                	<th>货主:</th>
-	                	<td><input type="text"  id="srStorerid"  name="srStorerid" /></td>
+	                	<td><input type="text"  id="srStorerid"  name="srStorerid" placeholder="请输入货主姓名" class="easyui-validatebox" data-options="required:true" /></td>
 	                	<th>退货体积:</th>
-	                	<td><input type="text"  id="srVolume"  name="srVolume" /></td>
+	                	<td><input type="text" validtype="intOrFloat" id="srVolume"  name="srVolume" placeholder="请输入退货体积" class="easyui-validatebox" data-options="required:true" /></td>
 	                	<th>仓库编号:</th>
-	                	<td><input type="text"  id="srWhid"  name="srWhid" /></td>
+	                	<td><input type="text"  id="srWhid"  name="srWhid" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true" /></td>
 	                </tr>
 	                <tr>
 	                	<th>号码:</th>
-	                	<td><input type="text" id="srPhone" name="srPhone" /></td>
+	                	<td><input type="text" validtype="mobile" id="srPhone" name="srPhone" placeholder="请输入手机号码" class="easyui-validatebox" data-options="required:true" /></td>
 	                	<th>退货时间:</th>
 	                    <td><input placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss '})"   readonly="readonly" id="srTime" name="srTime" /></td>
 	                    <th>退货数量:</th>
-	                    <td><input type="text" id="srNum" name="srNum" /></td>
-	                    <th>退货原因:</th>
-	                    <td><input type="text"  id="srCause" name="srCause" /></td>
+	                    <td><input type="text" id="srNum" validtype="integer" name="srNum" placeholder="请输入退货数量" class="easyui-validatebox" data-options="required:true" /></td>
+	                </tr>
+	                <tr>
+	                	<th>退货原因:</th>
+	                    <td colspan="5"><input style="width:100%;height:50px;" id="srCause" name="srCause" type="text" validtype="unnormal" class="easyui-textbox" data-options="multiline:true" placeholder="请输入退货原因" ></td>
 	                </tr>
 	            </table>
 	        </form>
 	    </div></div>
+	    
+	    <div>
+			<a href="javascript:void(0);" style="margin-left: 800px;" class="easyui-linkbutton" onclick="save();">确认</a>
+		</div>
 	</div>
 
-	<div>
-		<a href="javascript:void(0);" class="easyui-linkbutton" onclick="save();">确认</a>
-	</div>
+	
 </body>
 </html>

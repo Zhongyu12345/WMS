@@ -2,12 +2,18 @@ package com.wms.commons.utils;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.formula.eval.ErrorEval;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -41,7 +47,7 @@ public class ReadXls {
 						if(hssfCell == null){
 							continue;
 						}
-						rowlist.add(hssfCell+"");
+						rowlist.add(toStringxls(hssfCell));
 					}
 					list.add(rowlist);
 				}
@@ -65,7 +71,7 @@ public class ReadXls {
 						if(hssfCell == null){
 							continue;
 						}
-						rowlist.add(hssfCell+"");
+						rowlist.add(toStringxlsx(hssfCell));
 					}
 					list.add(rowlist);
 				}
@@ -74,4 +80,50 @@ public class ReadXls {
 		}
 		return null;
 	}
+	
+	    public static String toStringxlsx(XSSFCell cell) {
+	        switch (cell.getCellType()) {
+	            case Cell.CELL_TYPE_BLANK:
+	                return "";
+	            case Cell.CELL_TYPE_BOOLEAN:
+	                return cell.getBooleanCellValue() ? "TRUE" : "FALSE";
+	            case Cell.CELL_TYPE_ERROR:
+	                return ErrorEval.getText(cell.getErrorCellValue());
+	            case Cell.CELL_TYPE_FORMULA:
+	                return cell.getCellFormula();
+	            case Cell.CELL_TYPE_NUMERIC:
+	                if (DateUtil.isCellDateFormatted(cell)) {
+	                    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	                    return sdf.format(cell.getDateCellValue());
+	                }
+	                return Double.toString(cell.getNumericCellValue());
+	            case Cell.CELL_TYPE_STRING:
+	                return cell.getRichStringCellValue().toString();
+	            default:
+	                return "Unknown Cell Type: " + cell.getCellType();
+	        }
+	    }
+	    
+	    public static String toStringxls(HSSFCell cell) {
+	        switch (cell.getCellType()) {
+	            case Cell.CELL_TYPE_BLANK:
+	                return "";
+	            case Cell.CELL_TYPE_BOOLEAN:
+	                return cell.getBooleanCellValue() ? "TRUE" : "FALSE";
+	            case Cell.CELL_TYPE_ERROR:
+	                return ErrorEval.getText(cell.getErrorCellValue());
+	            case Cell.CELL_TYPE_FORMULA:
+	                return cell.getCellFormula();
+	            case Cell.CELL_TYPE_NUMERIC:
+	                if (DateUtil.isCellDateFormatted(cell)) {
+	                    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	                    return sdf.format(cell.getDateCellValue());
+	                }
+	                return Double.toString(cell.getNumericCellValue());
+	            case Cell.CELL_TYPE_STRING:
+	                return cell.getRichStringCellValue().toString();
+	            default:
+	                return "Unknown Cell Type: " + cell.getCellType();
+	        }
+	    }
 }
