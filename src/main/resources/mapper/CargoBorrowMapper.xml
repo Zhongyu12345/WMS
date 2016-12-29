@@ -12,15 +12,18 @@
     <result column="cb_status" jdbcType="VARCHAR" property="cbStatus"/>
     <result column="cb_endtime" jdbcType="TIMESTAMP" property="cbEndtime"/>
   </resultMap>
+
   <sql id="Base_Column_List">
     cb_id, cb_name, cb_SKUmodel, cb_num, cb_cause, cb_names, cb_time ,cb_status ,cb_endtime
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from cargo_borrow
     where cb_id = #{cbId,jdbcType=INTEGER}
   </select>
+
   <select id="select" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -37,17 +40,20 @@
       </if>
     </where>
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cargo_borrow
     where cb_id = #{cbId,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.wms.bean.CargoBorrow">
     insert into cargo_borrow (cb_id, cb_name, cb_SKUmodel, 
-      cb_num, cb_cause, cb_names, cb_time,cb_status)
+      cb_num, cb_cause, cb_names, cb_time,cb_status,cb_endtime)
     values (#{cbId,jdbcType=INTEGER}, #{cbName,jdbcType=VARCHAR}, #{cbSkumodel,jdbcType=VARCHAR}, 
       #{cbNum,jdbcType=DOUBLE}, #{cbCause,jdbcType=VARCHAR}, #{cbNames,jdbcType=VARCHAR}, 
-      #{cbTime,jdbcType=TIMESTAMP},#{cbStatus,jdbcType=VARCHAR})
+      #{cbTime,jdbcType=TIMESTAMP},#{cbStatus,jdbcType=VARCHAR},#{cbEndtime,jdbcType=VARCHAR})
   </insert>
+
   <insert id="insertSelective" parameterType="com.wms.bean.CargoBorrow">
     insert into cargo_borrow
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -75,6 +81,9 @@
       <if test="cbStatus != null">
         cb_status,
       </if>
+      <if test="cbEndtime != null">
+        cb_endtime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="cbId != null">
@@ -101,8 +110,12 @@
       <if test="cbStatus != null">
         #{cbStatus,jdbcType=VARCHAR},
       </if>
+      <if test="cbEndtime != null">
+        #{cbEndtime,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.CargoBorrow">
     update cargo_borrow
     <set>
@@ -115,30 +128,27 @@
       <if test="cbNum != null">
         cb_num = #{cbNum,jdbcType=DOUBLE},
       </if>
-      <if test="cbCause != null">
-        cb_cause = #{cbCause,jdbcType=VARCHAR},
-      </if>
       <if test="cbNames != null">
         cb_names = #{cbNames,jdbcType=VARCHAR},
-      </if>
-      <if test="cbTime != null">
-        cb_time = #{cbTime,jdbcType=TIMESTAMP},
       </if>
       <if test="cbStatus != null">
         cb_status = #{cbStatus,jdbcType=VARCHAR},
       </if>
+      <if test="cbEndtime != null">
+        cb_endtime  = #{cbEndtime,jdbcType=VARCHAR},
+      </if>
     </set>
     where cb_id = #{cbId,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.wms.bean.CargoBorrow">
     update cargo_borrow
     set cb_name = #{cbName,jdbcType=VARCHAR},
       cb_SKUmodel = #{cbSkumodel,jdbcType=VARCHAR},
       cb_num = #{cbNum,jdbcType=DOUBLE},
-      cb_cause = #{cbCause,jdbcType=VARCHAR},
       cb_names = #{cbNames,jdbcType=VARCHAR},
-      cb_time = #{cbTime,jdbcType=TIMESTAMP},
-      cb_status = #{cbStatus,jdbcType=VARCHAR}
+      cb_status = #{cbStatus,jdbcType=VARCHAR},
+      cb_endtime = #{cbEndtime,jdbcType=VARCHAR}
     where cb_id = #{cbId,jdbcType=INTEGER}
   </update>
 </mapper>
