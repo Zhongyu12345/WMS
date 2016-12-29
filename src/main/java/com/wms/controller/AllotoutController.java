@@ -1,28 +1,28 @@
 package com.wms.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.wms.bean.Allotout;
+import com.wms.commons.base.BaseController;
+import com.wms.commons.bean.Search;
+import com.wms.commons.utils.PageInfo;
+import com.wms.commons.utils.ReadXls;
+import com.wms.commons.utils.StringUtils;
+import com.wms.commons.utils.TimeUtils;
+import com.wms.service.AllotoutService;
+import org.apache.commons.fileupload.util.Streams;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.wms.bean.Allotout;
-import com.wms.commons.base.BaseController;
-import com.wms.commons.bean.Search;
-import com.wms.commons.utils.PageInfo;
-import com.wms.commons.utils.StringUtils;
-import com.wms.commons.utils.TimeUtils;
-import com.wms.service.AllotoutService;
+import java.io.FileOutputStream;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 调拨单管理
@@ -113,6 +113,54 @@ public class AllotoutController extends BaseController {
             return renderSuccess("删除成功!");
         } else {
             return renderError("删除失败!");
+        }
+    }
+
+    /** 进入导入页面 */
+    @GetMapping("importAllotout.html")
+    public String importAllotoutPage(){
+        return "outbound/allotoutImport";
+    }
+
+    /** 读取提交的Excel */
+    @PostMapping("readExcle")
+    public String readExcle(@RequestParam("file") MultipartFile file, Model model) {
+        String path = (AllotoutController.class.getResource("/").toString()).substring(6);
+        if (!file.isEmpty()) {
+            try {
+                Streams.copy(file.getInputStream(), new FileOutputStream(path + "/" + file.getOriginalFilename()), true);
+                URL url = GodownEntryController.class.getResource("/" + file.getOriginalFilename());
+                List<List<String>> lists = ReadXls.readxls(url.getFile());
+                Allotout allotout = new Allotout();
+                List<String> objects = lists.get(2);
+                for (int i = 0; i < objects.size(); i++) {
+                    allotout.setAoName(objects.get(0));
+                    allotout.setAoSkumodel(objects.get(1));
+                    allotout.setAoNum(Integer.valueOf(objects.get(2).trim().substring(0, objects.get(2).length() - 2)));
+                    allotout.setAoWhid(objects.get(3));
+                    allotout.setAoSippingno(objects.get(4));
+                    allotout.setAoTime(TimeUtils.updateTime("".equals(objects.get(5)) ? null : objects.get(5)));
+                    allotout.setAoVolume(Double.valueOf(objects.get(6).trim().substring(0, objects.get(6).length() - 2)));
+                }
+                model.addAttribute("allotout", allotout);
+            } catch (Exception e) {
+                model.addAttribute("error", "请导入正确的数据!!!");
+                e.printStackTrace();
+            }
+        }
+        return "outbound/allotoutImport";
+    }
+
+    /** 添加调拨单 */
+    @ResponseBody
+    @PostMapping(value = "allotout.php")
+    public Object importAllotout(Allotout allotout, String byTime) {
+        allotout.setAoTime(TimeUtils.updateTime(byTime));
+        int result = allotoutService.importAllotout(allotout);
+        if (result > 0) {
+            return renderSuccess("添加成功!");
+        } else {
+            return renderError("添加失败!");
         }
     }
 

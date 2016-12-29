@@ -117,4 +117,19 @@ public class Allotout {
     public void setGodowns(List<Godown> godowns) {
         this.godowns = godowns;
     }
+
+    @Override
+    public String toString() {
+        return "Allotout{" +
+                "aoId=" + aoId +
+                ", aoName='" + aoName + '\'' +
+                ", aoSkumodel='" + aoSkumodel + '\'' +
+                ", aoNum=" + aoNum +
+                ", aoWhid='" + aoWhid + '\'' +
+                ", aoSippingno='" + aoSippingno + '\'' +
+                ", aoTime=" + aoTime +
+                ", aoVolume=" + aoVolume +
+                ", godowns=" + godowns +
+                '}';
+    }
 }
