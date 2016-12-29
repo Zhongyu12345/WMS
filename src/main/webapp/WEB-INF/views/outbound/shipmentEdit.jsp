@@ -26,7 +26,19 @@
             }
         });
 
-        $("#shWhid").val('${shipment.shWhid}');
+        $("#selectCombobox").combobox({
+            url: "/godown/godownComboBox",
+            method: 'get',
+            valueField: 'id',
+            textField: 'text',
+            panelHeight: 'auto',
+            onLoadSuccess: function () {
+                var data = $('#selectCombobox').combobox('getData');
+                if (data.length > 0) {
+                    $("#selectCombobox").combobox('select', '${shipment.shWhid}');
+                }
+            }
+        });
 
     });
 </script>
@@ -50,9 +62,6 @@
                 <tr>
                     <td>仓库编码</td>
                     <td><input name="shWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
-                    <!--
-                    <td><input name="shWhid" type="text" placeholder="请输入仓库编码" class="easyui-validatebox" data-options="required:true" value="${shipment.shWhid}"></td>
-                    -->
                     <td>损坏数量</td>
                     <td><input name="shDamage" type="text" placeholder="请输入损坏数量" class="easyui-validatebox" data-options="required:true" value="${shipment.shDamage}"></td>
                 </tr>
