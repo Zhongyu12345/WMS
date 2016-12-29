@@ -101,7 +101,7 @@
             });
         });
 
-        function addFun() {
+       /* function addFun() {
             parent.$.modalDialog({
                 title : '新增货物',
                 width : 500,
@@ -116,7 +116,7 @@
                     }
                 } ]
             });
-        }
+        }*/
 
         function editFun(id) {
             if (id == undefined) {
@@ -191,10 +191,10 @@
 <div data-options="region:'center',border:true,title:'货物表'" >
     <table id="dataGrid" data-options="fit:true,border:false"></table>
 </div>
-<div id="toolbar" style="display: none;">
+<%--<div id="toolbar" style="display: none;">
     <shiro:hasPermission name="/cargo/insert">
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">新增货物</a>
     </shiro:hasPermission>
-</div>
+</div>--%>
 </body>
 </html>

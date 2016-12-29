@@ -6,7 +6,7 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>调拨出库管理</title>
+    <title>越库出货单列表</title>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
 <div data-options="region:'north',border:false" style="height: 30px; overflow: hidden;background-color: #fff">
@@ -27,7 +27,7 @@
         </table>
     </form>
 </div>
-<div data-options="region:'center',border:true,title:'出货单列表'">
+<div data-options="region:'center',border:true,title:'越库出货单列表'">
     <table id="dataGrid" data-options="fit:true,border:false"></table>
 </div>
 <div id="toolbar" style="display: none;">

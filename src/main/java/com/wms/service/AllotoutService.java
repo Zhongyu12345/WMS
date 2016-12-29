@@ -24,4 +24,6 @@ public interface AllotoutService {
 
     int updateAllotout(Allotout allotout);
 
+    int importAllotout(Allotout allotout);
+
 }

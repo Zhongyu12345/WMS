@@ -3,6 +3,7 @@ package com.wms.service.impl;
 import com.baomidou.framework.service.impl.SuperServiceImpl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.wms.bean.User;
 import com.wms.bean.UserRole;
 import com.wms.bean.vo.UserVo;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User 表数据服务层接口实现类
@@ -60,6 +62,11 @@ public class UserServiceImpl extends SuperServiceImpl<UserMapper, User> implemen
     @Override
     public UserVo selectVoById(Long id) {
         return userMapper.selectUserVoById(id);
+    }
+
+    @Override
+    public List<UserVo> selectUserBytype(Map<String,Object> map) {
+        return userMapper.selectUserBytype(map);
     }
 
     @Override

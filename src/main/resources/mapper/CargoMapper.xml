@@ -139,9 +139,6 @@
       <if test="cSupplierid != null">
         c_supplierid = #{cSupplierid,jdbcType=VARCHAR},
       </if>
-      <if test="cShippingno != null">
-        c_shippingNO = #{cShippingno,jdbcType=VARCHAR},
-      </if>
       <if test="cWhid != null">
         c_whid = #{cWhid,jdbcType=VARCHAR},
       </if>
@@ -168,7 +165,6 @@
     set c_name = #{cName,jdbcType=VARCHAR},
       c_storerid = #{cStorerid,jdbcType=VARCHAR},
       c_supplierid = #{cSupplierid,jdbcType=VARCHAR},
-      c_shippingNO = #{cShippingno,jdbcType=VARCHAR},
       c_whid = #{cWhid,jdbcType=VARCHAR},
       c_num = #{cNum,jdbcType=INTEGER},
       c_totalweight = #{cTotalweight,jdbcType=DOUBLE},
