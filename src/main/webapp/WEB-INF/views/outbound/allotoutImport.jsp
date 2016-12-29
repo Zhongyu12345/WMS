@@ -11,8 +11,8 @@
 <body class="easyui-layout" data-options="fit:true,border:false">
 <div style="height:30px;padding:20px;">
     <form action="${path }/allotout/readExcle" method="post" enctype="multipart/form-data" >
-        <input class="easyui-filebox" id="file" name="file" style="width:250px;" data-options="prompt:'请选择入库计划单...'" >
-        <input class="easyui-linkbutton" style="width:100px;height:24px;" type="submit" value="导入计划单" />
+        <input class="easyui-filebox" id="file" name="file" style="width:250px;" data-options="prompt:'请选择调拨单...'" >
+        <input class="easyui-linkbutton" style="width:100px;height:24px;" type="submit" value="导入调拨单" />
     </form>
 
     <form id="allotoutImportForm" method="post">
