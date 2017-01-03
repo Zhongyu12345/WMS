@@ -6,12 +6,13 @@
     <result column="mi_name" jdbcType="VARCHAR" property="miName" />
     <result column="mi_SKUmodel" jdbcType="VARCHAR" property="miSkumodel" />
     <result column="mi_num" jdbcType="DOUBLE" property="miNum" />
+    <result column="mi_Actual" jdbcType="DOUBLE" property="miActual" />
     <result column="mi_names" jdbcType="VARCHAR" property="miNames" />
     <result column="mi_whid" jdbcType="INTEGER" property="miWhid" />
     <result column="mi_time" jdbcType="TIMESTAMP" property="miTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    mi_id, mi_name, mi_SKUmodel, mi_num, mi_names, mi_whid, mi_time
+    mi_id, mi_name, mi_SKUmodel, mi_num,mi_Actual, mi_names, mi_whid, mi_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -19,16 +20,32 @@
     from make_inventory
     where mi_id = #{miId,jdbcType=INTEGER}
   </select>
+  <select id="select" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List" />
+    from make_inventory
+    <where>
+      <if test="SKM != null and SKM != ''">
+        mi_SKUmodel = #{SKM}
+      </if>
+      <if test="startTime != null">
+        <![CDATA[  mi_time >= #{stateTime} ]]>
+      </if>
+      <if test="endTime != null">
+        <![CDATA[ and mi_time <= #{endTime} ]]>
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from make_inventory
     where mi_id = #{miId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.wms.bean.MakeInventory">
     insert into make_inventory (mi_id, mi_name, mi_SKUmodel, 
-      mi_num, mi_names, mi_whid, 
+      mi_num,mi_Actual, mi_names, mi_whid,
       mi_time)
     values (#{miId,jdbcType=INTEGER}, #{miName,jdbcType=VARCHAR}, #{miSkumodel,jdbcType=VARCHAR}, 
-      #{miNum,jdbcType=DOUBLE}, #{miNames,jdbcType=VARCHAR}, #{miWhid,jdbcType=INTEGER}, 
+      #{miNum,jdbcType=DOUBLE}, #{miActual,jdbcType=DOUBLE}, #{miNames,jdbcType=VARCHAR}, #{miWhid,jdbcType=INTEGER},
       #{miTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.wms.bean.MakeInventory">
@@ -55,6 +72,9 @@
       <if test="miTime != null">
         mi_time,
       </if>
+      <if test="miActual != null">
+        mi_Actual,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="miId != null">
@@ -77,6 +97,9 @@
       </if>
       <if test="miTime != null">
         #{miTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="miActual != null">
+        #{miActual,jdbcType=DOUBLE},
       </if>
     </trim>
   </insert>

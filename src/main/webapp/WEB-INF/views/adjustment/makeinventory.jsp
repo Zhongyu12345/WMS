@@ -6,7 +6,7 @@
     <%@ include file="/commons/basejs.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>货品表</title>
+    <title>货物盘点单管理</title>
     <script type="text/javascript">
 
         var dataGrid;
@@ -14,14 +14,14 @@
 
         $(function() {
             dataGrid = $('#dataGrid').datagrid({
-                url : '${path }/cargo/select',
+                url : '${path }/make/select',
                 fit : true,
                 striped : true,
                 rownumbers : true,
                 pagination : true,
-                singleSelect : false,
+                singleSelect : true,
                 height : '27',
-                idField : 'cId',
+                idField : 'miId',
                 sortName : 'id',
                 sortOrder : 'asc',
                 pageSize : 20,
@@ -29,52 +29,37 @@
                 columns : [ [ {
                     width : '90',
                     title : '货物名称',
-                    field : 'cName',
+                    field : 'miName',
                     sortable : true
                 }, {
                     width : '70',
-                    title : '货主',
-                    field : 'cStorerid',
+                    title : '货物型号',
+                    field : 'miSkumodel',
                     sortable : true
                 },{
                     width : '100',
-                    title : '供应商',
-                    field : 'cSupplierid',
-                    sortable : true
-                },  {
-                    width : '120',
-                    title : '客户托单号',
-                    field : 'cShippingno',
-                    sortable : true
-                }, {
-                    width : '70',
-                    title : '仓库编码',
-                    field : 'cWhid',
+                    title : '盘点数量',
+                    field : 'miNum',
                     sortable : true
                 },{
-                    width : '60',
-                    title : '数量',
-                    field : 'cNum',
+                    width : '100',
+                    title : '实际盘点数量',
+                    field : 'miActual',
                     sortable : true
                 },{
-                        width : '80',
-                        title : '总货毛重',
-                        field : 'cTotalweight',
-                        sortable : true
-                },{
-                    width : '60',
-                    title : '总货体积',
-                    field : 'cTotalvolume',
-                    sortable : true
-                },{
-                    width : '150',
-                    title : '入库时间',
-                    field : 'cReceivedate',
+                    width : '100',
+                    title : '盘点人',
+                    field : 'miNames',
                     sortable : true
                 },{
                     width : '70',
-                    title : '货物型号',
-                    field : 'cSkumodel',
+                    title : '仓库编号',
+                    field : 'miWhid',
+                    sortable : true
+                },{
+                    width : '130',
+                    title : '盘点时间',
+                    field : 'miTime',
                     sortable : true
                 },{
                     field : 'action',
@@ -83,11 +68,11 @@
                     formatter : function(value, row, index) {
                         var str = '';
                         <shiro:hasPermission name="/user/edit">
-                          str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.cId);
+                        str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.miId);
                         </shiro:hasPermission>
                         <shiro:hasPermission name="/user/delete">
-                            str += '&nbsp;&nbsp;';
-                            str += $.formatString('<a style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.cId);
+                        str += '&nbsp;&nbsp;';
+                        str += $.formatString('<a style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.miId);
                         </shiro:hasPermission>
                         return str;
                     }
@@ -101,25 +86,8 @@
         });
 
 
-       function addFun() {
-           var rows = dataGrid.datagrid('getSelections');
-           if(rows != null && rows != ""){
-               var data = [];
-               for(var i=0;i<rows.length;i++){
-                   if(rows.length >0){
-                       data.push(rows[i].cId);
-                       data.push(rows[i].cName);
-                       data.push(rows[i].cWhid);
-                       data.push(rows[i].cNum);
-                       data.push("");
-                       data.push("");
-                       data.push(rows[i].cSkumodel);
-                   }
-               }
-               window.location.href = '${path }/make/ToDiskExcel?data='+data;
-           }else{
-               parent.$.messager.alert('提示',"请选择您要导出的数据", 'info');
-           }
+        function addFun() {
+
         }
 
         function editFun(id) {
@@ -154,7 +122,7 @@
             }
             parent.$.messager.confirm('询问', '您是否要删除当前数据？', function(b) {
                 if (b) {
-                    $.post('${path }/cargo/deletepk', {
+                    $.post('${path }/make/deletepk', {
                         id : id
                     }, function(result) {
                         if (result.success) {
@@ -182,10 +150,10 @@
         <table>
             <tr>
                 <th>货物型号:</th>
-                <td><input name="cSkumodel" placeholder="请输入货物型号"/></td>
+                <td><input name="miSkumodel" placeholder="请输入货物型号"/></td>
                 <th>创建时间:</th>
                 <td>
-                    <input name="createdateStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />至<input  name="createdateEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />
+                    <input name="createState" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />至<input  name="createEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />
                     <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
                 </td>
             </tr>
@@ -197,7 +165,10 @@
 </div>
 <div id="toolbar" style="display: none;">
     <shiro:hasPermission name="/cargo/insert">
-        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">打印盘点货物单</a>
+        <form action="ReadExcle" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <input type="submit" value="确定" />
+        </form>
     </shiro:hasPermission>
 </div>
 </body>
