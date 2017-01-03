@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wms.bean.Godown;
 import com.wms.bean.Receiving;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.PageInfo;
 import com.wms.commons.utils.StringUtils;
+import com.wms.service.GodownService;
 import com.wms.service.ReceivingService;
 
 @Controller
@@ -28,6 +30,9 @@ public class ReceivingController extends BaseController {
 	
 	@Autowired
 	private ReceivingService receivingService;
+	
+    @Autowired
+    private GodownService godownService;
 	
 	@GetMapping("receivingPage")
 	public String receivingPage(){
@@ -79,10 +84,98 @@ public class ReceivingController extends BaseController {
 	
 	@PostMapping("/update")
 	@ResponseBody
-	public Object update(Receiving receiving, String time){
+	public Object update(Receiving receiving, String time,String oldWhid,String oldCrossflag,String oldVolume){
 		receiving.setrTime(updateTime(time));
-		int a = receivingService.updateByPrimaryKey(receiving);
-		if(a>0){
+		double oldv = Double.valueOf(oldVolume);
+		int a=0,b=0;
+		if(receiving.getrWhid().equals(oldWhid)){//仓库不变
+			if("1".equals(oldCrossflag) && "1".equals(receiving.getrCrossflag())){//如果之前不越库，现在也不越库
+				if(Double.valueOf(oldVolume)>receiving.getrNum()){//如果之前体积大于现在体积
+					Godown g = godownService.selectByPrimaryKey(Integer.valueOf(receiving.getrWhid()));
+			    	g.setGoRdvolume(g.getGoRdvolume()+(oldv-receiving.getrNum()));//可用容积，可用容积 ＝　可用容积＋（之前体积－现在体积）
+			    	g.setGoUsevolume(g.getGoUsevolume()-(oldv-receiving.getrNum()));//已用容积，已用容积＝　已用容积－（之前体积－现在体积）
+			    	a = godownService.updateByPrimaryKey(g);
+			    	b = receivingService.updateByPrimaryKey(receiving);
+				}else if(Double.valueOf(oldVolume)<receiving.getrNum()){//如果之前体积小于现在体积
+					Godown g = godownService.selectByPrimaryKey(Integer.valueOf(receiving.getrWhid()));
+			    	g.setGoRdvolume(g.getGoRdvolume()-(receiving.getrNum()-oldv));//可用容积，可用容积 ＝　可用容积-（现在体积-之前体积）
+			    	g.setGoUsevolume(g.getGoUsevolume()+(receiving.getrNum()-oldv));//已用容积，已用容积＝　已用容积+（现在体积-之前体积）
+			    	a = godownService.updateByPrimaryKey(g);
+			    	b = receivingService.updateByPrimaryKey(receiving);
+				}else{//如果之前现在体积相等
+			    	b = receivingService.updateByPrimaryKey(receiving);
+			    	if(b>0){
+			    		return renderSuccess("修改成功");
+					}else{
+						return renderError("修改失败");
+					}
+				}
+			}else if("1".equals(oldCrossflag) && "0".equals(receiving.getrCrossflag())){//如果之前不越库，现在越库
+				Godown g = godownService.selectByPrimaryKey(Integer.valueOf(receiving.getrWhid()));
+		    	g.setGoRdvolume(g.getGoRdvolume()+oldv);//可用容积，可用容积 ＝　可用容积+之前体积
+		    	g.setGoUsevolume(g.getGoUsevolume()-oldv);//已用容积，已用容积＝　已用容积-之前体积
+		    	a = godownService.updateByPrimaryKey(g);
+		    	b = receivingService.updateByPrimaryKey(receiving);
+			}else if("0".equals(oldCrossflag) && "1".equals(receiving.getrCrossflag())){//如果之前越库，现在不越库
+				Godown g = godownService.selectByPrimaryKey(Integer.valueOf(receiving.getrWhid()));
+		    	g.setGoRdvolume(g.getGoRdvolume()-receiving.getrNum());//可用容积，可用容积 ＝　可用容积-现在体积
+		    	g.setGoUsevolume(g.getGoUsevolume()+receiving.getrNum());//已用容积，已用容积＝　已用容积+现在体积
+		    	a = godownService.updateByPrimaryKey(g);
+		    	b = receivingService.updateByPrimaryKey(receiving);
+			}else if("0".equals(oldCrossflag) && "0".equals(receiving.getrCrossflag())){//入果之前越库，现在越库
+				b = receivingService.updateByPrimaryKey(receiving);
+		    	if(b>0){
+		    		return renderSuccess("修改成功");
+				}else{
+					return renderError("修改失败");
+				}
+			}else{
+				System.out.println("没有预想到的情况");
+			}
+		}else{//仓库改变
+			if("1".equals(oldCrossflag) && "1".equals(receiving.getrCrossflag())){//如果之前不越库，现在也不越库
+				/**
+				 * 还原以前仓库
+				 */
+				Godown go = godownService.selectByPrimaryKey(Integer.valueOf(oldWhid));
+				go.setGoRdvolume(go.getGoRdvolume()+oldv);//可用容积
+				go.setGoUsevolume(go.getGoUsevolume()-oldv);//已用容积
+				godownService.updateByPrimaryKey(go);
+				/**
+				 * 修改现在仓库
+				 */
+				Godown g = godownService.selectByPrimaryKey(Integer.valueOf(receiving.getrWhid()));
+		    	g.setGoRdvolume(g.getGoRdvolume()-receiving.getrNum());//可用容积，可用容积 ＝　可用容积-现在体积
+		    	g.setGoUsevolume(g.getGoUsevolume()+receiving.getrNum());//已用容积，已用容积＝　已用容积+现在体积
+		    	a = godownService.updateByPrimaryKey(g);
+		    	b = receivingService.updateByPrimaryKey(receiving);
+			}else if("1".equals(oldCrossflag) && "0".equals(receiving.getrCrossflag())){//如果之前不越库，现在越库
+				/**
+				 * 还原以前仓库
+				 */
+				Godown go = godownService.selectByPrimaryKey(Integer.valueOf(oldWhid));
+				go.setGoRdvolume(go.getGoRdvolume()+oldv);//可用容积
+				go.setGoUsevolume(go.getGoUsevolume()-oldv);//已用容积
+				a = godownService.updateByPrimaryKey(go);
+		    	b = receivingService.updateByPrimaryKey(receiving);
+			}else if("0".equals(oldCrossflag) && "1".equals(receiving.getrCrossflag())){//如果之前越库，现在不越库
+				Godown g = godownService.selectByPrimaryKey(Integer.valueOf(receiving.getrWhid()));
+		    	g.setGoRdvolume(g.getGoRdvolume()-receiving.getrNum());//可用容积，可用容积 ＝　可用容积-现在体积
+		    	g.setGoUsevolume(g.getGoUsevolume()+receiving.getrNum());//已用容积，已用容积＝　已用容积+现在体积
+		    	a = godownService.updateByPrimaryKey(g);
+		    	b = receivingService.updateByPrimaryKey(receiving);
+			}else if("0".equals(oldCrossflag) && "0".equals(receiving.getrCrossflag())){//入果之前越库，现在越库
+				b = receivingService.updateByPrimaryKey(receiving);
+				if(b>0){
+					return renderSuccess("修改成功");
+				}else{
+					return renderError("修改失败");
+				}
+			}else{
+				System.out.println("没有预想到的情况");
+			}
+		}
+		if(a>0 && b>0){
 			return renderSuccess("修改成功");
 		}
 		return renderError("修改失败");
@@ -105,7 +198,7 @@ public class ReceivingController extends BaseController {
      * @return
      */
     private Date updateTime(String time) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = null;
         try {
             date = format.parse(time);

@@ -1,6 +1,7 @@
 package com.wms.bean;
 
 import java.util.Date;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
@@ -56,6 +57,8 @@ public class GodownEntry {
 	
 	@TableField(value = "g_heavy")
     private double gHeavy;
+	
+	private List<Godown> godowns; 
 
     public int getgNumber() {
 		return gNumber;
@@ -184,4 +187,12 @@ public class GodownEntry {
     public void setgSkumodel(String gSkumodel) {
         this.gSkumodel = gSkumodel == null ? null : gSkumodel.trim();
     }
+
+	public List<Godown> getGodowns() {
+		return godowns;
+	}
+
+	public void setGodowns(List<Godown> godowns) {
+		this.godowns = godowns;
+	}
 }

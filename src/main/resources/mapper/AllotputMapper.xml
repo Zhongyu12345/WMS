@@ -11,29 +11,34 @@
     <result column="ap_time" jdbcType="TIMESTAMP" property="apTime" />
     <result column="ap_volume" jdbcType="DOUBLE" property="apVolume" />
     <result column="ap_address" jdbcType="VARCHAR" property="apAddress" />
+    <collection property="godowns" ofType="com.wms.bean.Godown">
+            <id column="go_id" jdbcType="INTEGER" property="goId"/>
+            <result column="go_whid" jdbcType="VARCHAR" property="goWhid"/>
+            <result column="go_p" jdbcType="VARCHAR" property="goP"/>
+            <result column="go_volume" jdbcType="DOUBLE" property="goVolume"/>
+            <result column="go_usevolume" jdbcType="DOUBLE" property="goUsevolume"/>
+            <result column="go_rdvolume" jdbcType="DOUBLE" property="goRdvolume"/>
+        </collection>
   </resultMap>
   <sql id="Base_Column_List">
     ap_id, ap_name, ap_SKUmodel, ap_num, ap_whid, ap_sipping, ap_time, ap_volume, ap_address
   </sql>
   
   <select id="selectAll" resultMap="BaseResultMap">
-  	select 
-    <include refid="Base_Column_List" />
-    from allotput
-    <where>
+  	select a.*,g.*
+    from allotput a,godown g where a.ap_whid=g.go_id
            <if test=" apname != null and apname != '' ">
-               ap_name like #{apname}
+               and ap_name like #{apname}
            </if>
            <if test=" apsipping != null and apsipping != '' ">
-               ap_sipping = #{apsipping}
+               and ap_sipping = #{apsipping}
            </if>
            <if test=" startTime != null ">
-               <![CDATA[  sr_time >= #{startTime} ]]>
+               and <![CDATA[  sr_time >= #{startTime} ]]>
            </if>
            <if test=" endTime != null ">
                <![CDATA[ and sr_time <= #{endTime} ]]>
            </if>
-     </where>
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

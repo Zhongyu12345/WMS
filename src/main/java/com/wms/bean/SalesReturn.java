@@ -1,6 +1,7 @@
 package com.wms.bean;
 
 import java.util.Date;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
@@ -22,7 +23,7 @@ public class SalesReturn {
     private String srSipping;
 
 	@TableField(value = "sr_storerid")
-    private Integer srStorerid;
+    private String srStorerid;
 
 	@TableField(value = "sr_phone")
     private String srPhone;
@@ -50,6 +51,8 @@ public class SalesReturn {
 	
     private Date createdateStart;
     private Date createdateEnd;
+    
+    private List<Godown> godowns;
 
     public Integer getSrId() {
         return srId;
@@ -75,11 +78,11 @@ public class SalesReturn {
         this.srSipping = srSipping == null ? null : srSipping.trim();
     }
 
-    public Integer getSrStorerid() {
+    public String getSrStorerid() {
         return srStorerid;
     }
 
-    public void setSrStorerid(Integer srStorerid) {
+    public void setSrStorerid(String srStorerid) {
         this.srStorerid = srStorerid;
     }
 
@@ -161,5 +164,13 @@ public class SalesReturn {
 
 	public void setCreatedateEnd(Date createdateEnd) {
 		this.createdateEnd = createdateEnd;
+	}
+
+	public List<Godown> getGodowns() {
+		return godowns;
+	}
+
+	public void setGodowns(List<Godown> godowns) {
+		this.godowns = godowns;
 	}
 }

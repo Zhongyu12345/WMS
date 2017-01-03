@@ -44,8 +44,28 @@ public class GodownController {
         for (Godown godown : godowns) {
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
             comboBox4EasyUI.setId(String.valueOf(godown.getGoId()));
-            comboBox4EasyUI.setText(godown.getGoWhid());
+            comboBox4EasyUI.setText(godown.getGoWhid()+"(可用容积:"+godown.getGoRdvolume()+")");
             comboBox4EasyUIS.add(comboBox4EasyUI);
+        }
+        return comboBox4EasyUIS;
+    }
+    
+    @ResponseBody
+    @GetMapping("godownComboBoxs")
+    public List<ComboBox4EasyUI> listComboBox4EasyUi(String volume) {
+        List<ComboBox4EasyUI> comboBox4EasyUIS = new ArrayList<>();
+        List<Godown> godowns = godownService.godownComboBox();
+        for (Godown godown : godowns) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            if("".equals(volume) || godown.getGoRdvolume()>Double.valueOf(volume)){
+            	comboBox4EasyUI.setId(String.valueOf(godown.getGoId()));
+            	comboBox4EasyUI.setText(godown.getGoWhid()+"(可用容积:"+godown.getGoRdvolume()+")");
+            	comboBox4EasyUIS.add(comboBox4EasyUI);
+            }else{
+            	comboBox4EasyUI.setId(0+"");
+            	comboBox4EasyUI.setText("没有可用仓库");
+            	comboBox4EasyUIS.add(comboBox4EasyUI);
+            }
         }
         return comboBox4EasyUIS;
     }

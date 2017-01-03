@@ -15,5 +15,9 @@ public interface GodownService {
     List<Godown> godownComboBox();
     
     void selectDataGrid(PageInfo pageInfo);
+    
+    int updateByPrimaryKey(Godown record);
+    
+    Godown selectByPrimaryKey(Integer goId);
 
 }

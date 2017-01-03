@@ -1,6 +1,7 @@
 package com.wms.bean;
 
 import java.util.Date;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
@@ -59,6 +60,7 @@ public class Receiving {
 	
 	@TableField(value = "r_heavy")
     private double rHeavy;
+	private List<Godown> godowns;
 	
     public int getrNumber() {
 		return rNumber;
@@ -205,6 +207,14 @@ public class Receiving {
 
 	public void setCreatedateEnd(Date createdateEnd) {
 		this.createdateEnd = createdateEnd;
+	}
+
+	public List<Godown> getGodowns() {
+		return godowns;
+	}
+
+	public void setGodowns(List<Godown> godowns) {
+		this.godowns = godowns;
 	}
 
 

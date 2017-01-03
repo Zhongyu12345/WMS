@@ -33,4 +33,14 @@ public class GodownServiceImpl implements GodownService {
         pageInfo.setTotal(page.getTotal());
 	}
 
+	@Override
+	public int updateByPrimaryKey(Godown record) {
+		return godownMapper.updateByPrimaryKey(record);
+	}
+
+	@Override
+	public Godown selectByPrimaryKey(Integer goId) {
+		return godownMapper.selectByPrimaryKey(goId);
+	}
+
 }

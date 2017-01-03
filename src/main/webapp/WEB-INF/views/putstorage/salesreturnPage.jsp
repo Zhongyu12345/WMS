@@ -54,8 +54,15 @@
             } ,{
                 width : '80',
                 title : '仓库编号',
-                field : 'srWhid',
-                sortable : true
+                field: 'godowns',
+                sortable: true,
+                formatter: function (value) {
+                    var roles = [];
+                    for(var i = 0; i< value.length; i++) {
+                        roles.push(value[i].goWhid);
+                    }
+                    return(roles.join('\n'));
+                }
             } , {
                 width : '80',
                 title : '退货数量',
