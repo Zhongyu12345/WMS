@@ -16,8 +16,16 @@ public interface GodownService {
     
     void selectDataGrid(PageInfo pageInfo);
     
+<<<<<<< Updated upstream
     int updateByPrimaryKey(Godown record);
     
     Godown selectByPrimaryKey(Integer goId);
+=======
+    int insert(Godown godown);
+    
+    int updateStatus(Godown godown);
+    
+    Godown selectById(int id);
+>>>>>>> Stashed changes
 
 }

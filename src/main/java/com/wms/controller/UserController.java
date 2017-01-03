@@ -160,7 +160,7 @@ public class UserController extends BaseController {
     @ResponseBody
     public Object editUserPwd(String oldPwd, String pwd) {
         if (!getCurrentUser().getPassword().equals(DigestUtils.md5Hex(oldPwd))) {
-            return renderError("老密码不正确!");
+            return renderError("旧密码不正确!");
         }
 
         userService.updatePwdByUserId(getUserId(), DigestUtils.md5Hex(pwd));

@@ -7,13 +7,16 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wms.bean.Godown;
 import com.wms.bean.vo.UserVo;
+import com.wms.commons.base.BaseController;
 import com.wms.commons.bean.ComboBox4EasyUI;
 import com.wms.commons.utils.PageInfo;
 import com.wms.service.GodownService;
@@ -27,7 +30,7 @@ import net.sf.json.JSONArray;
  */
 @RequestMapping("godown")
 @Controller
-public class GodownController {
+public class GodownController extends BaseController{
 
     @Autowired
     private GodownService godownService;
@@ -92,23 +95,83 @@ public class GodownController {
     }
     
     @GetMapping("editPage")
-    public String editpage(){
+    public String editpage(Model model, @RequestParam(value = "id") Integer id){
+    	Godown godown = godownService.selectById(id);
+    	model.addAttribute("godown", godown);
     	return "data/godownEdit";
     }
 
-    @GetMapping("getUser")
+    @PostMapping("userCombobox")
     public @ResponseBody Object getUserName(){
     	List<UserVo> userList = userService.selectByRole();
     	List<HashMap<String, String>> list = new ArrayList<HashMap<String,String>>();
     	if(userList.size() != 0){
     		for(UserVo lists : userList){
     			HashMap<String, String> map = new HashMap<String,String>();
-    			map.put("userName", lists.getName());
+    			System.out.println(lists.getId().toString());
     			map.put("userId", lists.getId().toString());
+    			map.put("userName", lists.getName());
     			list.add(map);
     		}
     	}
     	JSONArray json = JSONArray.fromObject(list);
+    	System.out.println(json);
     	return json;
+    }
+
+    
+    @RequestMapping("add")
+    @ResponseBody
+    public Object godownAdd(Godown godown){
+    	godown.setGoUsevolume(0.0D);
+    	godown.setGoRdvolume(godown.getGoVolume());
+    	List<Godown> godowns = godownService.godownComboBox();
+    	for(Godown go : godowns){
+    		if(godown.getGoWhid().equals(go.getGoWhid())){
+    			return renderError("仓库名已存在，不能添加相同仓库");
+    		}else{
+    			int a =godownService.insert(godown);
+    	    	if(a>0){
+    	    		return renderSuccess("添加成功！");
+    	    	}
+    		}
+    	}
+    	return renderError("添加失败");
+    }
+    
+    @RequestMapping("delete")
+    @ResponseBody
+    public Object godowndelete(int id ,String status){
+    	System.out.println(status);
+    	Godown godowns = new Godown();
+    	godowns.setGoId(id);
+    	if(status.equals("0")){
+    		godowns.setGostatus(1);
+    		int a = godownService.updateStatus(godowns);
+        	if(a>0){
+        		return renderSuccess("修改成功");
+        	}
+    	}else if(status.equals("1")){
+    		godowns.setGostatus(0);
+    		int a = godownService.updateStatus(godowns);
+        	if(a>0){
+        		return renderSuccess("修改成功");
+        	}
+    	}
+    	return renderSuccess("修改成败");
+    }
+    
+    @RequestMapping("edit")
+    @ResponseBody
+    public Object editGodown(Godown godown, @RequestParam("add") Double add){
+    	Godown godowns = new Godown();
+    	godowns.setGoId(godown.getGoId());
+    	godowns.setGoVolume(godown.getGoVolume()+add);
+    	godowns.setGoRdvolume(godown.getGoRdvolume()+add);
+    	int a = godownService.updateStatus(godowns);
+    	if(a>0){
+    		return renderSuccess("修改成功");
+    	}
+    	return renderSuccess("修改成败");
     }
 }
