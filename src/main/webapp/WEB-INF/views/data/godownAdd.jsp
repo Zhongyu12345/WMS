@@ -8,10 +8,7 @@
     		editable:false,
     		valueField:'userId',
     		textField:'userName',
-    		/* onLoadSuccess : function(data) {
-                $('#goPer').combobox('setValue', 3);
-            } */
-    		});
+    	});
     	
         $('#godownAddForm').form({
             url : '${path }/godown/add',

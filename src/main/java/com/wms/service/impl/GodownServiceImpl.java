@@ -34,7 +34,6 @@ public class GodownServiceImpl implements GodownService {
 	}
 
 	@Override
-<<<<<<< Updated upstream
 	public int updateByPrimaryKey(Godown record) {
 		return godownMapper.updateByPrimaryKey(record);
 	}
@@ -42,7 +41,8 @@ public class GodownServiceImpl implements GodownService {
 	@Override
 	public Godown selectByPrimaryKey(Integer goId) {
 		return godownMapper.selectByPrimaryKey(goId);
-=======
+	}
+
 	public int insert(Godown godown) {
 		return godownMapper.insert(godown);
 	}
@@ -56,7 +56,6 @@ public class GodownServiceImpl implements GodownService {
 	public Godown selectById(int id) {
 		// TODO Auto-generated method stub
 		return godownMapper.selectByPrimaryKey(id);
->>>>>>> Stashed changes
 	}
 
 }
