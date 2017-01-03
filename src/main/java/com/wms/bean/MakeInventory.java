@@ -24,11 +24,14 @@ public class MakeInventory {
 	@TableField(value = "mi_num")
     private Double miNum;
 
+	@TableField(value = "mi_Actual")
+	private Double miActual;
+
 	@TableField(value = "mi_names")
     private String miNames;
 
 	@TableField(value = "mi_whid")
-    private Integer miWhid;
+    private String miWhid;
 
 	@TableField(value = "mi_time")
     private Date miTime;
@@ -36,6 +39,18 @@ public class MakeInventory {
 	private Date createState;
 
 	private Date createEnd;
+
+	public MakeInventory(Integer miId,String miName,String miWhid,Double miNum,String miNames,String miSkumodel,Date miTime){
+	    this.miId = miId;
+	    this.miName = miName;
+	    this.miWhid = miWhid;
+	    this.miNum = miNum;
+        this.miNames = miNames;
+	    this.miSkumodel = miSkumodel;
+	    this.miTime = miTime;
+    }
+
+    public MakeInventory(){}
 
     public Date getCreateState() {
         return createState;
@@ -93,11 +108,11 @@ public class MakeInventory {
         this.miNames = miNames == null ? null : miNames.trim();
     }
 
-    public Integer getMiWhid() {
+    public String getMiWhid() {
         return miWhid;
     }
 
-    public void setMiWhid(Integer miWhid) {
+    public void setMiWhid(String miWhid) {
         this.miWhid = miWhid;
     }
 
@@ -107,5 +122,13 @@ public class MakeInventory {
 
     public void setMiTime(Date miTime) {
         this.miTime = miTime;
+    }
+
+    public Double getMiActual() {
+        return miActual;
+    }
+
+    public void setMiActual(Double miActual) {
+        this.miActual = miActual;
     }
 }
