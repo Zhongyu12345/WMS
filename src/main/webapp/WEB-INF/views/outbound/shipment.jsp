@@ -148,7 +148,7 @@
     function addFun() {
         parent.$.modalDialog({
             title : '添加',
-            width: 500,
+            width: 520,
             height: 325,
             href : '${path }/shipment/shipment/insert',
             buttons : [ {
