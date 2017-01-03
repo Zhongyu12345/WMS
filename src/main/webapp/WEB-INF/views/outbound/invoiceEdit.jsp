@@ -25,6 +25,20 @@
                 }
             }
         });
+
+        $("#selectCombobox").combobox({
+            url: "/godown/godownComboBox",
+            method: 'get',
+            valueField: 'id',
+            textField: 'text',
+            panelHeight: 'auto',
+            onLoadSuccess: function () {
+                var data = $('#selectCombobox').combobox('getData');
+                if (data.length > 0) {
+                    $("#selectCombobox").combobox('select', '${invoice.inWhid}');
+                }
+            }
+        });
     });
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
@@ -42,9 +56,6 @@
                     <td>发货数量</td>
                     <td><input name="inNum" type="text" placeholder="请输入发货数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.inNum}"></td>
                     <td>仓库编号</td>
-                    <!--
-                    <td><input name="inWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.inWhid}"></td>
-                    -->
                     <td><input name="inWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
                 </tr>
                 <tr>

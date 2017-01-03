@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/commons/global.jsp" %>
 <script type="text/javascript" src="${staticPath }/static/My97DatePicker/WdatePicker.js" charset="utf-8"></script>
-<script type="text/javascript" src="${staticPath }/static/js/warehouse.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function () {
         $('#crossDatabaseEditForm').form({
@@ -25,6 +24,20 @@
                 }
             }
         });
+
+        $("#selectCombobox").combobox({
+            url: "/godown/godownComboBox",
+            method: 'get',
+            valueField: 'id',
+            textField: 'text',
+            panelHeight: 'auto',
+            onLoadSuccess: function () {
+                var data = $('#selectCombobox').combobox('getData');
+                if (data.length > 0) {
+                    $("#selectCombobox").combobox('select', '${crossDatabase.cdWhid}');
+                }
+            }
+        });
     });
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
@@ -42,9 +55,6 @@
                     <td>发货数量</td>
                     <td><input name="cdNum" type="text" placeholder="请输入发货数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.cdNum}"></td>
                     <td>仓库编号</td>
-                    <!--
-                    <td><input name="cdWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.cdWhid}"></td>
-                    -->
                     <td><input name="cdWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
                 </tr>
                 <tr>
