@@ -2,8 +2,11 @@ package com.wms.commons.utils;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+<<<<<<< Updated upstream
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+=======
+>>>>>>> Stashed changes
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +14,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+<<<<<<< Updated upstream
 import org.apache.poi.ss.formula.eval.ErrorEval;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -126,4 +130,36 @@ public class ReadXls {
 	                return "Unknown Cell Type: " + cell.getCellType();
 	        }
 	    }
+=======
+
+public class ReadXls {
+	public static List<List<String>> readxls(String path) throws Exception{
+		InputStream is = new FileInputStream(path);
+		@SuppressWarnings("resource")
+		HSSFWorkbook hssfWorkbook = new HSSFWorkbook(is);//HSSFWorkbook表示整个excel
+		List<List<String>> list = new ArrayList<List<String>>();
+		for(int i=0;i<hssfWorkbook.getNumberOfSheets();i++){
+			HSSFSheet sheet = hssfWorkbook.getSheetAt(i);
+			if(sheet == null){
+				continue;
+			}
+			for(int rownum = 1;rownum <= sheet.getLastRowNum();rownum++){
+				HSSFRow hssfRow = sheet.getRow(rownum);//HSSFRow表示行
+				int minColIx = hssfRow.getFirstCellNum();
+				int maxColIx = hssfRow.getLastCellNum();
+				
+				List<String> rowlist = new ArrayList<String>();
+				for(int ColIx = minColIx; ColIx < maxColIx ;ColIx++){
+					HSSFCell hssfCell = hssfRow.getCell(ColIx);
+					if(hssfCell == null){
+						continue;
+					}
+					rowlist.add(hssfCell+"");
+				}
+				list.add(rowlist);
+			}
+		}
+		return list;
+	}
+>>>>>>> Stashed changes
 }

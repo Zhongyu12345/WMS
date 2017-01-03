@@ -1,5 +1,6 @@
 package com.wms.controller;
 
+<<<<<<< Updated upstream
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +12,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+>>>>>>> Stashed changes
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +24,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.wms.bean.SalesReturn;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.PageInfo;
+<<<<<<< Updated upstream
 import com.wms.commons.utils.StringUtils;
+=======
+>>>>>>> Stashed changes
 import com.wms.service.SalesReturnService;
 
 @Controller
@@ -39,6 +47,7 @@ public class SalesReturnController extends BaseController {
 		return "putstorage/salesreturnPage";
 	}
 	
+<<<<<<< Updated upstream
 	@PostMapping("/save")
 	@ResponseBody
 	public Object save(SalesReturn salesreturn, String time){
@@ -79,19 +88,33 @@ public class SalesReturnController extends BaseController {
 	            condition.put("endTime", sales.getCreatedateEnd());
 	        }
 	     pageInfo.setCondition(condition);
+=======
+	@PostMapping("/select")
+	@ResponseBody
+	public Object select(Integer page, Integer rows){
+		 PageInfo pageInfo = new PageInfo(page, rows);
+>>>>>>> Stashed changes
 		 salesReturnService.selectAll(pageInfo);
 	     return pageInfo;
 	}
 	
 	@PostMapping("/update")
 	@ResponseBody
+<<<<<<< Updated upstream
 	public Object update(SalesReturn salesreturn,String time){
 		salesreturn.setSrTime(updateTime(time));
+=======
+	public Object update(SalesReturn salesreturn){
+>>>>>>> Stashed changes
 		int a = salesReturnService.updateByPrimaryKey(salesreturn);
 		if(a>0){
 			return renderSuccess("修改成功");
 		}
+<<<<<<< Updated upstream
 		return renderError("修改失败");
+=======
+		return null;
+>>>>>>> Stashed changes
 	}
 	
 	@PostMapping("/delete")
@@ -101,6 +124,7 @@ public class SalesReturnController extends BaseController {
 		if(a>0){
 			return renderSuccess("删除成功");
 		}
+<<<<<<< Updated upstream
 		return renderError("删除失败");
 	}
 	
@@ -120,4 +144,8 @@ public class SalesReturnController extends BaseController {
         }
         return date;
     }
+=======
+		return null;
+	}
+>>>>>>> Stashed changes
 }

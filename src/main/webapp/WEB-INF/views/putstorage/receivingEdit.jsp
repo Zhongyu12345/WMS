@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
+<<<<<<< Updated upstream
 <script type="text/javascript" src="${staticPath }/static/My97DatePicker/WdatePicker.js" charset="utf-8"></script>
+=======
+>>>>>>> Stashed changes
 <script type="text/javascript">
     $(function() {
         $('#receivingEditForm').form({
@@ -19,18 +22,28 @@
                 if (result.success) {
                     parent.$.modalDialog.openner_dataGrid.datagrid('reload');//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
                     parent.$.modalDialog.handler.dialog('close');
+<<<<<<< Updated upstream
                     parent.$.messager.alert('提示', result.msg, 'info');
+=======
+>>>>>>> Stashed changes
                 } else {
                     parent.$.messager.alert('错误', result.msg, 'error');
                 }
             }
         });
+<<<<<<< Updated upstream
         $("#rCrossflag").val('${user.rCrossflag}');
         $("#rDirectflag").val('${user.rDirectflag}');
     });
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false" >
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px; ">
+=======
+    });
+</script>
+<div class="easyui-layout" data-options="fit:true,border:false">
+    <div data-options="region:'center',border:false" title="货单修改" style="overflow: hidden;padding: 3px;">
+>>>>>>> Stashed changes
         <form id="receivingEditForm" method="post">
             <table class="grid">
                 <tr>
@@ -44,6 +57,7 @@
                     <td>货物型号</td>
                     <td><input name="rSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true" value="${user.rSkumodel}" /></td>
                     <td>货主号码</td>
+<<<<<<< Updated upstream
                     <td><input name="rPhone" type="text" validtype="mobile" placeholder="请输入货主号码" class="easyui-validatebox" data-options="required:true" value="${user.rPhone}"></td>
                 </tr>
                 <tr>
@@ -76,6 +90,33 @@
                     <input name="time" style="whith:100%" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${user.rTime}" />" readonly="readonly" />
                     <td>管理员编号</td>
                     <td><input name="rAdminid" type="text" placeholder="请输入管理员编号" class="easyui-validatebox" data-options="required:true" value="${user.rAdminid}"></td>
+=======
+                    <td><input name="rPhone" type="text" placeholder="请输入货主号码" class="easyui-validatebox" data-options="required:true" value="${user.rPhone}"></td>
+                </tr>
+                <tr>
+                    <td>供应商</td>
+                    <td><input name="rSupplierid" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true" value="${user.rSupplierid}" /></td>
+                    <td>客户托单号</td>
+                    <td><input name="rSippingno" type="text" placeholder="请输入货主号码" class="easyui-validatebox" data-options="required:true" value="${user.rSippingno}"></td>
+                </tr>
+                 <tr>
+                    <td>仓库编码</td>
+                    <td><input name="rWhid" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true" value="${user.rWhid}" /></td>
+                    <td>入库体积</td>
+                    <td><input name="rNum" type="text" placeholder="请输入货主号码" class="easyui-validatebox" data-options="required:true" value="${user.rNum}"></td>
+                </tr>
+                 <tr>
+                    <td>是否越库</td>
+                    <td><input name="rCrossflag" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true" value="${user.rCrossflag}" /></td>
+                    <td>是否整进</td>
+                    <td><input name="rDirectflag" type="text" placeholder="请输入货主号码" class="easyui-validatebox" data-options="required:true" value="${user.rDirectflag}"></td>
+                </tr>
+                 <tr>
+                    <td>入库时间</td>
+                    <td><input name="rTime" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true" value="${user.rTime}" /></td>
+                    <td>管理员编号</td>
+                    <td><input name="rAdminid" type="text" placeholder="请输入货主号码" class="easyui-validatebox" data-options="required:true" value="${user.rAdminid}"></td>
+>>>>>>> Stashed changes
                 </tr>
             </table>
         </form>

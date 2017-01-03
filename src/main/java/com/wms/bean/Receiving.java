@@ -54,6 +54,7 @@ public class Receiving {
 	@TableField(value = "r_SKUmodel")
     private String rSkumodel;
 	
+<<<<<<< Updated upstream
 	@TableField(value = "r_number")
     private int rNumber;
 	
@@ -79,6 +80,8 @@ public class Receiving {
 	private Date createdateStart;
     private Date createdateEnd;
 	
+=======
+>>>>>>> Stashed changes
     public Integer getrId() {
         return rId;
     }
@@ -191,6 +194,7 @@ public class Receiving {
         this.rSkumodel = rSkumodel == null ? null : rSkumodel.trim();
     }
 
+<<<<<<< Updated upstream
 	public Date getCreatedateStart() {
 		return createdateStart;
 	}
@@ -207,6 +211,8 @@ public class Receiving {
 		this.createdateEnd = createdateEnd;
 	}
 
+=======
+>>>>>>> Stashed changes
 
 
 }

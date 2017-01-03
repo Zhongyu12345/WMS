@@ -20,6 +20,7 @@
   	select 
     <include refid="Base_Column_List" />
     from allotput
+<<<<<<< Updated upstream
     <where>
            <if test=" apname != null and apname != '' ">
                ap_name like #{apname}
@@ -34,6 +35,8 @@
                <![CDATA[ and sr_time <= #{endTime} ]]>
            </if>
      </where>
+=======
+>>>>>>> Stashed changes
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

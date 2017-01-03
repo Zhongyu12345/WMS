@@ -1,5 +1,6 @@
 package com.wms.controller;
 
+<<<<<<< Updated upstream
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,6 +8,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+=======
+import java.util.ArrayList;
+import java.util.List;
+>>>>>>> Stashed changes
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +24,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.wms.bean.Receiving;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.PageInfo;
+<<<<<<< Updated upstream
 import com.wms.commons.utils.StringUtils;
+=======
+>>>>>>> Stashed changes
 import com.wms.service.ReceivingService;
 
 @Controller
@@ -36,6 +44,7 @@ public class ReceivingController extends BaseController {
 	
 	@PostMapping("/select")
 	@ResponseBody
+<<<<<<< Updated upstream
 	public Object select(Receiving rece , Integer page, Integer rows){
 		 PageInfo pageInfo = new PageInfo(page, rows);
 		 Map<String, Object> condition = new HashMap<String, Object>();
@@ -62,6 +71,10 @@ public class ReceivingController extends BaseController {
 	        	condition.put("rDirectflag", rece.getrDirectflag());
 	        }
 	     pageInfo.setCondition(condition);
+=======
+	public Object select(Integer page, Integer rows){
+		 PageInfo pageInfo = new PageInfo(page, rows);
+>>>>>>> Stashed changes
 		 receivingService.selectAll(pageInfo);
 	     return pageInfo;
 	}
@@ -79,13 +92,21 @@ public class ReceivingController extends BaseController {
 	
 	@PostMapping("/update")
 	@ResponseBody
+<<<<<<< Updated upstream
 	public Object update(Receiving receiving, String time){
 		receiving.setrTime(updateTime(time));
+=======
+	public Object update(Receiving receiving){
+>>>>>>> Stashed changes
 		int a = receivingService.updateByPrimaryKey(receiving);
 		if(a>0){
 			return renderSuccess("修改成功");
 		}
+<<<<<<< Updated upstream
 		return renderError("修改失败");
+=======
+		return renderSuccess("修改失败");
+>>>>>>> Stashed changes
 	}
 	
 	@PostMapping("/delete")
@@ -95,6 +116,7 @@ public class ReceivingController extends BaseController {
 		if(a>0){
 			return renderSuccess("删除成功");
 		}
+<<<<<<< Updated upstream
 		return renderError("删除失败");
 	}
 	
@@ -114,5 +136,9 @@ public class ReceivingController extends BaseController {
         }
         return date;
     }
+=======
+		return renderSuccess("删除失败");
+	}
+>>>>>>> Stashed changes
 
 }

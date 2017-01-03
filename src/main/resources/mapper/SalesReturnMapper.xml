@@ -24,6 +24,7 @@
   	select 
     <include refid="Base_Column_List" />
     from sales_return
+<<<<<<< Updated upstream
     <where>
            <if test=" srname != null and srname != '' ">
                sr_name like #{srname}
@@ -38,6 +39,8 @@
                <![CDATA[ and sr_time <= #{endTime} ]]>
            </if>
      </where>
+=======
+>>>>>>> Stashed changes
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
