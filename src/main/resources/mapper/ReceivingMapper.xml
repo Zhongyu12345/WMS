@@ -28,7 +28,6 @@
   	select 
     <include refid="Base_Column_List" />
     from receiving
-<<<<<<< Updated upstream
     <where>
            <if test=" rname != null and rname != '' ">
                r_name like #{rname}
@@ -52,8 +51,6 @@
                <![CDATA[ and r_time <= #{endTime} ]]>
            </if>
      </where>
-=======
->>>>>>> Stashed changes
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

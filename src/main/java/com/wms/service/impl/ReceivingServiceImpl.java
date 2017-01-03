@@ -50,11 +50,7 @@ public class ReceivingServiceImpl implements ReceivingService {
 	@Override
 	public void selectAll(PageInfo pageinfo) {
 		Page<Receiving> page  = new Page<Receiving>(pageinfo.getNowpage(),pageinfo.getPagesize());
-<<<<<<< Updated upstream
 		List<Receiving> list = receivingMapper.selectAll(page,pageinfo.getCondition());
-=======
-		List<Receiving> list = receivingMapper.selectAll(page);
->>>>>>> Stashed changes
 		pageinfo.setRows(list);
 		pageinfo.setTotal(page.getTotal());
 	}

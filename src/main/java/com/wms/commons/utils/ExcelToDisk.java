@@ -1,8 +1,5 @@
 package com.wms.commons.utils;
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.util.List;
@@ -20,13 +17,10 @@ import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
-<<<<<<< Updated upstream
 /**
  * 导出excel
  * @param <T>
  */
-=======
->>>>>>> Stashed changes
 public class ExcelToDisk<T> {
 	public  void Excel(List<T> list,String fileName,String [] title,HttpServletResponse resp){
 		try {

@@ -33,22 +33,14 @@ public class AllotputServiceImpl implements AllotputService {
 	}
 
 	@Override
-<<<<<<< Updated upstream
 	public Allotput selectByPrimaryKey(Integer apId) {
-=======
-	public List<Allotput> selectByPrimaryKey(Integer apId) {
->>>>>>> Stashed changes
 		return allotput.selectByPrimaryKey(apId);
 	}
 
 	@Override
 	public void selectAll(PageInfo pageinfo) {
 		Page<Allotput> page  = new Page<Allotput>(pageinfo.getNowpage(),pageinfo.getPagesize());
-<<<<<<< Updated upstream
 		List<Allotput> list = allotput.selectAll(page,pageinfo.getCondition());
-=======
-		List<Allotput> list = allotput.selectAll(page);
->>>>>>> Stashed changes
 		pageinfo.setRows(list);
 		pageinfo.setTotal(page.getTotal());
 	}
