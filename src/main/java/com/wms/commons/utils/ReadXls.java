@@ -3,6 +3,7 @@ package com.wms.commons.utils;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,9 +97,13 @@ public class ReadXls {
 	                    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	                    return sdf.format(cell.getDateCellValue());
 	                }
-	                return String.valueOf(cell.getNumericCellValue());
+	                if(String.valueOf(cell.getNumericCellValue()).length()>8){
+						DecimalFormat df = new DecimalFormat("0");
+						return df.format(cell.getNumericCellValue());
+					}
+					return String.valueOf((int)cell.getNumericCellValue());
 	            case Cell.CELL_TYPE_STRING:
-	                return cell.getRichStringCellValue().toString();
+					return cell.getRichStringCellValue().toString();
 	            default:
 	                return "Unknown Cell Type: " + cell.getCellType();
 	        }
@@ -121,7 +126,7 @@ public class ReadXls {
 	                }
 					return String.valueOf(cell.getNumericCellValue());
 	            case Cell.CELL_TYPE_STRING:
-	                return cell.getRichStringCellValue().toString();
+					return cell.getRichStringCellValue().toString();
 	            default:
 	                return "Unknown Cell Type: " + cell.getCellType();
 	        }
