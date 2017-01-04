@@ -8,17 +8,24 @@
     <result column="mi_num" jdbcType="DOUBLE" property="miNum" />
     <result column="mi_Actual" jdbcType="DOUBLE" property="miActual" />
     <result column="mi_names" jdbcType="VARCHAR" property="miNames" />
+    <result column="mi_order" jdbcType="VARCHAR" property="miOrder"/>
     <result column="mi_whid" jdbcType="INTEGER" property="miWhid" />
     <result column="mi_time" jdbcType="TIMESTAMP" property="miTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    mi_id, mi_name, mi_SKUmodel, mi_num,mi_Actual, mi_names, mi_whid, mi_time
+    mi_id, mi_name, mi_SKUmodel, mi_num,mi_Actual, mi_names, mi_whid, mi_time, mi_order
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from make_inventory
     where mi_id = #{miId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByOrder" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from make_inventory
+    where mi_order = #{miOrder,jdbcType=VARCHAR}
   </select>
   <select id="select" resultMap="BaseResultMap">
     select

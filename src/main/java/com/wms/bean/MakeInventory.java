@@ -26,6 +26,9 @@ public class MakeInventory {
 
 	@TableField(value = "mi_Actual")
 	private Double miActual;
+	
+	@TableField(value = "mi_order")
+	private String miOrder;
 
 	@TableField(value = "mi_names")
     private String miNames;
@@ -131,4 +134,12 @@ public class MakeInventory {
     public void setMiActual(Double miActual) {
         this.miActual = miActual;
     }
+
+	public String getMiOrder() {
+		return miOrder;
+	}
+
+	public void setMiOrder(String miOrder) {
+		this.miOrder = miOrder;
+	}
 }

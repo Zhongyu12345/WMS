@@ -17,4 +17,6 @@ public interface GodownEntryMapper {
     int updateByPrimaryKeySelective(GodownEntry record);
 
     int updateByPrimaryKey(GodownEntry record);
+    
+    GodownEntry selectByNo(String No);
 }

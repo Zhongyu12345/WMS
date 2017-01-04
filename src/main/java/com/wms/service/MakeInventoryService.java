@@ -20,4 +20,6 @@ public interface MakeInventoryService {
     int updateByPrimaryKeySelective(MakeInventory record);
 
     int updateByPrimaryKey(MakeInventory record);
+    
+    MakeInventory selectByOrder(String order);
 }

@@ -5,7 +5,7 @@
 <head>
 <%@ include file="/commons/basejs.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>盘点差异表</title>
+<title>入库计划差异表</title>
 
 <script type="text/javascript" src="${staticPath }/static/js/jquery-1.8.3.min.js"></script>
 
@@ -19,10 +19,7 @@
 	            type: 'column'
 	        },
 	        title: {
-	            text: '盘点差异统计表'
-	        },
-	        credits: { 
-	        	enabled: false //不显示LOGO 
+	            text: '入库计划差异统计表'
 	        },
 	        yAxis: {
 	            allowDecimals: false,
@@ -57,7 +54,7 @@
         <form id="searchForm">
             <table>
                 <tr>
-                    <th>盘点单号:</th>
+                    <th>计划入库单号:</th>
                     <td>
                     <input type="text" name="checknum" placeholder="请输入单号"/>
                     <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>

@@ -42,4 +42,9 @@ public class GodwnEntryServiceImpl  implements GodownEntryService {
 	public int updateByPrimaryKey(GodownEntry record) {
 		return godownEntryMapper.updateByPrimaryKey(record);
 	}
+
+	@Override
+	public GodownEntry selectByNo(String No) {
+		return godownEntryMapper.selectByNo(No);
+	}
 }

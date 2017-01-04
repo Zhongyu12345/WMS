@@ -57,4 +57,9 @@ public class MakeInventoryServiceImpl implements MakeInventoryService {
     public int updateByPrimaryKey(MakeInventory record) {
         return makeInventoryMapper.updateByPrimaryKey(record);
     }
+
+	@Override
+	public MakeInventory selectByOrder(String order) {
+		return makeInventoryMapper.selectByOrder(order);
+	}
 }
