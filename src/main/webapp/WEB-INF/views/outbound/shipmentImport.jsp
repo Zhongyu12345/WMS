@@ -10,37 +10,46 @@
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
 <div style="height:30px;padding:20px;">
-    <form action="${path }/allotout/readExcle" method="post" enctype="multipart/form-data" >
+    <form action="${path }/shipment/readExcle" method="post" enctype="multipart/form-data" >
         <input class="easyui-filebox" id="file" name="file" style="width:250px;" data-options="prompt:'请选择出货单...'" >
         <input class="easyui-linkbutton" style="width:100px;height:24px;" type="submit" value="导入出货单" />
     </form>
 
-    <form id="allotoutImportForm" method="post">
+    <form id="shipmentImportForm" method="post">
         <table class="grid">
             <tr>
-                <td>货物名称</td>
-                <td><input name="aoName" type="text" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoName}"></td>
-                <td>货物型号</td>
-                <td><input name="aoSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoSkumodel}"></td>
+                <td>货主</td>
+                <td><input name="shStoreid" type="text" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${shipment.shStoreid}"></td>
+                <td>时间</td>
+                <td><input name="byTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${shipment.shTime}" />"/></td>
             </tr>
             <tr>
-                <td>调拨数量</td>
-                <td><input name="aoNum" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoNum}"></td>
-                <td>仓库编号</td>
-                <td><input name="aoWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoWhid}"></td>
-                <!--
-                <td><input name="aoWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
-                -->
+                <td>号码</td>
+                <td><input name="shPhone" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${shipment.shPhone}"></td>
+                <td>单号</td>
+                <td><input name="shSippingno" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${shipment.shSippingno}"></td>
             </tr>
             <tr>
-                <td>货物体积</td>
-                <td><input name="aoVolume" type="text" placeholder="请输入货物体积" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoVolume}"></td>
-                <td>调拨单号</td>
-                <td><input name="aoSippingno" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoSippingno}"></td>
+                <td>仓库</td>
+                <td><input name="shWhid" type="text" placeholder="请输入货物体积" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${shipment.shWhid}"></td>
+                <td>损坏数量</td>
+                <td><input name="shDamage" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${shipment.shDamage}"></td>
             </tr>
             <tr>
-                <td>调拨时间</td>
-                <td><input name="byTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${allotout.aoTime}" />"/></td>
+                <td>损坏原因</td>
+                <td colspan="3"><textarea rows="3" cols="40" name="shCause" style="width: 397px;height: 50px;"></textarea></td>
+            </tr>
+            <tr>
+                <td>型号</td>
+                <td><input name="shSkumodel" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${shipment.shSkumodel}"></td>
+                <td>实际数量</td>
+                <td><input name="shShnum" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${shipment.shShnum}"></td>
+            </tr>
+            <tr>
+                <td>毛重</td>
+                <td><input name="shTotalweigh" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${shipment.shTotalweigh}"></td>
+                <td>体积</td>
+                <td><input name="shTotalvolume" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${shipment.shTotalvolume}"></td>
             </tr>
         </table>
     </form>
@@ -65,22 +74,22 @@
         });
 
         function add() {
-            var formParam = $("#allotoutImportForm").serialize();
+            var formParam = $("#shipmentImportForm").serialize();
             $.ajax({
                 type: 'post',
-                url: '${path }/allotout/allotout.php',
+                url: '${path }/shipment/shipment.php',
                 data: formParam,
                 cache: false,
                 dataType: 'json',
                 success: function () {
-                    window.location.href = "/allotout/allotout.html";
+                    window.location.href = "/shipment/shipment.html";
                 }
             });
         }
 
         $(function(){
             $('input[type=text]').validatebox();
-            $("#selectCombobox").combobox('setValue','${allotout.aoWhid}');
+            $("#selectCombobox").combobox('setValue','${shipment.shWhid}');
         });
     </script>
 </body>

@@ -21,4 +21,6 @@ public interface InvoiceService {
     int deleteById(Integer id);
 
     int updateInvoice(Invoice invoice);
+
+    int importInvoice(Invoice invoice);
 }

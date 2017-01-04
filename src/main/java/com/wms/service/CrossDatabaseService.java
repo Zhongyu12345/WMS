@@ -21,4 +21,6 @@ public interface CrossDatabaseService {
     int deleteById(Integer id);
 
     int updateCrossDatabase(CrossDatabase crossDatabase);
+
+    int importCrossDatabase(CrossDatabase crossDatabase);
 }

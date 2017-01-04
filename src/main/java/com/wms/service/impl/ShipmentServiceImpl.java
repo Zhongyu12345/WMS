@@ -76,4 +76,12 @@ public class ShipmentServiceImpl implements ShipmentService {
         return shipmentMapper.updateByPrimaryKeySelective(shipment);
     }
 
+    @Transactional
+    @Override
+    public int importShipment(Shipment shipment) {
+        //noinspection deprecation
+        godownService.reduction(Integer.parseInt(shipment.getShWhid()), shipment.getShTotalvolume());
+        return shipmentMapper.insert(shipment);
+    }
+
 }

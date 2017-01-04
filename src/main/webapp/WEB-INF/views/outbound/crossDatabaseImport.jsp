@@ -10,37 +10,37 @@
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
 <div style="height:30px;padding:20px;">
-    <form action="${path }/allotout/readExcle" method="post" enctype="multipart/form-data" >
+    <form action="${path }/crossDatabase/readExcle" method="post" enctype="multipart/form-data" >
         <input class="easyui-filebox" id="file" name="file" style="width:250px;" data-options="prompt:'请选择越库出货单...'" >
         <input class="easyui-linkbutton" style="width:100px;height:24px;" type="submit" value="导入越库出货单" />
     </form>
 
-    <form id="allotoutImportForm" method="post">
+    <form id="crossDatabaseImportForm" method="post">
         <table class="grid">
             <tr>
                 <td>货物名称</td>
-                <td><input name="aoName" type="text" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoName}"></td>
+                <td><input name="cdName" type="text" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.cdName}"></td>
                 <td>货物型号</td>
-                <td><input name="aoSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoSkumodel}"></td>
+                <td><input name="cdSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.cdSkumodel}"></td>
             </tr>
             <tr>
                 <td>调拨数量</td>
-                <td><input name="aoNum" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoNum}"></td>
+                <td><input name="cdNum" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.cdNum}"></td>
                 <td>仓库编号</td>
-                <td><input name="aoWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoWhid}"></td>
+                <td><input name="cdWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.cdWhid}"></td>
                 <!--
                 <td><input name="aoWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
                 -->
             </tr>
             <tr>
                 <td>货物体积</td>
-                <td><input name="aoVolume" type="text" placeholder="请输入货物体积" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoVolume}"></td>
+                <td><input name="cdVolume" type="text" placeholder="请输入货物体积" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.cdVolume}"></td>
                 <td>调拨单号</td>
-                <td><input name="aoSippingno" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${allotout.aoSippingno}"></td>
+                <td><input name="cdOddnumbers" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.cdOddnumbers}"></td>
             </tr>
             <tr>
                 <td>调拨时间</td>
-                <td><input name="byTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${allotout.aoTime}" />"/></td>
+                <td><input name="byTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${crossDatabase.cdTime}" />"/></td>
             </tr>
         </table>
     </form>
@@ -65,22 +65,22 @@
         });
 
         function add() {
-            var formParam = $("#allotoutImportForm").serialize();
+            var formParam = $("#crossDatabaseImportForm").serialize();
             $.ajax({
                 type: 'post',
-                url: '${path }/allotout/allotout.php',
+                url: '${path }/crossDatabase/crossDatabase.php',
                 data: formParam,
                 cache: false,
                 dataType: 'json',
                 success: function () {
-                    window.location.href = "/allotout/allotout.html";
+                    window.location.href = "/crossDatabase/crossDatabase.html";
                 }
             });
         }
 
         $(function(){
             $('input[type=text]').validatebox();
-            $("#selectCombobox").combobox('setValue','${allotout.aoWhid}');
+            $("#selectCombobox").combobox('setValue','${crossDatabase.cdWhid}');
         });
     </script>
 </body>

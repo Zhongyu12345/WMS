@@ -9,6 +9,7 @@ import com.wms.service.GodownService;
 import com.wms.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -70,6 +71,14 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public int updateInvoice(Invoice invoice) {
         return invoiceMapper.updateByPrimaryKeySelective(invoice);
+    }
+
+    @Transactional
+    @Override
+    public int importInvoice(Invoice invoice) {
+        //noinspection deprecation
+        godownService.reduction(Integer.parseInt(invoice.getInWhid()), invoice.getInVolume());
+        return invoiceMapper.insert(invoice);
     }
 
 }

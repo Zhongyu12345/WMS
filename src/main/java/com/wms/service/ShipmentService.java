@@ -21,4 +21,6 @@ public interface ShipmentService {
     int deleteById(Integer id);
 
     int updateShipment(Shipment shipment);
+
+    int importShipment(Shipment shipment);
 }

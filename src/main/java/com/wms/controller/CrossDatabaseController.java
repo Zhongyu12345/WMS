@@ -4,16 +4,21 @@ import com.wms.bean.CrossDatabase;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.bean.Search;
 import com.wms.commons.utils.PageInfo;
+import com.wms.commons.utils.ReadXls;
 import com.wms.commons.utils.StringUtils;
 import com.wms.commons.utils.TimeUtils;
 import com.wms.service.CrossDatabaseService;
+import org.apache.commons.fileupload.util.Streams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileOutputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,6 +124,46 @@ public class CrossDatabaseController extends BaseController {
     @GetMapping("importCrossDatabase.html")
     public String importPage(){
         return "outbound/crossDatabaseImport";
+    }
+
+    /** 读取提交的Excel */
+    @PostMapping("readExcle")
+    public String readExcle(@RequestParam("file") MultipartFile file, Model model) {
+        String path = (CrossDatabaseController.class.getResource("/").toString()).substring(6);
+        if (!file.isEmpty()) {
+            try {
+                Streams.copy(file.getInputStream(), new FileOutputStream(path + "/" + file.getOriginalFilename()), true);
+                URL url = GodownEntryController.class.getResource("/" + file.getOriginalFilename());
+                List<List<String>> lists = ReadXls.readxls(url.getFile());
+                CrossDatabase crossDatabase = new CrossDatabase();
+                List<String> objects = lists.get(2);
+                for (int i = 0; i < objects.size(); i++) {
+                    crossDatabase.setCdName(objects.get(0));
+                    crossDatabase.setCdSkumodel(objects.get(1));
+                    crossDatabase.setCdNum(Double.valueOf((objects.get(2))));
+                    crossDatabase.setCdWhid(objects.get(3));
+                    crossDatabase.setCdOddnumbers(objects.get(4));
+                    crossDatabase.setCdTime(TimeUtils.updateTime("".equals(objects.get(5)) ? null : objects.get(5)));
+                    crossDatabase.setCdVolume(Double.valueOf(objects.get(6)));
+                }
+                model.addAttribute("crossDatabase", crossDatabase);
+            } catch (Exception e) {
+                model.addAttribute("error", "请导入正确的数据!!!");
+                e.printStackTrace();
+            }
+        }
+        return "outbound/crossDatabaseImport";
+    }
+
+    @ResponseBody
+    @PostMapping(value = "crossDatabase.php")
+    public Object importCrossDatabase(CrossDatabase crossDatabase,String byTime){
+        crossDatabase.setCdTime(TimeUtils.updateTime(byTime));
+        int result = crossDatabaseService.importCrossDatabase(crossDatabase);
+        if (result > 0) {
+            return renderSuccess("添加成功!");
+        }
+        return renderError("添加失败!");
     }
 
 }
