@@ -55,4 +55,9 @@ public class ReceivingServiceImpl implements ReceivingService {
 		pageinfo.setTotal(page.getTotal());
 	}
 
+	@Override
+	public Receiving selectByNo(String No) {
+		return receivingMapper.selectByNo(No);
+	}
+
 }

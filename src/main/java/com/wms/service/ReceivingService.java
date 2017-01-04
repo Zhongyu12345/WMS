@@ -18,4 +18,6 @@ public interface ReceivingService {
 	int updateByPrimaryKeySelective(Receiving record);
 	
 	int updateByPrimaryKey(Receiving record);
+	
+	Receiving selectByNo(String No);
 }

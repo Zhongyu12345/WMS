@@ -29,6 +29,7 @@ public class Godown {
 
 	@TableField(value = "go_rdvolume")
     private Double goRdvolume;
+	
 	/**
 	 * gostatus仓库状态
 	 * 0:正常
