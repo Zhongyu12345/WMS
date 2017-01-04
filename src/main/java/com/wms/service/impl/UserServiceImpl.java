@@ -123,4 +123,9 @@ public class UserServiceImpl extends SuperServiceImpl<UserMapper, User> implemen
     }
 
 	@Override
+    @Override
+    public UserVo selectByloginname(String user){
+        return userMapper.selectByloginname(user);
+    }
+
 }

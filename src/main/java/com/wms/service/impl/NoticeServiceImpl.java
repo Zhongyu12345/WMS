@@ -1,7 +1,10 @@
 package com.wms.service.impl;
 
-import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.plugins.Page;
 import com.wms.bean.Notice;
 import com.wms.commons.utils.PageInfo;
 import com.wms.dao.NoticeMapper;
