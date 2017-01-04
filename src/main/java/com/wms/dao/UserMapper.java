@@ -24,5 +24,6 @@ public interface UserMapper extends AutoMapper<User> {
 
     List<UserVo> selectBytype(Map<String,Object> map);
 
+    List<UserVo> selectByRole();
 
 }

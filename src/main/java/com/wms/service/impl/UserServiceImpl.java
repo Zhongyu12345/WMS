@@ -125,4 +125,10 @@ public class UserServiceImpl extends SuperServiceImpl<UserMapper, User> implemen
         return userMapper.selectByloginname(user);
     }
 
+    @Override
+    public List<UserVo> selectByRole() {
+        List<UserVo> userList = userMapper.selectByRole();
+        return userList;
+    }
+
 }

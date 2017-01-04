@@ -10,6 +10,8 @@ import com.wms.commons.utils.PageInfo;
 import com.wms.dao.NoticeMapper;
 import com.wms.service.NoticeService;
 
+import java.util.List;
+
 @Service
 public class NoticeServiceImpl implements NoticeService {
 

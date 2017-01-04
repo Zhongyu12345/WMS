@@ -32,4 +32,6 @@ public interface IUserService extends ISuperService<User> {
     void deleteUserById(Long id);
 
     UserVo selectByloginname(String user);
+
+    List<UserVo> selectByRole();
 }
