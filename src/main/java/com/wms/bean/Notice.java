@@ -3,6 +3,7 @@ package com.wms.bean;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotations.IdType;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 
 /**
@@ -13,10 +14,15 @@ import com.baomidou.mybatisplus.annotations.TableId;
 public class Notice {
 	
 	@TableId(type = IdType.AUTO)
+	@TableField(value = "nid")
 	private int nid;
+	@TableField(value = "text")
 	private String text;//公告内容
+	@TableField(value = "userid")
 	private int userid;//发布人
+	@TableField(value = "ntime")
 	private Date ntime;//发布时间
+	@TableField(value = "nstatus")
 	private int nstatus;//发布状态
 
 	public int getNid() {

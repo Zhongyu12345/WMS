@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.wms.bean.User;
 import com.wms.bean.vo.UserVo;
 import com.wms.commons.utils.PageInfo;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +30,8 @@ public interface IUserService extends ISuperService<User> {
     void selectDataGrid(PageInfo pageInfo);
 
     void deleteUserById(Long id);
-    
+
+    UserVo selectByloginname(String user);
+
     List<UserVo> selectByRole();
 }

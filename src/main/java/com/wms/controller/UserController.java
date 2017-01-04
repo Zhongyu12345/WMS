@@ -179,4 +179,34 @@ public class UserController extends BaseController {
         userService.deleteUserById(id);
         return renderSuccess("删除成功！");
     }
+
+    @GetMapping("/update")
+    public String update(Model model) {
+        Long id = getUserId();
+        UserVo userVo = userService.selectVoById(id);
+        model.addAttribute("user", userVo);
+        return "system/updatePage";
+    }
+
+    @GetMapping("/updatePage")
+    public String updatePage(Model model) {
+        Long id = getUserId();
+        UserVo userVo = userService.selectVoById(id);
+        List<Role> rolesList = userVo.getRolesList();
+        List<Long> ids = new ArrayList<Long>();
+        for (Role role : rolesList) {
+            ids.add(role.getId());
+        }
+        model.addAttribute("roleIds", ids);
+        model.addAttribute("user", userVo);
+        return "system/update";
+    }
+
+    @RequestMapping("/updateUser")
+    @ResponseBody
+    public Object updateUser(UserVo userVo, Model model) {
+        userService.updateByVo(userVo);
+        model.addAttribute("user", userVo);
+        return renderSuccess("修改成功！");
+    }
 }

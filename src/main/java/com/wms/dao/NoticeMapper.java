@@ -1,8 +1,12 @@
 package com.wms.dao;
 
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import org.springframework.stereotype.Repository;
 
 import com.wms.bean.Notice;
+
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface NoticeMapper {
@@ -17,4 +21,6 @@ public interface NoticeMapper {
     int updateByPrimaryKeySelective(Notice notice);
 
     int updateByPrimaryKey(Notice notice);
+
+    List<Notice> selectDataGrid(Pagination page, Map<String, Object> params);
 }
