@@ -116,8 +116,15 @@
 				},  {
 				    width : '70',
 				    title : '管理员编号',
-				    field : 'rAdminid',
-				    sortable : true
+				    field : 'users',
+				    sortable : true,
+				    formatter: function (value) {
+	                    var roles = [];
+	                    for(var i = 0; i< value.length; i++) {
+	                        roles.push(value[i].loginName);
+	                    }
+	                    return(roles.join('\n'));
+	                }
 				},    {
 	                field : 'action',
 	                title : '操作',

@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wms.bean.Godown;
 import com.wms.bean.Receiving;
+import com.wms.bean.User;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.PageInfo;
 import com.wms.commons.utils.StringUtils;
 import com.wms.service.GodownService;
+import com.wms.service.IUserService;
 import com.wms.service.ReceivingService;
 
 @Controller
@@ -33,6 +35,9 @@ public class ReceivingController extends BaseController {
 	
     @Autowired
     private GodownService godownService;
+    
+    @Autowired
+    private IUserService userService;
 	
 	@GetMapping("receivingPage")
 	public String receivingPage(){
@@ -75,6 +80,8 @@ public class ReceivingController extends BaseController {
 	@GetMapping("/editPage")
     public String editPage(Integer id, Model model) {
         Receiving rece = receivingService.selectByPrimaryKey(id);
+        User user = userService.selectById(rece.getrAdminid());
+        rece.setAdminname(user.getLoginName());
         List<Integer> ids = new ArrayList<Integer>();
         ids.add(rece.getrId());
         model.addAttribute("roleIds", ids);

@@ -12,6 +12,7 @@
     	$("#selectCombobox").combobox({
     	    url:"${path}/godown/godownComboBox",
     	    method: 'get',
+    	    editable:false,
     	    valueField: 'id',
     	    textField: 'text',
     	    panelHeight: 'auto',

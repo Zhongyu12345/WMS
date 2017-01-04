@@ -13,6 +13,7 @@
     	    url:"${path}/godown/godownComboBoxs?volume=${godown.gNum}",
     	    method: 'get',
     	    valueField: 'id',
+    	    editable:false,
     	    textField: 'text',
     	    panelHeight: 'auto',
     	    onLoadSuccess: function () {
@@ -106,6 +107,7 @@
 				     	    url:"${path}/godown/godownComboBox",
 				     	    method: 'get',
 				     	    valueField: 'id',
+				     	   editable:false,
 				     	    textField: 'text',
 				     	    panelHeight: 'auto',
 				     	    onLoadSuccess: function () {

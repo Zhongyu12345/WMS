@@ -8,6 +8,7 @@
     	    url:"${path}/godown/godownComboBox",
     	    method: 'get',
     	    valueField: 'id',
+    	    editable:false,
     	    textField: 'text',
     	    panelHeight: 'auto',
     	    onLoadSuccess: function () {
@@ -94,7 +95,7 @@
                     <td>
                     <input name="time" style="whith:100%" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${user.rTime}" />" readonly="readonly" />
                     <td>管理员</td>
-                    <td><input name="rAdminid" type="text" readonly="readonly" placeholder="请输入管理员" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${user.rAdminid}"></td>
+                    <td><input name="rAdminid" type="text" readonly="readonly" placeholder="请输入管理员" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${user.adminname}"></td>
                 </tr>
             </table>
         </form>

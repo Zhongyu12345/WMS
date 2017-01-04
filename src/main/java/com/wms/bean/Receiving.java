@@ -62,6 +62,10 @@ public class Receiving {
     private double rHeavy;
 	private List<Godown> godowns;
 	
+	private List<User> users;
+	
+	private String adminname;
+	
     public int getrNumber() {
 		return rNumber;
 	}
@@ -215,6 +219,22 @@ public class Receiving {
 
 	public void setGodowns(List<Godown> godowns) {
 		this.godowns = godowns;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
+	public String getAdminname() {
+		return adminname;
+	}
+
+	public void setAdminname(String adminname) {
+		this.adminname = adminname;
 	}
 
 

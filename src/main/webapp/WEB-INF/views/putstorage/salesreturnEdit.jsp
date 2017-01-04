@@ -7,6 +7,7 @@
     	    url:"${path}/godown/godownComboBox",
     	    method: 'get',
     	    valueField: 'id',
+    	    editable:false,
     	    textField: 'text',
     	    panelHeight: 'auto',
     	    onLoadSuccess: function () {

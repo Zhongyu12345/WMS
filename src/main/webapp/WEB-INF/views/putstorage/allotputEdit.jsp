@@ -9,6 +9,7 @@
     	    method: 'get',
     	    valueField: 'id',
     	    textField: 'text',
+    	    editable:false,
     	    panelHeight: 'auto',
     	    onLoadSuccess: function () {
     	        var data = $('#selectCombobox').combobox('getData');
