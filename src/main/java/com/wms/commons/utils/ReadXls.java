@@ -124,7 +124,11 @@ public class ReadXls {
 	                    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	                    return sdf.format(cell.getDateCellValue());
 	                }
-					return String.valueOf(cell.getNumericCellValue());
+					if(String.valueOf(cell.getNumericCellValue()).length()>8){
+						DecimalFormat df = new DecimalFormat("0");
+						return df.format(cell.getNumericCellValue());
+					}
+					return String.valueOf((int)cell.getNumericCellValue());
 	            case Cell.CELL_TYPE_STRING:
 					return cell.getRichStringCellValue().toString();
 	            default:
