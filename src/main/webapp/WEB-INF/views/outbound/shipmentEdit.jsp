@@ -61,7 +61,7 @@
                 </tr>
                 <tr>
                     <td>仓库编码</td>
-                    <td><input name="shWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
+                    <td><input name="shWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,novalidate:true" /></td>
                     <td>损坏数量</td>
                     <td><input name="shDamage" type="text" placeholder="请输入损坏数量" class="easyui-validatebox" data-options="required:true" value="${shipment.shDamage}"></td>
                 </tr>

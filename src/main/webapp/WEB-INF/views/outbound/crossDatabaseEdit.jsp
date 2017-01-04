@@ -55,7 +55,7 @@
                     <td>发货数量</td>
                     <td><input name="cdNum" type="text" placeholder="请输入发货数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.cdNum}"></td>
                     <td>仓库编号</td>
-                    <td><input name="cdWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
+                    <td><input name="cdWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,novalidate:true" /></td>
                 </tr>
                 <tr>
                     <td>调拨单号</td>

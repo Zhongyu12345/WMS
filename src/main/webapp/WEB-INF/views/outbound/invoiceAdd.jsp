@@ -45,7 +45,7 @@
                     <!--
                     <td><input name="inWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"/></td>
                     -->
-                    <td><input name="inWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
+                    <td><input name="inWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,novalidate:true" /></td>
                 </tr>
                 <tr>
                     <td>发货时间</td>

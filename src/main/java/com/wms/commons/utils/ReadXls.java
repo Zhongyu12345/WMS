@@ -96,7 +96,7 @@ public class ReadXls {
 	                    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	                    return sdf.format(cell.getDateCellValue());
 	                }
-	                return Double.toString(cell.getNumericCellValue());
+	                return String.valueOf(cell.getNumericCellValue());
 	            case Cell.CELL_TYPE_STRING:
 	                return cell.getRichStringCellValue().toString();
 	            default:
@@ -119,7 +119,7 @@ public class ReadXls {
 	                    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	                    return sdf.format(cell.getDateCellValue());
 	                }
-	                return Double.toString(cell.getNumericCellValue());
+					return String.valueOf(cell.getNumericCellValue());
 	            case Cell.CELL_TYPE_STRING:
 	                return cell.getRichStringCellValue().toString();
 	            default:
