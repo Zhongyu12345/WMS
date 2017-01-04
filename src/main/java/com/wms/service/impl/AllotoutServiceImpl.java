@@ -6,6 +6,7 @@ import com.wms.commons.utils.OrderNumberUtil;
 import com.wms.commons.utils.PageInfo;
 import com.wms.dao.AllotoutMapper;
 import com.wms.service.AllotoutService;
+import com.wms.service.GodownService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ public class AllotoutServiceImpl implements AllotoutService {
 
     @Autowired
     private AllotoutMapper allotoutMapper;
+
+    @Autowired
+    private GodownService godownService;
 
     @Override
     public int addAllotout(Allotout allotout) {
@@ -56,6 +60,8 @@ public class AllotoutServiceImpl implements AllotoutService {
 
     @Override
     public int importAllotout(Allotout allotout) {
+        //noinspection deprecation
+        godownService.reduction(Integer.parseInt(allotout.getAoWhid()), allotout.getAoVolume());
         return allotoutMapper.insert(allotout);
     }
 }

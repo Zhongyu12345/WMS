@@ -49,6 +49,14 @@
         </where>
     </select>
 
+    <select id="selectByloginname" resultMap="userVoResultMap">
+        select id
+        FROM user
+        <where>
+          login_name = #{user}
+        </where>
+    </select>
+
     <select id="selectUserVoPage" resultMap="userVoResultMap">
         SELECT
         t.id,

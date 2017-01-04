@@ -11,19 +11,29 @@ import java.util.List;
  */
 public interface GodownService {
 
-    /** 仓库下拉框 */
+    /**
+     * 仓库下拉框
+     */
     List<Godown> godownComboBox();
-    
+
     void selectDataGrid(PageInfo pageInfo);
-    
+
     int updateByPrimaryKey(Godown record);
-    
+
     Godown selectByPrimaryKey(Integer goId);
 
     int insert(Godown godown);
-    
+
     int updateStatus(Godown godown);
-    
+
     Godown selectById(int id);
+
+    /**
+     * @param id     仓库编号
+     * @param volume 货物体积
+     * @return
+     * @deprecated 仓库增加仓库容量操作
+     */
+    int reduction(int id, double volume);
 
 }
