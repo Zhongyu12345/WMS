@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50712
 File Encoding         : 65001
 
-Date: 2016-12-19 08:55:31
+Date: 2017-01-04 08:21:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -87,7 +87,7 @@ CREATE TABLE `cargo` (
   `c_storerid` varchar(255) DEFAULT NULL,
   `c_supplierid` varchar(255) DEFAULT NULL,
   `c_shippingNO` varchar(255) DEFAULT NULL,
-  `c_whid` varchar(255) DEFAULT NULL,
+  `c_whid` int(11) DEFAULT NULL,
   `c_num` int(11) DEFAULT NULL,
   `c_totalweight` double DEFAULT NULL,
   `c_totalvolume` double DEFAULT NULL,
@@ -112,6 +112,8 @@ CREATE TABLE `cargo_borrow` (
   `cb_cause` varchar(255) DEFAULT NULL COMMENT '原因',
   `cb_names` varchar(255) DEFAULT NULL COMMENT '借用人',
   `cb_time` datetime DEFAULT NULL COMMENT '时间',
+  `cb_endtime` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `cb_status` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`cb_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -120,19 +122,20 @@ CREATE TABLE `cargo_borrow` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for compay_accounts
+-- Table structure for compay
 -- ----------------------------
-DROP TABLE IF EXISTS `compay_accounts`;
-CREATE TABLE `compay_accounts` (
-  `ca_id` int(11) NOT NULL AUTO_INCREMENT,
-  `ca_accounts` int(11) NOT NULL,
-  `ca_name` varchar(500) NOT NULL,
-  PRIMARY KEY (`ca_id`),
-  KEY `ca_accounts` (`ca_accounts`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公司账户表';
+DROP TABLE IF EXISTS `compay`;
+CREATE TABLE `compay` (
+  `caid` int(11) NOT NULL,
+  `caaccounts` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `caname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `camoney` decimal(10,0) DEFAULT NULL,
+  `cacount` decimal(10,0) DEFAULT NULL,
+  PRIMARY KEY (`caid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
--- Records of compay_accounts
+-- Records of compay
 -- ----------------------------
 
 -- ----------------------------
@@ -179,18 +182,22 @@ CREATE TABLE `give_back` (
 -- ----------------------------
 DROP TABLE IF EXISTS `godown`;
 CREATE TABLE `godown` (
+  `gostatus` int(11) DEFAULT NULL,
   `go_id` int(11) NOT NULL AUTO_INCREMENT,
   `go_whid` varchar(255) DEFAULT NULL,
-  `go_p` varchar(255) DEFAULT NULL,
+  `go_p` int(255) DEFAULT NULL,
   `go_volume` double DEFAULT NULL,
-  `go_usevolume` double(255,0) DEFAULT NULL,
+  `go_usevolume` double DEFAULT NULL,
   `go_rdvolume` double DEFAULT NULL,
   PRIMARY KEY (`go_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of godown
 -- ----------------------------
+INSERT INTO `godown` VALUES ('0', '1', 'A1', '3', '530.16', '120.06', '410.1');
+INSERT INTO `godown` VALUES ('1', '2', 'A2', '5', '360', '0', '360');
+INSERT INTO `godown` VALUES ('1', '3', 'A3', '3', '666.23', '0', '666.23');
 
 -- ----------------------------
 -- Table structure for godown_entry
@@ -210,6 +217,8 @@ CREATE TABLE `godown_entry` (
   `g_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `g_adminid` int(11) DEFAULT NULL,
   `g_SKUmodel` varchar(255) DEFAULT NULL,
+  `g_number` int(11) DEFAULT NULL COMMENT '数量',
+  `g_heavy` double DEFAULT NULL COMMENT '重量',
   PRIMARY KEY (`g_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -222,15 +231,15 @@ CREATE TABLE `godown_entry` (
 -- ----------------------------
 DROP TABLE IF EXISTS `income`;
 CREATE TABLE `income` (
-  `i_id` int(11) NOT NULL AUTO_INCREMENT,
-  `i_income` decimal(10,0) NOT NULL,
-  `i_pay` decimal(10,0) NOT NULL,
-  `i_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `i_caid` int(11) NOT NULL,
-  PRIMARY KEY (`i_id`),
-  KEY `income_compay` (`i_caid`),
-  CONSTRAINT `income_compay` FOREIGN KEY (`i_caid`) REFERENCES `compay_accounts` (`ca_accounts`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收/入财务表';
+  `iid` int(11) NOT NULL,
+  `icause` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `itime` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `iabout` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `icount` decimal(10,0) DEFAULT NULL,
+  `iincome` decimal(10,0) DEFAULT NULL,
+  `ibalance` decimal(10,0) DEFAULT NULL,
+  PRIMARY KEY (`iid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of income
@@ -268,11 +277,48 @@ CREATE TABLE `make_inventory` (
   `mi_names` varchar(255) DEFAULT NULL COMMENT '盘点人',
   `mi_whid` int(11) DEFAULT NULL COMMENT '仓库编号',
   `mi_time` datetime DEFAULT NULL COMMENT '盘点时间',
+  `mi_Actual` double DEFAULT NULL,
   PRIMARY KEY (`mi_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of make_inventory
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for notice
+-- ----------------------------
+DROP TABLE IF EXISTS `notice`;
+CREATE TABLE `notice` (
+  `nid` int(11) NOT NULL AUTO_INCREMENT COMMENT '公告栏id',
+  `text` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '公告内容',
+  `userid` int(11) DEFAULT NULL COMMENT '发布人',
+  `ntime` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '发布时间',
+  `nstatus` int(11) DEFAULT NULL COMMENT '公告状态',
+  PRIMARY KEY (`nid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of notice
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for pay
+-- ----------------------------
+DROP TABLE IF EXISTS `pay`;
+CREATE TABLE `pay` (
+  `pid` int(11) NOT NULL,
+  `pcause` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ptime` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `pabout` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pcount` decimal(10,0) DEFAULT NULL,
+  `ppay` decimal(10,0) DEFAULT NULL,
+  `punexpense` decimal(10,0) DEFAULT NULL,
+  PRIMARY KEY (`pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of pay
 -- ----------------------------
 
 -- ----------------------------
@@ -294,6 +340,8 @@ CREATE TABLE `receiving` (
   `r_adminid` int(11) DEFAULT NULL,
   `r_partflag` int(11) DEFAULT NULL,
   `r_SKUmodel` varchar(255) DEFAULT NULL,
+  `r_number` int(11) DEFAULT NULL COMMENT '数量',
+  `r_heavy` double DEFAULT NULL COMMENT '重量',
   PRIMARY KEY (`r_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -317,7 +365,7 @@ CREATE TABLE `resource` (
   `resource_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '资源类别',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of resource
@@ -330,22 +378,19 @@ INSERT INTO `resource` VALUES ('5', '流通加工出库', null, '流通加工出
 INSERT INTO `resource` VALUES ('6', '财务管理', null, '财务管理', 'icon-company', null, '0', '0', '0', '2016-12-15 11:10:55');
 INSERT INTO `resource` VALUES ('7', '数据报表', null, '数据报表', 'icon-company', null, '0', '0', '0', '2016-12-15 11:11:25');
 INSERT INTO `resource` VALUES ('8', '系统管理', null, '系统管理', 'icon-company', null, '0', '0', '0', '2016-12-15 11:11:54');
-INSERT INTO `resource` VALUES ('9', '收货入库确认', null, '收货入库确认', 'menu_icon_datadeal', '2', '0', '0', '0', '2016-12-15 11:14:47');
-INSERT INTO `resource` VALUES ('10', '收货单管理', null, '收货单管理', 'menu_icon_datadeal', '2', '0', '0', '0', '2016-12-15 11:15:27');
-INSERT INTO `resource` VALUES ('12', '调拨入库单管理', null, '调拨入库单管理', 'menu_icon_datadeal', '2', '0', '0', '0', '2016-12-15 11:18:36');
-INSERT INTO `resource` VALUES ('13', '新增退货单管理', null, '新增退货单管理', 'menu_icon_datadeal', '2', '0', '0', '0', '2016-12-15 11:19:20');
-INSERT INTO `resource` VALUES ('14', '退货入库单管理', null, '退货入库单管理', 'menu_icon_datadeal', '2', '0', '0', '0', '2016-12-15 11:20:10');
-INSERT INTO `resource` VALUES ('17', '库存调整单查询', null, '库存调整单查询', 'menu_icon_datadeal', '3', '0', '0', '0', '2016-12-15 11:23:12');
-INSERT INTO `resource` VALUES ('18', '货品借出登记', null, '货品借出登记', 'menu_icon_datadeal', '3', '0', '0', '0', '2016-12-15 11:23:58');
-INSERT INTO `resource` VALUES ('19', '货品归还登记', null, '货品归还登记', 'menu_icon_datadeal', '3', '0', '0', '0', '2016-12-15 11:24:31');
-INSERT INTO `resource` VALUES ('20', '借出货品查询', null, '借出货品查询', 'menu_icon_datadeal', '3', '0', '0', '0', '2016-12-15 11:24:55');
-INSERT INTO `resource` VALUES ('21', '盘点单管理', null, '盘点单管理', 'menu_icon_datadeal', '3', '0', '0', '0', '2016-12-15 11:25:22');
-INSERT INTO `resource` VALUES ('22', '打印空白盘点单', null, '打印空白盘点单', 'menu_icon_datadeal', '3', '0', '0', '0', '2016-12-15 11:26:02');
+INSERT INTO `resource` VALUES ('9', '收货入库确认', '/putstorage/receiving', '收货入库确认', 'menu_icon_datadeal', '2', '0', '0', '0', '2016-12-15 11:14:47');
+INSERT INTO `resource` VALUES ('10', '收货单管理', '/receiving/receivingPage', '收货单管理', 'menu_icon_datadeal', '2', '0', '0', '0', '2016-12-15 11:15:27');
+INSERT INTO `resource` VALUES ('12', '调拨入库单管理', '/allotput/alloputPage', '调拨入库单管理', 'menu_icon_datadeal', '2', '0', '0', '0', '2016-12-15 11:18:36');
+INSERT INTO `resource` VALUES ('13', '新增退货单管理', '/salesreturn/salesreturnAddPage', '新增退货单管理', 'menu_icon_datadeal', '2', '0', '0', '0', '2016-12-15 11:19:20');
+INSERT INTO `resource` VALUES ('14', '退货入库单管理', '/salesreturn/salesreturnPage', '退货入库单管理', 'menu_icon_datadeal', '2', '0', '0', '0', '2016-12-15 11:20:10');
+INSERT INTO `resource` VALUES ('17', '库存调整单查询', '/adjust/page', '库存调整单查询', 'menu_icon_datadeal', '3', '0', '0', '0', '2016-12-15 11:23:12');
+INSERT INTO `resource` VALUES ('18', '货品借还登记', '/borrow/borrowpage', '货品借出登记', 'menu_icon_datadeal', '3', '0', '0', '0', '2016-12-15 11:23:58');
+INSERT INTO `resource` VALUES ('21', '盘点单管理', '/make/selectpage', '盘点单管理', 'menu_icon_datadeal', '3', '0', '0', '0', '2016-12-15 11:25:22');
 INSERT INTO `resource` VALUES ('23', '新增调拨单', null, '新增调拨单', 'menu_icon_datadeal', '3', '0', '0', '0', '2016-12-15 11:26:28');
-INSERT INTO `resource` VALUES ('25', '出货单管理', null, '出货单管理', 'menu_icon_datadeal', '4', '0', '0', '0', '2016-12-15 11:27:29');
-INSERT INTO `resource` VALUES ('27', '调拨出库单管理', null, '调拨出库单管理', 'menu_icon_datadeal', '4', '0', '0', '0', '2016-12-15 11:28:50');
-INSERT INTO `resource` VALUES ('29', '越库出货单管理', null, '越库出货单管理', 'menu_icon_datadeal', '4', '0', '0', '0', '2016-12-15 11:30:35');
-INSERT INTO `resource` VALUES ('31', '直接出库单管理', null, '直接出库单管理', 'menu_icon_datadeal', '4', '0', '0', '0', '2016-12-15 11:31:47');
+INSERT INTO `resource` VALUES ('25', '出货单管理', '/shipment/shipment.html', '出货单管理', 'menu_icon_datadeal', '4', '0', '0', '0', '2016-12-15 11:27:29');
+INSERT INTO `resource` VALUES ('27', '调拨出库单管理', '/allotout/allotout.html', '调拨出库单管理', 'menu_icon_datadeal', '4', '0', '0', '0', '2016-12-15 11:28:50');
+INSERT INTO `resource` VALUES ('29', '越库出货单管理', '/crossDatabase/crossDatabase.html', '越货出库单管理', 'menu_icon_datadeal', '4', '0', '0', '0', '2016-12-15 11:30:35');
+INSERT INTO `resource` VALUES ('31', '直接出库单管理', '/invoice/invoice.html', '直接出库单管理', 'menu_icon_datadeal', '4', '0', '0', '0', '2016-12-15 11:31:47');
 INSERT INTO `resource` VALUES ('32', '新增货品加工BOM方案', null, '新增货品加工BOM方案', 'menu_icon_datadeal', '5', '0', '0', '0', '2016-12-15 11:32:38');
 INSERT INTO `resource` VALUES ('33', '加工方案管理', null, '加工方案管理', 'menu_icon_datadeal', '5', '0', '0', '0', '2016-12-15 11:33:55');
 INSERT INTO `resource` VALUES ('34', '账户总览', null, '账户总览', 'menu_icon_datadeal', '6', '0', '0', '0', '2016-12-15 11:34:55');
@@ -353,10 +398,9 @@ INSERT INTO `resource` VALUES ('35', '财务日结表', null, '财务日结表',
 INSERT INTO `resource` VALUES ('39', '收入统计', '', '新增收入', 'menu_icon_datadeal', '6', '0', '0', '0', '2016-12-15 11:38:29');
 INSERT INTO `resource` VALUES ('40', '支出统计', '', '新增支出', 'menu_icon_datadeal', '6', '0', '0', '0', '2016-12-15 11:38:46');
 INSERT INTO `resource` VALUES ('41', '入库计划报表', null, '入库计划报表', 'menu_icon_datadeal', '6', '0', '0', '0', '2016-12-15 11:39:27');
-INSERT INTO `resource` VALUES ('42', '实际收货报表', null, '实际收货报表', 'menu_icon_datadeal', '7', '0', '0', '0', '2016-12-15 11:40:07');
+INSERT INTO `resource` VALUES ('42', '盘点差异报表', '/check/page', '实际收货报表', 'menu_icon_datadeal', '7', '0', '0', '0', '2016-12-15 11:40:07');
 INSERT INTO `resource` VALUES ('43', '入库计划差异报表', null, '入库计划差异报表', 'menu_icon_datadeal', '7', '0', '0', '0', '2016-12-15 11:41:16');
 INSERT INTO `resource` VALUES ('44', '出库退货报表', null, '出库退货报表', 'menu_icon_datadeal', '7', '0', '0', '0', '2016-12-15 11:41:46');
-INSERT INTO `resource` VALUES ('45', '修改密码', null, '修改密码', 'menu_icon_datadeal', '8', '0', '0', '0', '2016-12-15 11:42:09');
 INSERT INTO `resource` VALUES ('46', '修改资料', null, '修改资料', 'menu_icon_datadeal', '8', '0', '0', '0', '2016-12-15 11:42:28');
 INSERT INTO `resource` VALUES ('47', '公告栏', null, '公告栏', 'menu_icon_datadeal', '8', '0', '0', '0', '2016-12-15 11:42:58');
 INSERT INTO `resource` VALUES ('48', '资源管理', '/resource/manager', '资源管理', 'menu_icon_datadeal', '1', '0', '0', '0', '2016-12-15 11:47:21');
@@ -372,6 +416,39 @@ INSERT INTO `resource` VALUES ('57', '编辑', '/role/edit', '角色编辑', 'ic
 INSERT INTO `resource` VALUES ('58', '删除', '/role/delete', '角色删除', 'icon-del', '49', '0', '0', '1', '2016-12-15 15:45:05');
 INSERT INTO `resource` VALUES ('59', '授权', '/role/grant', '角色授权', 'icon-ok', '49', '0', '0', '1', '2016-12-15 15:54:30');
 INSERT INTO `resource` VALUES ('60', '添加', '/user/add', '用户添加', 'icon-add', '50', '0', '0', '1', '2016-12-18 19:46:12');
+INSERT INTO `resource` VALUES ('61', '仓库表', '/godown/page', null, 'menu_icon_datadeal', '7', '0', '0', '0', '2016-12-19 10:06:19');
+INSERT INTO `resource` VALUES ('62', '货物报表', '/cargo/cargopage', null, 'menu_icon_datadeal', '3', '0', '0', '0', '2016-12-19 10:08:17');
+INSERT INTO `resource` VALUES ('63', '编辑', '/user/edit', null, 'icon-edit', '50', '0', '0', '1', '2016-12-19 16:59:50');
+INSERT INTO `resource` VALUES ('64', '删除', '/user/delete', null, 'icon-del', '50', '0', '0', '1', '2016-12-20 09:32:21');
+INSERT INTO `resource` VALUES ('65', '修改密码', '/user/editPwdPage', null, 'icon-edit', '0', '0', '0', '0', '2016-12-20 19:49:40');
+INSERT INTO `resource` VALUES ('66', '出货单添加', '/shipment/insert', '出货单添加', 'icon-add', '25', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES ('67', '出货单修改', '/shipment/update', '出货单修改', 'icon-edit', '25', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES ('68', '出货单删除', '/shipment/delete', '出货单删除', 'icon-del', '25', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES ('69', '调拨出库单添加', '/allotout/insert', '调拨出库单添加', 'icon-add', '27', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES ('70', '调拨出库单修改', '/allotout/update', '调拨出库单修改', 'icon-edit', '27', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES ('71', '调拨出库单删除', '/shipment/delete', '调拨出库单删除', 'icon-del', '27', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES ('72', '越库出货单添加', '/crossDatabase/insert', '越库出货单添加', 'icon-add', '29', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES ('73', '越库出货单修改', '/crossDatabase/update', '越库出货单修改', 'icon-edit', '29', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES ('74', '越库出货单删除', '/crossDatabase/delete', '越库出货单删除', 'icon-del', '29', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES ('75', '直接出库单添加', '/invoice/insert', '直接出库单添加', 'icon-add', '31', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES ('76', '直接出库单修改', '/invoice/update', '直接出库单修改', 'icon-edit', '31', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES ('77', '直接出库单删除', '/invoice/delete', '直接出库单删除', 'icon-del', '31', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES ('78', '仓库添加', '/godown/add', null, 'icon-add', '61', '0', '0', '1', '2016-12-27 14:27:29');
+INSERT INTO `resource` VALUES ('79', '仓库扩建', '/godown/edit', null, 'icon-edit', '61', '0', '0', '1', '2016-12-27 14:30:13');
+INSERT INTO `resource` VALUES ('80', '仓库停用', '/godown/delete', null, 'icon-del', '61', '0', '0', '1', '2016-12-27 14:30:54');
+INSERT INTO `resource` VALUES ('81', '仓库启用', '/godown/delete', null, 'icon-ok', '61', '0', '0', '1', '2016-12-29 15:32:53');
+INSERT INTO `resource` VALUES ('95', '调拨出库单导入', '/allotout/import', '调拨出库单导入', 'icon-del', '27', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES ('97', '库存调整删除', '/adjust/delete', null, 'icon-del', '17', '0', '0', '1', '2016-12-22 20:11:17');
+INSERT INTO `resource` VALUES ('98', '新增货品借出单', '/borrow/add', null, 'icon-add', '18', '0', '0', '1', '2016-12-22 20:12:30');
+INSERT INTO `resource` VALUES ('99', '新增货物', '/cargo/insert', null, 'icon-add', '62', '0', '0', '1', '2016-12-26 20:24:52');
+INSERT INTO `resource` VALUES ('100', '货品借还删除', '/borrow/delete', null, 'icon-del', '18', '0', '0', '1', '2016-12-27 16:10:38');
+INSERT INTO `resource` VALUES ('101', '归还', '/borrow/edit', null, 'icon-edit', '18', '0', '0', '1', '2016-12-27 16:12:21');
+INSERT INTO `resource` VALUES ('102', '删除', '/receiving/delete', null, 'icon-del', '10', '0', '0', '1', '2016-12-20 14:08:36');
+INSERT INTO `resource` VALUES ('103', '编辑', '/receiving/update', null, 'icon-edit', '10', '0', '0', '1', '2016-12-20 14:28:57');
+INSERT INTO `resource` VALUES ('104', '删除', '/allotput/delete', null, 'icon-del', '12', '0', '0', '1', '2016-12-20 19:10:26');
+INSERT INTO `resource` VALUES ('105', '编辑', '/allotput/edit', null, 'icon-edit', '12', '0', '0', '1', '2016-12-20 19:11:40');
+INSERT INTO `resource` VALUES ('106', '编辑', '/salesreturn/edit', null, 'icon-edit', '14', '0', '0', '1', '2016-12-20 19:56:47');
+INSERT INTO `resource` VALUES ('107', '删除', '/salesreturn/delete', null, 'icon-del', '14', '0', '0', '1', '2016-12-20 19:57:26');
 
 -- ----------------------------
 -- Table structure for role
@@ -402,7 +479,7 @@ CREATE TABLE `role_resource` (
   `role_id` bigint(19) NOT NULL COMMENT '角色id',
   `resource_id` bigint(19) NOT NULL COMMENT '资源id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=853 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role_resource
@@ -465,68 +542,86 @@ INSERT INTO `role_resource` VALUES ('69', '3', '8');
 INSERT INTO `role_resource` VALUES ('70', '3', '45');
 INSERT INTO `role_resource` VALUES ('71', '3', '46');
 INSERT INTO `role_resource` VALUES ('72', '3', '47');
-INSERT INTO `role_resource` VALUES ('73', '1', '1');
-INSERT INTO `role_resource` VALUES ('74', '1', '48');
-INSERT INTO `role_resource` VALUES ('75', '1', '52');
-INSERT INTO `role_resource` VALUES ('76', '1', '53');
-INSERT INTO `role_resource` VALUES ('77', '1', '54');
-INSERT INTO `role_resource` VALUES ('78', '1', '49');
-INSERT INTO `role_resource` VALUES ('79', '1', '56');
-INSERT INTO `role_resource` VALUES ('80', '1', '57');
-INSERT INTO `role_resource` VALUES ('81', '1', '58');
-INSERT INTO `role_resource` VALUES ('82', '1', '59');
-INSERT INTO `role_resource` VALUES ('83', '1', '50');
-INSERT INTO `role_resource` VALUES ('84', '1', '60');
-INSERT INTO `role_resource` VALUES ('85', '1', '2');
-INSERT INTO `role_resource` VALUES ('86', '1', '9');
-INSERT INTO `role_resource` VALUES ('87', '1', '10');
-INSERT INTO `role_resource` VALUES ('88', '1', '11');
-INSERT INTO `role_resource` VALUES ('89', '1', '12');
-INSERT INTO `role_resource` VALUES ('90', '1', '13');
-INSERT INTO `role_resource` VALUES ('91', '1', '14');
-INSERT INTO `role_resource` VALUES ('92', '1', '3');
-INSERT INTO `role_resource` VALUES ('93', '1', '15');
-INSERT INTO `role_resource` VALUES ('94', '1', '16');
-INSERT INTO `role_resource` VALUES ('95', '1', '17');
-INSERT INTO `role_resource` VALUES ('96', '1', '18');
-INSERT INTO `role_resource` VALUES ('97', '1', '19');
-INSERT INTO `role_resource` VALUES ('98', '1', '20');
-INSERT INTO `role_resource` VALUES ('99', '1', '21');
-INSERT INTO `role_resource` VALUES ('100', '1', '22');
-INSERT INTO `role_resource` VALUES ('101', '1', '23');
-INSERT INTO `role_resource` VALUES ('102', '1', '4');
-INSERT INTO `role_resource` VALUES ('103', '1', '24');
-INSERT INTO `role_resource` VALUES ('104', '1', '25');
-INSERT INTO `role_resource` VALUES ('105', '1', '26');
-INSERT INTO `role_resource` VALUES ('106', '1', '27');
-INSERT INTO `role_resource` VALUES ('107', '1', '28');
-INSERT INTO `role_resource` VALUES ('108', '1', '29');
-INSERT INTO `role_resource` VALUES ('109', '1', '30');
-INSERT INTO `role_resource` VALUES ('110', '1', '31');
-INSERT INTO `role_resource` VALUES ('111', '1', '5');
-INSERT INTO `role_resource` VALUES ('112', '1', '32');
-INSERT INTO `role_resource` VALUES ('113', '1', '33');
-INSERT INTO `role_resource` VALUES ('114', '1', '6');
-INSERT INTO `role_resource` VALUES ('115', '1', '34');
-INSERT INTO `role_resource` VALUES ('116', '1', '35');
-INSERT INTO `role_resource` VALUES ('117', '1', '36');
-INSERT INTO `role_resource` VALUES ('118', '1', '37');
-INSERT INTO `role_resource` VALUES ('119', '1', '38');
-INSERT INTO `role_resource` VALUES ('120', '1', '39');
-INSERT INTO `role_resource` VALUES ('121', '1', '40');
-INSERT INTO `role_resource` VALUES ('122', '1', '41');
-INSERT INTO `role_resource` VALUES ('123', '1', '7');
-INSERT INTO `role_resource` VALUES ('124', '1', '42');
-INSERT INTO `role_resource` VALUES ('125', '1', '43');
-INSERT INTO `role_resource` VALUES ('126', '1', '44');
-INSERT INTO `role_resource` VALUES ('127', '1', '8');
-INSERT INTO `role_resource` VALUES ('128', '1', '45');
-INSERT INTO `role_resource` VALUES ('129', '1', '46');
-INSERT INTO `role_resource` VALUES ('130', '1', '47');
 INSERT INTO `role_resource` VALUES ('131', '4', '2');
 INSERT INTO `role_resource` VALUES ('132', '4', '3');
 INSERT INTO `role_resource` VALUES ('133', '4', '4');
 INSERT INTO `role_resource` VALUES ('134', '4', '5');
+INSERT INTO `role_resource` VALUES ('777', '1', '1');
+INSERT INTO `role_resource` VALUES ('778', '1', '48');
+INSERT INTO `role_resource` VALUES ('779', '1', '52');
+INSERT INTO `role_resource` VALUES ('780', '1', '53');
+INSERT INTO `role_resource` VALUES ('781', '1', '54');
+INSERT INTO `role_resource` VALUES ('782', '1', '49');
+INSERT INTO `role_resource` VALUES ('783', '1', '56');
+INSERT INTO `role_resource` VALUES ('784', '1', '57');
+INSERT INTO `role_resource` VALUES ('785', '1', '58');
+INSERT INTO `role_resource` VALUES ('786', '1', '59');
+INSERT INTO `role_resource` VALUES ('787', '1', '50');
+INSERT INTO `role_resource` VALUES ('788', '1', '60');
+INSERT INTO `role_resource` VALUES ('789', '1', '63');
+INSERT INTO `role_resource` VALUES ('790', '1', '64');
+INSERT INTO `role_resource` VALUES ('791', '1', '2');
+INSERT INTO `role_resource` VALUES ('792', '1', '9');
+INSERT INTO `role_resource` VALUES ('793', '1', '10');
+INSERT INTO `role_resource` VALUES ('794', '1', '102');
+INSERT INTO `role_resource` VALUES ('795', '1', '103');
+INSERT INTO `role_resource` VALUES ('796', '1', '12');
+INSERT INTO `role_resource` VALUES ('797', '1', '104');
+INSERT INTO `role_resource` VALUES ('798', '1', '105');
+INSERT INTO `role_resource` VALUES ('799', '1', '13');
+INSERT INTO `role_resource` VALUES ('800', '1', '14');
+INSERT INTO `role_resource` VALUES ('801', '1', '106');
+INSERT INTO `role_resource` VALUES ('802', '1', '107');
+INSERT INTO `role_resource` VALUES ('803', '1', '3');
+INSERT INTO `role_resource` VALUES ('804', '1', '17');
+INSERT INTO `role_resource` VALUES ('805', '1', '97');
+INSERT INTO `role_resource` VALUES ('806', '1', '18');
+INSERT INTO `role_resource` VALUES ('807', '1', '98');
+INSERT INTO `role_resource` VALUES ('808', '1', '100');
+INSERT INTO `role_resource` VALUES ('809', '1', '101');
+INSERT INTO `role_resource` VALUES ('810', '1', '21');
+INSERT INTO `role_resource` VALUES ('811', '1', '23');
+INSERT INTO `role_resource` VALUES ('812', '1', '62');
+INSERT INTO `role_resource` VALUES ('813', '1', '99');
+INSERT INTO `role_resource` VALUES ('814', '1', '4');
+INSERT INTO `role_resource` VALUES ('815', '1', '25');
+INSERT INTO `role_resource` VALUES ('816', '1', '66');
+INSERT INTO `role_resource` VALUES ('817', '1', '67');
+INSERT INTO `role_resource` VALUES ('818', '1', '68');
+INSERT INTO `role_resource` VALUES ('819', '1', '27');
+INSERT INTO `role_resource` VALUES ('820', '1', '69');
+INSERT INTO `role_resource` VALUES ('821', '1', '70');
+INSERT INTO `role_resource` VALUES ('822', '1', '71');
+INSERT INTO `role_resource` VALUES ('823', '1', '95');
+INSERT INTO `role_resource` VALUES ('824', '1', '29');
+INSERT INTO `role_resource` VALUES ('825', '1', '72');
+INSERT INTO `role_resource` VALUES ('826', '1', '73');
+INSERT INTO `role_resource` VALUES ('827', '1', '74');
+INSERT INTO `role_resource` VALUES ('828', '1', '31');
+INSERT INTO `role_resource` VALUES ('829', '1', '75');
+INSERT INTO `role_resource` VALUES ('830', '1', '76');
+INSERT INTO `role_resource` VALUES ('831', '1', '77');
+INSERT INTO `role_resource` VALUES ('832', '1', '5');
+INSERT INTO `role_resource` VALUES ('833', '1', '32');
+INSERT INTO `role_resource` VALUES ('834', '1', '33');
+INSERT INTO `role_resource` VALUES ('835', '1', '6');
+INSERT INTO `role_resource` VALUES ('836', '1', '34');
+INSERT INTO `role_resource` VALUES ('837', '1', '35');
+INSERT INTO `role_resource` VALUES ('838', '1', '39');
+INSERT INTO `role_resource` VALUES ('839', '1', '40');
+INSERT INTO `role_resource` VALUES ('840', '1', '41');
+INSERT INTO `role_resource` VALUES ('841', '1', '7');
+INSERT INTO `role_resource` VALUES ('842', '1', '42');
+INSERT INTO `role_resource` VALUES ('843', '1', '43');
+INSERT INTO `role_resource` VALUES ('844', '1', '44');
+INSERT INTO `role_resource` VALUES ('845', '1', '61');
+INSERT INTO `role_resource` VALUES ('846', '1', '78');
+INSERT INTO `role_resource` VALUES ('847', '1', '79');
+INSERT INTO `role_resource` VALUES ('848', '1', '80');
+INSERT INTO `role_resource` VALUES ('849', '1', '81');
+INSERT INTO `role_resource` VALUES ('850', '1', '8');
+INSERT INTO `role_resource` VALUES ('851', '1', '46');
+INSERT INTO `role_resource` VALUES ('852', '1', '47');
 
 -- ----------------------------
 -- Table structure for sales_return
@@ -536,7 +631,7 @@ CREATE TABLE `sales_return` (
   `sr_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `sr_name` varchar(255) DEFAULT NULL COMMENT '货物名称',
   `sr_sipping` varchar(255) DEFAULT NULL COMMENT '客户托单号',
-  `sr_storerid` int(11) DEFAULT NULL COMMENT '客户',
+  `sr_storerid` varchar(255) DEFAULT NULL COMMENT '客户',
   `sr_phone` varchar(255) DEFAULT NULL COMMENT '电话号码',
   `sr_names` varchar(255) DEFAULT NULL COMMENT '货物',
   `sr_SKUmodel` varchar(255) DEFAULT NULL COMMENT '货物型号',
@@ -570,11 +665,12 @@ CREATE TABLE `shipment` (
   `sh_totalweigh` double DEFAULT NULL,
   `sh_totalvolume` double DEFAULT NULL,
   PRIMARY KEY (`sh_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of shipment
 -- ----------------------------
+INSERT INTO `shipment` VALUES ('1', '那边', '2017-01-02 00:00:00', '123456', '201701030941351', '1', '50', '集合', 'kiu', '150', '20', '10');
 
 -- ----------------------------
 -- Table structure for stock_removal
@@ -649,14 +745,15 @@ CREATE TABLE `user` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '用户状态',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin', 'admin', '098f6bcd4621d373cade4e832627b4f6', '0', '0', null, '0', '0', '2016-12-15 10:55:43');
+INSERT INTO `user` VALUES ('1', 'admin', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '0', '23', '123456789', '0', '0', '2017-01-03 19:18:51');
 INSERT INTO `user` VALUES ('2', 'user', '张三', 'e10adc3949ba59abbe56e057f20f883e', '0', '26', '', '0', '0', '2016-12-18 19:51:17');
 INSERT INTO `user` VALUES ('3', 'users', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', null, '', '1', '0', '2016-12-18 20:06:45');
+INSERT INTO `user` VALUES ('5', 'abc', '阿桑', 'e10adc3949ba59abbe56e057f20f883e', '0', '25', '', '1', '0', '2016-12-27 14:55:46');
 
 -- ----------------------------
 -- Table structure for user_role
@@ -667,11 +764,13 @@ CREATE TABLE `user_role` (
   `user_id` bigint(19) NOT NULL COMMENT '用户id',
   `role_id` bigint(19) NOT NULL COMMENT '角色id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
-INSERT INTO `user_role` VALUES ('1', '1', '1');
-INSERT INTO `user_role` VALUES ('2', '2', '3');
+INSERT INTO `user_role` VALUES ('2', '1', '1');
 INSERT INTO `user_role` VALUES ('3', '3', '4');
+INSERT INTO `user_role` VALUES ('8', '2', '3');
+INSERT INTO `user_role` VALUES ('10', '5', '4');
+INSERT INTO `user_role` VALUES ('11', '6', '1');
