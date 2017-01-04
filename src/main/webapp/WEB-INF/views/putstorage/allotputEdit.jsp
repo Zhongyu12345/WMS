@@ -3,11 +3,27 @@
 <script type="text/javascript" src="${staticPath }/static/My97DatePicker/WdatePicker.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function() {
+    	
+    	$("#selectCombobox").combobox({
+    	    url:"${path}/godown/godownComboBox",
+    	    method: 'get',
+    	    valueField: 'id',
+    	    textField: 'text',
+    	    panelHeight: 'auto',
+    	    onLoadSuccess: function () {
+    	        var data = $('#selectCombobox').combobox('getData');
+    	        if (data.length > 0) {
+    	            $("#selectCombobox").combobox('select', '${allotput.apWhid}');
+    	        }
+    	    }
+    	});
+    	
+    	
         $('#allotputEditForm').form({
             url : '${path }/allotput/update',
             onSubmit : function() {
                 progressLoad();
-                var isValid = $(this).form('validate');
+                var isValid = $(this).form('enableValidation').form('validate');
                 if (!isValid) {
                     progressClose();
                 }
@@ -34,21 +50,25 @@
                 <tr>
                     <td>货物名称</td>
                     <td><input name="apId" type="hidden"  value="${allotput.apId}">
-                    <input name="apName" type="text" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true" value="${allotput.apName}"></td>
+                    <input name="apName" type="text" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${allotput.apName}"></td>
                     <td>货物型号</td>
-                    <td><input name="apSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true" value="${allotput.apSkumodel}" /></td>
+                    <td><input name="apSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${allotput.apSkumodel}" /></td>
                 </tr>
                  <tr>
                     <td>调拨数量</td>
-                    <td><input name="apNum" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true" value="${allotput.apNum}" /></td>
+                    <td><input name="apNum" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${allotput.apNum}" /></td>
                     <td>货物体积</td>
-                    <td><input name="apVolume" type="text" placeholder="请输入货物体积" class="easyui-validatebox" data-options="required:true" value="${allotput.apVolume}"></td>
+                    <td>
+                    <input name="oldVolume" type="hidden"  value="${allotput.apVolume}">
+                    <input name="apVolume" type="text" placeholder="请输入货物体积" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${allotput.apVolume}"></td>
                 </tr>
                 <tr>
                     <td>仓库编号</td>
-                    <td><input name="apWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true" value="${allotput.apWhid}"></td>
+                    <td>
+                    <input name="oldWhid" type="hidden"  value="${allotput.apWhid}">
+                    <input name="apWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,novalidate:true" /></td>
                     <td>调拨单号</td>
-                    <td><input name="apSipping" type="text" placeholder="请输入调拨单号" class="easyui-validatebox" data-options="required:true" value="${allotput.apSipping}"></td>
+                    <td><input name="apSipping" type="text" placeholder="请输入调拨单号" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${allotput.apSipping}"></td>
                 </tr>
                  <tr>
                     <td>调拨时间</td>

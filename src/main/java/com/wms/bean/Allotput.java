@@ -1,6 +1,7 @@
 package com.wms.bean;
 
 import java.util.Date;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
@@ -41,6 +42,8 @@ public class Allotput {
 	
     private Date createdateStart;
     private Date createdateEnd;
+    
+    private List<Godown> godowns;
 
     public Integer getApId() {
         return apId;
@@ -128,5 +131,13 @@ public class Allotput {
 
 	public void setCreatedateEnd(Date createdateEnd) {
 		this.createdateEnd = createdateEnd;
+	}
+
+	public List<Godown> getGodowns() {
+		return godowns;
+	}
+
+	public void setGodowns(List<Godown> godowns) {
+		this.godowns = godowns;
 	}
 }

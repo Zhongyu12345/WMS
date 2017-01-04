@@ -18,6 +18,14 @@
     <result column="r_SKUmodel" jdbcType="VARCHAR" property="rSkumodel" />
     <result column="r_number" jdbcType="INTEGER" property="rNumber" />
     <result column="r_heavy" jdbcType="DOUBLE" property="rHeavy"/>
+    <collection property="godowns" ofType="com.wms.bean.Godown">
+            <id column="go_id" jdbcType="INTEGER" property="goId"/>
+            <result column="go_whid" jdbcType="VARCHAR" property="goWhid"/>
+            <result column="go_p" jdbcType="VARCHAR" property="goP"/>
+            <result column="go_volume" jdbcType="DOUBLE" property="goVolume"/>
+            <result column="go_usevolume" jdbcType="DOUBLE" property="goUsevolume"/>
+            <result column="go_rdvolume" jdbcType="DOUBLE" property="goRdvolume"/>
+        </collection>
   </resultMap>
   <sql id="Base_Column_List">
     r_id, r_name, r_storerid, r_phone, r_supplierid, r_sippingNO, r_whid, r_num, r_crossflag, 
@@ -25,32 +33,29 @@
   </sql>
   
   <select id="selectAll"  resultMap="BaseResultMap">
-  	select 
-    <include refid="Base_Column_List" />
-    from receiving
-    <where>
+  	select r.*,g.*
+    from receiving r,godown g where r.r_whid=g.go_id
            <if test=" rname != null and rname != '' ">
-               r_name like #{rname}
+            and   r_name like #{rname}
            </if>
            <if test=" rskumodel != null and rskumodel != '' ">
-               r_SKUmodel = #{rskumodel}
+              and r_SKUmodel = #{rskumodel}
            </if>
            <if test=" rSupplierid != null and rSupplierid != '' ">
-               r_supplierid = #{rSupplierid}
+             and  r_supplierid = #{rSupplierid}
            </if>
            <if test=" rCrossflag != null and rCrossflag != '' ">
-               r_crossflag = #{rCrossflag}
+              and r_crossflag = #{rCrossflag}
            </if>
            <if test=" rDirectflag != null and rDirectflag != '' ">
-               r_directflag = #{rDirectflag}
+              and r_directflag = #{rDirectflag}
            </if>
            <if test=" startTime != null ">
-               <![CDATA[  r_time >= #{startTime} ]]>
+              and <![CDATA[  r_time >= #{startTime} ]]>
            </if>
            <if test=" endTime != null ">
                <![CDATA[ and r_time <= #{endTime} ]]>
            </if>
-     </where>
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

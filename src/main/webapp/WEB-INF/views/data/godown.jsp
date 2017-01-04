@@ -11,7 +11,6 @@
 
     var dataGrid;
     var organizationTree;
-
     $(function() {
 
         dataGrid = $('#dataGrid').datagrid({
@@ -21,7 +20,7 @@
             rownumbers : true,
             pagination : true,
             singleSelect : true,
-            idField : 'id',
+            idField : 'goid',
             sortName : 'goid',
             sortOrder : 'asc',
             pageSize : 20,
@@ -45,32 +44,53 @@
                 }
             },{
                 width : '130',
-                title : '仓库容积',
+                title : '仓库容积(m³)',
                 field : 'goVolume',
                 sortable : true
             }, {
                 width : '130',
-                title : '已用容积',
+                title : '已用容积(m³)',
                 field : 'goUsevolume',
                 sortable : true,
             }, {
                 width : '130',
-                title : '可用容积',
+                title : '可用容积(m³)',
                 field : 'goRdvolume',
                 sortable : true
+            },{
+                width : '80',
+                title : '状态',
+                field : 'gostatus',
+                sortable : true,
+                formatter : function(value, row, index) {
+                    switch (value) {
+                    case 0:
+                        return '正常';
+                    case 1:
+                        return '停用';
+                    case 2:
+                        return '已满';
+                    }
+                }
             }, {
                 field : 'action',
                 title : '操作',
                 width : 130,
                 formatter : function(value, row, index) {
                     var str = '';
-                        <shiro:hasPermission name="/godown/edit">
-                            str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" style="height:25px;" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >扩建</a>', row.goId);
-                        </shiro:hasPermission>
                         if(row.goUsevolume==0){
+                        	<shiro:hasPermission name="/godown/edit">
+                            	str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" style="height:25px;" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >扩建</a>', row.goId);
+                        	</shiro:hasPermission>
 	                        <shiro:hasPermission name="/godown/delete">
-	                            str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-	                            str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" style="height:25px;" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.goId);
+	                        	if(row.gostatus == 0){
+	                        		str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
+		                            str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" style="height:25px;" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >停用</a>', row.goId);
+	                        	}else if(row.gostatus == 1){
+	                        		str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
+		                            str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" style="height:25px;" class="user-easyui-linkbutton-ok" data-options="plain:true,iconCls:\'icon-ok\'" onclick="deleteFun(\'{0}\');" >启用</a>', row.goId);
+	                        	}
+	                            
 	                        </shiro:hasPermission>
                         }
                     return str;
@@ -78,7 +98,8 @@
             }] ],
             onLoadSuccess:function(data){
                 $('.user-easyui-linkbutton-edit').linkbutton({text:'扩建',plain:true,iconCls:'icon-edit'});
-                $('.user-easyui-linkbutton-del').linkbutton({text:'删除',plain:true,iconCls:'icon-del'});
+                $('.user-easyui-linkbutton-del').linkbutton({text:'停用',plain:true,iconCls:'icon-del'});
+                $('.user-easyui-linkbutton-ok').linkbutton({text:'启用',plain:true,iconCls:'icon-ok'});
             },
             toolbar : '#toolbar'
         });
@@ -102,36 +123,30 @@
     }
     
     function deleteFun(id) {
-        if (id == undefined) {//点击右键菜单才会触发这个
+    	if (id == undefined) {//点击右键菜单才会触发这个
             var rows = dataGrid.datagrid('getSelections');
             id = rows[0].id;
         } else {//点击操作里面的删除图标会触发这个
             dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
         }
-        parent.$.messager.confirm('询问', '您确定要删除这个仓库？', function(b) {
+        parent.$.messager.confirm('询问', '您是否要改变仓库当前状态？', function(b) {
             if (b) {
-                var currentUserId = '${sessionInfo.id}';/*当前登录用户的ID*/
-                if (currentUserId != id) {
-                    progressLoad();
-                    $.post('${path }/godown/delete', {
-                        id : id
-                    }, function(result) {
-                        if (result.success) {
-                            parent.$.messager.alert('提示', result.msg, 'info');
-                            dataGrid.datagrid('reload');
-                        }
-                        progressClose();
-                    }, 'JSON');
-                } else {
-                    parent.$.messager.show({
-                        title : '提示',
-                        msg : '不可以删除自己！'
-                    });
-                }
+                progressLoad();
+                var rows = dataGrid.datagrid('getSelections');
+                $.post('${path }/godown/delete', {
+                    id : id,
+                   	'status' : rows[0].gostatus
+                }, function(result) {
+                    if (result.success) {
+                        parent.$.messager.alert('提示', result.msg, 'info');
+                        dataGrid.datagrid('reload');
+                    }
+                    progressClose();
+                }, 'JSON');
             }
         });
     }
-    
+
     function editFun(id) {
         if (id == undefined) {
             var rows = dataGrid.datagrid('getSelections');

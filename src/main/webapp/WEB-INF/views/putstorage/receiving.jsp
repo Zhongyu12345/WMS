@@ -9,6 +9,19 @@
 <title>收货入库确认</title>
     <script type="text/javascript">   
     $(function(){
+    	$("#selectCombobox").combobox({
+    	    url:"${path}/godown/godownComboBoxs?volume=${godown.gNum}",
+    	    method: 'get',
+    	    valueField: 'id',
+    	    textField: 'text',
+    	    panelHeight: 'auto',
+    	    onLoadSuccess: function () {
+    	        var data = $('#selectCombobox').combobox('getData');
+    	        if (data.length > 0) {
+    	            $("#selectCombobox").combobox('select', data[0].id);
+    	        }
+    	    }
+    	});
     	$('input[type=text]').validatebox();
     	 $("#gCrossflag").combobox('setValue','${godown.gCrossflag}');
          $("#gDirectflag").combobox('setValue','${godown.gDirectflag}');
@@ -17,7 +30,7 @@
     });
     
     function save(){
-    	if ($("#godownEntryForm").form("validate") && $("#receivingForm").form("validate") ) { // 验证整个表单里的所有validatabox是否通过验证
+    	if ($("#godownEntryForm").form('enableValidation').form("validate") && $("#receivingForm").form('enableValidation').form("validate") ) { // 验证整个表单里的所有validatabox是否通过验证
 			var gName = $("#gName").val();
 			var gSupplierid = $("#gSupplierid").val();
 			var gSippingno = $("#gSippingno").val();
@@ -37,7 +50,7 @@
 			var rSupplierid = $("#rSupplierid").val();
 			var rSippingno = $("#rSippingno").val();
 			var rStorerid = $("#rStorerid").val();
-			var rWhid = $("#rWhid").val();
+			var rWhid = $("#selectCombobox").combobox("getValue");
 			var rNum = $("#rNum").val();
 			var rCrossflag = $("#rCrossflag").combobox("getValue");
 			var rDirectflag = $("#rDirectflag").combobox("getValue");
@@ -88,8 +101,22 @@
 				         $("#gDirectflag").combobox('setValue',' ');
 				         $("#rCrossflag").combobox('setValue',' ');
 				         $("#rDirectflag").combobox('setValue',' ');
+				         
+				         $("#selectCombobox").combobox({
+				     	    url:"${path}/godown/godownComboBox",
+				     	    method: 'get',
+				     	    valueField: 'id',
+				     	    textField: 'text',
+				     	    panelHeight: 'auto',
+				     	    onLoadSuccess: function () {
+				     	        var data = $('#selectCombobox').combobox('getData');
+				     	        if (data.length > 0) {
+				     	            $("#selectCombobox").combobox('select', data[0].id);
+				     	        }
+				     	    }
+				     	});
+				         
 				         $.messager.alert('提示','添加成功');
-						
 					}
 				});
 		}
@@ -112,34 +139,24 @@
 	            <table>
 	                <tr>
 	                    <th>货物名称:</th>
-	                    <td><input type="text" id="gName" name="gName" value="${godown.gName }" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true"/></td>
+	                    <td><input type="text" id="gName" name="gName" value="${godown.gName }" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true,novalidate:true" readonly="readonly" /></td>
 	                    <th>货物型号:</th>
-	                    <td><input type="text"  id="gSkumodel" name="gSkumodel" value="${godown.gSkumodel }" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true"/></td>
+	                    <td><input type="text"  id="gSkumodel" name="gSkumodel" value="${godown.gSkumodel }" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,novalidate:true" readonly="readonly" /></td>
 	                    <th>客户托单号:</th>
-	                    <td><input type="text" id="gSippingno" name="gSippingno" value="${godown.gSippingno }" placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true"/></td>
-	                    <th>入库编码:</th>
-	                    <td><input type="text" id="gWhid" name="gWhid" value="${godown.gWhid }" placeholder="请输入入库编码" class="easyui-validatebox" data-options="required:true"/></td>
+	                    <td><input type="text" id="gSippingno" name="gSippingno" value="${godown.gSippingno }" placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true,novalidate:true" readonly="readonly" /></td>
+	                    <%-- <th>入库编码:</th>
+	                    <td><input type="text" id="gWhid" name="gWhid" value="${godown.gWhid }" placeholder="请输入入库编码" class="easyui-validatebox" data-options="required:true,novalidate:true"/></td>
+	                     --%>
 	                    <th>是否越库:</th>
 	                    <td>
-	                    	<select id="gCrossflag" name="gCrossflag"  class="easyui-combobox" data-options="width:80,height:24,editable:false,panelHeight:'auto'">
+	                    	<select id="gCrossflag" name="gCrossflag"  class="easyui-combobox" data-options="width:80,height:20,editable:false,panelHeight:'auto'" readonly="readonly" >
 	                    	<option value=" " selected="selected">请选择</option>
 	                            <option value="0">越库</option>
 	                            <option value="1">不越库</option>
                    			 </select></td>
-	                </tr>
-	                <tr>
-	                	<th>货主:</th>
-	                	<td><input type="text"  id="gStorerid"  name="gStorerid"  value="${godown.gStorerid }" placeholder="请输入货主姓名" class="easyui-validatebox" data-options="required:true"/></td>
-	                	<th>入库数量:</th>
-	                    <td><input type="text"  id="gNumber" name="gNumber" validtype="integer" value="${godown.gNumber }" placeholder="请输入入库数量" class="easyui-validatebox" data-options="required:true"/></td>
-	                    <th>入库重量:</th>
-	                    <td><input type="text"  id="gHeavy" name="gHeavy" validtype="intOrFloat" value="${godown.gHeavy }" placeholder="请输入入库重量" class="easyui-validatebox" data-options="required:true"/></td>
-	                	<th>入库体积:</th>
-	                    <td><input type="text"  id="gNum" name="gNum" validtype="intOrFloat" value="${godown.gNum }" placeholder="请输入入库体积" class="easyui-validatebox" data-options="required:true"/></td>
-	                    
-	                    <th>是否整进整出:</th>
+              			<th>是否整进整出:</th>
 	                    <td>
-	                    	<select id="gDirectflag" name="gDirectflag" class="easyui-combobox" data-options="width:80,height:24,editable:false,panelHeight:'auto'">
+	                    	<select id="gDirectflag" name="gDirectflag" class="easyui-combobox" data-options="width:80,height:20,editable:false,panelHeight:'auto'" readonly="readonly" >
 	                    	<option value=" " selected="selected">请选择</option>
 	                            <option value="0">整进</option>
 	                            <option value="1">不整进</option>
@@ -147,12 +164,23 @@
                    		</td>
 	                </tr>
 	                <tr>
+	                	<th>货主:</th>
+	                	<td><input type="text"  id="gStorerid"  name="gStorerid"  value="${godown.gStorerid }" placeholder="请输入货主姓名" class="easyui-validatebox" data-options="required:true,novalidate:true" readonly="readonly" /></td>
+	                	<th>入库数量:</th>
+	                    <td><input type="text"  id="gNumber" name="gNumber" validtype="integer" value="${godown.gNumber }" placeholder="请输入入库数量" class="easyui-validatebox" data-options="required:true,novalidate:true" readonly="readonly" /></td>
+	                    <th>入库重量:</th>
+	                    <td><input type="text"  id="gHeavy" name="gHeavy" validtype="intOrFloat" value="${godown.gHeavy }" placeholder="请输入入库重量" class="easyui-validatebox" data-options="required:true,novalidate:true" readonly="readonly" /></td>
+	                	<th>入库体积:</th>
+	                    <td><input type="text"  id="gNum" name="gNum" validtype="intOrFloat" value="${godown.gNum }" placeholder="请输入入库体积" class="easyui-validatebox" data-options="required:true,novalidate:true" readonly="readonly" /></td>
+	                </tr>
+	                <tr>
 	                	<th>号码:</th>
-	                	<td><input type="text" id="gPhone" name="gPhone" validtype="mobile" value="${godown.gPhone }" placeholder="请输入手机号码" class="easyui-validatebox" data-options="required:true"/></td>
+	                	<td><input type="text" id="gPhone" name="gPhone" validtype="mobile" value="${godown.gPhone }" placeholder="请输入手机号码" class="easyui-validatebox" data-options="required:true,novalidate:true" readonly="readonly" /></td>
 	                	<th>供应商:</th>
-	                    <td><input type="text" id="gSupplierid" name="gSupplierid" value="${godown.gSupplierid }" placeholder="请输入供应商" class="easyui-validatebox" data-options="required:true"/></td>
-	                    <th>管理员编号:</th>
-	                    <td><input type="text" id="gAdminid" name="gAdminid" value="${godown.gAdminid }" placeholder="请输入管理员编号" class="easyui-validatebox" data-options="required:true" /></td>
+	                    <td><input type="text" id="gSupplierid" name="gSupplierid" value="${godown.gSupplierid }" placeholder="请输入供应商" class="easyui-validatebox" data-options="required:true,novalidate:true" readonly="readonly" /></td>
+	                    <%-- <th>管理员编号:</th>
+	                    <td><input type="text" id="gAdminid" name="gAdminid" value="${godown.gAdminid }" placeholder="请输入管理员编号" class="easyui-validatebox" data-options="required:true,novalidate:true" /></td>
+	                	 --%>
 	                	<th>入库计划时间:</th>
 	                    <td><input id="gTime" name="gTime"   placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"  value="<fmt:formatDate pattern="yyyy-MM-dd " value="${godown.gTime}" />" readonly="readonly" /></td>
 	                </tr>
@@ -168,16 +196,16 @@
 	            <table>
 	                <tr>
 	                    <th>货物名称:</th>
-	                    <td><input type="text" id="rName"  name="rName" value="${godown.gName }"  placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true"/></td>
+	                    <td><input type="text" id="rName"  name="rName" value="${godown.gName }"  placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true,novalidate:true"/></td>
 	                    <th>货物型号:</th>
-	                    <td><input type="text"  id="rSkumodel"  value="${godown.gSkumodel }"  name="rSkumodel" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true"/></td>
+	                    <td><input type="text"  id="rSkumodel"  value="${godown.gSkumodel }"  name="rSkumodel" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,novalidate:true"/></td>
 	                   	<th>客户托单号:</th>
-	                    <td><input type="text"  id="rSippingno"  name="rSippingno" value="${godown.gSippingno }"  placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true"/></td>
+	                    <td><input type="text"  id="rSippingno"  name="rSippingno" value="${godown.gSippingno }"  placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true,novalidate:true"/></td>
 	                    <th>入库编码:</th>
-	                    <td><input type="text"  id="rWhid"  name="rWhid" value="${godown.gWhid }"  placeholder="请输入入库编码" class="easyui-validatebox" data-options="required:true"/></td>
+	                    <td><input name="rWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,novalidate:true" /></td>
 	                    <th>是否越库:</th>
 	                    <td>
-	                    	<select id="rCrossflag" name="rCrossflag"  class="easyui-combobox" data-options="width:80,height:24,editable:false,panelHeight:'auto'">
+	                    	<select id="rCrossflag" name="rCrossflag"  class="easyui-combobox" data-options="width:80,height:20,editable:false,panelHeight:'auto'">
 	                    	<option value=" " selected="selected">请选择</option>
 	                            <option value="0">越库</option>
 	                            <option value="1">不越库</option>
@@ -185,16 +213,16 @@
 	                </tr>
 	                <tr>
 	                	<th>货主:</th>
-	                	<td><input type="text"  id="rStorerid" name="rStorerid" value="${godown.gStorerid }"  placeholder="请输入货主姓名" class="easyui-validatebox" data-options="required:true"/></td>
+	                	<td><input type="text"  id="rStorerid" name="rStorerid" value="${godown.gStorerid }"  placeholder="请输入货主姓名" class="easyui-validatebox" data-options="required:true,novalidate:true"/></td>
 	                	<th>入库数量:</th>
-	                    <td><input type="text"  id="rNumber" name="rNumber" validtype="integer"  placeholder="请输入入库数量" class="easyui-validatebox" data-options="required:true"/></td>
+	                    <td><input type="text"  id="rNumber" name="rNumber" validtype="integer"  placeholder="请输入入库数量" class="easyui-validatebox" data-options="required:true,novalidate:true"/></td>
 	                    <th>入库重量:</th>
-	                    <td><input type="text"  id="rHeavy" name="rHeavy" validtype="intOrFloat"  placeholder="请输入入库重量" class="easyui-validatebox" data-options="required:true"/></td>
+	                    <td><input type="text"  id="rHeavy" name="rHeavy" validtype="intOrFloat"  placeholder="请输入入库重量" class="easyui-validatebox" data-options="required:true,novalidate:true"/></td>
 	                	<th>入库体积:</th>
-	                    <td><input type="text"  id="rNum" name="rNum"  validtype="intOrFloat" placeholder="请输入入库体积" class="easyui-validatebox" data-options="required:true"/></td>
+	                    <td><input type="text"  id="rNum" name="rNum"  validtype="intOrFloat" placeholder="请输入入库体积" class="easyui-validatebox" data-options="required:true,novalidate:true"/></td>
 	                    <th>是否整进整出:</th>
 	                    <td>
-	                    	<select id="rDirectflag" name="rDirectflag"   class="easyui-combobox" data-options="width:80,height:24,editable:false,panelHeight:'auto'">
+	                    	<select id="rDirectflag" name="rDirectflag"   class="easyui-combobox" data-options="width:80,height:20,editable:false,panelHeight:'auto'">
 	                    	<option value=" " selected="selected">请选择</option>
 	                            <option value="0">整进</option>
 	                            <option value="1">不整进</option>
@@ -203,13 +231,13 @@
 	                </tr>
 	                <tr>
 	                	<th>号码:</th>
-	                	<td><input type="text"  id="rPhone" validtype="mobile" name="rPhone" value="${godown.gPhone }"  placeholder="请输入手机号码" class="easyui-validatebox" data-options="required:true"/></td>
+	                	<td><input type="text"  id="rPhone" validtype="mobile" name="rPhone" value="${godown.gPhone }"  placeholder="请输入手机号码" class="easyui-validatebox" data-options="required:true,novalidate:true"/></td>
 	                	 <th>供应商:</th>
-	                    <td><input type="text"  id="rSupplierid"  name="rSupplierid" value="${godown.gSupplierid }"  placeholder="请输入供应商" class="easyui-validatebox" data-options="required:true"/></td>
-	                	<th>管理员编号:</th>
-	                    <td><input type="text"  id="rAdminid" value="${godown.gAdminid }"  name="rAdminid" placeholder="请输入管理员编号" class="easyui-validatebox" data-options="required:true" /></td>
+	                    <td><input type="text"  id="rSupplierid"  name="rSupplierid" value="${godown.gSupplierid }"  placeholder="请输入供应商" class="easyui-validatebox" data-options="required:true,novalidate:true"/></td>
+	                	<th>管理员:</th>
+	                    <td><input type="text"  id="rAdminid" value='<shiro:principal></shiro:principal>'  name="rAdminid" placeholder="请输入管理员编号" class="easyui-validatebox" data-options="required:true,novalidate:true" readonly="readonly" /></td>
 	                    <th>入库时间:</th>
-	                    <td><input id="rTime" name="rTime" validtype="date" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss '})" data-options="required:true"   readonly="readonly" /></td>
+	                    <td><input id="rTime" name="rTime" validtype="date" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss '})" data-options="required:true,novalidate:true"   readonly="readonly" /></td>
 	                    
 	                </tr>
 	            </table>

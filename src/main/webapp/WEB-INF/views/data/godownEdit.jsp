@@ -32,8 +32,12 @@
             <table class="grid">
                 <tr>
                     <td>扩充容积</td>
-                    <td><input name="id" type="hidden"  value="${user.id}">
-                    <input name="add" type="text" placeholder="请输入需扩充容积" class="easyui-validatebox" data-options="required:true">&nbsp;m³</td>
+                    <td>
+                    	<input name="goId" type="hidden" value="${godown.goId}">
+                    	<input name="goVolume" type="hidden" value="${godown.goVolume}">
+                    	<input name="goRdvolume" type="hidden" value="${godown.goRdvolume}">
+                    	<input name="add" type="number" placeholder="请输入需扩充容积" class="easyui-validatebox" data-options="required:true">&nbsp;m³
+                    </td>
                 </tr>
             </table>
         </form>

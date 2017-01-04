@@ -26,7 +26,7 @@
         });
 
         $("#selectCombobox").combobox({
-            url: "/godown/godownComboBox",
+            url: "${path }/godown/godownComboBox",
             method: 'get',
             valueField: 'id',
             textField: 'text',

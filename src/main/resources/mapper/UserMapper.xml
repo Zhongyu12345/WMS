@@ -93,7 +93,7 @@
         </where>
     </select>
 	<select id="selectByRole" resultMap="userVoResultMap">
-		select name from user
+		select id,name from user
 		<where>
 			user_type = 1
 		</where>

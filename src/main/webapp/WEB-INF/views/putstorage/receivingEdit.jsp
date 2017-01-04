@@ -3,11 +3,25 @@
 <script type="text/javascript" src="${staticPath }/static/My97DatePicker/WdatePicker.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function() {
+    	
+    	$("#selectCombobox").combobox({
+    	    url:"${path}/godown/godownComboBox",
+    	    method: 'get',
+    	    valueField: 'id',
+    	    textField: 'text',
+    	    panelHeight: 'auto',
+    	    onLoadSuccess: function () {
+    	        var data = $('#selectCombobox').combobox('getData');
+    	        if (data.length > 0) {
+    	            $("#selectCombobox").combobox('select', '${user.rWhid}');
+    	        }
+    	    }
+    	});
         $('#receivingEditForm').form({
             url : '${path }/receiving/update',
             onSubmit : function() {
                 progressLoad();
-                var isValid = $(this).form('validate');
+                var isValid = $(this).form('enableValidation').form('validate');
                 if (!isValid) {
                     progressClose();
                 }
@@ -36,36 +50,41 @@
                 <tr>
                     <td>货物名称</td>
                     <td><input name="rId" type="hidden"  value="${user.rId}">
-                    <input name="rName" type="text" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true" value="${user.rName}"></td>
+                    <input name="rName" type="text" placeholder="请输入货物名称" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${user.rName}"></td>
                     <td>货主</td>
-                    <td><input name="rStorerid" type="text" placeholder="请输入货主姓名" class="easyui-validatebox" data-options="required:true" value="${user.rStorerid}"></td>
+                    <td><input name="rStorerid" type="text" placeholder="请输入货主姓名" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${user.rStorerid}"></td>
                 </tr>
                 <tr>
                     <td>货物型号</td>
-                    <td><input name="rSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true" value="${user.rSkumodel}" /></td>
+                    <td><input name="rSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${user.rSkumodel}" /></td>
                     <td>货主号码</td>
-                    <td><input name="rPhone" type="text" validtype="mobile" placeholder="请输入货主号码" class="easyui-validatebox" data-options="required:true" value="${user.rPhone}"></td>
+                    <td><input name="rPhone" type="text" validtype="mobile" placeholder="请输入货主号码" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${user.rPhone}"></td>
                 </tr>
                 <tr>
                     <td>供应商</td>
-                    <td><input name="rSupplierid" type="text" placeholder="请输入供应商" class="easyui-validatebox" data-options="required:true" value="${user.rSupplierid}" /></td>
+                    <td><input name="rSupplierid" type="text" placeholder="请输入供应商" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${user.rSupplierid}" /></td>
                     <td>客户托单号</td>
-                    <td><input name="rSippingno" type="text" placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true" value="${user.rSippingno}"></td>
+                    <td><input name="rSippingno" type="text" placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${user.rSippingno}"></td>
                 </tr>
                  <tr>
                     <td>仓库编码</td>
-                    <td><input name="rWhid" type="text" placeholder="请输入仓库编码" class="easyui-validatebox" data-options="required:true" value="${user.rWhid}" /></td>
+                    <td>
+                    <input name="oldWhid" type="hidden"  value="${user.rWhid}">
+                    <input name="rWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,novalidate:true" /></td>
                     <td>入库体积</td>
-                    <td><input name="rNum" type="text" validtype="intOrFloat" placeholder="请输入入库体积" class="easyui-validatebox" data-options="required:true" value="${user.rNum}"></td>
+                    <input name="oldVolume" type="hidden"  value="${user.rNum}">
+                    <td><input name="rNum" type="text" validtype="intOrFloat" placeholder="请输入入库体积" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${user.rNum}"></td>
                 </tr>
                  <tr>
                     <td>是否越库</td>
-                    <td><select id="rCrossflag" name="rCrossflag" value="${user.rCrossflag}" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                    <td>
+                    <input name="oldCrossflag" type="hidden"  value="${user.rCrossflag}">
+                    <select id="rCrossflag" name="rCrossflag" value="${user.rCrossflag}" class="easyui-combobox" data-options="width:80,height:22,editable:false,panelHeight:'auto'">
                             <option value="0">越库</option>
                             <option value="1">不越库</option>
                     </select></td>
                     <td>是否整进</td>
-                    <td><select id="rDirectflag" name="rDirectflag" value="${user.rDirectflag}" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                    <td><select id="rDirectflag" name="rDirectflag" value="${user.rDirectflag}" class="easyui-combobox" data-options="width:80,height:22,editable:false,panelHeight:'auto'">
                             <option value="0">整进</option>
                             <option value="1">不整进</option>
                     </select></td>
@@ -74,8 +93,8 @@
                     <td>入库时间</td>
                     <td>
                     <input name="time" style="whith:100%" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${user.rTime}" />" readonly="readonly" />
-                    <td>管理员编号</td>
-                    <td><input name="rAdminid" type="text" placeholder="请输入管理员编号" class="easyui-validatebox" data-options="required:true" value="${user.rAdminid}"></td>
+                    <td>管理员</td>
+                    <td><input name="rAdminid" type="text" readonly="readonly" placeholder="请输入管理员" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${user.rAdminid}"></td>
                 </tr>
             </table>
         </form>

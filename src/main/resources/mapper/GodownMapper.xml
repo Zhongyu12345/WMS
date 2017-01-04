@@ -8,6 +8,7 @@
         <result column="go_volume" jdbcType="DOUBLE" property="goVolume"/>
         <result column="go_usevolume" jdbcType="DOUBLE" property="goUsevolume"/>
         <result column="go_rdvolume" jdbcType="DOUBLE" property="goRdvolume"/>
+        <result column="gostatus" jdbcType="INTEGER" property="gostatus"/>
         
         <collection property="userList" ofType="User">
 	        <id column="userId" property="id"/>
@@ -16,7 +17,7 @@
     </resultMap>
     
     <sql id="Base_Column_List">
-      go_id, go_whid, go_p, go_volume, go_usevolume, go_rdvolume
+      go_id, go_whid, go_p, go_volume, go_usevolume, go_rdvolume,gostatus
     </sql>
 
 	<select id="selectDataGrid" resultMap="BaseResultMap">
@@ -49,10 +50,11 @@
 
     <insert id="insert" parameterType="com.wms.bean.Godown">
         insert into godown (go_id, go_whid, go_p,
-          go_volume, go_usevolume, go_rdvolume
+          go_volume, go_usevolume, go_rdvolume,gostatus
           )
         values (#{goId,jdbcType=INTEGER}, #{goWhid,jdbcType=VARCHAR}, #{goP,jdbcType=VARCHAR},
-          #{goVolume,jdbcType=DOUBLE}, #{goUsevolume,jdbcType=DOUBLE}, #{goRdvolume,jdbcType=DOUBLE}
+          #{goVolume,jdbcType=DOUBLE}, #{goUsevolume,jdbcType=DOUBLE}, #{goRdvolume,jdbcType=DOUBLE},
+          #{gostatus,jdbcType=INTEGER}
       )
     </insert>
 
@@ -77,6 +79,9 @@
             <if test="goRdvolume != null">
                 go_rdvolume,
             </if>
+            <if test="goRdvolume != null">
+                gostatus,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="goId != null">
@@ -96,6 +101,9 @@
             </if>
             <if test="goRdvolume != null">
                 #{goRdvolume,jdbcType=DOUBLE},
+            </if>
+            <if test="gostatus != null">
+                #{gostatus,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -118,6 +126,9 @@
             <if test="goRdvolume != null">
                 go_rdvolume = #{goRdvolume,jdbcType=DOUBLE},
             </if>
+            <if test="gostatus != null">
+                gostatus = #{gostatus,jdbcType=INTEGER},
+            </if>
         </set>
         where go_id = #{goId,jdbcType=INTEGER}
     </update>
@@ -128,7 +139,8 @@
           go_p = #{goP,jdbcType=VARCHAR},
           go_volume = #{goVolume,jdbcType=DOUBLE},
           go_usevolume = #{goUsevolume,jdbcType=DOUBLE},
-          go_rdvolume = #{goRdvolume,jdbcType=DOUBLE}
+          go_rdvolume = #{goRdvolume,jdbcType=DOUBLE},
+          gostatus = #{gostatus,jdbcType=INTEGER}
         where go_id = #{goId,jdbcType=INTEGER}
     </update>
 

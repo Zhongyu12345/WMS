@@ -20,12 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.wms.bean.Cargo;
+import com.wms.bean.Godown;
 import com.wms.bean.GodownEntry;
 import com.wms.bean.Receiving;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.ReadXls;
 import com.wms.service.CargoService;
 import com.wms.service.GodownEntryService;
+import com.wms.service.GodownService;
 import com.wms.service.ReceivingService;
 /**
  * 
@@ -37,6 +39,9 @@ public class GodownEntryController extends BaseController {
 	
 	@Autowired
 	private GodownEntryService godownEntryService;
+	
+    @Autowired
+    private GodownService godownService;
 	
 	@Autowired
 	private ReceivingService receivingService;
@@ -116,8 +121,9 @@ public class GodownEntryController extends BaseController {
 		g.setcWhid(receiving.getrWhid());
 		g.setcNum(receiving.getrNumber());
 		g.setcTotalweight(receiving.getrHeavy());
+		int d = run(receiving);
 		int c = cargoService.insert(g);
-		if(a>0 && b>0 && c>0){
+		if(a>0 && b>0 && c>0&&d>0){
 			return renderSuccess("添加成功");
 		}else{
 			return renderError("添加失败");
@@ -139,6 +145,18 @@ public class GodownEntryController extends BaseController {
             e.printStackTrace();
         }
         return date;
+    }
+    
+    private int run(Receiving receiving){
+    	Godown g = godownService.selectByPrimaryKey(Integer.valueOf(receiving.getrWhid()));
+    	g.setGoRdvolume(g.getGoRdvolume()-receiving.getrNum());//可用容积
+    	g.setGoUsevolume(g.getGoUsevolume()+receiving.getrNum());//已用容积
+    	int a = godownService.updateByPrimaryKey(g);
+    	if(a>0){
+    		return 1;
+    	}else{
+    		return 0;
+    	}
     }
 
 }

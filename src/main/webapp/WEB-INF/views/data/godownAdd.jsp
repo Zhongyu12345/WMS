@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
-<%@ include file="/commons/basejs.jsp" %>
 <script type="text/javascript">
     $(function() {
-    	$("#goP").combobox({
-    		
-    		url:'${path }/godown/getUser',
-    		valueField:"userId",
-    		textField:"userName"
 
-    	})
-
+    	$('#goPer').combobox({
+    		url:'${path}/godown/userCombobox',
+    		editable:false,
+    		valueField:'userId',
+    		textField:'userName',
+    	});
+    	
         $('#godownAddForm').form({
             url : '${path }/godown/add',
             onSubmit : function() {
@@ -32,7 +31,6 @@
                 }
             }
         });
-        
     });
     
 </script>
@@ -41,19 +39,16 @@
         <form id="godownAddForm" method="post">
             <table class="grid">
                 <tr>
-                	<td></td>
                     <td>仓库名字</td>
                     <td><input name="goWhid" type="text" placeholder="请输入仓库名称" class="easyui-validatebox" data-options="required:true" value=""></td>
                 </tr>
                 <tr>
-                	<td></td>
                 	<td>管理员</td>
-                    <td><input name="goP" placeholder="请输入姓名" class="easyui-validatebox" data-options="required:true"></td>
+                    <td><input name="goP" id="goPer" class="easyui-combobox" value="请选择用户" ></td>
                 </tr>
                 <tr>
-                	<td></td>
                     <td>仓库容积</td>
-                    <td><input name="password" type="number" placeholder="请输入仓库容积" class="easyui-validatebox" data-options="required:true">&nbsp;m³</td>
+                    <td><input name="goVolume" type="number" placeholder="请输入仓库容积" class="easyui-validatebox" data-options="required:true">&nbsp;m³</td>
                 </tr>
             </table>
         </form>

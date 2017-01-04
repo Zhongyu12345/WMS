@@ -5,7 +5,7 @@
     <id column="sr_id" jdbcType="INTEGER" property="srId" />
     <result column="sr_name" jdbcType="VARCHAR" property="srName" />
     <result column="sr_sipping" jdbcType="VARCHAR" property="srSipping" />
-    <result column="sr_storerid" jdbcType="INTEGER" property="srStorerid" />
+    <result column="sr_storerid" jdbcType="VARCHAR" property="srStorerid" />
     <result column="sr_phone" jdbcType="VARCHAR" property="srPhone" />
     <result column="sr_names" jdbcType="VARCHAR" property="srNames" />
     <result column="sr_SKUmodel" jdbcType="VARCHAR" property="srSkumodel" />
@@ -14,6 +14,14 @@
     <result column="sr_time" jdbcType="TIMESTAMP" property="srTime" />
     <result column="sr_whid" jdbcType="INTEGER" property="srWhid" />
     <result column="sr_volume" jdbcType="DOUBLE" property="srVolume" />
+    <collection property="godowns" ofType="com.wms.bean.Godown">
+            <id column="go_id" jdbcType="INTEGER" property="goId"/>
+            <result column="go_whid" jdbcType="VARCHAR" property="goWhid"/>
+            <result column="go_p" jdbcType="VARCHAR" property="goP"/>
+            <result column="go_volume" jdbcType="DOUBLE" property="goVolume"/>
+            <result column="go_usevolume" jdbcType="DOUBLE" property="goUsevolume"/>
+            <result column="go_rdvolume" jdbcType="DOUBLE" property="goRdvolume"/>
+        </collection>
   </resultMap>
   <sql id="Base_Column_List">
     sr_id, sr_name, sr_sipping, sr_storerid, sr_phone, sr_names, sr_SKUmodel, sr_num, 
@@ -21,23 +29,20 @@
   </sql>
   
   <select id="selectAll" resultMap="BaseResultMap">
-  	select 
-    <include refid="Base_Column_List" />
-    from sales_return
-    <where>
+  	select s.*,g.*
+    from sales_return s,godown g where s.sr_whid=g.go_id
            <if test=" srname != null and srname != '' ">
-               sr_name like #{srname}
+             and  sr_name like #{srname}
            </if>
            <if test=" srsipping != null and srsipping != '' ">
-               sr_sipping = #{srsipping}
+             and  sr_sipping = #{srsipping}
            </if>
            <if test=" startTime != null ">
-               <![CDATA[  sr_time >= #{startTime} ]]>
+             and  <![CDATA[  sr_time >= #{startTime} ]]>
            </if>
            <if test=" endTime != null ">
                <![CDATA[ and sr_time <= #{endTime} ]]>
            </if>
-     </where>
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -57,7 +62,7 @@
       sr_time, sr_whid, sr_volume
       )
     values (#{srId,jdbcType=INTEGER}, #{srName,jdbcType=VARCHAR}, #{srSipping,jdbcType=VARCHAR}, 
-      #{srStorerid,jdbcType=INTEGER}, #{srPhone,jdbcType=VARCHAR}, #{srNames,jdbcType=VARCHAR}, 
+      #{srStorerid,jdbcType=VARCHAR}, #{srPhone,jdbcType=VARCHAR}, #{srNames,jdbcType=VARCHAR}, 
       #{srSkumodel,jdbcType=VARCHAR}, #{srNum,jdbcType=DOUBLE}, #{srCause,jdbcType=VARCHAR}, 
       #{srTime,jdbcType=TIMESTAMP}, #{srWhid,jdbcType=INTEGER}, #{srVolume,jdbcType=DOUBLE}
       )
@@ -113,7 +118,7 @@
         #{srSipping,jdbcType=VARCHAR},
       </if>
       <if test="srStorerid != null">
-        #{srStorerid,jdbcType=INTEGER},
+        #{srStorerid,jdbcType=VARCHAR},
       </if>
       <if test="srPhone != null">
         #{srPhone,jdbcType=VARCHAR},
@@ -184,7 +189,7 @@
     update sales_return
     set sr_name = #{srName,jdbcType=VARCHAR},
       sr_sipping = #{srSipping,jdbcType=VARCHAR},
-      sr_storerid = #{srStorerid,jdbcType=INTEGER},
+      sr_storerid = #{srStorerid,jdbcType=VARCHAR},
       sr_phone = #{srPhone,jdbcType=VARCHAR},
       sr_names = #{srNames,jdbcType=VARCHAR},
       sr_SKUmodel = #{srSkumodel,jdbcType=VARCHAR},

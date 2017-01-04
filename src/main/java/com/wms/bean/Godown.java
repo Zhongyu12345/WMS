@@ -29,10 +29,25 @@ public class Godown {
 
 	@TableField(value = "go_rdvolume")
     private Double goRdvolume;
+	/**
+	 * gostatus仓库状态
+	 * 0:正常
+	 * 1:停用
+	 * 2:已满
+	 */
+	private int gostatus;
 	
 	private List<User> userList;
 
-    public List<User> getUserList() {
+    public int getGostatus() {
+		return gostatus;
+	}
+
+	public void setGostatus(int gostatus) {
+		this.gostatus = gostatus;
+	}
+
+	public List<User> getUserList() {
 		return userList;
 	}
 
