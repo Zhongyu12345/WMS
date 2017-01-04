@@ -5,9 +5,11 @@ import com.wms.bean.Shipment;
 import com.wms.commons.utils.OrderNumberUtil;
 import com.wms.commons.utils.PageInfo;
 import com.wms.dao.ShipmentMapper;
+import com.wms.service.GodownService;
 import com.wms.service.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +21,9 @@ public class ShipmentServiceImpl implements ShipmentService {
 
     @Autowired
     private ShipmentMapper shipmentMapper;
+
+    @Autowired
+    private GodownService godownService;
 
     @Override
     public List<Shipment> queryAll() {
@@ -38,9 +43,14 @@ public class ShipmentServiceImpl implements ShipmentService {
         return shipmentMapper.selectByPrimaryKey(id);
     }
 
+    @Transactional
     @Override
     public int addShipment(Shipment shipment) {
+        //后台单号生成
         shipment.setShSippingno(OrderNumberUtil.generateOrderNo());
+        //减库存操作
+        //noinspection deprecation
+        godownService.reduction(Integer.parseInt(shipment.getShWhid()), shipment.getShTotalvolume());
         return shipmentMapper.insert(shipment);
     }
 

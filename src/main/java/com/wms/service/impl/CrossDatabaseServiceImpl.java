@@ -6,6 +6,7 @@ import com.wms.commons.utils.OrderNumberUtil;
 import com.wms.commons.utils.PageInfo;
 import com.wms.dao.CrossDatabaseMapper;
 import com.wms.service.CrossDatabaseService;
+import com.wms.service.GodownService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ public class CrossDatabaseServiceImpl implements CrossDatabaseService {
 
     @Autowired
     private CrossDatabaseMapper crossDatabaseMapper;
+
+    @Autowired
+    private GodownService godownService;
 
     @Override
     public List<CrossDatabase> queryAll() {
@@ -41,6 +45,8 @@ public class CrossDatabaseServiceImpl implements CrossDatabaseService {
     @Override
     public int addCrossDatabase(CrossDatabase crossDatabase) {
         crossDatabase.setCdOddnumbers(OrderNumberUtil.generateOrderNo());
+        //noinspection deprecation
+        godownService.reduction(Integer.parseInt(crossDatabase.getCdWhid()), crossDatabase.getCdVolume());
         return crossDatabaseMapper.insert(crossDatabase);
     }
 

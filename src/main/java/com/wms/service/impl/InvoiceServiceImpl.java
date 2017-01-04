@@ -5,6 +5,7 @@ import com.wms.bean.Invoice;
 import com.wms.commons.utils.OrderNumberUtil;
 import com.wms.commons.utils.PageInfo;
 import com.wms.dao.InvoiceMapper;
+import com.wms.service.GodownService;
 import com.wms.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Autowired
     private InvoiceMapper invoiceMapper;
+
+    @Autowired
+    private GodownService godownService;
 
     @Override
     public List<Invoice> queryAll() {
@@ -41,6 +45,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public int addInvoice(Invoice invoice) {
         invoice.setInOddnumber(OrderNumberUtil.generateOrderNo());
+        //noinspection deprecation
+        godownService.reduction(Integer.parseInt(invoice.getInWhid()), invoice.getInVolume());
         return invoiceMapper.insert(invoice);
     }
 

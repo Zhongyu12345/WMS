@@ -19,43 +19,52 @@ public class GodownServiceImpl implements GodownService {
     @Autowired
     private GodownMapper godownMapper;
 
-    /** 查询所有仓库 EasyUI下拉框操作 */
+    /**
+     * 查询所有仓库 EasyUI下拉框操作
+     */
     @Override
     public List<Godown> godownComboBox() {
         return godownMapper.findByComboBox4EasyUi();
     }
 
-	@Override
-	public void selectDataGrid(PageInfo pageInfo) {
-		Page<Godown> page = new Page<Godown>(pageInfo.getNowpage(), pageInfo.getSize());
+    @Override
+    public void selectDataGrid(PageInfo pageInfo) {
+        Page<Godown> page = new Page<Godown>(pageInfo.getNowpage(), pageInfo.getSize());
         List<Godown> list = godownMapper.selectDataGrid(page, pageInfo.getCondition());
         pageInfo.setRows(list);
         pageInfo.setTotal(page.getTotal());
-	}
+    }
 
-	@Override
-	public int updateByPrimaryKey(Godown record) {
-		return godownMapper.updateByPrimaryKey(record);
-	}
+    @Override
+    public int updateByPrimaryKey(Godown record) {
+        return godownMapper.updateByPrimaryKey(record);
+    }
 
-	@Override
-	public Godown selectByPrimaryKey(Integer goId) {
-		return godownMapper.selectByPrimaryKey(goId);
-	}
+    @Override
+    public Godown selectByPrimaryKey(Integer goId) {
+        return godownMapper.selectByPrimaryKey(goId);
+    }
 
-	public int insert(Godown godown) {
-		return godownMapper.insert(godown);
-	}
+    public int insert(Godown godown) {
+        return godownMapper.insert(godown);
+    }
 
-	@Override
-	public int updateStatus(Godown godown) {
-		return godownMapper.updateByPrimaryKeySelective(godown);
-	}
+    @Override
+    public int updateStatus(Godown godown) {
+        return godownMapper.updateByPrimaryKeySelective(godown);
+    }
 
-	@Override
-	public Godown selectById(int id) {
-		// TODO Auto-generated method stub
-		return godownMapper.selectByPrimaryKey(id);
-	}
+    @Override
+    public Godown selectById(int id) {
+        return godownMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int reduction(int id, double volume) {
+        Godown godown = selectById(id);
+        godown.setGoUsevolume(godown.getGoUsevolume() - volume);
+        godown.setGoRdvolume(godown.getGoRdvolume() + volume);
+        return updateByPrimaryKey(godown);
+    }
 
 }
