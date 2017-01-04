@@ -31,6 +31,9 @@
     <table id="dataGrid" data-options="fit:true,border:false"></table>
 </div>
 <div id="toolbar" style="display: none;">
+    <shiro:hasPermission name="/shipment/import">
+        <a href="${path }/shipment/importShipment.html" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-folder'">导入出货单</a>
+    </shiro:hasPermission>
     <shiro:hasPermission name="/shipment/insert">
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">手动添加</a>
     </shiro:hasPermission>
@@ -147,12 +150,12 @@
     <!-- \\\\\\\\\\ 添加操作 \\\\\\\\\\ -->
     function addFun() {
         parent.$.modalDialog({
-            title : '添加',
+            title : '添加出货单',
             width: 520,
             height: 325,
             href : '${path }/shipment/shipment/insert',
             buttons : [ {
-                text : '添加',
+                text : '确认提交',
                 handler : function() {
                     parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find('#shipmentAddForm');
@@ -195,12 +198,12 @@
             dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
         }
         parent.$.modalDialog({
-            title: '编辑',
+            title: '修改出货单',
             width: 500,
             height: 390,
             href: '${path }/shipment/getEditPage?id=' + id,
             buttons: [{
-                text: '确定',
+                text: '确认提交',
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find('#shipmentEditForm');

@@ -117,4 +117,9 @@ public class ShipmentController extends BaseController {
         }
     }
 
+    @GetMapping("importShipment.html")
+    public String importPage(){
+        return "outbound/shipmentImport";
+    }
+
 }

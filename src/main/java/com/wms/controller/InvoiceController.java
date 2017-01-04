@@ -116,4 +116,9 @@ public class InvoiceController extends BaseController {
         }
     }
 
+    @GetMapping("importInvoice.html")
+    public String importPage(){
+        return "outbound/invoiceImport";
+    }
+
 }

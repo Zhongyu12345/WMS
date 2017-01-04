@@ -130,12 +130,12 @@
     <!-- \\\\\\\\\\ 添加操作 \\\\\\\\\\ -->
     function addFun() {
         parent.$.modalDialog({
-            title: '添加',
+            title: '添加调拨单',
             width: 500,
             height: 222,
             href: '${path }/allotout/insert',
             buttons: [{
-                text: '添加',
+                text: '确认提交',
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find('#allotoutAddForm');
@@ -178,12 +178,12 @@
             dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
         }
         parent.$.modalDialog({
-            title: '编辑',
+            title: '修改调拨单',
             width: 500,
             height: 222,
             href: '${path }/allotout/getEditPage?id=' + id,
             buttons: [{
-                text: '确定',
+                text: '确认提交',
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find('#allotoutEditForm');

@@ -426,7 +426,7 @@ INSERT INTO `resource` VALUES ('67', '出货单修改', '/shipment/update', '出
 INSERT INTO `resource` VALUES ('68', '出货单删除', '/shipment/delete', '出货单删除', 'icon-del', '25', '0', '0', '1', '2016-12-26 00:00:00');
 INSERT INTO `resource` VALUES ('69', '调拨出库单添加', '/allotout/insert', '调拨出库单添加', 'icon-add', '27', '0', '0', '1', '2016-12-26 00:00:00');
 INSERT INTO `resource` VALUES ('70', '调拨出库单修改', '/allotout/update', '调拨出库单修改', 'icon-edit', '27', '0', '0', '1', '2016-12-26 00:00:00');
-INSERT INTO `resource` VALUES ('71', '调拨出库单删除', '/shipment/delete', '调拨出库单删除', 'icon-del', '27', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES ('71', '调拨出库单删除', '/allotout/delete', '调拨出库单删除', 'icon-del', '27', '0', '0', '1', '2016-12-26 00:00:00');
 INSERT INTO `resource` VALUES ('72', '越库出货单添加', '/crossDatabase/insert', '越库出货单添加', 'icon-add', '29', '0', '0', '1', '2016-12-26 00:00:00');
 INSERT INTO `resource` VALUES ('73', '越库出货单修改', '/crossDatabase/update', '越库出货单修改', 'icon-edit', '29', '0', '0', '1', '2016-12-26 00:00:00');
 INSERT INTO `resource` VALUES ('74', '越库出货单删除', '/crossDatabase/delete', '越库出货单删除', 'icon-del', '29', '0', '0', '1', '2016-12-26 00:00:00');

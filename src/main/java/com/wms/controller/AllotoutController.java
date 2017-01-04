@@ -136,11 +136,11 @@ public class AllotoutController extends BaseController {
                 for (int i = 0; i < objects.size(); i++) {
                     allotout.setAoName(objects.get(0));
                     allotout.setAoSkumodel(objects.get(1));
-                    allotout.setAoNum(Integer.valueOf(objects.get(2).trim().substring(0, objects.get(2).length() - 2)));
+                    allotout.setAoNum(Integer.valueOf(objects.get(2)));
                     allotout.setAoWhid(objects.get(3));
                     allotout.setAoSippingno(objects.get(4));
                     allotout.setAoTime(TimeUtils.updateTime("".equals(objects.get(5)) ? null : objects.get(5)));
-                    allotout.setAoVolume(Double.valueOf(objects.get(6).trim().substring(0, objects.get(6).length() - 2)));
+                    allotout.setAoVolume(Double.valueOf(objects.get(6)));
                 }
                 model.addAttribute("allotout", allotout);
             } catch (Exception e) {

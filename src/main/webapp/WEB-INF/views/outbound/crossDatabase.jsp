@@ -31,7 +31,10 @@
     <table id="dataGrid" data-options="fit:true,border:false"></table>
 </div>
 <div id="toolbar" style="display: none;">
-    <shiro:hasPermission name="/allotout/insert">
+    <shiro:hasPermission name="/crossDatabase/import">
+        <a href="${path }/crossDatabase/importCrossDatabase.html" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-folder'">导入越库单</a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="/crossDatabase/insert">
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">手动添加</a>
     </shiro:hasPermission>
 </div>
@@ -127,12 +130,12 @@
     <!-- \\\\\\\\\\ 添加操作 \\\\\\\\\\ -->
     function addFun() {
         parent.$.modalDialog({
-            title: '添加',
+            title: '添加越库单',
             width: 500,
             height: 222,
             href: '${path }/crossDatabase/crossDatabase/insert',
             buttons: [{
-                text: '添加',
+                text: '确认提交',
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find('#crossDatabaseAddForm');
@@ -175,12 +178,12 @@
             dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
         }
         parent.$.modalDialog({
-            title: '编辑',
+            title: '修改越库单',
             width: 500,
             height: 222,
             href: '${path }/crossDatabase/getEditPage?id=' + id,
             buttons: [{
-                text: '确定',
+                text: '确定提交',
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find('#crossDatabaseEditForm');

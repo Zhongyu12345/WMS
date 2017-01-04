@@ -116,4 +116,9 @@ public class CrossDatabaseController extends BaseController {
         }
     }
 
+    @GetMapping("importCrossDatabase.html")
+    public String importPage(){
+        return "outbound/crossDatabaseImport";
+    }
+
 }
