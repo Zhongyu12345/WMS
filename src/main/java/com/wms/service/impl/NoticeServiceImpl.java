@@ -1,7 +1,6 @@
 package com.wms.service.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,40 +15,42 @@ public class NoticeServiceImpl implements NoticeService {
     @Autowired
     private NoticeMapper noticeMapper;
 
+
 	@Override
-	public List<Notice> queryAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public int deleteByPrimaryKey(Integer jId) {
+		return noticeMapper.deleteByPrimaryKey(jId);
+	}
+
+	@Override
+	public int insert(Notice notice) {
+		return noticeMapper.insert(notice);
+	}
+
+	@Override
+	public int insertSelective(Notice notice) {
+		return noticeMapper.insertSelective(notice);
+	}
+
+	@Override
+	public Notice selectByPrimaryKey(Integer nid) {
+		return noticeMapper.selectByPrimaryKey(nid);
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(Notice notice) {
+		return noticeMapper.updateByPrimaryKeySelective(notice);
+	}
+
+	@Override
+	public int updateByPrimaryKey(Notice notice) {
+		return noticeMapper.updateByPrimaryKey(notice);
 	}
 
 	@Override
 	public void selectDataGrid(PageInfo pageInfo) {
-		// TODO Auto-generated method stub
-		
+		Page<Notice> page = new Page<Notice>(pageInfo.getNowpage(), pageInfo.getSize());
+		List<Notice> list = noticeMapper.selectDataGrid(page,pageInfo.getCondition());
+		pageInfo.setRows(list);
+		pageInfo.setTotal(page.getTotal());
 	}
-
-	@Override
-	public Notice selectById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int addShipment(Notice notice) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deleteById(Integer id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int updateShipment(Notice notice) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

@@ -17,6 +17,12 @@
     from notice
     where nid = #{nid,jdbcType=INTEGER}
   </select>
+  <!-- 分页查询 -->
+  <select id="selectDataGrid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from notice
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from notice
     where nid = #{nid,jdbcType=INTEGER}
@@ -80,10 +86,10 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.wms.bean.Notice">
     update notice
-    set text = #{jName,jdbcType=VARCHAR},
-      userid = #{jSkumodel,jdbcType=INTEGER},
-      ntime = #{jTime,jdbcType=TIMESTAMP},
-      nstatus = #{nstatus,jdbcType=INTEGER},
+    set text = #{text,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=INTEGER},
+      ntime = #{ntime,jdbcType=TIMESTAMP},
+      nstatus = #{nstatus,jdbcType=INTEGER}
     where nid = #{nid,jdbcType=INTEGER}
   </update>
 </mapper>

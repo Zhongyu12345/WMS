@@ -28,6 +28,4 @@ public interface IUserService extends ISuperService<User> {
     void selectDataGrid(PageInfo pageInfo);
 
     void deleteUserById(Long id);
-    
-    List<UserVo> selectByRole();
 }

@@ -20,8 +20,6 @@ public interface UserMapper extends AutoMapper<User> {
 
     List<UserVo> selectUserVoPage(Pagination page, Map<String, Object> params);
 
+    UserVo selectByloginname(String user);
     List<UserVo> selectUserBytype(Map<String, Object> params);
-    
-    List<UserVo> selectByRole();
-
 }

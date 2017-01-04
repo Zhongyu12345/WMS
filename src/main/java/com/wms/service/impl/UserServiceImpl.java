@@ -13,6 +13,7 @@ import com.wms.commons.utils.StringUtils;
 import com.wms.dao.UserMapper;
 import com.wms.dao.UserRoleMapper;
 import com.wms.service.IUserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -122,10 +123,4 @@ public class UserServiceImpl extends SuperServiceImpl<UserMapper, User> implemen
     }
 
 	@Override
-	public List<UserVo> selectByRole() {
-		List<UserVo> userList = userMapper.selectByRole();
-		return userList;
-	}
-    
-    
 }
