@@ -86,7 +86,7 @@
 				</tr>
 				<tr>
 					<td>用户类型</td>
-					<td><select id="state" name="status" value="${user.status}" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'" readonly>
+					<td><select id="status" name="status" value="${user.status}" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'" readonly>
 						<option value="0">正常</option>
 						<option value="1">停用</option>
 					</select></td>
