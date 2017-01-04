@@ -3,7 +3,6 @@ package com.wms.service.impl;
 import com.baomidou.framework.service.impl.SuperServiceImpl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.wms.bean.User;
 import com.wms.bean.UserRole;
 import com.wms.bean.vo.UserVo;
@@ -13,7 +12,6 @@ import com.wms.commons.utils.StringUtils;
 import com.wms.dao.UserMapper;
 import com.wms.dao.UserRoleMapper;
 import com.wms.service.IUserService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +65,7 @@ public class UserServiceImpl extends SuperServiceImpl<UserMapper, User> implemen
 
     @Override
     public List<UserVo> selectUserBytype(Map<String,Object> map) {
-        return userMapper.selectUserBytype(map);
+        return userMapper.selectBytype(map);
     }
 
     @Override
@@ -122,7 +120,6 @@ public class UserServiceImpl extends SuperServiceImpl<UserMapper, User> implemen
         }
     }
 
-	@Override
     @Override
     public UserVo selectByloginname(String user){
         return userMapper.selectByloginname(user);
