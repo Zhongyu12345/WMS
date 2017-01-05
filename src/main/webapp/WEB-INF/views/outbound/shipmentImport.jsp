@@ -37,7 +37,7 @@
             </tr>
             <tr>
                 <td>损坏原因</td>
-                <td colspan="3"><textarea rows="3" cols="40" name="shCause" style="width: 397px;height: 50px;"></textarea></td>
+                <td colspan="2" rowspan="2"><textarea rows="3" cols="40" name="shCause" style="width: 397px;height: 50px;"></textarea></td>
             </tr>
             <tr>
                 <td>型号</td>

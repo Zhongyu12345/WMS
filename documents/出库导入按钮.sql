@@ -1,0 +1,3 @@
+INSERT INTO `resource` VALUES (null, '出货单导入', '/shipment/import', '出货单导入', 'icon-folder', '25', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES (null, '越库出货单导入', '/crossDatabase/import', '越库出货单导入', 'icon-folder', '29', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES (null, '直接出库单导入', '/invoice/import', '直接出库单导入', 'icon-folder', '31', '0', '0', '1', '2016-12-26 00:00:00');

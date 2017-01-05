@@ -437,7 +437,7 @@ INSERT INTO `resource` VALUES ('78', '仓库添加', '/godown/add', null, 'icon-
 INSERT INTO `resource` VALUES ('79', '仓库扩建', '/godown/edit', null, 'icon-edit', '61', '0', '0', '1', '2016-12-27 14:30:13');
 INSERT INTO `resource` VALUES ('80', '仓库停用', '/godown/delete', null, 'icon-del', '61', '0', '0', '1', '2016-12-27 14:30:54');
 INSERT INTO `resource` VALUES ('81', '仓库启用', '/godown/delete', null, 'icon-ok', '61', '0', '0', '1', '2016-12-29 15:32:53');
-INSERT INTO `resource` VALUES ('95', '调拨出库单导入', '/allotout/import', '调拨出库单导入', 'icon-del', '27', '0', '0', '1', '2016-12-26 00:00:00');
+INSERT INTO `resource` VALUES ('95', '调拨出库单导入', '/allotout/import', '调拨出库单导入', 'icon-folder', '27', '0', '0', '1', '2016-12-26 00:00:00');
 INSERT INTO `resource` VALUES ('97', '库存调整删除', '/adjust/delete', null, 'icon-del', '17', '0', '0', '1', '2016-12-22 20:11:17');
 INSERT INTO `resource` VALUES ('98', '新增货品借出单', '/borrow/add', null, 'icon-add', '18', '0', '0', '1', '2016-12-22 20:12:30');
 INSERT INTO `resource` VALUES ('99', '新增货物', '/cargo/insert', null, 'icon-add', '62', '0', '0', '1', '2016-12-26 20:24:52');
