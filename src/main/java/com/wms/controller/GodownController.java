@@ -53,7 +53,8 @@ public class GodownController extends BaseController{
         return comboBox4EasyUIS;
     }
     
-    @ResponseBody
+    @SuppressWarnings("unused")
+	@ResponseBody
     @GetMapping("godownComboBoxs")
     public List<ComboBox4EasyUI> listComboBox4EasyUi(String volume) {
         List<ComboBox4EasyUI> comboBox4EasyUIS = new ArrayList<>();
@@ -64,11 +65,13 @@ public class GodownController extends BaseController{
             	comboBox4EasyUI.setId(String.valueOf(godown.getGoId()));
             	comboBox4EasyUI.setText(godown.getGoWhid()+"(可用容积:"+godown.getGoRdvolume()+")");
             	comboBox4EasyUIS.add(comboBox4EasyUI);
-            }else{
-            	comboBox4EasyUI.setId(0+"");
-            	comboBox4EasyUI.setText("没有可用仓库");
-            	comboBox4EasyUIS.add(comboBox4EasyUI);
             }
+        }
+        if(comboBox4EasyUIS == null){
+        	ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+        	comboBox4EasyUI.setId(0+"");
+        	comboBox4EasyUI.setText("没有可用仓库");
+        	comboBox4EasyUIS.add(comboBox4EasyUI);
         }
         return comboBox4EasyUIS;
     }

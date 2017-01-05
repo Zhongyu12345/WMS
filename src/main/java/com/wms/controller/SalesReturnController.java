@@ -73,7 +73,7 @@ public class SalesReturnController extends BaseController {
 					if("".equals(obj.get(6))){
 						s.setSrNum(Double.valueOf(0));
 					}else{
-						s.setSrNum(Double.valueOf(obj.get(6).trim().substring(0, obj.get(6).length()-2)));//数量
+						s.setSrNum(Double.valueOf(obj.get(6).trim()));//数量
 					}
 //					s.setSrWhid(obj.get(7));//仓库编号
 					s.setSrTime(updateTime("".equals(obj.get(7))?null:obj.get(7)));//时间

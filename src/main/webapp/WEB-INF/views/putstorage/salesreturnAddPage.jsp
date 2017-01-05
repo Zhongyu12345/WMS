@@ -50,10 +50,7 @@
 				"time":srTime
 			}, function(data) {
 				if (data.result) {
-					alert("true");
-					$.messager.alert("提示", data.msg, "info", function() {
-						alert("sssss");
-					});
+					$.messager.alert('提示','添加失败');
 				} else {
 					$('#salesreturnForm input').val('');
 					$('#srCause').textbox('setValue','');

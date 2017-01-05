@@ -56,7 +56,7 @@
 			var rCrossflag = $("#rCrossflag").combobox("getValue");
 			var rDirectflag = $("#rDirectflag").combobox("getValue");
 			var rPhone = $("#rPhone").val();
-			var rAdminid = $("#rAdminid").val();
+			var rAdminid = $("#adminname").val();
 			var rSkumodel = $("#rSkumodel").val();
 			var rTime = $("#rTime").val();
 			var rNumber = $("#rNumber").val();
@@ -87,14 +87,12 @@
 				"rCrossflag":rCrossflag,
 				"rDirectflag":rDirectflag,
 				"rPhone":rPhone,
-				"rAdminid":rAdminid,
+				"adminname":rAdminid,
 				"rSkumodel":rSkumodel,
 				"srTime":rTime
 			}, function(data) {
 					if (data.result) {
-						$.messager.alert("提示", data.result.msg, "info", function() {
-							alert("ok1");
-						});
+						 $.messager.alert('提示','添加失败');
 					} else {
 						$('#godownEntryForm input').val('');
 						$('#receivingForm input').val('');
@@ -117,7 +115,6 @@
 				     	        }
 				     	    }
 				     	});
-				         
 				         $.messager.alert('提示','添加成功');
 					}
 				});
@@ -237,9 +234,9 @@
 	                	 <th>供应商:</th>
 	                    <td><input type="text"  id="rSupplierid"  name="rSupplierid" value="${godown.gSupplierid }"  placeholder="请输入供应商" class="easyui-validatebox" data-options="required:true,novalidate:true"/></td>
 	                	<th>管理员:</th>
-	                    <td><input type="text"  id="rAdminid" value='<shiro:principal></shiro:principal>'  name="rAdminid" placeholder="请输入管理员编号" class="easyui-validatebox" data-options="required:true,novalidate:true" readonly="readonly" /></td>
+	                    <td><input type="text"  id="adminname" value='<shiro:principal></shiro:principal>'  name="adminname" placeholder="请输入管理员编号" class="easyui-validatebox" data-options="required:true,novalidate:true" readonly="readonly" /></td>
 	                    <th>入库时间:</th>
-	                    <td><input id="rTime" name="rTime" validtype="date" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss '})" data-options="required:true,novalidate:true"   readonly="readonly" /></td>
+	                    <td><input id="rTime" name="rTime" validtype="date" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" data-options="required:true,novalidate:true"   readonly="readonly" /></td>
 	                    
 	                </tr>
 	            </table>

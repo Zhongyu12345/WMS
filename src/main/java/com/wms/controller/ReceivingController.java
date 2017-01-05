@@ -191,8 +191,13 @@ public class ReceivingController extends BaseController {
 	@PostMapping("/delete")
 	@ResponseBody
 	public Object delete(Integer id){
-		int a = receivingService.deleteByPrimaryKey(id);
-		if(a>0){
+		Receiving rece = receivingService.selectByPrimaryKey(id);
+		Godown go = godownService.selectByPrimaryKey(Integer.valueOf(rece.getrWhid()));
+		go.setGoRdvolume(go.getGoRdvolume()+rece.getrNum());//可用容积
+		go.setGoUsevolume(go.getGoUsevolume()-rece.getrNum());//已用容积
+		int b = godownService.updateByPrimaryKey(go);
+    	int a = receivingService.deleteByPrimaryKey(id);
+		if(a>0 && b>0){
 			return renderSuccess("删除成功");
 		}
 		return renderError("删除失败");

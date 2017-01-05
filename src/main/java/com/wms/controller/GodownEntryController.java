@@ -23,11 +23,14 @@ import com.wms.bean.Cargo;
 import com.wms.bean.Godown;
 import com.wms.bean.GodownEntry;
 import com.wms.bean.Receiving;
+import com.wms.bean.User;
+import com.wms.bean.vo.UserVo;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.ReadXls;
 import com.wms.service.CargoService;
 import com.wms.service.GodownEntryService;
 import com.wms.service.GodownService;
+import com.wms.service.IUserService;
 import com.wms.service.ReceivingService;
 /**
  * 
@@ -48,6 +51,9 @@ public class GodownEntryController extends BaseController {
 	
 	@Autowired
 	private CargoService cargoService;
+	
+    @Autowired
+    private IUserService userService;
 
 	
 	@RequestMapping("/receiving")
@@ -66,20 +72,21 @@ public class GodownEntryController extends BaseController {
 			List<List<String>> list = ReadXls.readxls(url.getFile());
 			GodownEntry g = new GodownEntry();
 			List<String> obj = list.get(2);
-				for(int j=0;j<14;j++){
+				for(int j=0;j<obj.size();j++){
 					g.setgName(obj.get(0));//货物名称
 					g.setgStorerid(obj.get(1));//货主
-					g.setgPhone(Integer.valueOf(obj.get(2).trim().substring(0, obj.get(2).length()-2)).toString());//号码
+					g.setgPhone(obj.get(2));//号码
 					g.setgSippingno(obj.get(3));//客户托单号
-					g.setgWhid(Integer.valueOf(obj.get(4).trim().length()-2).toString());//仓库编码
+					g.setgSkumodel(obj.get(4));//货物型号
+//					g.setgWhid(Integer.valueOf(obj.get(4).trim().length()-2).toString());//仓库编码
 					g.setgSupplierid(obj.get(5));//供应商
 					if("".equals(obj.get(6))){
 						g.setgNumber(0);
 					}else{
-						g.setgNumber(Integer.valueOf(obj.get(6).trim().substring(0, obj.get(6).length()-2)));//数量
+						g.setgNumber(Integer.valueOf(obj.get(6).trim()));//数量
 					}
-					g.setgHeavy(Double.valueOf(obj.get(7).trim().substring(0, obj.get(7).length()-2)));//重量
-					g.setgNum(Double.valueOf(obj.get(8).trim().substring(0, obj.get(8).length()-2)));//体积
+					g.setgHeavy(Double.valueOf(obj.get(7).trim()));//重量
+					g.setgNum(Double.valueOf(obj.get(8).trim()));//体积
 					if("越库".equals(obj.get(9).trim())){
 						g.setgCrossflag(0+"");
 					}else{
@@ -91,8 +98,7 @@ public class GodownEntryController extends BaseController {
 						g.setgDirectflag(1+"");
 					}
 					g.setgTime(updateTime("".equals(obj.get(11))?null:obj.get(11)));//时间
-					g.setgAdminid(Integer.valueOf(obj.get(12).trim().substring(0, obj.get(12).length()-2)));//管理员编号
-					g.setgSkumodel(obj.get(13));//货物型号
+//					g.setgAdminid(Integer.valueOf(obj.get(12).trim()));//管理员编号
 				}
 				System.out.println(g.toString());
 				model.addAttribute("godown", g);
@@ -108,6 +114,12 @@ public class GodownEntryController extends BaseController {
 	public Object save(GodownEntry godownEntry,Receiving receiving,String sgTime, String srTime){
 		godownEntry.setgTime(updateTime(sgTime));
 		receiving.setrTime(updateTime(srTime));
+		UserVo u = new UserVo();
+		u.setLoginName(receiving.getAdminname());
+		List<User> users = userService.selectByLoginName(u);
+		for(User user : users){
+			receiving.setrAdminid(user.getId().intValue());
+		}
 		int a = godownEntryService.insert(godownEntry);
 		int b = receivingService.insert(receiving);
 		Cargo g = new Cargo();
