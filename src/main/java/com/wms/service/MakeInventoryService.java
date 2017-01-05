@@ -1,5 +1,7 @@
 package com.wms.service;
 
+import java.util.List;
+
 import com.wms.bean.MakeInventory;
 import com.wms.commons.utils.PageInfo;
 
@@ -21,5 +23,5 @@ public interface MakeInventoryService {
 
     int updateByPrimaryKey(MakeInventory record);
     
-    MakeInventory selectByOrder(String order);
+    List<MakeInventory> selectByOrder(String order);
 }

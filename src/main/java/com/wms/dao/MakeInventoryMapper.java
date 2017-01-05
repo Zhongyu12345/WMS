@@ -22,5 +22,5 @@ public interface MakeInventoryMapper {
 
     int updateByPrimaryKey(MakeInventory record);
     
-    MakeInventory selectByOrder(String order);
+    List<MakeInventory> selectByOrder(String order);
 }

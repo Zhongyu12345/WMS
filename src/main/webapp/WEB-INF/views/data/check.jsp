@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,41 +12,49 @@
 
 <script type="text/javascript">
 	$(function () {
-	    var chart = $('#container').highcharts({
-	        data: {
-	            table: 'datatable'
-	        },
-	        chart: {
-	            type: 'column'
-	        },
-	        title: {
-	            text: '盘点差异统计表'
-	        },
-	        credits: { 
-	        	enabled: false //不显示LOGO 
-	        },
-	        yAxis: {
-	            allowDecimals: false,
-	            title: {
-	                text: '数量'
-	            }
-	        },
-	        tooltip: {
-	            formatter: function () {
-	                return '<b>' + this.series.name + '</b><br/>' +
-	                    this.point.y + ' ' + this.point.name.toLowerCase();
-	            }
-	        }
-	    });
+	    
 	});
 
     function searchFun() {
-        window.location.reload();
+    	var order = document.getElementById("order").value;
+    	$.ajax({
+    		mothod : 'post',
+    		url :'${path}/check/selectc?checknum='+order,
+    		success :function(data) {
+    			var chart = $('#container').highcharts({
+    		        data: {
+    		            table: 'datatable'
+    		        }, 
+    		        chart: {
+    		            type: 'column'
+    		        },
+    		        title: {
+    		            text: '盘点差异统计表'
+    		        },
+    		        credits: { 
+    		        	enabled: false //不显示LOGO 
+    		        },
+    		        yAxis: {
+    		            allowDecimals: false,
+    		            title: {
+    		                text: '数量'
+    		            }
+    		        },
+    		        tooltip: {
+    		            formatter: function () {
+    		                return '<b>' + this.series.name + '</b><br/>' +
+    		                    this.point.y + ' ' + this.point.name.toLowerCase();
+    		            }
+    		        }
+    		    });
+    		}
+    	});
     }
     function cleanFun() {
         $('#searchForm input').val('');
         window.location.reload();
     }
+   
 </script>		
 </head>
 <body>
@@ -59,7 +68,7 @@
                 <tr>
                     <th>盘点单号:</th>
                     <td>
-                    <input type="text" name="checknum" placeholder="请输入单号"/>
+                    <input type="text" id="order" name="checknum" placeholder="请输入单号"/>
                     <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
                     </td>
                 </tr>
@@ -78,21 +87,23 @@
 	        </tr>
 	    </thead>
 	    <tbody>
+	   <c:forEach items="${makeInventory}" var="m">
 	        <tr>
-	            <th>Apples</th>
-	            <td>3</td>
-	            <td>4</td>
-	            <td>1</td>
+	            <th>${m.miName }</th>
+	            <td>${m.miNum }</td>
+	            <td>${m.miActual }</td>
+	            <td>2</td>
 	        </tr>
-	        <tr>
+	    </c:forEach>
+	        <!-- <tr>
 	            <th>Pears</th>
-	            <td>2</td>
-	            <td>0</td>
-	            <td>2</td>
+	            <td>2.0</td>
+	            <td>1.0</td>
+	            <td>20</td>
 	        </tr>
 	        <tr>
 	            <th>Plums</th>
-	            <td>5</td>
+	            <td>500</td>
 	            <td>11</td>
 	            <td>6</td>
 	        </tr>
@@ -107,7 +118,7 @@
 	            <td>2</td>
 	            <td>4</td>
 	            <td>2</td>
-	        </tr>
+	        </tr> -->
 	    </tbody>
 	</table>
 </body>

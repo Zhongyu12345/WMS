@@ -59,7 +59,7 @@ public class MakeInventoryServiceImpl implements MakeInventoryService {
     }
 
 	@Override
-	public MakeInventory selectByOrder(String order) {
+	public List<MakeInventory> selectByOrder(String order) {
 		return makeInventoryMapper.selectByOrder(order);
 	}
 }
