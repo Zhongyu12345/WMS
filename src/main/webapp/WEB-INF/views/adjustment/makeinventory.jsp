@@ -10,8 +10,6 @@
     <script type="text/javascript">
 
         var dataGrid;
-        var organizationTree;
-
         $(function() {
             dataGrid = $('#dataGrid').datagrid({
                 url : '${path }/make/select',
@@ -97,11 +95,13 @@
             var row =$('#dataGrid').datagrid('getSelected');
             var miActual = row.miActual;
             var miNum = row.miNum;
+            var name = $("#name").val();
             parent.$.messager.confirm('询问', '您是否要更新当前数据？', function(){
                 $.post('${path }/make/edit', {
                     id : id,
                     miActual : miActual,
-                    miNum : miNum
+                    miNum : miNum,
+                    name : name
                 }, function(result) {
                     if (result.success) {
                         parent.$.messager.alert('提示', result.msg, 'info');
@@ -154,6 +154,7 @@
                 <td>
                     <input name="createState" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />至<input  name="createEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />
                     <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
+                    <input type="hidden" value="<shiro:principal></shiro:principal>" id="name">
                 </td>
             </tr>
         </table>

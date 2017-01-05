@@ -56,6 +56,8 @@ public class makeinventoryController extends BaseController{
     @Autowired
     private CargoService cargoService;
 
+    private Cargo cargo = new Cargo();
+
     @GetMapping("/selectpage")
     private String selectpage(){
         return "adjustment/makeinventory";
@@ -125,7 +127,7 @@ public class makeinventoryController extends BaseController{
      */
     @RequestMapping("/edit")
     @ResponseBody
-    public Object edit(Integer id,Double miActual,Double miNum){
+    public Object edit(Integer id,Double miActual,Double miNum,String name){
         MakeInventory makeInventory = new MakeInventory();
         makeInventory.setMiId(id);
         makeInventory.setMiActual(miActual);
@@ -136,11 +138,15 @@ public class makeinventoryController extends BaseController{
             adjust.setjName(makeInventory1.getMiName());
             adjust.setjSkumodel(makeInventory1.getMiSkumodel());
             adjust.setjNum((miActual-miNum));
-            adjust.setjNames("");
+            adjust.setjNames(name);
             adjust.setjCause("更新库存");
             adjust.setjTime(new Date());
             adjust.setjWhid(makeInventory1.getMiWhid());
-            adjust.setjVolum(100.0);
+            if(miActual<miNum){
+                adjust.setjVolum((cargo.getcTotalvolume()/cargo.getcNum())*((miActual-miNum)*-1));
+            }else{
+                adjust.setjVolum((cargo.getcTotalvolume()/cargo.getcNum())*(miActual-miNum));
+            }
             adjustService.insert(adjust);
             return renderSuccess("修改成功");
         }
@@ -178,7 +184,7 @@ public class makeinventoryController extends BaseController{
             MakeInventory makeInventory = new MakeInventory();
             List<String> l = list.get(0);
             for(int i=0;i<l.size();i++){
-                Cargo cargo = cargoService.selectByPrimaryKey(Integer.valueOf(l.get(0)));
+                cargo = cargoService.selectByPrimaryKey(Integer.valueOf(l.get(0)));
                 makeInventory.setMiName(l.get(1).toString());
                 makeInventory.setMiWhid(l.get(2).toString());
                 makeInventory.setMiSkumodel(l.get(3).toString());
