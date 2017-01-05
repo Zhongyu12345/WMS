@@ -50,10 +50,10 @@
   <insert id="insert" parameterType="com.wms.bean.MakeInventory">
     insert into make_inventory (mi_id, mi_name, mi_SKUmodel, 
       mi_num,mi_Actual, mi_names, mi_whid,
-      mi_time)
+      mi_time,mi_order)
     values (#{miId,jdbcType=INTEGER}, #{miName,jdbcType=VARCHAR}, #{miSkumodel,jdbcType=VARCHAR}, 
       #{miNum,jdbcType=DOUBLE}, #{miActual,jdbcType=DOUBLE}, #{miNames,jdbcType=VARCHAR}, #{miWhid,jdbcType=INTEGER},
-      #{miTime,jdbcType=TIMESTAMP})
+      #{miTime,jdbcType=TIMESTAMP},#{miOrder,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wms.bean.MakeInventory">
     insert into make_inventory
@@ -82,6 +82,9 @@
       <if test="miActual != null">
         mi_Actual,
       </if>
+      <if test="mi_order != null">
+        mi_order
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="miId != null">
@@ -108,6 +111,9 @@
       <if test="miActual != null">
         #{miActual,jdbcType=DOUBLE},
       </if>
+      <if test="miOrder != null">
+        #{miOrder,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.MakeInventory">
@@ -131,17 +137,15 @@
       <if test="miTime != null">
         mi_time = #{miTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="miOrder != null">
+        mi_order = #{miOrder,jdbcType=VARCHAR},
+      </if>
     </set>
     where mi_id = #{miId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.wms.bean.MakeInventory">
     update make_inventory
-    set mi_name = #{miName,jdbcType=VARCHAR},
-      mi_SKUmodel = #{miSkumodel,jdbcType=VARCHAR},
-      mi_num = #{miNum,jdbcType=DOUBLE},
-      mi_names = #{miNames,jdbcType=VARCHAR},
-      mi_whid = #{miWhid,jdbcType=INTEGER},
-      mi_time = #{miTime,jdbcType=TIMESTAMP}
+    set  mi_num = #{miActual,jdbcType=DOUBLE}
     where mi_id = #{miId,jdbcType=INTEGER}
   </update>
 </mapper>

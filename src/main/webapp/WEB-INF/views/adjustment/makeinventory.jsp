@@ -38,7 +38,7 @@
                     sortable : true
                 },{
                     width : '100',
-                    title : '盘点数量',
+                    title : '货物数量',
                     field : 'miNum',
                     sortable : true
                 },{
@@ -62,54 +62,53 @@
                     field : 'miTime',
                     sortable : true
                 },{
-                    field : 'action',
-                    title : '操作',
-                    width : 130,
                     formatter : function(value, row, index) {
                         var str = '';
-                        <shiro:hasPermission name="/user/edit">
-                        str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.miId);
-                        </shiro:hasPermission>
-                        <shiro:hasPermission name="/user/delete">
-                        str += '&nbsp;&nbsp;';
-                        str += $.formatString('<a style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.miId);
-                        </shiro:hasPermission>
+                        if(row.miNum != row.miActual){
+                            <shiro:hasPermission name="/make/edit">
+                            str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >更新库存</a>', row.miId);
+                            </shiro:hasPermission>
+                        }else {
+                            <shiro:hasPermission name="/make/delete">
+                            str += '&nbsp;&nbsp;';
+                            str += $.formatString('<a style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.miId);
+                            </shiro:hasPermission>
+                        }
                         return str;
-                    }
+                    },
+                    field : 'action',
+                    title : '操作',
+                    width : 130
                 }] ],
+                rowStyler: function(value, row, index){
+                    if (row.miNum != row.miActual){
+                        return 'color:red;';
+                    }
+                },
                 onLoadSuccess:function(data){
-                    $('.user-easyui-linkbutton-edit').linkbutton({text:'编辑',plain:true,iconCls:'icon-edit'});
+                    $('.user-easyui-linkbutton-edit').linkbutton({text:'更新库存',plain:true,iconCls:'icon-edit'});
                     $('.user-easyui-linkbutton-del').linkbutton({text:'删除',plain:true,iconCls:'icon-del'});
                 },
                 toolbar : '#toolbar'
             });
         });
 
-
-        function addFun() {
-
-        }
-
         function editFun(id) {
-            if (id == undefined) {
-                var rows = dataGrid.datagrid('getSelections');
-                id = rows[0].id;
-            } else {
-                dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
-            }
-            parent.$.modalDialog({
-                title : '编辑',
-                width : 500,
-                height : 300,
-                href : '${path }/cargo/cargoeditpage?id=' + id,
-                buttons : [ {
-                    text : '确定',
-                    handler : function() {
-                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find('#CargoEditForm');
-                        f.submit();
+            var row =$('#dataGrid').datagrid('getSelected');
+            var miActual = row.miActual;
+            var miNum = row.miNum;
+            parent.$.messager.confirm('询问', '您是否要更新当前数据？', function(){
+                $.post('${path }/make/edit', {
+                    id : id,
+                    miActual : miActual,
+                    miNum : miNum
+                }, function(result) {
+                    if (result.success) {
+                        parent.$.messager.alert('提示', result.msg, 'info');
+                        dataGrid.datagrid('reload');
                     }
-                } ]
+                    progressClose();
+                }, 'JSON');
             });
         }
 
@@ -160,14 +159,14 @@
         </table>
     </form>
 </div>
-<div data-options="region:'center',border:true,title:'货物表'" >
+<div data-options="region:'center',border:true,title:'盘点表'" >
     <table id="dataGrid" data-options="fit:true,border:false"></table>
 </div>
-<div id="toolbar" style="display: none;">
+<div id="toolbar" style="display: none;height:20px;padding:10px;">
     <shiro:hasPermission name="/cargo/insert">
-        <form action="ReadExcle" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" />
-            <input type="submit" value="确定" />
+        <form action="${path }/make/ReadExcle" method="post" enctype="multipart/form-data">
+            <input class="easyui-filebox" style="width:250px;" id="file" name="file"  data-options="prompt:'请选择盘点计划单...'" />
+            <input class="easyui-linkbutton" style="width:100px;height:24px;" type="submit" value="导入计划单" />
         </form>
     </shiro:hasPermission>
 </div>

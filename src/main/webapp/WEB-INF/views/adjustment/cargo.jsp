@@ -110,10 +110,9 @@
                        data.push(rows[i].cId);
                        data.push(rows[i].cName);
                        data.push(rows[i].cWhid);
-                       data.push(rows[i].cNum);
-                       data.push("");
-                       data.push("");
                        data.push(rows[i].cSkumodel);
+                       data.push("");
+                       data.push("");
                    }
                }
                window.location.href = '${path }/make/ToDiskExcel?data='+data;
@@ -191,13 +190,14 @@
             </tr>
         </table>
     </form>
+
 </div>
 <div data-options="region:'center',border:true,title:'货物表'" >
     <table id="dataGrid" data-options="fit:true,border:false"></table>
 </div>
-<div id="toolbar" style="display: none;">
+<div id="toolbar" style="display: none;padding:5px;">
     <shiro:hasPermission name="/cargo/insert">
-        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">打印盘点货物单</a>
+        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-folder'">打印盘点货物单</a>
     </shiro:hasPermission>
 </div>
 </body>

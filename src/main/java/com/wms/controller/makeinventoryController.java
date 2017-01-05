@@ -16,8 +16,11 @@ import java.util.stream.Stream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wms.commons.utils.ReadXls;
-import com.wms.commons.utils.TimeUtils;
+import com.wms.bean.Adjust;
+import com.wms.bean.Cargo;
+import com.wms.commons.utils.*;
+import com.wms.service.AdjustService;
+import com.wms.service.CargoService;
 import jxl.Workbook;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
@@ -25,14 +28,13 @@ import org.apache.commons.fileupload.util.Streams;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.wms.bean.MakeInventory;
 import com.wms.commons.base.BaseController;
-import com.wms.commons.utils.ExcelToDisk;
-import com.wms.commons.utils.PageInfo;
 import com.wms.service.MakeInventoryService;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,6 +49,12 @@ public class makeinventoryController extends BaseController{
 
     @Autowired
     private MakeInventoryService makeInventoryService;
+
+    @Autowired
+    private AdjustService adjustService;
+
+    @Autowired
+    private CargoService cargoService;
 
     @GetMapping("/selectpage")
     private String selectpage(){
@@ -109,6 +117,36 @@ public class makeinventoryController extends BaseController{
         return pageInfo;
     }
 
+    /**
+     *
+     * @param id
+     * @param miActual
+     * @return
+     */
+    @RequestMapping("/edit")
+    @ResponseBody
+    public Object edit(Integer id,Double miActual,Double miNum){
+        MakeInventory makeInventory = new MakeInventory();
+        makeInventory.setMiId(id);
+        makeInventory.setMiActual(miActual);
+        int result = makeInventoryService.updateByPrimaryKey(makeInventory);
+        if(result > 0){
+            MakeInventory makeInventory1 = makeInventoryService.selectByPrimaryKey(id);
+            Adjust adjust = new Adjust();
+            adjust.setjName(makeInventory1.getMiName());
+            adjust.setjSkumodel(makeInventory1.getMiSkumodel());
+            adjust.setjNum((miActual-miNum));
+            adjust.setjNames("");
+            adjust.setjCause("更新库存");
+            adjust.setjTime(new Date());
+            adjust.setjWhid(makeInventory1.getMiWhid());
+            adjust.setjVolum(100.0);
+            adjustService.insert(adjust);
+            return renderSuccess("修改成功");
+        }
+        return renderError("修改失败");
+    }
+
 
     /**
      *导出excel表
@@ -119,7 +157,7 @@ public class makeinventoryController extends BaseController{
     @ResponseBody
     public void ToDiskExcel(@RequestParam("data") Object data[], HttpServletResponse resp){
         ExcelToDisk<MakeInventory> ex = new ExcelToDisk<MakeInventory>();
-        String [] title = {"ID","货物名称","货物型号","盘点数量","实际盘点数量","盘点人","仓库编号"};
+        String [] title = {"ID","货物名称","货物型号","仓库编号","实际盘点数量","盘点人"};
         ex.Excel(data,"Makeinventory.xls",title,resp);
     }
 
@@ -140,12 +178,14 @@ public class makeinventoryController extends BaseController{
             MakeInventory makeInventory = new MakeInventory();
             List<String> l = list.get(0);
             for(int i=0;i<l.size();i++){
+                Cargo cargo = cargoService.selectByPrimaryKey(Integer.valueOf(l.get(0)));
                 makeInventory.setMiName(l.get(1).toString());
-                makeInventory.setMiSkumodel(l.get(6).toString());
-                makeInventory.setMiNum(Double.valueOf(l.get(3).toString()));
+                makeInventory.setMiWhid(l.get(2).toString());
+                makeInventory.setMiSkumodel(l.get(3).toString());
                 makeInventory.setMiActual(Double.valueOf(l.get(4).toString()));
                 makeInventory.setMiNames(l.get(5).toString());
-                makeInventory.setMiWhid(l.get(2).toString());
+                makeInventory.setMiNum(Double.valueOf(cargo.getcNum()));
+                makeInventory.setMiOrder(OrderNumberUtil.generateOrderNo());
                 makeInventory.setMiTime(new Date());
             }
             int result = makeInventoryService.insert(makeInventory);
