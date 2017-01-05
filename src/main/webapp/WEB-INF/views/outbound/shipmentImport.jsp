@@ -36,10 +36,6 @@
                 <td><input name="shDamage" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${shipment.shDamage}"></td>
             </tr>
             <tr>
-                <td>损坏原因</td>
-                <td colspan="2" rowspan="2"><textarea rows="3" cols="40" name="shCause" style="width: 397px;height: 50px;"></textarea></td>
-            </tr>
-            <tr>
                 <td>型号</td>
                 <td><input name="shSkumodel" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${shipment.shSkumodel}"></td>
                 <td>实际数量</td>
@@ -50,6 +46,10 @@
                 <td><input name="shTotalweigh" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${shipment.shTotalweigh}"></td>
                 <td>体积</td>
                 <td><input name="shTotalvolume" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${shipment.shTotalvolume}"></td>
+            </tr>
+            <tr>
+                <td>损坏原因</td>
+                <td colspan="3"><textarea rows="3" cols="40" name="shCause" style="width: 397px;height: 50px;">${shipment.shCause}</textarea></td>
             </tr>
         </table>
     </form>

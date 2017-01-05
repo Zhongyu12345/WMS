@@ -29,7 +29,8 @@
 				if (result.success) {
 					parent.$.messager.alert('提示', result.msg, 'info');
 					parent.$.modalDialog.handler.dialog('close');
-                    parent.location.reload();
+                    //parent.location.reload();
+					window.location.reload();
 				} else {
 					parent.$.messager.alert('错误', result.msg, 'error');
 				}
