@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wms.dao.TariffMapper">
+	<resultMap id="BaseResultMap" type="com.wms.bean.Tariff">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cause" jdbcType="VARCHAR" property="cause" />
+    <result column="scope" jdbcType="INTEGER" property="scope" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, cause, scope, money, unit
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tariff
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectDataGrid" resultMap="BaseResultMap">
+    	select
+    	<include refid="Base_Column_List"/>
+        from tariff
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tariff
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wms.bean.Tariff">
+    insert into tariff (id, cause, scope, 
+      money, unit)
+    values (#{id,jdbcType=INTEGER}, #{cause,jdbcType=VARCHAR}, #{scope,jdbcType=INTEGER}, 
+      #{money,jdbcType=DECIMAL}, #{unit,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wms.bean.Tariff">
+    insert into tariff
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cause != null">
+        cause,
+      </if>
+      <if test="scope != null">
+        scope,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cause != null">
+        #{cause,jdbcType=VARCHAR},
+      </if>
+      <if test="scope != null">
+        #{scope,jdbcType=INTEGER},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Tariff">
+    update tariff
+    <set>
+      <if test="cause != null">
+        cause = #{cause,jdbcType=VARCHAR},
+      </if>
+      <if test="scope != null">
+        scope = #{scope,jdbcType=INTEGER},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wms.bean.Tariff">
+    update tariff
+    set cause = #{cause,jdbcType=VARCHAR},
+      scope = #{scope,jdbcType=INTEGER},
+      money = #{money,jdbcType=DECIMAL},
+      unit = #{unit,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

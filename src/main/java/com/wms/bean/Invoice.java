@@ -36,6 +36,20 @@ public class Invoice {
 
 	@TableField(value = "in_volume")
     private Double inVolume;
+	
+	private String store;
+	
+	private String phone;
+	
+	private int damage;
+	
+	private String cause;
+	
+	private Double totalweigh;
+	/**
+	 * status 0:正在确认  1:已确认
+	 */
+	private int status;
 
     private List<Godown> godowns;
 
@@ -103,7 +117,56 @@ public class Invoice {
         this.inVolume = inVolume;
     }
 
-    public List<Godown> getGodowns() {
+    public String getStore() {
+		return store;
+	}
+
+	public void setStore(String store) {
+		this.store = store;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
+	public String getCause() {
+		return cause;
+	}
+
+	public void setCause(String cause) {
+		this.cause = cause;
+	}
+
+	public Double getTotalweigh() {
+		return totalweigh;
+	}
+
+	public void setTotalweigh(Double totalweigh) {
+		this.totalweigh = totalweigh;
+	}
+
+	
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public List<Godown> getGodowns() {
         return godowns;
     }
 

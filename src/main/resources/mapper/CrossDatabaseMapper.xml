@@ -10,6 +10,12 @@
         <result column="cd_oddnumbers" jdbcType="VARCHAR" property="cdOddnumbers"/>
         <result column="cd_time" jdbcType="TIMESTAMP" property="cdTime"/>
         <result column="cd_volume" jdbcType="DOUBLE" property="cdVolume"/>
+        <result column="store" jdbcType="VARCHAR" property="store"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="damage" jdbcType="INTEGER" property="damage"/>
+        <result column="cause" jdbcType="VARCHAR" property="cause"/>
+        <result column="totalweigh" jdbcType="DOUBLE" property="totalweigh"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
         <collection property="godowns" ofType="com.wms.bean.Godown">
             <id column="go_id" jdbcType="INTEGER" property="goId"/>
             <result column="go_whid" jdbcType="VARCHAR" property="goWhid"/>
@@ -20,7 +26,7 @@
         </collection>
     </resultMap>
     <sql id="Base_Column_List">
-      cd_id, cd_name, cd_SKUmodel, cd_num, cd_whid, cd_oddnumbers, cd_time, cd_volume
+      cd_id, cd_name, cd_SKUmodel, cd_num, cd_whid, cd_oddnumbers, cd_time, cd_volume, store, phone, damage, cause, totalweigh, status
     </sql>
     <!-- 根据ID查询 -->
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -32,7 +38,7 @@
     <!-- 分页查询 -->
     <select id="selectCrossDatabasePage" resultMap="BaseResultMap">
         select
-          cr.cd_id, cr.cd_name, cr.cd_SKUmodel, cr.cd_num, cr.cd_whid, cr.cd_oddnumbers, cr.cd_time, cr.cd_volume , g.*
+          cr.cd_id, cr.cd_name, cr.cd_SKUmodel, cr.cd_num, cr.cd_whid, cr.cd_oddnumbers, cr.cd_time, cr.cd_volume, cr.store, cr.phone, cr.damage, cr.cause, cr.totalweigh, cr.status , g.*
         from cross_database cr, godown g
         where cr.cd_whid = g.go_id
         <if test=" name != null and name != '' ">
@@ -53,10 +59,11 @@
     <insert id="insert" parameterType="com.wms.bean.CrossDatabase">
     insert into cross_database (cd_id, cd_name, cd_SKUmodel,
         cd_num, cd_whid, cd_oddnumbers,
-        cd_time, cd_volume)
+        cd_time, cd_volume, store, phone, damage, cause, totalweigh, status)
       values (#{cdId,jdbcType=INTEGER}, #{cdName,jdbcType=VARCHAR}, #{cdSkumodel,jdbcType=VARCHAR},
         #{cdNum,jdbcType=DOUBLE}, #{cdWhid,jdbcType=VARCHAR}, #{cdOddnumbers,jdbcType=VARCHAR},
-        #{cdTime,jdbcType=TIMESTAMP}, #{cdVolume,jdbcType=DOUBLE})
+        #{cdTime,jdbcType=TIMESTAMP}, #{cdVolume,jdbcType=DOUBLE},#{store,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+        #{damage,jdbcType=INTEGER},#{cause,jdbcType=VARCHAR},#{totalweigh,jdbcType=DOUBLE},#{status,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.wms.bean.CrossDatabase">
         insert into cross_database
@@ -85,6 +92,24 @@
             <if test="cdVolume != null">
                 cd_volume,
             </if>
+            <if test="store != null">
+                store,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="damage != null">
+                damage,
+            </if>
+            <if test="cause != null">
+                cause,
+            </if>
+            <if test="totalweigh != null">
+                totalweigh,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="cdId != null">
@@ -110,6 +135,24 @@
             </if>
             <if test="cdVolume != null">
                 #{cdVolume,jdbcType=DOUBLE},
+            </if>
+            <if test="store != null">
+                #{store,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="damage != null">
+                #{damage,jdbcType=INTEGER},
+            </if>
+            <if test="cause != null">
+                #{cause,jdbcType=VARCHAR},
+            </if>
+            <if test="totalweigh != null">
+                #{totalweigh,jdbcType=DOUBLE},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -137,6 +180,24 @@
             <if test="cdVolume != null">
                 cd_volume = #{cdVolume,jdbcType=DOUBLE},
             </if>
+            <if test="store != null">
+                store = #{store,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="damage != null">
+                damage = #{damage,jdbcType=INTEGER},
+            </if>
+            <if test="cause != null">
+                cause = #{cause,jdbcType=VARCHAR},
+            </if>
+            <if test="totalweigh != null">
+                totalweigh = #{totalweigh,jdbcType=DOUBLE},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
         </set>
         where cd_id = #{cdId,jdbcType=INTEGER}
     </update>
@@ -148,7 +209,13 @@
       cd_whid = #{cdWhid,jdbcType=VARCHAR},
       cd_oddnumbers = #{cdOddnumbers,jdbcType=VARCHAR},
       cd_time = #{cdTime,jdbcType=TIMESTAMP},
-      cd_volume = #{cdVolume,jdbcType=DOUBLE}
+      cd_volume = #{cdVolume,jdbcType=DOUBLE},
+      store = #{store,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      damage = #{damage,jdbcType=INTEGER},
+      cause = #{cause,jdbcType=VARCHAR},
+      totalweigh = #{totalweigh,jdbcType=DOUBLE},
+      status = #{status,jdbcType=INTEGER}
     where cd_id = #{cdId,jdbcType=INTEGER}
   </update>
 </mapper>

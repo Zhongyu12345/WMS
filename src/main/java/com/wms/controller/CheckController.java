@@ -17,6 +17,8 @@ import com.wms.commons.base.BaseController;
 import com.wms.service.GodownEntryService;
 import com.wms.service.MakeInventoryService;
 
+import net.sf.json.JSONArray;
+
 @Controller
 @RequestMapping("/check")
 public class CheckController extends BaseController{
@@ -61,12 +63,13 @@ public class CheckController extends BaseController{
      */
     @GetMapping("selectc")
     @ResponseBody
-    public ModelAndView selectCheck(@RequestParam(value = "checknum") String checknum){
+    public List<MakeInventory> selectCheck(@RequestParam(value = "checknum") String checknum){
     	System.out.println("-----------------------   "+checknum+"     ");
     	List<MakeInventory> makeInventory = makeinventoryService.selectByOrder(checknum);
     	ModelAndView model = new ModelAndView();
     	model.addObject("makeInventory", makeInventory);
     	model.setViewName("data/check");
-    	return model;
+    	/*JSONArray json = JSONArray.fromObject(makeInventory);*/
+    	return makeInventory;
     }
 }
