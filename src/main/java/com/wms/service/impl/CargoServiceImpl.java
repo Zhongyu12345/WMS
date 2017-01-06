@@ -54,4 +54,9 @@ public class CargoServiceImpl implements CargoService {
 	public int updateByPrimaryKey(Cargo record) {
 		return cargoMapper.updateByPrimaryKey(record);
 	}
+
+	@Override
+	public int update(Cargo cargo) {
+		return cargoMapper.update(cargo);
+	}
 }

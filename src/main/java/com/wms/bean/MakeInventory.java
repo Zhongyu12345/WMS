@@ -39,6 +39,9 @@ public class MakeInventory {
 	@TableField(value = "mi_time")
     private Date miTime;
 
+	@TableField(value = "mi_status")
+    private String  miStatus;
+
 	private Date createState;
 
 	private Date createEnd;
@@ -142,4 +145,12 @@ public class MakeInventory {
 	public void setMiOrder(String miOrder) {
 		this.miOrder = miOrder;
 	}
+
+    public String getMiStatus() {
+        return miStatus;
+    }
+
+    public void setMiStatus(String miStatus) {
+        this.miStatus = miStatus;
+    }
 }

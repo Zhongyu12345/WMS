@@ -11,9 +11,10 @@
     <result column="mi_order" jdbcType="VARCHAR" property="miOrder"/>
     <result column="mi_whid" jdbcType="INTEGER" property="miWhid" />
     <result column="mi_time" jdbcType="TIMESTAMP" property="miTime" />
+    <result column="mi_status" jdbcType="VARCHAR" property="miStatus"/>
   </resultMap>
   <sql id="Base_Column_List">
-    mi_id, mi_name, mi_SKUmodel, mi_num,mi_Actual, mi_names, mi_whid, mi_time, mi_order
+    mi_id, mi_name, mi_SKUmodel, mi_num,mi_Actual, mi_names, mi_whid, mi_time, mi_order,mi_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -50,10 +51,10 @@
   <insert id="insert" parameterType="com.wms.bean.MakeInventory">
     insert into make_inventory (mi_id, mi_name, mi_SKUmodel, 
       mi_num,mi_Actual, mi_names, mi_whid,
-      mi_time,mi_order)
+      mi_time,mi_order,mi_status)
     values (#{miId,jdbcType=INTEGER}, #{miName,jdbcType=VARCHAR}, #{miSkumodel,jdbcType=VARCHAR}, 
       #{miNum,jdbcType=DOUBLE}, #{miActual,jdbcType=DOUBLE}, #{miNames,jdbcType=VARCHAR}, #{miWhid,jdbcType=INTEGER},
-      #{miTime,jdbcType=TIMESTAMP},#{miOrder,jdbcType=VARCHAR})
+      #{miTime,jdbcType=TIMESTAMP},#{miOrder,jdbcType=VARCHAR},#{miStatus,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wms.bean.MakeInventory">
     insert into make_inventory
@@ -145,7 +146,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.wms.bean.MakeInventory">
     update make_inventory
-    set  mi_num = #{miActual,jdbcType=DOUBLE}
+    set  mi_status = #{miStatus,jdbcType=VARCHAR}
     where mi_id = #{miId,jdbcType=INTEGER}
   </update>
 </mapper>

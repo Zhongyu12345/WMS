@@ -60,13 +60,19 @@
                     field : 'miTime',
                     sortable : true
                 },{
+                    width : '50',
+                    title : '状态',
+                    hidden : true,
+                    field : 'miStatus',
+                    sortable : true
+                },{
                     formatter : function(value, row, index) {
                         var str = '';
-                        if(row.miNum != row.miActual){
+                        if(row.miStatus == "0"){
                             <shiro:hasPermission name="/make/edit">
-                            str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >更新库存</a>', row.miId);
+                            str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >更新库存</a>', row.miId,index);
                             </shiro:hasPermission>
-                        }else {
+                        }else{
                             <shiro:hasPermission name="/make/delete">
                             str += '&nbsp;&nbsp;';
                             str += $.formatString('<a style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.miId);
@@ -79,8 +85,10 @@
                     width : 130
                 }] ],
                 rowStyler: function(value, row, index){
-                    if (row.miNum != row.miActual){
+                    if (row.miStatus == "0"){
                         return 'color:red;';
+                    }else{
+                        return 'color:blue;';
                     }
                 },
                 onLoadSuccess:function(data){

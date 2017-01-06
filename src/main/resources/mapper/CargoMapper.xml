@@ -173,4 +173,12 @@
       c_SKUmodel = #{cSkumodel,jdbcType=VARCHAR}
     where c_id = #{cId,jdbcType=INTEGER}
   </update>
+  <update id="update" parameterType="com.wms.bean.Cargo">
+    update cargo
+    set
+    c_num = #{cNum,jdbcType=INTEGER},
+    c_totalweight = #{cTotalweight,jdbcType=DOUBLE},
+    c_totalvolume = #{cTotalvolume,jdbcType=DOUBLE}
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
 </mapper>

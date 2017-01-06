@@ -56,8 +56,6 @@ public class makeinventoryController extends BaseController{
     @Autowired
     private CargoService cargoService;
 
-    private Cargo cargo = new Cargo();
-
     @GetMapping("/selectpage")
     private String selectpage(){
         return "adjustment/makeinventory";
@@ -129,30 +127,36 @@ public class makeinventoryController extends BaseController{
     @ResponseBody
     public Object edit(Integer id,Double miActual,Double miNum,String name){
         MakeInventory makeInventory = new MakeInventory();
+        MakeInventory makeInventory1 = makeInventoryService.selectByPrimaryKey(id);
         makeInventory.setMiId(id);
-        makeInventory.setMiActual(miActual);
-        int result = makeInventoryService.updateByPrimaryKey(makeInventory);
-        if(result > 0){
-            MakeInventory makeInventory1 = makeInventoryService.selectByPrimaryKey(id);
-            Adjust adjust = new Adjust();
-            adjust.setjName(makeInventory1.getMiName());
-            adjust.setjSkumodel(makeInventory1.getMiSkumodel());
-            adjust.setjNum((miActual-miNum));
-            adjust.setjNames(name);
-            adjust.setjCause("更新库存");
-            adjust.setjTime(new Date());
-            adjust.setjWhid(makeInventory1.getMiWhid());
-            if(miActual<miNum){
-                adjust.setjVolum((cargo.getcTotalvolume()/cargo.getcNum())*((miActual-miNum)*-1));
-            }else{
-                adjust.setjVolum((cargo.getcTotalvolume()/cargo.getcNum())*(miActual-miNum));
-            }
-            adjustService.insert(adjust);
-            return renderSuccess("修改成功");
+        makeInventory.setMiStatus("1");
+        makeInventoryService.updateByPrimaryKey(makeInventory);
+        Adjust adjust = new Adjust();
+        adjust.setjName(makeInventory1.getMiName());
+        adjust.setjSkumodel(makeInventory1.getMiSkumodel());
+        adjust.setjNum((miActual-miNum));
+        adjust.setjNames(name);
+        adjust.setjCause("更新库存");
+        adjust.setjTime(new Date());
+        adjust.setjWhid(makeInventory1.getMiWhid());
+        Cargo cargo = cargoService.selectByPrimaryKey(makeInventory1.getMiId());
+        if(miActual<miNum){
+            adjust.setjVolum((cargo.getcTotalvolume()/cargo.getcNum())*((miActual-miNum)*-1));
+            cargo.setcTotalvolume(cargo.getcTotalvolume()-(cargo.getcTotalvolume()/cargo.getcNum())*((miActual-miNum)*-1));
+            cargo.setcTotalweight(cargo.getcTotalweight()-((cargo.getcTotalweight()/cargo.getcNum())*((miActual-miNum)*-1)));
+        }else{
+            adjust.setjVolum((cargo.getcTotalvolume()/cargo.getcNum())*(miActual-miNum));
+            cargo.setcTotalvolume(cargo.getcTotalvolume()-(cargo.getcTotalvolume()/cargo.getcNum())*(miActual-miNum));
+            cargo.setcTotalweight(cargo.getcTotalweight()-((cargo.getcTotalweight()/cargo.getcNum())*(miActual-miNum)));
         }
-        return renderError("修改失败");
+        int result = adjustService.insert(adjust);
+        if(result >0){
+            cargo.setcNum(miActual.intValue());
+            cargo.setcTotalvolume(cargo.getcTotalvolume());
+            cargoService.update(cargo);
+        }
+        return renderSuccess("修改成功");
     }
-
 
     /**
      *导出excel表
@@ -164,7 +168,8 @@ public class makeinventoryController extends BaseController{
     public void ToDiskExcel(@RequestParam("data") Object data[], HttpServletResponse resp){
         ExcelToDisk<MakeInventory> ex = new ExcelToDisk<MakeInventory>();
         String [] title = {"ID","货物名称","货物型号","仓库编号","实际盘点数量","盘点人"};
-        ex.Excel(data,"Makeinventory.xls",title,resp);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+        ex.Excel(data,"盘点计划"+sdf.format(new Date())+".xls",title,resp);
     }
 
     /**
@@ -184,7 +189,8 @@ public class makeinventoryController extends BaseController{
             MakeInventory makeInventory = new MakeInventory();
             List<String> l = list.get(0);
             for(int i=0;i<l.size();i++){
-                cargo = cargoService.selectByPrimaryKey(Integer.valueOf(l.get(0)));
+                Cargo cargo = cargoService.selectByPrimaryKey(Integer.valueOf(l.get(0)));
+                makeInventory.setMiId(Integer.valueOf(l.get(0)));
                 makeInventory.setMiName(l.get(1).toString());
                 makeInventory.setMiWhid(l.get(2).toString());
                 makeInventory.setMiSkumodel(l.get(3).toString());
@@ -193,8 +199,9 @@ public class makeinventoryController extends BaseController{
                 makeInventory.setMiNum(Double.valueOf(cargo.getcNum()));
                 makeInventory.setMiOrder(OrderNumberUtil.generateOrderNo());
                 makeInventory.setMiTime(new Date());
+                makeInventory.setMiStatus("0");
             }
-            int result = makeInventoryService.insert(makeInventory);
+            makeInventoryService.insert(makeInventory);
         } catch (Exception e) {
             e.printStackTrace();
         }
