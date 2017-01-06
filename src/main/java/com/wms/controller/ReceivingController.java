@@ -244,7 +244,7 @@ public class ReceivingController extends BaseController {
 	   Godown g =  godownService.selectByPrimaryKey(Integer.valueOf(rece.getrWhid()));
 	   SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 	  Object obj[] = {rece.getrName(),rece.getrSkumodel(),rece.getrStorerid(),rece.getrPhone(),rece.getrNumber(),rece.getrHeavy(),rece.getrNum(),g.getGoWhid(),dan,f.format(new Date())};
-      e.Excel(obj,"越库出货单"+sdf.format(new Date())+".xls",title,resp);
+      e.Excel(obj,"越库出货单"+sdf.format(new Date())+".xlsx",title,resp);
     }
 
 }
