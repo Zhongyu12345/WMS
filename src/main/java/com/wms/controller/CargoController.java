@@ -1,13 +1,18 @@
 package com.wms.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.wms.bean.MakeInventory;
+import com.wms.commons.utils.ExcelToDisk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wms.bean.Cargo;
@@ -15,6 +20,8 @@ import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.OrderNumberUtil;
 import com.wms.commons.utils.PageInfo;
 import com.wms.service.CargoService;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * cargo货物表
@@ -124,6 +131,22 @@ public class CargoController extends BaseController{
             return renderSuccess("修改成功");
         }
         return renderError("修改失败");
+    }
+
+    /**
+     * @param resp
+     */
+    @RequestMapping("/ToDiskExcelAll")
+    @ResponseBody
+    public void ToDiskExcelAll(@RequestParam("cName") String cName,@RequestParam("cStorerid") String cStorerid,@RequestParam("cSupplierid") String cSupplierid,@RequestParam("cWhid") String cWhid,@RequestParam("cNum") String cNum,@RequestParam("cTotalweight") String cTotalweight
+            ,@RequestParam("cTotalvolume") String cTotalvolume,@RequestParam("cSkumodel") String cSkumodel, HttpServletResponse resp){
+        ExcelToDisk<Cargo> ex = new ExcelToDisk<Cargo>();
+        String [] title = {"货物名称","货主","供应商","出库单号","仓库编码","数量","总货毛重","总货体积","入库时间","货物型号"};
+        String cShippingno = OrderNumberUtil.generateOrderNo();
+        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Object data [] = {cName,cStorerid,cSupplierid,cShippingno,cWhid,cNum,cTotalweight,cTotalvolume,s.format(new Date()),cSkumodel};
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+        ex.Excel(data,"货物出库单"+sdf.format(new Date())+".xls",title,resp);
     }
 
 }

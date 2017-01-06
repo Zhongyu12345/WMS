@@ -8,10 +8,23 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>新增调拨单</title>
     <script type="text/javascript">
-
         var dataGrid;
 
         $(function() {
+            $("#selectCombobox").combobox({
+                url:"${path}/godown/godownComboBox",
+                method: 'get',
+                valueField: 'id',
+                editable:false,
+                textField: 'text',
+                panelHeight: 'auto',
+                onLoadSuccess: function () {
+                    var data = $('#selectCombobox').combobox('getData');
+                    if (data.length > 0) {
+                        $("#selectCombobox").combobox('select', data[0].id);
+                    }
+                }
+            });
             dataGrid = $('#dataGrid').datagrid({
                 url : '${path }/cargo/select',
                 fit : true,
@@ -132,7 +145,7 @@
 </div>
 <div id="toolbar" style="display: none;padding:5px;">
     <shiro:hasPermission name="/allo/insert">
-        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-folder'">打印调拨单</a>
+        <input name="rWhid" id="selectCombobox" class="easyui-combobox" style="width: 150px;" data-options="required:true,novalidate:true" /><a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-folder'">打印调拨单</a>
     </shiro:hasPermission>
 </div>
 </body>

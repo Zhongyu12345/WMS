@@ -121,6 +121,26 @@
            }
         }
 
+        function addAllo() {
+            var rows = $("#dataGrid").datagrid('getSelected');
+            if(rows != null && rows != ""){
+                var cName = rows.cName;
+                var cStorerid = rows.cStorerid;
+                var cSupplierid = rows.cSupplierid;
+                var cWhid = rows.cWhid;
+                var cNum = rows.cNum;
+                var cTotalweight = rows.cTotalweight;
+                var cTotalvolume = rows.cTotalvolume;
+                var cSkumodel = rows.cSkumodel;
+                window.location.href = '${path }/cargo/ToDiskExcelAll?cName='
+                    +cName+'&cStorerid='+cStorerid+'&cSupplierid='+cSupplierid
+                    +'&cWhid='+cWhid+'&cNum='+cNum+'&cTotalweight='+cTotalweight
+                    +'&cTotalvolume='+cTotalvolume+'&cSkumodel='+cSkumodel;
+            }else{
+                parent.$.messager.alert('提示',"请选择您要导出的数据", 'info');
+            }
+        }
+
         function editFun(id) {
             if (id == undefined) {
                 var rows = dataGrid.datagrid('getSelections');
@@ -198,6 +218,7 @@
 <div id="toolbar" style="display: none;padding:5px;">
     <shiro:hasPermission name="/cargo/insert">
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-folder'">打印盘点货物单</a>
+        <a onclick="addAllo();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-folder'">打印货物出库单</a>
     </shiro:hasPermission>
 </div>
 </body>
