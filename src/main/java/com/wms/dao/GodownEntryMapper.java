@@ -1,7 +1,11 @@
 package com.wms.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Repository;
 
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.wms.bean.GodownEntry;
 
 @Repository
@@ -19,4 +23,6 @@ public interface GodownEntryMapper {
     int updateByPrimaryKey(GodownEntry record);
     
     GodownEntry selectByNo(String No);
+    
+    List<GodownEntry> selectAll(Pagination page, Map<String, Object> params);
 }

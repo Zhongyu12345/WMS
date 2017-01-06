@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,8 @@ import com.wms.bean.Godown;
 import com.wms.bean.Receiving;
 import com.wms.bean.User;
 import com.wms.commons.base.BaseController;
+import com.wms.commons.utils.ExcelToDisk;
+import com.wms.commons.utils.OrderNumberUtil;
 import com.wms.commons.utils.PageInfo;
 import com.wms.commons.utils.StringUtils;
 import com.wms.service.GodownService;
@@ -203,6 +207,12 @@ public class ReceivingController extends BaseController {
 		return renderError("删除失败");
 	}
 	
+	@RequestMapping("/toexcel")
+	public void excel(String id,HttpServletResponse resp){
+		Receiving rece = receivingService.selectByPrimaryKey(Integer.valueOf(id));
+		excel(rece,resp);
+	}
+	
 	 /**
      * 把字符串时间转成Date类型
      *
@@ -210,7 +220,7 @@ public class ReceivingController extends BaseController {
      * @return
      */
     private Date updateTime(String time) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         try {
             date = format.parse(time);
@@ -218,6 +228,17 @@ public class ReceivingController extends BaseController {
             e.printStackTrace();
         }
         return date;
+    }
+    
+    private void excel(Receiving rece,HttpServletResponse resp){
+    	ExcelToDisk<Receiving> e = new ExcelToDisk<>();
+	  SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+	  String dan = OrderNumberUtil.generateOrderNo();//单号
+	  String title[] = {"货物名称","货物型号","货主","货主号码","客户托单号","发货数量","发货重量","发货体积","仓库","发货单号","发货时间"};
+	   Godown g =  godownService.selectByPrimaryKey(Integer.valueOf(rece.getrWhid()));
+	   SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+	  Object obj[] = {rece.getrName(),rece.getrSkumodel(),rece.getrStorerid(),rece.getrPhone(),rece.getrSippingno(),rece.getrNumber(),rece.getrHeavy(),rece.getrNum(),g.getGoWhid(),dan,f.format(new Date())};
+      e.Excel(obj,"越库出货单"+sdf.format(new Date())+".xls",title,resp);
     }
 
 }

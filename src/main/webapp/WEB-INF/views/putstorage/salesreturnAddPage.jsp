@@ -95,7 +95,7 @@
 	                	<th>号码:</th>
 	                	<td><input type="text" validtype="mobile" id="srPhone" name="srPhone" value="${salesreturn.srPhone }" placeholder="请输入手机号码" class="easyui-validatebox" data-options="required:true,novalidate:true" /></td>
 	                	<th>退货时间:</th>
-	                    <td><input placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss '})" value="<fmt:formatDate pattern="yyyy-MM-dd " value="${salesreturn.srTime}" />"    readonly="readonly" id="srTime" name="srTime" /></td>
+	                    <td><input placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" value="<fmt:formatDate pattern="yyyy-MM-dd " value="${salesreturn.srTime}" />"    readonly="readonly" id="srTime" name="srTime" /></td>
 	                    <th>退货数量:</th>
 	                    <td><input type="text" id="srNum" validtype="integer" name="srNum" value="${salesreturn.srNum }" placeholder="请输入退货数量" class="easyui-validatebox" data-options="required:true,novalidate:true" /></td>
 	                </tr>

@@ -1,6 +1,7 @@
 package com.wms.service;
 
 import com.wms.bean.GodownEntry;
+import com.wms.commons.utils.PageInfo;
 
 public interface GodownEntryService  {
 	int deleteByPrimaryKey(Integer gId);
@@ -16,4 +17,6 @@ public interface GodownEntryService  {
     int updateByPrimaryKey(GodownEntry record);
     
     GodownEntry selectByNo(String No);
+    
+    void selectAll(PageInfo pageinfo);
 }

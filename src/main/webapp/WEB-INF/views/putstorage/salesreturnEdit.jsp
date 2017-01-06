@@ -78,7 +78,7 @@
                  <tr>
                     <td>退货时间</td>
                     <td>
-                    <input name="time" style="whith:100%" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${salesreturn.srTime}" />" readonly="readonly" />
+                    <input name="time" style="whith:100%" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"  value="<fmt:formatDate pattern="yyyy-MM-dd" value="${salesreturn.srTime}" />" readonly="readonly" />
                 </tr>
                 <tr>
                  	<td>退货原因</td>

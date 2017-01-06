@@ -6,13 +6,13 @@
 <%@ include file="/commons/basejs.jsp" %>
 <meta http-equiv="X-UA-Compatible" content="edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>收货单管理</title>
+<title>计划入库单管理</title>
     <script type="text/javascript">
 
     var dataGrid;
     $(function() {
        		dataGrid = $('#dataGrid').datagrid({
-            url : '${path }/receiving/select',
+            url : '${path }/putstorage/select',
             fit : true,
             striped : true,
             rownumbers : true,
@@ -27,65 +27,53 @@
             frozenColumns : [ [ {
                 width : '80',
                 title : '货物名称',
-                field : 'rName',
+                field : 'gName',
                 sortable : true
             }, {
                 width : '80',
                 title : '货物型号',
-                field : 'rSkumodel',
+                field : 'gSkumodel',
                 sortable : true
             },  ] ],
             columns:[[{
 				    width : '80',
 				    title : '货主',
-				    field : 'rStorerid',
+				    field : 'gStorerid',
 				    sortable : true
 				},{
 				    width : '100',
 				    title : '货主号码',
-				    field : 'rPhone',
+				    field : 'gPhone',
 				    sortable : true
 				},  {
 				    width : '100',
 				    title : '供应商',
-				    field : 'rSupplierid',
+				    field : 'gSupplierid',
 				    sortable : true,
 				}, {
 				    width : '80',
 				    title : '客户托单号',
-				    field : 'rSippingno',
+				    field : 'gSippingno',
 				    sortable : true
-				},{
-				    width : '80',
-				    title : '仓库',
-				    field: 'godowns',
-	                sortable: true,
-	                formatter: function (value) {
-	                    var roles = [];
-	                    for(var i = 0; i< value.length; i++) {
-	                        roles.push(value[i].goWhid);
-	                    }
-	                    return(roles.join('\n'));
-	                }
 				}, {
 				    width : '80',
 				    title : '入库数量<a style="color:blue;">(个)</a>',
-				    field : 'rNumber',
+				    field : 'gNumber',
 				    sortable : true
 				}, {
 				    width : '80',
 				    title : '入库重量<a style="color:blue;">(/kg)</a>',
-				    field : 'rHeavy',
+				    field : 'gHeavy',
 				    sortable : true
 				}, {
 				    width : '80',
 				    title : '入库体积<a style="color:blue;">(m³)</a>',
-				    field : 'rNum',
+				    field : 'gNum',
 				    sortable : true
 				}, {
 				    width : '60',
 				    title : '是否越库',
-				    field : 'rCrossflag',
+				    field : 'gCrossflag',
 				    sortable : true,
 				    formatter : function(value, row, index) {
 				        switch (value) {
@@ -98,7 +86,7 @@
 				},  {
 				    width : '60',
 				    title : '是否整进',
-				    field : 'rDirectflag',
+				    field : 'gDirectflag',
 				    sortable : true,
 				    formatter : function(value, row, index) {
 				        switch (value) {
@@ -110,56 +98,29 @@
 				    }
 				},  {
 				    width : '120',
-				    title : '入库时间',
-				    field : 'rTime',
+				    title : '计划入库时间',
+				    field : 'gTime',
 				    sortable : true
-				},  {
-				    width : '70',
-				    title : '管理员编号',
-				    field : 'users',
-				    sortable : true,
-				    formatter: function (value) {
-	                    var roles = [];
-	                    for(var i = 0; i< value.length; i++) {
-	                        roles.push(value[i].loginName);
-	                    }
-	                    return(roles.join('\n'));
-	                }
-				},    {
+				},   {
 	                field : 'action',
 	                title : '操作',
-	                width : 230,
+	                width : 130,
 	                formatter : function(value, row, index) {
 	                    var str = '';
-	                        <shiro:hasPermission name="/receiving/update">
-	                            str += $.formatString('<a  style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.rId);
+	                        <shiro:hasPermission name="/godownEntry/delete">
+	                            str += $.formatString('<a style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.gId);
 	                        </shiro:hasPermission>
-	                        <shiro:hasPermission name="/receiving/delete">
-	                            str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-	                            str += $.formatString('<a style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.rId);
-	                        </shiro:hasPermission>
-	                        if(row.rCrossflag == '0'){
-                        	<shiro:hasPermission name="/receiving/excel">
-	                        	str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-	                            str += $.formatString('<a  style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-folder" data-options="plain:true,iconCls:\'icon-folder\'" onclick="excelFun(\'{0}\');" >生成表单</a>', row.rId);
-	                        </shiro:hasPermission>
-	                        }
 	                    return str;
 	                }
 	            }
             ]],
             onLoadSuccess:function(data){
-                $('.user-easyui-linkbutton-edit').linkbutton({text:'编辑',plain:true,iconCls:'icon-edit'});
                 $('.user-easyui-linkbutton-del').linkbutton({text:'删除',plain:true,iconCls:'icon-del'});
-                $('.user-easyui-linkbutton-folder').linkbutton({text:'生成表单',plain:true,iconCls:'icon-folder'});
             },
             toolbar : '#toolbar'
         });
     }); 
     
-    function excelFun(id){
-    	  window.location.href = '${path }/receiving/toexcel?id='+id;
-    }
    
     function deleteFun(id) {
         if (id == undefined) {//点击右键菜单才会触发这个
@@ -173,7 +134,7 @@
                 var currentUserId = '${sessionInfo.id}';/*当前登录用户的ID*/
                 if (currentUserId != id) {
                     progressLoad();
-                    $.post('${path }/receiving/delete', {
+                    $.post('${path }/putstorage/delete', {
                         id : id
                     }, function(result) {
                         if (result.success) {
@@ -189,29 +150,6 @@
                     });
                 }
             }
-        });
-    }
-    
-    function editFun(id) {
-        if (id == undefined) {
-            var rows = dataGrid.datagrid('getSelections');
-            id = rows[0].id;
-        } else {
-            dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
-        }
-        parent.$.modalDialog({
-            title : '编辑',
-            width : 540,
-            height : 350,
-            href : '${path }/receiving/editPage?id=' + id,
-            buttons : [ {
-                text : '确定',
-                handler : function() {
-                    parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                    var f = parent.$.modalDialog.handler.find('#receivingEditForm');
-                    f.submit();
-                }
-            } ]
         });
     }
     
@@ -232,9 +170,9 @@
             <table>
                 <tr>
                     <th>货物名称:</th>
-                    <td><input id="a" name="rName" placeholder="请输入货物名称"/></td>
+                    <td><input id="a" name="gName" placeholder="请输入货物名称"/></td>
                     <th>货物型号:</th>
-                    <td><input id="a" name="rSkumodel" placeholder="请输入货物型号"/></td>
+                    <td><input id="a" name="gSkumodel" placeholder="请输入货物型号"/></td>
                     <th>入库时间:</th>
                     <td>
 	                    <input id="a" name="createdateStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" />至<input id="a"  name="createdateEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" />
@@ -242,10 +180,10 @@
                 </tr>
                  <tr>
                     <th>供应商:</th>
-                    <td><input id="a" name="rSupplierid" placeholder="请输入供应商名称"/></td>
+                    <td><input id="a" name="gSupplierid" placeholder="请输入供应商名称"/></td>
                     <th>是否越库:</th>
                     <td>
-                    	<select id="b"  name="rCrossflag" class="easyui-combobox" data-options="width:80,height:24,editable:false,panelHeight:'auto'">
+                    	<select id="b"  name="gCrossflag" class="easyui-combobox" data-options="width:80,height:24,editable:false,panelHeight:'auto'">
                     		<option value=" " selected="selected" >请选择</option>
                             <option value="0">越库</option>
                             <option value="1">不越库</option>
@@ -253,7 +191,7 @@
                     </td>
                     <th>是否整进:</th>
                     <td>
-                    	<select id="c" name="rDirectflag" class="easyui-combobox" data-options="width:80,height:24,editable:false,panelHeight:'auto'">
+                    	<select id="c" name="gDirectflag" class="easyui-combobox" data-options="width:80,height:24,editable:false,panelHeight:'auto'">
                     		<option value=" " selected="selected">请选择</option>
                             <option value="0">整进</option>
                             <option value="1">不整进</option>
@@ -265,7 +203,7 @@
             </table>
         </form>
     </div>
-    <div data-options="region:'center',border:true,title:'货单列表'" >
+    <div data-options="region:'center',border:true,title:'计划单列表'" >
         <table id="dataGrid" data-options="fit:true,border:true"></table>
     </div>
     

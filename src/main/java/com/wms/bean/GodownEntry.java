@@ -59,6 +59,9 @@ public class GodownEntry {
     private double gHeavy;
 	
 	private List<Godown> godowns; 
+	
+	private Date createdateStart;
+    private Date createdateEnd;
 
     public int getgNumber() {
 		return gNumber;
@@ -194,5 +197,21 @@ public class GodownEntry {
 
 	public void setGodowns(List<Godown> godowns) {
 		this.godowns = godowns;
+	}
+
+	public Date getCreatedateStart() {
+		return createdateStart;
+	}
+
+	public void setCreatedateStart(Date createdateStart) {
+		this.createdateStart = createdateStart;
+	}
+
+	public Date getCreatedateEnd() {
+		return createdateEnd;
+	}
+
+	public void setCreatedateEnd(Date createdateEnd) {
+		this.createdateEnd = createdateEnd;
 	}
 }
