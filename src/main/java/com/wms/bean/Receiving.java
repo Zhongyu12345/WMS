@@ -34,6 +34,16 @@ public class Receiving {
 	@TableField(value = "r_whid")
     private String rWhid;
 
+	@Override
+	public String toString() {
+		return "Receiving [rId=" + rId + ", rName=" + rName + ", rStorerid=" + rStorerid + ", rPhone=" + rPhone
+				+ ", rSupplierid=" + rSupplierid + ", rSippingno=" + rSippingno + ", rWhid=" + rWhid + ", rNum=" + rNum
+				+ ", rCrossflag=" + rCrossflag + ", rDirectflag=" + rDirectflag + ", rTime=" + rTime + ", rAdminid="
+				+ rAdminid + ", rPartflag=" + rPartflag + ", rSkumodel=" + rSkumodel + ", rNumber=" + rNumber
+				+ ", rHeavy=" + rHeavy + ", godowns=" + godowns + ", users=" + users + ", adminname=" + adminname
+				+ ", createdateStart=" + createdateStart + ", createdateEnd=" + createdateEnd + "]";
+	}
+
 	@TableField(value = "r_num")
     private Double rNum;
 

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.wms.bean.Godown;
 import com.wms.bean.Receiving;
 import com.wms.bean.User;
+import com.wms.bean.vo.UserVo;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.ExcelToDisk;
 import com.wms.commons.utils.OrderNumberUtil;
@@ -97,6 +98,8 @@ public class ReceivingController extends BaseController {
 	@ResponseBody
 	public Object update(Receiving receiving, String time,String oldWhid,String oldCrossflag,String oldVolume){
 		receiving.setrTime(updateTime(time));
+		UserVo user = userService.selectByloginname(receiving.getAdminname());
+		receiving.setrAdminid(user.getId().intValue());
 		double oldv = Double.valueOf(oldVolume);
 		int a=0,b=0;
 		if(receiving.getrWhid().equals(oldWhid)){//仓库不变
