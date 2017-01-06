@@ -65,7 +65,7 @@ public class UserServiceImpl extends SuperServiceImpl<UserMapper, User> implemen
 
     @Override
     public List<UserVo> selectUserBytype(Map<String,Object> map) {
-        return userMapper.selectBytype(map);
+        return userMapper.selectUserBytype(map);
     }
 
     @Override

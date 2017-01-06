@@ -22,7 +22,7 @@ public interface UserMapper extends AutoMapper<User> {
 
     UserVo selectByloginname(String user);
 
-    List<UserVo> selectBytype(Map<String,Object> map);
+    List<UserVo> selectUserBytype(Map<String,Object> map);
 
     List<UserVo> selectByRole();
 
