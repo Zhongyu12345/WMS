@@ -88,7 +88,7 @@
 	                	<td><input type="text"  id="srStorerid"  name="srStorerid" value="${salesreturn.srStorerid }" placeholder="请输入货主姓名" class="easyui-validatebox" data-options="required:true,novalidate:true" /></td>
 	                	<th>退货体积:</th>
 	                	<td><input type="text" validtype="intOrFloat" id="srVolume"  value="${salesreturn.srVolume }" name="srVolume" placeholder="请输入退货体积" class="easyui-validatebox" data-options="required:true,novalidate:true" /></td>
-	                	<th>仓库编号:</th>
+	                	<th>仓库:</th>
                     	<td><input name="srWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,novalidate:true" /></td>
 	                </tr>
 	                <tr>

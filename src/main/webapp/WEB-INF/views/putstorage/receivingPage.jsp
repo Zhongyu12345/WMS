@@ -115,7 +115,7 @@
 				    sortable : true
 				},  {
 				    width : '70',
-				    title : '管理员编号',
+				    title : '管理员',
 				    field : 'users',
 				    sortable : true,
 				    formatter: function (value) {

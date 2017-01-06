@@ -200,7 +200,7 @@
 	                    <td><input type="text"  id="rSkumodel"  value="${godown.gSkumodel }"  name="rSkumodel" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,novalidate:true"/></td>
 	                   	<th>客户托单号:</th>
 	                    <td><input type="text"  id="rSippingno"  name="rSippingno" value="${godown.gSippingno }"  placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true,novalidate:true"/></td>
-	                    <th>入库编码:</th>
+	                    <th>仓库:</th>
 	                    <td><input name="rWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,novalidate:true" /></td>
 	                    <th>是否越库:</th>
 	                    <td>

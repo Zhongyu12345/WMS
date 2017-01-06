@@ -68,7 +68,7 @@
                     <td><input name="rSippingno" type="text" placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${user.rSippingno}"></td>
                 </tr>
                  <tr>
-                    <td>仓库编码</td>
+                    <td>仓库</td>
                     <td>
                     <input name="oldWhid" type="hidden"  value="${user.rWhid}">
                     <input name="rWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,novalidate:true" /></td>

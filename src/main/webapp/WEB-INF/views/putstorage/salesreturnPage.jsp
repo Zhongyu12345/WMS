@@ -53,7 +53,7 @@
                 sortable : true
             } ,{
                 width : '80',
-                title : '仓库编号',
+                title : '仓库',
                 field: 'godowns',
                 sortable: true,
                 formatter: function (value) {
@@ -65,12 +65,12 @@
                 }
             } , {
                 width : '80',
-                title : '退货数量',
+                title : '退货数量<a style="color:blue;">(个)</a>',
                 field : 'srNum',
                 sortable : true
             } ,  {
                 width : '80',
-                title : '退货体积',
+                title : '退货体积<a style="color:blue;">(m³)</a>',
                 field : 'srVolume',
                 sortable : true
             } ,  {

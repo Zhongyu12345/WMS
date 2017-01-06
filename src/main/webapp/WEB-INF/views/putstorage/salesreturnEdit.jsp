@@ -66,7 +66,7 @@
                     <td><input name="srNum" type="text" validtype="integer" placeholder="请输入退货数量" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${salesreturn.srNum}" /></td>
                 </tr>
                  <tr>
-                    <td>仓库编码</td>
+                    <td>仓库</td>
                     <td>
                     <input name="oldWhid" type="hidden"  value="${salesreturn.srWhid}">
                     <input name="srWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,novalidate:true" /></td>
