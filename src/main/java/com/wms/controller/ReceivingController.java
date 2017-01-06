@@ -237,10 +237,10 @@ public class ReceivingController extends BaseController {
     	ExcelToDisk<Receiving> e = new ExcelToDisk<>();
 	  SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 	  String dan = OrderNumberUtil.generateOrderNo();//单号
-	  String title[] = {"货物名称","货物型号","货主","货主号码","客户托单号","发货数量","发货重量","发货体积","仓库","发货单号","发货时间"};
+	  String title[] = {"货物名称","货物型号","货主","货主号码","发货数量","发货重量","发货体积","仓库","发货单号","发货时间"};
 	   Godown g =  godownService.selectByPrimaryKey(Integer.valueOf(rece.getrWhid()));
 	   SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-	  Object obj[] = {rece.getrName(),rece.getrSkumodel(),rece.getrStorerid(),rece.getrPhone(),rece.getrSippingno(),rece.getrNumber(),rece.getrHeavy(),rece.getrNum(),g.getGoWhid(),dan,f.format(new Date())};
+	  Object obj[] = {rece.getrName(),rece.getrSkumodel(),rece.getrStorerid(),rece.getrPhone(),rece.getrNumber(),rece.getrHeavy(),rece.getrNum(),g.getGoWhid(),dan,f.format(new Date())};
       e.Excel(obj,"越库出货单"+sdf.format(new Date())+".xls",title,resp);
     }
 
