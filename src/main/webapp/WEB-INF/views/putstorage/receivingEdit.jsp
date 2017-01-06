@@ -68,7 +68,7 @@
                     <td><input name="rSippingno" type="text" placeholder="请输入客户托单号" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${user.rSippingno}"></td>
                 </tr>
                  <tr>
-                    <td>仓库编码</td>
+                    <td>仓库</td>
                     <td>
                     <input name="oldWhid" type="hidden"  value="${user.rWhid}">
                     <input name="rWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,novalidate:true" /></td>
@@ -93,9 +93,9 @@
                  <tr>
                     <td>入库时间</td>
                     <td>
-                    <input name="time" style="whith:100%" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${user.rTime}" />" readonly="readonly" />
+                    <input name="time" style="whith:100%" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"  value="<fmt:formatDate pattern="yyyy-MM-dd" value="${user.rTime}" />" readonly="readonly" />
                     <td>管理员</td>
-                    <td><input name="rAdminid" type="text" readonly="readonly" placeholder="请输入管理员" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${user.adminname}"></td>
+                    <td><input name="adminname" type="text" readonly="readonly" placeholder="请输入管理员" class="easyui-validatebox" data-options="required:true,novalidate:true" value="${user.adminname}"></td>
                 </tr>
             </table>
         </form>

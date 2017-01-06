@@ -56,6 +56,7 @@
             url : '${path }/resource/tree',
             parentField : 'pid',
             lines : true,
+            expanded:false,
             onClick : function(node) {
                 if (node.attributes.indexOf("http") >= 0) {
                     var url = node.attributes;

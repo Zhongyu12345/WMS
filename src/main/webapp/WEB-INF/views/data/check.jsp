@@ -11,44 +11,65 @@
 <script type="text/javascript" src="${staticPath }/static/js/jquery-1.8.3.min.js"></script>
 
 <script type="text/javascript">
-	$(function () {
-	    
-	});
-
+	
+	var ochart; 
+	var options;
+	
+	
+	options ={
+	        chart: {
+	        	renderTo: 'container',
+	            type: 'column'
+	        },
+	        title: {
+	            text: '盘点差异统计表',
+	            	style: {  
+	                    margin: '10px 100px 0 0', // center it  
+	                    font: 'normal 25px Verdana, sans-serif'//设置标题字体的样式  
+	                } 
+	        },
+	        credits: { 
+	        	enabled: false //不显示LOGO 
+	        },
+	        xAxis: {
+                categories: ['账上数量','盘点数量','差异数量']
+            },
+	        yAxis: {
+	            allowDecimals: false,
+	            title: {
+	                text: '数量'
+	            }
+	        },
+	        tooltip: {
+	        	pointFormat: '{series.name}: <b>{point.y:.1f} </b>',
+                shared: false,//节点数据框共享
+                enabled: true,//每个节点显示数据框
+                formatter: function() {//格式化每个节点数据框
+                    return '<b>'+ this.series.name +'</b>数量: <b>'+ this.y;
+                }
+	        },
+	        series: []
+	    };
+	
     function searchFun() {
     	var order = document.getElementById("order").value;
+    	ochart = new Highcharts.Chart(options);
     	$.ajax({
     		mothod : 'post',
+    		dataType : 'json',
     		url :'${path}/check/selectc?checknum='+order,
     		success :function(data) {
-    			var chart = $('#container').highcharts({
-    		        data: {
-    		            table: 'datatable'
-    		        }, 
-    		        chart: {
-    		            type: 'column'
-    		        },
-    		        title: {
-    		            text: '盘点差异统计表'
-    		        },
-    		        credits: { 
-    		        	enabled: false //不显示LOGO 
-    		        },
-    		        yAxis: {
-    		            allowDecimals: false,
-    		            title: {
-    		                text: '数量'
-    		            }
-    		        },
-    		        tooltip: {
-    		            formatter: function () {
-    		                return '<b>' + this.series.name + '</b><br/>' +
-    		                    this.point.y + ' ' + this.point.name.toLowerCase();
-    		            }
-    		        }
-    		    });
+    			for(var i in data){  
+    	            var oseries ={
+    	            	name : data[i].miName,
+    	            	data : eval("[" + parseInt(data[i].miNum) + ","+parseInt(data[i].miActual)+","+
+    	            	              (parseInt(data[i].miActual)-parseInt(data[i].miNum))+"]")
+    	            };
+    	            ochart.addSeries(oseries);     
+    			}
     		}
     	});
+    	ochart.hideLoading();
     }
     function cleanFun() {
         $('#searchForm input').val('');
@@ -77,49 +98,5 @@
     </div>
 	<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 	
-	<table id="datatable">
-	    <thead>
-	        <tr>
-	            <th></th>
-	            <th>账上数量</th>
-	            <th>实际数量</th>
-	            <th>差异数</th>
-	        </tr>
-	    </thead>
-	    <tbody>
-	   <c:forEach items="${makeInventory}" var="m">
-	        <tr>
-	            <th>${m.miName }</th>
-	            <td>${m.miNum }</td>
-	            <td>${m.miActual }</td>
-	            <td>2</td>
-	        </tr>
-	    </c:forEach>
-	        <!-- <tr>
-	            <th>Pears</th>
-	            <td>2.0</td>
-	            <td>1.0</td>
-	            <td>20</td>
-	        </tr>
-	        <tr>
-	            <th>Plums</th>
-	            <td>500</td>
-	            <td>11</td>
-	            <td>6</td>
-	        </tr>
-	        <tr>
-	            <th>Bananas</th>
-	            <td>1</td>
-	            <td>1</td>
-	            <td>0</td>
-	        </tr>
-	        <tr>
-	            <th>Oranges</th>
-	            <td>2</td>
-	            <td>4</td>
-	            <td>2</td>
-	        </tr> -->
-	    </tbody>
-	</table>
 </body>
 </html>

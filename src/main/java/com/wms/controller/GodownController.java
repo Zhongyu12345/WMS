@@ -118,7 +118,7 @@ public class GodownController extends BaseController{
     		}
     	}
     	JSONArray json = JSONArray.fromObject(list);
-    	System.out.println(json);
+    	
     	return json;
     }
 
@@ -145,23 +145,22 @@ public class GodownController extends BaseController{
     @RequestMapping("delete")
     @ResponseBody
     public Object godowndelete(int id ,String status){
-    	System.out.println(status);
     	Godown godowns = new Godown();
     	godowns.setGoId(id);
     	if(status.equals("0")){
     		godowns.setGostatus(1);
     		int a = godownService.updateStatus(godowns);
         	if(a>0){
-        		return renderSuccess("修改成功");
+        		return renderSuccess("删除成功");
         	}
     	}else if(status.equals("1")){
     		godowns.setGostatus(0);
     		int a = godownService.updateStatus(godowns);
         	if(a>0){
-        		return renderSuccess("修改成功");
+        		return renderSuccess("删除成功");
         	}
     	}
-    	return renderSuccess("修改成败");
+    	return renderSuccess("删除成败");
     }
     
     @RequestMapping("edit")

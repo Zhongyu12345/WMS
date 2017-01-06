@@ -5,7 +5,9 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,7 +28,9 @@ import com.wms.bean.Receiving;
 import com.wms.bean.User;
 import com.wms.bean.vo.UserVo;
 import com.wms.commons.base.BaseController;
+import com.wms.commons.utils.PageInfo;
 import com.wms.commons.utils.ReadXls;
+import com.wms.commons.utils.StringUtils;
 import com.wms.service.CargoService;
 import com.wms.service.GodownEntryService;
 import com.wms.service.GodownService;
@@ -60,6 +64,55 @@ public class GodownEntryController extends BaseController {
 	public String ruchuPage(){
 		return "putstorage/receiving";
 	} 
+	
+	@RequestMapping("/godownEntryPage")
+	public String toPage(){
+		return "putstorage/godownEntryPage";
+	}
+	
+	
+	@PostMapping("/select")
+	@ResponseBody
+	public Object select(GodownEntry ge , Integer page, Integer rows){
+		 PageInfo pageInfo = new PageInfo(page, rows);
+		 Map<String, Object> condition = new HashMap<String, Object>();
+	        if (StringUtils.isNotBlank(ge.getgName())) {
+	        	String str = "%"+ge.getgName()+"%";
+	            condition.put("gname",str );
+	        }
+	        if(StringUtils.isNotBlank(ge.getgSkumodel())){
+	        	condition.put("gskumodel", ge.getgSkumodel());
+	        }
+	        if (ge.getCreatedateStart() != null) {
+	            condition.put("startTime", ge.getCreatedateStart());
+	        }
+	        if (ge.getCreatedateEnd() != null) {
+	            condition.put("endTime", ge.getCreatedateEnd());
+	        }
+	        if(StringUtils.isNotBlank(ge.getgSupplierid())){
+	        	condition.put("gSupplierid", ge.getgSupplierid());
+	        }
+	        if(StringUtils.isNotBlank(ge.getgCrossflag())){
+	        	condition.put("gCrossflag", ge.getgCrossflag());
+	        }
+	        if(StringUtils.isNotBlank(ge.getgDirectflag())){
+	        	condition.put("gDirectflag", ge.getgDirectflag());
+	        }
+	     pageInfo.setCondition(condition);
+	     godownEntryService.selectAll(pageInfo);
+	     return pageInfo;
+	}
+	
+	
+	@PostMapping("/delete")
+	@ResponseBody
+	public Object delete(Integer id){
+    	int a = godownEntryService.deleteByPrimaryKey(id);
+		if(a>0){
+			return renderSuccess("删除成功");
+		}
+		return renderError("删除失败");
+	}
 	
 	@RequestMapping("/readExcle")
 	public String Excle(@RequestParam("file") MultipartFile file, HttpServletRequest request,Model model){
@@ -160,15 +213,22 @@ public class GodownEntryController extends BaseController {
     }
     
     private int run(Receiving receiving){
-    	Godown g = godownService.selectByPrimaryKey(Integer.valueOf(receiving.getrWhid()));
-    	g.setGoRdvolume(g.getGoRdvolume()-receiving.getrNum());//可用容积
-    	g.setGoUsevolume(g.getGoUsevolume()+receiving.getrNum());//已用容积
-    	int a = godownService.updateByPrimaryKey(g);
-    	if(a>0){
-    		return 1;
+    	int a=0;
+    	if(receiving.getrCrossflag().equals("1")){//如果不越库
+    		Godown g = godownService.selectByPrimaryKey(Integer.valueOf(receiving.getrWhid()));
+        	g.setGoRdvolume(g.getGoRdvolume()-receiving.getrNum());//可用容积
+        	g.setGoUsevolume(g.getGoUsevolume()+receiving.getrNum());//已用容积
+        	a = godownService.updateByPrimaryKey(g);
+        	if(a>0){
+        		return 1;
+        	}else{
+        		return 0;
+        	}
     	}else{
-    		return 0;
+    		return 1;
     	}
     }
+    
+
 
 }

@@ -22,6 +22,36 @@
     g_id, g_name, g_storerid, g_phone, g_supplierid, g_sippingNO, g_whid, g_num, g_crossflag, 
     g_directflag, g_time, g_adminid, g_SKUmodel,g_number,g_heavy
   </sql>
+  
+  <select id="selectAll"  resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+    from godown_entry
+    	<where>
+           <if test=" gname != null and gname != '' ">
+               g_name like #{gname}
+           </if>
+           <if test=" gskumodel != null and gskumodel != '' ">
+               g_SKUmodel = #{gskumodel}
+           </if>
+           <if test=" gSupplierid != null and gSupplierid != '' ">
+               g_supplierid = #{gSupplierid}
+           </if>
+           <if test=" gCrossflag != null and gCrossflag != '' ">
+               g_crossflag = #{gCrossflag}
+           </if>
+           <if test=" gDirectflag != null and gDirectflag != '' ">
+               g_directflag = #{gDirectflag}
+           </if>
+           <if test=" startTime != null ">
+               <![CDATA[  g_time >= #{startTime} ]]>
+           </if>
+           <if test=" endTime != null ">
+               <![CDATA[ and g_time <= #{endTime} ]]>
+           </if>
+      </where>
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
