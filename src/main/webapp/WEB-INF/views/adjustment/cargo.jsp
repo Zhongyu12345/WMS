@@ -36,6 +36,11 @@
                     title : '货主',
                     field : 'cStorerid',
                     sortable : true
+                }, {
+                    width : '100',
+                    title : '货主号码',
+                    field : 'cPhone',
+                    sortable : true
                 },{
                     width : '100',
                     title : '供应商',
@@ -132,10 +137,11 @@
                 var cTotalweight = rows.cTotalweight;
                 var cTotalvolume = rows.cTotalvolume;
                 var cSkumodel = rows.cSkumodel;
+                var cPhone = rows.cPhone;
                 window.location.href = '${path }/cargo/ToDiskExcelAll?cName='
                     +cName+'&cStorerid='+cStorerid+'&cSupplierid='+cSupplierid
                     +'&cWhid='+cWhid+'&cNum='+cNum+'&cTotalweight='+cTotalweight
-                    +'&cTotalvolume='+cTotalvolume+'&cSkumodel='+cSkumodel;
+                    +'&cTotalvolume='+cTotalvolume+'&cSkumodel='+cSkumodel+"&cPhone="+cPhone;
             }else{
                 parent.$.messager.alert('提示',"请选择您要导出的数据", 'info');
             }

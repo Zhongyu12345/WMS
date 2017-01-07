@@ -13,10 +13,11 @@
     <result column="c_totalvolume" jdbcType="DOUBLE" property="cTotalvolume" />
     <result column="c_receivedate" jdbcType="TIMESTAMP" property="cReceivedate" />
     <result column="c_SKUmodel" jdbcType="VARCHAR" property="cSkumodel" />
+    <result column="c_phone" jdbcType="VARCHAR" property="cPhone" />
   </resultMap>
   <sql id="Base_Column_List">
     c_id, c_name, c_storerid, c_supplierid, c_shippingNO, c_whid, c_num, c_totalweight, 
-    c_totalvolume, c_receivedate, c_SKUmodel
+    c_totalvolume, c_receivedate, c_SKUmodel,c_phone
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -48,11 +49,11 @@
     insert into cargo (c_id, c_name, c_storerid, 
       c_supplierid, c_shippingNO, c_whid, 
       c_num, c_totalweight, c_totalvolume, 
-      c_receivedate, c_SKUmodel)
+      c_receivedate, c_SKUmodel,c_phone)
     values (#{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cStorerid,jdbcType=VARCHAR}, 
       #{cSupplierid,jdbcType=VARCHAR}, #{cShippingno,jdbcType=VARCHAR}, #{cWhid,jdbcType=VARCHAR}, 
       #{cNum,jdbcType=INTEGER}, #{cTotalweight,jdbcType=DOUBLE}, #{cTotalvolume,jdbcType=DOUBLE}, 
-      #{cReceivedate,jdbcType=TIMESTAMP}, #{cSkumodel,jdbcType=VARCHAR})
+      #{cReceivedate,jdbcType=TIMESTAMP}, #{cSkumodel,jdbcType=VARCHAR},#{cPhone,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wms.bean.Cargo">
     insert into cargo
@@ -90,6 +91,9 @@
       <if test="cSkumodel != null">
         c_SKUmodel,
       </if>
+      <if test="cPhone != null">
+        c_phone,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="cId != null">
@@ -125,6 +129,9 @@
       <if test="cSkumodel != null">
         #{cSkumodel,jdbcType=VARCHAR},
       </if>
+      <if test="cPhone != null">
+        #{cPhone,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.wms.bean.Cargo">
@@ -157,6 +164,9 @@
       <if test="cSkumodel != null">
         c_SKUmodel = #{cSkumodel,jdbcType=VARCHAR},
       </if>
+      <if test="cPhone != null">
+        c_phone = #{cPhone,jdbcType=VARCHAR},
+      </if>
     </set>
     where c_id = #{cId,jdbcType=INTEGER}
   </update>
@@ -170,7 +180,8 @@
       c_totalweight = #{cTotalweight,jdbcType=DOUBLE},
       c_totalvolume = #{cTotalvolume,jdbcType=DOUBLE},
       c_receivedate = #{cReceivedate,jdbcType=TIMESTAMP},
-      c_SKUmodel = #{cSkumodel,jdbcType=VARCHAR}
+      c_SKUmodel = #{cSkumodel,jdbcType=VARCHAR},
+      c_phone = #{cPhone,jdbcType=VARCHAR}
     where c_id = #{cId,jdbcType=INTEGER}
   </update>
   <update id="update" parameterType="com.wms.bean.Cargo">

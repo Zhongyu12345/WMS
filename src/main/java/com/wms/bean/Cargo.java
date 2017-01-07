@@ -51,6 +51,9 @@ public class Cargo {
 	@TableField(value = "c_SKUmodel")
     private String cSkumodel;
 
+	@TableField(value = "c_phone")
+    private String cPhone;
+
     public Integer getcId() {
         return cId;
     }
@@ -153,5 +156,13 @@ public class Cargo {
 
     public void setCreatedateEnd(Date createdateEnd) {
         this.createdateEnd = createdateEnd;
+    }
+
+    public String getcPhone() {
+        return cPhone;
+    }
+
+    public void setcPhone(String cPhone) {
+        this.cPhone = cPhone;
     }
 }

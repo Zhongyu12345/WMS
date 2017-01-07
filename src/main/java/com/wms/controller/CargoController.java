@@ -139,12 +139,12 @@ public class CargoController extends BaseController{
     @RequestMapping("/ToDiskExcelAll")
     @ResponseBody
     public void ToDiskExcelAll(@RequestParam("cName") String cName,@RequestParam("cStorerid") String cStorerid,@RequestParam("cSupplierid") String cSupplierid,@RequestParam("cWhid") String cWhid,@RequestParam("cNum") String cNum,@RequestParam("cTotalweight") String cTotalweight
-            ,@RequestParam("cTotalvolume") String cTotalvolume,@RequestParam("cSkumodel") String cSkumodel, HttpServletResponse resp){
+            ,@RequestParam("cTotalvolume") String cTotalvolume,@RequestParam("cSkumodel") String cSkumodel,@RequestParam("cPhone") String cPhone, HttpServletResponse resp){
         ExcelToDisk<Cargo> ex = new ExcelToDisk<Cargo>();
-        String [] title = {"货物名称","货主","供应商","出库单号","仓库编码","数量","总货毛重","总货体积","入库时间","货物型号"};
+        String [] title = {"货物名称","货主","货主号码","供应商","出库单号","仓库编码","数量","总货毛重","总货体积","入库时间","货物型号"};
         String cShippingno = OrderNumberUtil.generateOrderNo();
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Object data [] = {cName,cStorerid,cSupplierid,cShippingno,cWhid,cNum,cTotalweight,cTotalvolume,s.format(new Date()),cSkumodel};
+        Object data [] = {cName,cStorerid,cPhone,cSupplierid,cShippingno,cWhid,cNum,cTotalweight,cTotalvolume,s.format(new Date()),cSkumodel};
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
         ex.Excel(data,"货物出库单"+sdf.format(new Date())+".xls",title,resp);
     }
