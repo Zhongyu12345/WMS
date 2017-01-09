@@ -21,7 +21,7 @@
                 onLoadSuccess: function () {
                     var data = $('#selectCombobox').combobox('getData');
                     if (data.length > 0) {
-                        $("#selectCombobox").combobox('select', data[0].id);
+                        $("#selectCombobox").combobox('select',"请选择仓库");
                     }
                 }
             });
@@ -94,21 +94,44 @@
         });
 
 
-       function addFun() {
+       function addFun(value) {
            var rows = dataGrid.datagrid('getSelections');
            if(rows != null && rows != ""){
                var data = [];
+               var Warehouse = $("#selectCombobox").combobox("getValue");
+               var cTotalvolume;
+               var cWhid ;
                for(var i=0;i<rows.length;i++){
+                   cTotalvolume = rows[i].cTotalvolume;
+                   cWhid = rows[i].cWhid;
                    if(rows.length >0){
-                       data.push(rows[i].cId);
                        data.push(rows[i].cName);
-                       data.push(rows[i].cWhid);
                        data.push(rows[i].cSkumodel);
-                       data.push("");
-                       data.push("");
+                       data.push(rows[i].cNum);
+                       data.push(cTotalvolume);
+                       data.push(Warehouse);
+                       data.push(cWhid);
                    }
                }
-               window.location.href = '${path }/make/ToDiskExcel?data='+data;
+               if(value == 1){
+                   if(Warehouse != "请选择仓库"){
+                       $.post('${path }/allo/veri', {
+                           Warehouse : Warehouse,
+                           cTotalvolume:cTotalvolume,
+                           cWhid : cWhid
+                       }, function(result) {
+                           if (result.success) {
+                               window.location.href = '${path }/allo/ToDiskExcelout?data='+data;
+                           }else{
+                               parent.$.messager.alert('提示', result.msg, 'info');
+                           }
+                       }, 'JSON');
+                   }else{
+                       parent.$.messager.alert('提示',"请选择您要调拨的仓库", 'info');
+                   }
+               }else{
+                   window.location.href = '${path }/allo/ToDiskExcelput?data='+data;
+               }
            }else{
                parent.$.messager.alert('提示',"请选择您要导出的数据", 'info');
            }
@@ -145,7 +168,9 @@
 </div>
 <div id="toolbar" style="display: none;padding:5px;">
     <shiro:hasPermission name="/allo/insert">
-        <input name="rWhid" id="selectCombobox" class="easyui-combobox" style="width: 150px;" data-options="required:true,novalidate:true" /><a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-folder'">打印调拨单</a>
+        <input name="rWhid" id="selectCombobox" class="easyui-combobox" style="width: 150px;" data-options="required:true,novalidate:true" />
+        <a onclick="addFun(1);" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-folder'">打印调拨出库单</a>
+        <a onclick="addFun(2);" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-folder'">打印调拨入库单</a>
     </shiro:hasPermission>
 </div>
 </body>
