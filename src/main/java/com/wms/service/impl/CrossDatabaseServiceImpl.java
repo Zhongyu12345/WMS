@@ -43,12 +43,13 @@ public class CrossDatabaseServiceImpl implements CrossDatabaseService {
         return crossDatabaseMapper.selectByPrimaryKey(id);
     }
 
-    @Transactional
+    @SuppressWarnings("deprecation")
+	@Transactional
     @Override
     public int addCrossDatabase(CrossDatabase crossDatabase) {
         crossDatabase.setCdOddnumbers(OrderNumberUtil.generateOrderNo());
         //noinspection deprecation
-        godownService.reduction(Integer.parseInt(crossDatabase.getCdWhid()), crossDatabase.getCdVolume());
+        godownService.reduction(crossDatabase.getCdWhid(), crossDatabase.getCdVolume());
         return crossDatabaseMapper.insert(crossDatabase);
     }
 
@@ -74,10 +75,11 @@ public class CrossDatabaseServiceImpl implements CrossDatabaseService {
         return crossDatabaseMapper.updateByPrimaryKeySelective(crossDatabase);
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public int importCrossDatabase(CrossDatabase crossDatabase) {
         //noinspection deprecation
-        godownService.reduction(Integer.parseInt(crossDatabase.getCdWhid()), crossDatabase.getCdVolume());
+        godownService.reduction(crossDatabase.getCdWhid(), crossDatabase.getCdVolume());
         return crossDatabaseMapper.insert(crossDatabase);
     }
 

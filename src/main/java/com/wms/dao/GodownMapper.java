@@ -27,4 +27,6 @@ public interface GodownMapper {
     int updateByPrimaryKey(Godown record);
     
     List<Godown> selectDataGrid(Pagination page, Map<String, Object> params);
+    
+    Godown selectByWhid(String whid);
 }

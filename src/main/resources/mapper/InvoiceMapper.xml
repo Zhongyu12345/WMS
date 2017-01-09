@@ -40,7 +40,7 @@
         select
           ins.in_id, ins.in_name, ins.in_SKUmodel, ins.in_num, ins.in_whid, ins.in_oddnumber, ins.in_time, ins.in_volume, ins.store, ins.phone, ins.damage, ins.cause, ins.totalweigh, ins.status , g.*
         from invoice ins, godown g
-        where ins.in_whid = g.go_id
+        where ins.in_whid = g.go_whid
         <if test=" name != null and name != '' ">
             and in_name like concat('%', #{name}, '%')
         </if>

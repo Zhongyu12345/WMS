@@ -24,9 +24,9 @@
                 <td><input name="cdSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.cdSkumodel}"></td>
             </tr>
             <tr>
-                <td>调拨数量</td>
+                <td>发货数量</td>
                 <td><input name="cdNum" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.cdNum}"></td>
-                <td>仓库编号</td>
+                <td>仓库</td>
                 <td><input name="cdWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.cdWhid}"></td>
                 <!--
                 <td><input name="aoWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
@@ -35,12 +35,20 @@
             <tr>
                 <td>货物体积</td>
                 <td><input name="cdVolume" type="text" placeholder="请输入货物体积" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.cdVolume}"></td>
-                <td>调拨单号</td>
+                <td>发货单号</td>
                 <td><input name="cdOddnumbers" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.cdOddnumbers}"></td>
             </tr>
             <tr>
-                <td>调拨时间</td>
+                <td>发货时间</td>
                 <td><input name="byTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${crossDatabase.cdTime}" />"/></td>
+                <td>发货重量</td>
+                <td><input name="totalweigh" type="text" placeholder="请输入发货重量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.totalweigh}"></td>
+            </tr>
+            <tr>
+                <td>货主</td>
+                <td><input name="store" type="text" placeholder="请输入货主" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.store}"></td>
+                <td>货主号码</td>
+                <td><input name="phone" type="text" placeholder="请输入货主号码" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${crossDatabase.phone}"></td>
             </tr>
         </table>
     </form>
@@ -73,7 +81,7 @@
                 cache: false,
                 dataType: 'json',
                 success: function () {
-                    window.location.href = "/crossDatabase/crossDatabase.html";
+                    window.location.href = "${path }/crossDatabase/crossDatabase.html";
                 }
             });
         }

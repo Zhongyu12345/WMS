@@ -60,4 +60,8 @@ public class ReceivingServiceImpl implements ReceivingService {
 		return receivingMapper.selectByNo(No);
 	}
 
+	@Override
+	public Receiving selectByModel(String model){
+		return receivingMapper.selectByModel(model);
+	}
 }

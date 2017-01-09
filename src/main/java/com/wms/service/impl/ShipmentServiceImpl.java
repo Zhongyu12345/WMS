@@ -43,14 +43,15 @@ public class ShipmentServiceImpl implements ShipmentService {
         return shipmentMapper.selectByPrimaryKey(id);
     }
 
-    @Transactional
+    @SuppressWarnings("deprecation")
+	@Transactional
     @Override
     public int addShipment(Shipment shipment) {
         //后台单号生成
-        shipment.setShSippingno(OrderNumberUtil.generateOrderNo());
+        /*shipment.setShSippingno(OrderNumberUtil.generateOrderNo());*/
         //减库存操作
         //noinspection deprecation
-        godownService.reduction(Integer.parseInt(shipment.getShWhid()), shipment.getShTotalvolume());
+        godownService.reduction(shipment.getShWhid(), shipment.getShTotalvolume());
         return shipmentMapper.insert(shipment);
     }
 
@@ -76,11 +77,12 @@ public class ShipmentServiceImpl implements ShipmentService {
         return shipmentMapper.updateByPrimaryKeySelective(shipment);
     }
 
-    @Transactional
+    @SuppressWarnings("deprecation")
+	@Transactional
     @Override
     public int importShipment(Shipment shipment) {
         //noinspection deprecation
-        godownService.reduction(Integer.parseInt(shipment.getShWhid()), shipment.getShTotalvolume());
+        godownService.reduction(shipment.getShWhid(), shipment.getShTotalvolume());
         return shipmentMapper.insert(shipment);
     }
 

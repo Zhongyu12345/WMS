@@ -55,92 +55,107 @@
             sortOrder: 'asc',
             pageSize: 20,
             pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
-            columns: [[/*{
-                width: '70',
-                title: '出货单编号',
-                field: 'shId',
-                sortable: true
-            }, */{
+            frozenColumns :[[{
                 width: '80',
                 title: '货主',
                 field: 'shStoreid',
+                align:'center',
                 sortable: true
             }, {
-                width: '80',
-                title: '实际出货时间',
-                field: 'shTime',
-                sortable: true,
-                formatter: formatDatebox
-            }, {
+                width: '79',
+                title: '型号',
+                align:'center',
+                field: 'shSkumodel',
+                sortable: true
+            }]],
+            columns: [[{
                 width: '100',
                 title: '号码',
+                align:'center',
                 field: 'shPhone',
                 sortable: true
             }, {
                 width: '150',
                 title: '客户托单号',
+                align:'center',
                 field: 'shSippingno',
                 sortable: true
             }, {
                 width: '80',
                 title: '仓库',
-                field: 'godowns',
+                align:'center',
+                field: 'shWhid',
                 sortable: true,
-                formatter: function (value) {
-                    var roles = [];
-                    for(var i = 0; i< value.length; i++) {
-                        roles.push(value[i].goWhid);
-                    }
-                    return(roles.join('\n'));
-                }
             }, {
                 width: '60',
                 title: '损坏数量',
+                align:'center',
                 field: 'shDamage',
                 sortable: true
             }, {
                 width: '130',
                 title: '损坏原因',
+                align:'center',
                 field: 'shCause',
                 sortable: true
             }, {
-                width: '79',
-                title: '型号',
-                field: 'shSkumodel',
-                sortable: true
+            	width: '80',
+                title: '实际出货时间',
+                align:'center',
+                field: 'shTime',
+                sortable: true,
+                formatter: formatDatebox
             }, {
                 width: '79',
                 title: '实际出货数量',
+                align:'center',
                 field: 'shShnum',
                 sortable: true
             }, {
                 width: '79',
                 title: '发货毛重',
+                align:'center',
                 field: 'shTotalweigh',
                 sortable: true
             }, {
                 width: '79',
                 title: '发货体积',
+                align:'center',
                 field: 'shTotalvolume',
                 sortable: true
             }, {
                 field: 'action',
                 title: '操作',
-                width: 130,
+                align:'center',
+                width: '220',
                 formatter: function (value, row, index) {
                     var str = '';
                     <shiro:hasPermission name="/shipment/update">
-                    str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.shId);
+                    	if(row.status == 0){
+                   			str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >已收货</a>', row.shId);
+                   			str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
+                   			str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit2" data-options="plain:true,iconCls:\'icon-edit\'" onclick="importFun(\'{0}\');" >退货</a>', row.shId);
+                    	}else if(row.status == 1){
+                   			str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit1" data-options="plain:true,iconCls:\'icon-edit\'" onclick="moneyFun(\'{0}\');" >付款</a>', row.shId,row.shTotalweigh);
+                    	}else if(row.status == 2){
+                   			str += $.formatString('<a style="height: 24px; color: red;" href="javascript:void(0)" class="user-easyui-linkbutton-ok" data-options="plain:true,iconCls:\'icon-ok\'">已付款</a>', row.shId);
+                    	}else if(row.status == 3){
+                   			str += $.formatString('<a style="height: 24px; color: red;" href="javascript:void(0)" class="user-easyui-linkbutton-ok2" data-options="plain:true,iconCls:\'icon-ok\'">已退货</a>', row.shId);
+                    	}
                     </shiro:hasPermission>
                     <shiro:hasPermission name="/shipment/delete">
-                    str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-                    str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.shId);
+	                    str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
+	                    str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.shId);
                     </shiro:hasPermission>
                     return str;
                 }
             }]],
             onLoadSuccess: function (data) {
-                $('.user-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
+                $('.user-easyui-linkbutton-edit').linkbutton({text: '已收货', plain: true, iconCls: 'icon-edit'});
+                $('.user-easyui-linkbutton-edit1').linkbutton({text: '付款', plain: true, iconCls: 'icon-edit'});
+                $('.user-easyui-linkbutton-ok').linkbutton({text: '已付款', plain: true, iconCls: 'icon-ok'});
+                $('.user-easyui-linkbutton-edit2').linkbutton({text: '退货', plain: true, iconCls: 'icon-edit'});
+                $('.user-easyui-linkbutton-ok2').linkbutton({text: '已退货', plain: true, iconCls: 'icon-ok'});
                 $('.user-easyui-linkbutton-del').linkbutton({text: '删除', plain: true, iconCls: 'icon-del'});
             },
             toolbar: '#toolbar'
@@ -177,7 +192,8 @@
             if (b) {
                 progressLoad();
                 $.post('${path }/shipment/shipment/delete', {
-                    id: id
+                    id: id,
+                    'status': rows[0].status
                 }, function (result) {
                     if (result.success) {
                         parent.$.messager.alert('提示', result.msg, 'info');
@@ -189,24 +205,48 @@
         });
     }
 
-    <!-- \\\\\\\\\\ 编辑操作 \\\\\\\\\\ -->
-    function editFun(id) {
-        if (id == undefined) {
+    /* 已收货 */
+    function editFun(id){
+    	if (id == undefined) {//点击右键菜单才会触发这个
             var rows = dataGrid.datagrid('getSelections');
+            id = rows[0].id;
+        } else {//点击操作里面的删除图标会触发这个
+            dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
+        }
+        parent.$.messager.confirm('询问', '确定执行当前操作？', function (b) {
+            if (b) {
+                progressLoad();
+                $.post('${path }/shipment/getEditPage', {
+                    id: id,
+                }, function (result) {
+                    if (result.success) {
+                        parent.$.messager.alert('提示', result.msg, 'info');
+                        dataGrid.datagrid('reload');
+                    }
+                    progressClose();
+                }, 'JSON');
+            }
+        });
+    }
+    
+    <!-- \\\\\\\\\\ 付款操作 \\\\\\\\\\ -->
+    function moneyFun(id,shTotalweigh) {
+    	var rows= dataGrid.datagrid('getSelections');
+        if (id == undefined) {
             id = rows[0].id;
         } else {
             dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
         }
         parent.$.modalDialog({
-            title: '修改出货单',
+            title: '费用清单',
             width: 500,
             height: 390,
-            href: '${path }/shipment/getEditPage?id=' + id,
+            href: '${path }/shipment/moneyPage?id=' + id+'&shTotalweigh='+shTotalweigh,
             buttons: [{
-                text: '确认提交',
+                text: '确认支付',
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                    var f = parent.$.modalDialog.handler.find('#shipmentEditForm');
+                    var f = parent.$.modalDialog.handler.find('#shipmentMoneyForm');
                     f.submit();
                 }
             }]
@@ -223,10 +263,10 @@
         $('#searchForm input').val('');
         dataGrid.datagrid('load', {});
     }
-
+/* 
     function goWhid(value) {
         return value.goWhid;
-    }
+    } */
 </script>
 </body>
 </html>

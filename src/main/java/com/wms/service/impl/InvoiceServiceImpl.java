@@ -43,11 +43,12 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceMapper.selectByPrimaryKey(id);
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public int addInvoice(Invoice invoice) {
         invoice.setInOddnumber(OrderNumberUtil.generateOrderNo());
         //noinspection deprecation
-        godownService.reduction(Integer.parseInt(invoice.getInWhid()), invoice.getInVolume());
+        godownService.reduction(invoice.getInWhid(), invoice.getInVolume());
         return invoiceMapper.insert(invoice);
     }
 
@@ -73,11 +74,12 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceMapper.updateByPrimaryKeySelective(invoice);
     }
 
-    @Transactional
+    @SuppressWarnings("deprecation")
+	@Transactional
     @Override
     public int importInvoice(Invoice invoice) {
         //noinspection deprecation
-        godownService.reduction(Integer.parseInt(invoice.getInWhid()), invoice.getInVolume());
+        godownService.reduction(invoice.getInWhid(), invoice.getInVolume());
         return invoiceMapper.insert(invoice);
     }
 
