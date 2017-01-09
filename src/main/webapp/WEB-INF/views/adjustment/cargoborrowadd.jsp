@@ -161,6 +161,7 @@
 
     function yes() {
         var row=$("#SelectDataGrid").datagrid("getSelected");
+        //$("#cbNum").val(row.)
         $("#cbName").val(row.cName);
         $("#cbSkumodel").val(row.cSkumodel);
         $("#selectData").window("close");
@@ -186,6 +187,17 @@
         SelectUserGrid.datagrid('load', {});
     }
 
+    $.extend($.fn.validatebox.defaults.rules, {
+        cbNum: {
+            validator: function (cbNum, num) {
+                if(cbNum <= num){
+                    return true;
+                }
+            },
+            message: '您输入的数量超过了库存的最大数量'
+        }
+    });
+
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
@@ -199,7 +211,7 @@
                 </tr>
                 <tr>
                     <td>数量</td>
-                    <td><input name="cbNum" type="text" class="easyui-numberbox" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""></td>
+                    <td><input id="cbNum" name="cbNum" type="text" validType="cbNum[1000,9000]" class="easyui-numberbox" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""></td>
                     <td>借用人</td>
                     <td><input id="cbNames" name="cbNames" onclick="selectUser();"  readonly="readonly" type="text" placeholder="请选择借用人姓名" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""/></td>
                 </tr>

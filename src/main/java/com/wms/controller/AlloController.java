@@ -62,8 +62,9 @@ public class AlloController extends BaseController{
         String cNum = data[2];
         String cTotalvolume = data[3];
         String cWhid = data[5];
+        Godown godown = godownService.selectByPrimaryKey(Integer.valueOf(cWhid));
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String arr [] = {cName,cSkumodel,cNum,cTotalvolume,cWhid, OrderNumberUtil.generateOrderNo(),s.format(new Date())};
+        String arr [] = {cName,cSkumodel,cNum,cTotalvolume,godown.getGoWhid(), OrderNumberUtil.generateOrderNo(),s.format(new Date())};
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
        ex1.Excel(arr, "调拨入库单" + sdf.format(new Date()) + ".xls", title, resp);
     }
@@ -83,8 +84,9 @@ public class AlloController extends BaseController{
         String cNum = data[2];
         String cTotalvolume = data[3];
         String Warehouse = data[4];
+        Godown godown = godownService.selectByPrimaryKey(Integer.valueOf(Warehouse));
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String arr [] = {cName,cSkumodel,cNum,cTotalvolume,Warehouse, OrderNumberUtil.generateOrderNo(),s.format(new Date())};
+        String arr [] = {cName,cSkumodel,cNum,cTotalvolume,godown.getGoWhid(), OrderNumberUtil.generateOrderNo(),s.format(new Date())};
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
         ex.Excel(arr,"调拨出库单"+sdf.format(new Date())+".xls",title,resp);
     }
