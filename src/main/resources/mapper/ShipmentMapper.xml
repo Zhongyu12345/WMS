@@ -14,6 +14,7 @@
         <result column="sh_shnum" jdbcType="DOUBLE" property="shShnum"/>
         <result column="sh_totalweigh" jdbcType="DOUBLE" property="shTotalweigh"/>
         <result column="sh_totalvolume" jdbcType="DOUBLE" property="shTotalvolume"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
         <collection property="godowns" ofType="com.wms.bean.Godown">
             <id column="go_id" jdbcType="INTEGER" property="goId"/>
             <result column="go_whid" jdbcType="VARCHAR" property="goWhid"/>
@@ -25,7 +26,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         sh_id, sh_storeid, sh_time, sh_phone, sh_sippingNO, sh_whid, sh_damage, sh_cause,
-        sh_SKUmodel, sh_shnum, sh_totalweigh, sh_totalvolume
+        sh_SKUmodel, sh_shnum, sh_totalweigh, sh_totalvolume, status
     </sql>
     <!-- 查询所有不带条件 -->
     <select id="queryAll" resultMap="BaseResultMap">
@@ -42,9 +43,9 @@
     </select>
     <!-- 分页查询 -->
     <select id="selectShipmentPage" resultMap="BaseResultMap">
-        SELECT sh.sh_id, sh.sh_storeid, sh.sh_time, sh.sh_phone, sh.sh_sippingNO, sh.sh_whid, sh.sh_damage, sh.sh_cause, sh.sh_SKUmodel, sh.sh_shnum, sh.sh_totalweigh, sh.sh_totalvolume, g.*
+        SELECT sh.sh_id, sh.sh_storeid, sh.sh_time, sh.sh_phone, sh.sh_sippingNO, sh.sh_whid, sh.sh_damage, sh.sh_cause, sh.sh_SKUmodel, sh.sh_shnum, sh.sh_totalweigh, sh.sh_totalvolume, sh.status, g.*
         FROM shipment sh, godown g
-        WHERE sh.sh_whid = g.go_id
+        WHERE sh.sh_whid = g.go_whid
         <if test=" name != null and name != '' ">
             and sh_storeid like concat('%', #{name}, '%')
         </if>
@@ -64,12 +65,13 @@
         insert into shipment (sh_id, sh_storeid, sh_time,
         sh_phone, sh_sippingNO, sh_whid,
         sh_damage, sh_cause, sh_SKUmodel,
-        sh_shnum, sh_totalweigh, sh_totalvolume
+        sh_shnum, sh_totalweigh, sh_totalvolume, status
         )
         values (#{shId,jdbcType=INTEGER}, #{shStoreid,jdbcType=VARCHAR}, #{shTime,jdbcType=TIMESTAMP},
         #{shPhone,jdbcType=VARCHAR}, #{shSippingno,jdbcType=VARCHAR}, #{shWhid,jdbcType=VARCHAR},
         #{shDamage,jdbcType=INTEGER}, #{shCause,jdbcType=VARCHAR}, #{shSkumodel,jdbcType=VARCHAR},
-        #{shShnum,jdbcType=DOUBLE}, #{shTotalweigh,jdbcType=DOUBLE}, #{shTotalvolume,jdbcType=DOUBLE}
+        #{shShnum,jdbcType=DOUBLE}, #{shTotalweigh,jdbcType=DOUBLE}, #{shTotalvolume,jdbcType=DOUBLE},
+        #{status,jdbcType=INTEGER}
         )
     </insert>
     <insert id="insertSelective" parameterType="com.wms.bean.Shipment">
@@ -111,6 +113,9 @@
             <if test="shTotalvolume != null">
                 sh_totalvolume,
             </if>
+            <if test="status != null">
+                status,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="shId != null">
@@ -148,6 +153,9 @@
             </if>
             <if test="shTotalvolume != null">
                 #{shTotalvolume,jdbcType=DOUBLE},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -187,6 +195,9 @@
             <if test="shTotalvolume != null">
                 sh_totalvolume = #{shTotalvolume,jdbcType=DOUBLE},
             </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
         </set>
         where sh_id = #{shId,jdbcType=INTEGER}
     </update>
@@ -202,7 +213,8 @@
         sh_SKUmodel = #{shSkumodel,jdbcType=VARCHAR},
         sh_shnum = #{shShnum,jdbcType=DOUBLE},
         sh_totalweigh = #{shTotalweigh,jdbcType=DOUBLE},
-        sh_totalvolume = #{shTotalvolume,jdbcType=DOUBLE}
+        sh_totalvolume = #{shTotalvolume,jdbcType=DOUBLE},
+        status = #{status,jdbcType=INTEGER}
         where sh_id = #{shId,jdbcType=INTEGER}
     </update>
 </mapper>

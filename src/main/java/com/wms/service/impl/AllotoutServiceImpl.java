@@ -58,10 +58,11 @@ public class AllotoutServiceImpl implements AllotoutService {
         return allotoutMapper.updateByPrimaryKey(allotout);
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public int importAllotout(Allotout allotout) {
         //noinspection deprecation
-        godownService.reduction(Integer.parseInt(allotout.getAoWhid()), allotout.getAoVolume());
+        godownService.reduction(allotout.getAoWhid(), allotout.getAoVolume());
         return allotoutMapper.insert(allotout);
     }
 }

@@ -55,4 +55,9 @@ public class TariffServiceImpl implements TariffService{
         pageInfo.setTotal(page.getTotal());
 	}
 
+	@Override
+	public List<Tariff> selectByCause() {
+		return tariffMapper.selectByCause();
+	}
+
 }

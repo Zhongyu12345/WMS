@@ -49,6 +49,10 @@ public class Shipment {
 
     @TableField(value = "sh_totalvolume")
     private Double shTotalvolume;
+    /**
+     * status 0:已收货  1：付款  2:已付款  3:已退货
+     */
+    private int status;
 
     private List<Godown> godowns;
 
@@ -148,7 +152,15 @@ public class Shipment {
         this.shTotalvolume = shTotalvolume;
     }
 
-    public List<Godown> getGodowns() {
+    public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public List<Godown> getGodowns() {
         return godowns;
     }
 

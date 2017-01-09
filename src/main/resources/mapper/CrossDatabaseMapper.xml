@@ -40,7 +40,7 @@
         select
           cr.cd_id, cr.cd_name, cr.cd_SKUmodel, cr.cd_num, cr.cd_whid, cr.cd_oddnumbers, cr.cd_time, cr.cd_volume, cr.store, cr.phone, cr.damage, cr.cause, cr.totalweigh, cr.status , g.*
         from cross_database cr, godown g
-        where cr.cd_whid = g.go_id
+        where cr.cd_whid = g.go_whid
         <if test=" name != null and name != '' ">
             and cd_name like concat('%', #{name}, '%')
         </if>

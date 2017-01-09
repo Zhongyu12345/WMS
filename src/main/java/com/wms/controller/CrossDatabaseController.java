@@ -1,6 +1,7 @@
 package com.wms.controller;
 
 import com.wms.bean.CrossDatabase;
+import com.wms.bean.Shipment;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.bean.Search;
 import com.wms.commons.utils.PageInfo;
@@ -8,6 +9,8 @@ import com.wms.commons.utils.ReadXls;
 import com.wms.commons.utils.StringUtils;
 import com.wms.commons.utils.TimeUtils;
 import com.wms.service.CrossDatabaseService;
+import com.wms.service.ShipmentService;
+
 import org.apache.commons.fileupload.util.Streams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +38,9 @@ public class CrossDatabaseController extends BaseController {
 
     @Autowired
     private CrossDatabaseService crossDatabaseService;
+    
+    @Autowired
+    private ShipmentService shipmentService;
 
     /** 出货单管理页面 */
     @GetMapping(value = "crossDatabase.html")
@@ -112,12 +118,32 @@ public class CrossDatabaseController extends BaseController {
     @ResponseBody
     @PostMapping(value = "crossDatabase/update")
     public Object updateShipment(CrossDatabase crossDatabase, String byTime) {
-        crossDatabase.setCdTime(TimeUtils.updateTime(byTime));
-        int result = crossDatabaseService.updateCrossDatabase(crossDatabase);
-        if (result > 0) {
-            return renderSuccess("更新成功!");
+    	
+    	Shipment shipment = new Shipment();
+        shipment.setShSkumodel(crossDatabase.getCdSkumodel());
+        shipment.setShStoreid(crossDatabase.getStore());
+        shipment.setShTime(TimeUtils.updateTime(byTime));
+        shipment.setShPhone(crossDatabase.getPhone());
+        shipment.setShSippingno(crossDatabase.getCdOddnumbers());
+        shipment.setShWhid(crossDatabase.getCdWhid());
+        shipment.setShDamage(crossDatabase.getDamage());
+        shipment.setShCause(crossDatabase.getCause());
+        shipment.setShShnum(crossDatabase.getCdNum());
+        shipment.setShTotalweigh(crossDatabase.getTotalweigh());
+        shipment.setShTotalvolume(crossDatabase.getCdVolume());
+        int a = shipmentService.addShipment(shipment);
+        
+        if (a>0) {
+        	crossDatabase.setCdTime(TimeUtils.updateTime(byTime));
+            crossDatabase.setStatus(1);
+            int result = crossDatabaseService.updateCrossDatabase(crossDatabase);
+        	if(result>0){
+        		return renderSuccess("确认成功!");
+        	}else{
+        		return renderError("确认失败!");
+        	}
         } else {
-            return renderError("更新失败!");
+            return renderError("确认失败!");
         }
     }
 
@@ -136,15 +162,19 @@ public class CrossDatabaseController extends BaseController {
                 URL url = GodownEntryController.class.getResource("/" + file.getOriginalFilename());
                 List<List<String>> lists = ReadXls.readxls(url.getFile());
                 CrossDatabase crossDatabase = new CrossDatabase();
-                List<String> objects = lists.get(2);
+                List<String> objects = lists.get(0);
                 for (int i = 0; i < objects.size(); i++) {
                     crossDatabase.setCdName(objects.get(0));
                     crossDatabase.setCdSkumodel(objects.get(1));
-                    crossDatabase.setCdNum(Double.valueOf((objects.get(2))));
-                    crossDatabase.setCdWhid(objects.get(3));
-                    crossDatabase.setCdOddnumbers(objects.get(4));
-                    crossDatabase.setCdTime(TimeUtils.updateTime("".equals(objects.get(5)) ? null : objects.get(5)));
+                    crossDatabase.setStore(objects.get(2));
+                    crossDatabase.setPhone(objects.get(3));
+                    crossDatabase.setCdNum(Double.valueOf(objects.get(4)));
+                    crossDatabase.setTotalweigh(Double.valueOf(objects.get(5)));
                     crossDatabase.setCdVolume(Double.valueOf(objects.get(6)));
+                    crossDatabase.setCdWhid(objects.get(7));
+                    crossDatabase.setCdOddnumbers(objects.get(8));
+                    crossDatabase.setCdTime(TimeUtils.updateTime("".equals(objects.get(9)) ? null : objects.get(9)));
+                    crossDatabase.setStatus(0);
                 }
                 model.addAttribute("crossDatabase", crossDatabase);
             } catch (Exception e) {
@@ -158,6 +188,8 @@ public class CrossDatabaseController extends BaseController {
     @ResponseBody
     @PostMapping(value = "crossDatabase.php")
     public Object importCrossDatabase(CrossDatabase crossDatabase,String byTime){
+    	crossDatabase.setStatus(0);
+    	crossDatabase.setCause("");
         crossDatabase.setCdTime(TimeUtils.updateTime(byTime));
         int result = crossDatabaseService.importCrossDatabase(crossDatabase);
         if (result > 0) {

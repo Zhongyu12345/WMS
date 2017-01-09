@@ -55,38 +55,27 @@
             sortOrder: 'asc',
             pageSize: 20,
             pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
-            columns: [[/*{
-                width: '100',
-                title: '单号',
-                field: 'cdId',
-                sortable: true
-            },*/ {
-                width: '150',
+            frozenColumns :[[{
+                width: '80',
                 title: '货物名称',
                 field: 'cdName',
                 sortable: true
             }, {
-                width: '150',
+                width: '80',
                 title: '货物型号',
                 field: 'cdSkumodel',
                 sortable: true
-            }, {
-                width: '100',
+            }]],
+            columns: [[{
+                width: '80',
                 title: '发货数量',
                 field: 'cdNum',
                 sortable: true
             }, {
-                width: '100',
+                width: '80',
                 title: '仓库',
-                field: 'godowns',
+                field: 'cdWhid',
                 sortable: true,
-                formatter: function (value) {
-                    var roles = [];
-                    for(var i = 0; i< value.length; i++) {
-                        roles.push(value[i].goWhid);
-                    }
-                    return(roles.join('\n'));
-                }
             }, {
                 width: '150',
                 title: '发货单号',
@@ -99,28 +88,58 @@
                 sortable: true,
                 formatter: formatDatebox
             }, {
-                width: '100',
+                width: '80',
                 title: '货物体积',
                 field: 'cdVolume',
+                sortable: true
+            },{
+                width: '80',
+                title: '货主',
+                field: 'store',
+                sortable: true
+            }, {
+                width: '100',
+                title: '联系号码',
+                field: 'phone',
+                sortable: true
+            },{
+                width: '80',
+                title: '损坏数量',
+                field: 'damage',
+                sortable: true
+            }, {
+                width: '80',
+                title: '损坏原因',
+                field: 'cause',
+                sortable: true
+            }, {
+                width: '80',
+                title: '货品毛重',
+                field: 'totalweigh',
                 sortable: true
             }, {
                 field: 'action',
                 title: '操作',
-                width: 130,
+                width: 150,
                 formatter: function (value, row, index) {
                     var str = '';
                     <shiro:hasPermission name="/crossDatabase/update">
-                    str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.cdId);
+                    	if(row.status == 0){
+                    		str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-ok" data-options="plain:true,iconCls:\'icon-ok\'" onclick="editFun(\'{0}\');" >确认发货</a>', row.cdId);
+                    	}else{
+                    		str += $.formatString('<span style="height: 24px; color:red;" href="javascript:void(0)" class="user-easyui-linkbutton-oked">已发货</span>');
+                    	}
                     </shiro:hasPermission>
                     <shiro:hasPermission name="/crossDatabase/delete">
-                    str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-                    str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.cdId);
+	                    str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
+	                    str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.cdId);
                     </shiro:hasPermission>
                     return str;
                 }
             }]],
             onLoadSuccess: function (data) {
-                $('.user-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
+                $('.user-easyui-linkbutton-ok').linkbutton({text: '确认发货', plain: true, iconCls: 'icon-ok'});
+                $('.user-easyui-linkbutton-oked').linkbutton({text: '已发货', plain: true, iconCls: 'icon-ok'});
                 $('.user-easyui-linkbutton-del').linkbutton({text: '删除', plain: true, iconCls: 'icon-del'});
             },
             toolbar: '#toolbar'
@@ -178,12 +197,12 @@
             dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
         }
         parent.$.modalDialog({
-            title: '修改越库单',
+            title: '确认越库单',
             width: 500,
-            height: 222,
+            height: 350,
             href: '${path }/crossDatabase/getEditPage?id=' + id,
             buttons: [{
-                text: '确定提交',
+                text: '确定发货',
                 handler: function () {
                     parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find('#crossDatabaseEditForm');

@@ -144,4 +144,10 @@
         where go_id = #{goId,jdbcType=INTEGER}
     </update>
 
+	<select id="selectByWhid" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from godown
+        where go_whid = #{goWhid,jdbcType=VARCHAR}
+    </select>
 </mapper>

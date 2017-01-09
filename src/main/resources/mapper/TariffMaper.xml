@@ -17,6 +17,11 @@
     from tariff
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByCause" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tariff
+  </select>
   <select id="selectDataGrid" resultMap="BaseResultMap">
     	select
     	<include refid="Base_Column_List"/>

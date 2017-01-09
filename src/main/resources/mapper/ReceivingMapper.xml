@@ -77,6 +77,14 @@
     from receiving
     where r_id = #{rId,jdbcType=INTEGER}
   </select>
+  
+  <select id="selectByModel" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from receiving
+    where r_SKUmodel = #{rSkumodel,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectByNo" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

@@ -41,7 +41,7 @@
                 <tr>
                     <td>发货数量</td>
                     <td><input name="cdNum" type="text" placeholder="请输入发货数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"></td>
-                    <td>仓库编号</td>
+                    <td>仓库</td>
                     <!--
                     <td><input name="cdWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true"/></td>
                     -->

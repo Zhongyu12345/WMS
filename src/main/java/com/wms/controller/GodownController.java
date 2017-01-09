@@ -46,7 +46,7 @@ public class GodownController extends BaseController{
         List<Godown> godowns = godownService.godownComboBox();
         for (Godown godown : godowns) {
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-            comboBox4EasyUI.setId(String.valueOf(godown.getGoId()));
+            comboBox4EasyUI.setId(godown.getGoWhid());
             comboBox4EasyUI.setText(godown.getGoWhid()+"(可用容积:"+godown.getGoRdvolume()+")");
             comboBox4EasyUIS.add(comboBox4EasyUI);
         }

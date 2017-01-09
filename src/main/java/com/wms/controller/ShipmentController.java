@@ -1,14 +1,18 @@
 package com.wms.controller;
 
-import com.wms.bean.Invoice;
+import com.wms.bean.Receiving;
 import com.wms.bean.Shipment;
+import com.wms.bean.Tariff;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.bean.Search;
 import com.wms.commons.utils.PageInfo;
 import com.wms.commons.utils.ReadXls;
 import com.wms.commons.utils.StringUtils;
 import com.wms.commons.utils.TimeUtils;
+import com.wms.service.ReceivingService;
 import com.wms.service.ShipmentService;
+import com.wms.service.TariffService;
+
 import org.apache.commons.fileupload.util.Streams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +23,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +42,12 @@ public class ShipmentController extends BaseController {
 
     @Autowired
     private ShipmentService shipmentService;
+    
+    @Autowired
+    private TariffService tariffService;
+    
+    @Autowired
+    private ReceivingService receivingService;
 
     /** 出货单管理页面 */
     @GetMapping(value = "shipment.html")
@@ -102,12 +114,47 @@ public class ShipmentController extends BaseController {
         }
     }
 
-    /** 进入编辑页面 */
-    @GetMapping(value = "getEditPage")
-    public String editPage(Model model, @RequestParam(value = "id") Integer id) {
-        Shipment shipment = shipmentService.selectById(id);
+    /** 确认已收货操作 */
+    @ResponseBody
+    @RequestMapping(value = "getEditPage")
+    public Object editPage(Integer id) {
+    	Shipment shipment = new Shipment();
+    	shipment.setShId(id);
+    	shipment.setStatus(1);
+    	int result = shipmentService.updateShipment(shipment);
+    	if (result > 0) {
+            return renderSuccess("修改成功!");
+        } else {
+            return renderError("修改失败!");
+        }
+        /*Shipment shipment = shipmentService.selectById(id);
         model.addAttribute("shipment", shipment);
-        return "outbound/shipmentEdit";
+        return "outbound/shipmentEdit";*/
+    }
+    
+    /**付款*/
+    @ResponseBody
+    @RequestMapping(value="moneyPage")
+    public String moneypage(Model model, @RequestParam(value = "id") Integer id, @RequestParam(value = "shTotalweigh") Double shTotalweigh){
+    	Shipment shipment = shipmentService.selectById(id);
+    	Receiving receiving = receivingService.selectByModel(shipment.getShSkumodel());
+    	long betweenTime = (shipment.getShTime().getTime()-receiving.getrTime().getTime())/1000/60/60/24;//储存天数
+    	List<Tariff> aTariffs = tariffService.selectByCause();
+    	BigDecimal cMoney = new BigDecimal(0);
+    	BigDecimal gMoney = new BigDecimal(0);
+    	for(Tariff t: aTariffs){
+    		if(t.getCause().equals("储存费") && t.getScope()>=shTotalweigh){
+    			cMoney = t.getMoney();
+    		}
+    		if(t.getCause().equals("管理费") && t.getScope()>=shTotalweigh){
+    			gMoney = t.getMoney();
+    		}
+    	}
+    	System.out.println(cMoney.multiply(new BigDecimal(betweenTime))+"------------"+gMoney.multiply(new BigDecimal(betweenTime)));
+    	model.addAttribute("cMoney", cMoney.multiply(new BigDecimal(betweenTime)));
+    	model.addAttribute("gMoney", gMoney.multiply(new BigDecimal(betweenTime)));
+    	model.addAttribute("shipments", shipment);
+    	return "outbound/shipmentMoney";
     }
 
     /** 更新操作 */

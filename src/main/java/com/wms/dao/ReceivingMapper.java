@@ -27,4 +27,6 @@ public interface ReceivingMapper {
     int updateByPrimaryKey(Receiving record);
     
     Receiving selectByNo(String No);
+    
+    Receiving selectByModel(String model);
 }

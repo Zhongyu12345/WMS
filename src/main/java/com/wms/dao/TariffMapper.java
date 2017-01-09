@@ -20,4 +20,6 @@ public interface TariffMapper {
     int updateByPrimaryKey(Tariff tariff);
     
     List<Tariff> selectDataGrid(Pagination page, Map<String, Object> params);
+    
+    List<Tariff> selectByCause ();
 }
