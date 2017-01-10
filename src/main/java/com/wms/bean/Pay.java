@@ -1,5 +1,6 @@
 package com.wms.bean;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotations.IdType;
@@ -21,11 +22,11 @@ public class Pay {
 
     private String pabout;
 
-    private Long pcount;
+    private BigDecimal pcount;
 
-    private Long ppay;
+    private BigDecimal ppay;
 
-    private Long punexpense;
+    private BigDecimal punexpense;
 
     public Integer getPid() {
         return pid;
@@ -59,27 +60,27 @@ public class Pay {
         this.pabout = pabout == null ? null : pabout.trim();
     }
 
-    public Long getPcount() {
+    public BigDecimal getPcount() {
         return pcount;
     }
 
-    public void setPcount(Long pcount) {
+    public void setPcount(BigDecimal pcount) {
         this.pcount = pcount;
     }
 
-    public Long getPpay() {
+    public BigDecimal getPpay() {
         return ppay;
     }
 
-    public void setPpay(Long ppay) {
+    public void setPpay(BigDecimal ppay) {
         this.ppay = ppay;
     }
 
-    public Long getPunexpense() {
+    public BigDecimal getPunexpense() {
         return punexpense;
     }
 
-    public void setPunexpense(Long punexpense) {
+    public void setPunexpense(BigDecimal punexpense) {
         this.punexpense = punexpense;
     }
 }

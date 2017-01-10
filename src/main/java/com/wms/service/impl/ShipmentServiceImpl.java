@@ -2,7 +2,6 @@ package com.wms.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.wms.bean.Shipment;
-import com.wms.commons.utils.OrderNumberUtil;
 import com.wms.commons.utils.PageInfo;
 import com.wms.dao.ShipmentMapper;
 import com.wms.service.GodownService;

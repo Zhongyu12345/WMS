@@ -1,5 +1,6 @@
 package com.wms.controller;
 
+import com.wms.bean.Income;
 import com.wms.bean.Receiving;
 import com.wms.bean.Shipment;
 import com.wms.bean.Tariff;
@@ -9,6 +10,7 @@ import com.wms.commons.utils.PageInfo;
 import com.wms.commons.utils.ReadXls;
 import com.wms.commons.utils.StringUtils;
 import com.wms.commons.utils.TimeUtils;
+import com.wms.service.IncomeService;
 import com.wms.service.ReceivingService;
 import com.wms.service.ShipmentService;
 import com.wms.service.TariffService;
@@ -26,9 +28,11 @@ import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.SimpleFormatter;
 
 /**
  * 实际出库表
@@ -48,6 +52,9 @@ public class ShipmentController extends BaseController {
     
     @Autowired
     private ReceivingService receivingService;
+    
+    @Autowired
+    private IncomeService incomeService;
 
     /** 出货单管理页面 */
     @GetMapping(value = "shipment.html")
@@ -133,28 +140,75 @@ public class ShipmentController extends BaseController {
     }
     
     /**付款*/
-    @ResponseBody
     @RequestMapping(value="moneyPage")
     public String moneypage(Model model, @RequestParam(value = "id") Integer id, @RequestParam(value = "shTotalweigh") Double shTotalweigh){
+    	Double shTotalweighs = shTotalweigh;
     	Shipment shipment = shipmentService.selectById(id);
     	Receiving receiving = receivingService.selectByModel(shipment.getShSkumodel());
+    	Double VshTotalweigh = shipment.getShTotalvolume()*1000000/5000;
     	long betweenTime = (shipment.getShTime().getTime()-receiving.getrTime().getTime())/1000/60/60/24;//储存天数
     	List<Tariff> aTariffs = tariffService.selectByCause();
     	BigDecimal cMoney = new BigDecimal(0);
     	BigDecimal gMoney = new BigDecimal(0);
+    	if(VshTotalweigh>shTotalweigh){
+    		shTotalweighs=VshTotalweigh;
+    	}
     	for(Tariff t: aTariffs){
-    		if(t.getCause().equals("储存费") && t.getScope()>=shTotalweigh){
+    		if(t.getCause().equals("储存费") && t.getScope()>=shTotalweighs){
     			cMoney = t.getMoney();
+    			model.addAttribute("ct", t);
+    			break;
+    		}else if(shTotalweighs>5000){
+    			cMoney = new BigDecimal(8.8);
+    			t.setMoney(cMoney);
+    			model.addAttribute("ct", t);
     		}
-    		if(t.getCause().equals("管理费") && t.getScope()>=shTotalweigh){
+    		
+    	}
+    	for(Tariff t: aTariffs){
+    		if(t.getCause().equals("管理费") && t.getScope()>=shTotalweighs){
     			gMoney = t.getMoney();
+    			model.addAttribute("glt", t);
+    			break;
+    		}else if(shTotalweighs>5000){
+    			gMoney = new BigDecimal(20);
+    			t.setMoney(gMoney);
+    			model.addAttribute("glt", t);
     		}
     	}
-    	System.out.println(cMoney.multiply(new BigDecimal(betweenTime))+"------------"+gMoney.multiply(new BigDecimal(betweenTime)));
     	model.addAttribute("cMoney", cMoney.multiply(new BigDecimal(betweenTime)));
     	model.addAttribute("gMoney", gMoney.multiply(new BigDecimal(betweenTime)));
     	model.addAttribute("shipments", shipment);
     	return "outbound/shipmentMoney";
+    }
+    
+    /**确认付款*/
+    @ResponseBody
+    @RequestMapping("Money")
+    public Object moneyed(@RequestParam("shId") int id, @RequestParam("moneyed") BigDecimal pay, @RequestParam("countMoney") BigDecimal count){
+    	Shipment shipments = shipmentService.selectById(id);
+    	Income income = new Income();
+    	if(count.compareTo(pay) == 1){
+    		return renderError("请一次性付清账单");
+    	}else if(count.compareTo(pay) == -1){
+    		return renderError("付款金额大于应付金额");
+    	}
+    	income.setIcause("储存费，管理费收入");
+    	income.setIabout(shipments.getShSippingno());
+    	income.setItime(TimeUtils.updateTime(new SimpleDateFormat().format(new Date())));
+    	income.setIcount(count);
+    	income.setIincome(pay);
+    	income.setIbalance(count.subtract(pay));
+    	
+    	int result = incomeService.insert(income);
+    	if(result >0){
+    		shipments.setStatus(2);
+    		int a = shipmentService.updateShipment(shipments);
+    		if(a>0){
+    			return renderSuccess("付款成功");
+    		}
+    	}
+    	return renderError("付款失败");
     }
 
     /** 更新操作 */

@@ -67,8 +67,8 @@
                 align:'center',
                 field: 'shSkumodel',
                 sortable: true
-            }]],
-            columns: [[{
+            },  ] ],
+            columns:[[{
                 width: '100',
                 title: '号码',
                 align:'center',
@@ -136,7 +136,7 @@
                    			str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
                    			str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit2" data-options="plain:true,iconCls:\'icon-edit\'" onclick="importFun(\'{0}\');" >退货</a>', row.shId);
                     	}else if(row.status == 1){
-                   			str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit1" data-options="plain:true,iconCls:\'icon-edit\'" onclick="moneyFun(\'{0}\');" >付款</a>', row.shId,row.shTotalweigh);
+                   			str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit1" data-options="plain:true,iconCls:\'icon-edit\'" onclick="moneyFun(\'{0}\');" >付款</a>', row.shId);
                     	}else if(row.status == 2){
                    			str += $.formatString('<a style="height: 24px; color: red;" href="javascript:void(0)" class="user-easyui-linkbutton-ok" data-options="plain:true,iconCls:\'icon-ok\'">已付款</a>', row.shId);
                     	}else if(row.status == 3){
@@ -230,18 +230,13 @@
     }
     
     <!-- \\\\\\\\\\ 付款操作 \\\\\\\\\\ -->
-    function moneyFun(id,shTotalweigh) {
+    function moneyFun(id) {
     	var rows= dataGrid.datagrid('getSelections');
-        if (id == undefined) {
-            id = rows[0].id;
-        } else {
-            dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
-        }
         parent.$.modalDialog({
             title: '费用清单',
-            width: 500,
-            height: 390,
-            href: '${path }/shipment/moneyPage?id=' + id+'&shTotalweigh='+shTotalweigh,
+            width: 380,
+            height: 300,
+            href: '${path }/shipment/moneyPage?id=' + id+'&shTotalweigh='+rows[0].shTotalweigh,
             buttons: [{
                 text: '确认支付',
                 handler: function () {
@@ -263,10 +258,7 @@
         $('#searchForm input').val('');
         dataGrid.datagrid('load', {});
     }
-/* 
-    function goWhid(value) {
-        return value.goWhid;
-    } */
+
 </script>
 </body>
 </html>

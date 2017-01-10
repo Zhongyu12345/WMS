@@ -1,5 +1,6 @@
 package com.wms.bean;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotations.IdType;
@@ -15,11 +16,11 @@ public class Income {
 
     private String iabout;
 
-    private Long icount;
+    private BigDecimal icount;
 
-    private Long iincome;
+    private BigDecimal iincome;
 
-    private Long ibalance;
+    private BigDecimal ibalance;
 
     public Integer getIid() {
         return iid;
@@ -53,27 +54,27 @@ public class Income {
         this.iabout = iabout == null ? null : iabout.trim();
     }
 
-    public Long getIcount() {
+    public BigDecimal getIcount() {
         return icount;
     }
 
-    public void setIcount(Long icount) {
+    public void setIcount(BigDecimal icount) {
         this.icount = icount;
     }
 
-    public Long getIincome() {
+    public BigDecimal getIincome() {
         return iincome;
     }
 
-    public void setIincome(Long iincome) {
+    public void setIincome(BigDecimal iincome) {
         this.iincome = iincome;
     }
 
-    public Long getIbalance() {
+    public BigDecimal getIbalance() {
         return ibalance;
     }
 
-    public void setIbalance(Long ibalance) {
+    public void setIbalance(BigDecimal ibalance) {
         this.ibalance = ibalance;
     }
 }
