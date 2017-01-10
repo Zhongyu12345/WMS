@@ -151,16 +151,16 @@ public class GodownController extends BaseController{
     		godowns.setGostatus(1);
     		int a = godownService.updateStatus(godowns);
         	if(a>0){
-        		return renderSuccess("删除成功");
+        		return renderSuccess("操作成功");
         	}
     	}else if(status.equals("1")){
     		godowns.setGostatus(0);
     		int a = godownService.updateStatus(godowns);
         	if(a>0){
-        		return renderSuccess("删除成功");
+        		return renderSuccess("操作成功");
         	}
     	}
-    	return renderSuccess("删除成败");
+    	return renderSuccess("操作成败");
     }
     
     @RequestMapping("edit")
@@ -172,8 +172,8 @@ public class GodownController extends BaseController{
     	godowns.setGoRdvolume(godown.getGoRdvolume()+add);
     	int a = godownService.updateStatus(godowns);
     	if(a>0){
-    		return renderSuccess("修改成功");
+    		return renderSuccess("扩建成功");
     	}
-    	return renderSuccess("修改成败");
+    	return renderSuccess("扩建成败");
     }
 }

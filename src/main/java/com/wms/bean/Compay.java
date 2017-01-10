@@ -1,5 +1,7 @@
 package com.wms.bean;
 
+import java.math.BigDecimal;
+
 import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableId;
 
@@ -11,9 +13,9 @@ public class Compay {
 
     private String caname;
 
-    private Long camoney;
+    private BigDecimal camoney;
 
-    private Long cacount;
+    private BigDecimal cacount;
 
     public Integer getCaid() {
         return caid;
@@ -39,19 +41,19 @@ public class Compay {
         this.caname = caname == null ? null : caname.trim();
     }
 
-    public Long getCamoney() {
+    public BigDecimal getCamoney() {
         return camoney;
     }
 
-    public void setCamoney(Long camoney) {
+    public void setCamoney(BigDecimal camoney) {
         this.camoney = camoney;
     }
 
-    public Long getCacount() {
+    public BigDecimal getCacount() {
         return cacount;
     }
 
-    public void setCacount(Long cacount) {
+    public void setCacount(BigDecimal cacount) {
         this.cacount = cacount;
     }
 }

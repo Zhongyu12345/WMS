@@ -1,10 +1,9 @@
-package com.wms.dao;
+package com.wms.service;
 
 import com.wms.bean.Income;
 
-public interface IncomeMapper {
-	
-    int deleteByPrimaryKey(Integer iid);
+public interface IncomeService {
+	int deleteByPrimaryKey(Integer iid);
 
     int insert(Income record);
 
