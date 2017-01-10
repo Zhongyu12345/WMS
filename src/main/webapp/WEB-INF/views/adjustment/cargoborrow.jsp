@@ -66,7 +66,17 @@
                     width : '90',
                     title : '是否归还',
                     field : 'cbStatus',
-                    sortable : true
+                    sortable : true,
+                    formatter : function(value, row, index) {
+                        switch (value) {
+                            case 0:
+                                return '已归还';
+                            case 1:
+                                return '未归还';
+                            case 2:
+                                return '未归还';
+                        }
+                    }
                 },{
                         field : 'action',
                         title : '操作',

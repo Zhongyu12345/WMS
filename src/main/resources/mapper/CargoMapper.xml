@@ -30,8 +30,9 @@
     <include refid="Base_Column_List" />
     from cargo
     <where>
+      c_num != 0
       <if test="SKM != null and SKM != ''">
-        c_SKUmodel = #{SKM}
+         and c_SKUmodel = #{SKM}
       </if>
       <if test="start != null">
         <![CDATA[  c_receivedate >= #{start} ]]>

@@ -1,18 +1,18 @@
 package com.wms.controller;
 
+import com.wms.bean.Cargo;
 import com.wms.bean.CargoBorrow;
 import com.wms.bean.vo.UserVo;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.PageInfo;
 import com.wms.service.CargoBorrowService;
+import com.wms.service.CargoService;
 import com.wms.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +30,9 @@ public class CargoBorrowController extends BaseController{
 
     @Autowired
     private IUserService iUserService;
+
+    @Autowired
+    private CargoService cargoService;
 
     /**
      * 跳转到货品借出登记页面
@@ -69,13 +72,60 @@ public class CargoBorrowController extends BaseController{
      */
     @RequestMapping("/add")
     @ResponseBody
-    public Object add(CargoBorrow cargoBorrow){
-        cargoBorrow.setCbStatus("未归还");
-        int result = cargoborrowservice.insert(cargoBorrow);
-        if(result > 0){
-            return renderSuccess("添加成功");
+    public Object add(CargoBorrow cargoBorrow,@RequestParam("status") String status){
+        System.out.println("ID:"+cargoBorrow.getCbId());
+        Cargo cargo = cargoService.selectByPrimaryKey(cargoBorrow.getCbId());
+        Cargo c = new Cargo();
+        if(cargo.getcNum() != 0){
+            if(status.equals("1")){
+                cargoBorrow.setCbStatus("0");//0代表未归还
+                int result = cargoborrowservice.insert(cargoBorrow);
+                if(result > 0){
+                    /**
+                     * 数量（数量等于货物数量-借用数量）
+                     * 体积（总数量-借用数量*单个货物体积）
+                     * 重量（总重量-借用数量*单个货物总量）
+                     */
+                    c.setcNum(cargo.getcNum()-cargoBorrow.getCbNum().intValue());//数量
+                    c.setcTotalvolume(cargo.getcTotalvolume()-cargoBorrow.getCbNum()*(cargo.getcTotalvolume()/cargo.getcNum()));//体积
+                    c.setcTotalweight(cargo.getcTotalweight()-cargoBorrow.getCbNum()*(cargo.getcTotalweight()/cargo.getcNum()));//重量
+                    c.setcId(cargoBorrow.getCbId());
+                    cargoService.update(c);
+                    return renderSuccess("添加成功");
+                }else{
+                    return renderError("添加失败");
+                }
+            }else{
+                cargoBorrow.setCbStatus("1");//代表已归还
+                int result = cargoborrowservice.updateByPrimaryKey(cargoBorrow);
+                if(result > 0){
+                    /**
+                     * 数量（数量等于货物数量+借用数量）
+                     * 体积（剩余数量+借用数量*单个货物体积）
+                     * 重量（剩余重量+借用数量*单个货物总量）
+                     */
+                    c.setcNum(cargo.getcNum()+cargoBorrow.getCbNum().intValue());//数量
+                    c.setcTotalvolume(cargo.getcTotalvolume()+cargoBorrow.getCbNum()*(cargo.getcTotalvolume()/cargo.getcNum()));//体积
+                    c.setcTotalweight(cargo.getcTotalweight()+cargoBorrow.getCbNum()*(cargo.getcTotalweight()/cargo.getcNum()));//重量
+                    c.setcId(cargoBorrow.getCbId());
+                    cargoService.update(c);
+                    return renderSuccess("归还成功");
+                }
+                return renderError("归还失败");
+            }
         }
-        return renderError("添加失败");
+        if(status.equals("1")){
+            cargoBorrow.setCbStatus("2");//2代表全部借出未归还
+            int result = cargoborrowservice.insert(cargoBorrow);
+            if(result > 0){
+                cargoborrowservice.updateByPrimaryKey(cargoBorrow);
+                return renderSuccess("添加成功");
+            }
+        }
+        cargoBorrow.setCbStatus("1");
+        int result = cargoborrowservice.updateByPrimaryKey(cargoBorrow);
+        return renderSuccess("归还成功");
+
     }
 
     /**
@@ -133,22 +183,6 @@ public class CargoBorrowController extends BaseController{
         }
         List<UserVo> list = iUserService.selectUserBytype(map);
         return list;
-    }
-
-    /**
-     * 修改
-     * @param cargoBorrow
-     * @return
-     */
-    @RequestMapping("/edit")
-    @ResponseBody
-    public Object Edit(CargoBorrow cargoBorrow){
-        cargoBorrow.setCbStatus("已归还");
-        int result = cargoborrowservice.updateByPrimaryKey(cargoBorrow);
-        if(result > 0){
-            return renderSuccess("修改成功");
-        }
-        return renderError("修改失败");
     }
 
 }

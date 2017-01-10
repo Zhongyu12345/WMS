@@ -47,9 +47,9 @@
   </delete>
 
   <insert id="insert" parameterType="com.wms.bean.CargoBorrow">
-    insert into cargo_borrow (cb_id, cb_name, cb_SKUmodel, 
+    insert into cargo_borrow (cb_id,cb_name, cb_SKUmodel,
       cb_num, cb_cause, cb_names, cb_time,cb_status,cb_endtime)
-    values (#{cbId,jdbcType=INTEGER}, #{cbName,jdbcType=VARCHAR}, #{cbSkumodel,jdbcType=VARCHAR}, 
+    values (#{cbId,jdbcType=INTEGER},#{cbName,jdbcType=VARCHAR}, #{cbSkumodel,jdbcType=VARCHAR},
       #{cbNum,jdbcType=DOUBLE}, #{cbCause,jdbcType=VARCHAR}, #{cbNames,jdbcType=VARCHAR}, 
       #{cbTime,jdbcType=TIMESTAMP},#{cbStatus,jdbcType=VARCHAR},#{cbEndtime,jdbcType=VARCHAR})
   </insert>

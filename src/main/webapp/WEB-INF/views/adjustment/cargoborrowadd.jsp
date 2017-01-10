@@ -3,7 +3,7 @@
 <script type="text/javascript">
     $(function() {
         $('#cargoborrwAddForm').form({
-            url : '${path }/borrow/add',
+            url : '${path }/borrow/add?status='+1,
             onSubmit : function() {
                 progressLoad();
                 var isValid = $(this).form('enableValidation').form('validate');
@@ -11,14 +11,14 @@
                     progressClose();
                 }
                 return isValid;
-            },
-            success : function(result) {
+            },success : function(result) {
                 progressClose();
                 result = $.parseJSON(result);
                 if (result.success) {
+                    parent.$.messager.alert('提示', result.msg, 'warning');
                     parent.$.modalDialog.openner_dataGrid.datagrid('reload');//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
                     parent.$.modalDialog.handler.dialog('close');
-                } else {
+                }else{
                     parent.$.messager.alert('提示', result.msg, 'warning');
                 }
             }
@@ -37,7 +37,7 @@
             pagination : true,
             singleSelect : true,
             height : '27',
-            idField : 'id',
+            idField : 'cId',
             sortName : 'id',
             sortOrder : 'asc',
             pageSize : 10,
@@ -154,14 +154,14 @@
     }
 
     function useryes() {
-        var row=$("#SelectUserGrid").datagrid("getSelected");
-        $("#cbNames").val(row.name);
+        var userrow=$("#SelectUserGrid").datagrid("getSelected");
+        $("#cbNames").val(userrow.name);
         $("#SelectUser").window("close");
     }
 
     function yes() {
         var row=$("#SelectDataGrid").datagrid("getSelected");
-        //$("#cbNum").val(row.)
+        $("#cbId").val(row.cId);
         $("#cbName").val(row.cName);
         $("#cbSkumodel").val(row.cSkumodel);
         $("#selectData").window("close");
@@ -189,7 +189,10 @@
 
     $.extend($.fn.validatebox.defaults.rules, {
         cbNum: {
-            validator: function (cbNum, num) {
+            validator: function () {
+                var row=$("#SelectDataGrid").datagrid("getSelected");
+                var num = row.cNum;
+                var cbNum = $("#cbNum").val();
                 if(cbNum <= num){
                     return true;
                 }
@@ -211,13 +214,15 @@
                 </tr>
                 <tr>
                     <td>数量</td>
-                    <td><input id="cbNum" name="cbNum" type="text" validType="cbNum[1000,9000]" class="easyui-numberbox" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""></td>
+                    <td><input id="cbNum" name="cbNum" type="text" validType="cbNum[]" class="easyui-numberbox" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""></td>
                     <td>借用人</td>
                     <td><input id="cbNames" name="cbNames" onclick="selectUser();"  readonly="readonly" type="text" placeholder="请选择借用人姓名" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""/></td>
                 </tr>
                 <tr>
                     <td>日期</td>
                     <td><input name="cbTime" placeholder="请选择时间" class="easyui-validatebox" data-options="required:true,novalidate:true" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" /></td>
+                    <td></td>
+                    <td><input id="cbId" name="cbId"  type="hidden"/></td>
                 </tr>
                 <tr>
                     <td>原因</td>

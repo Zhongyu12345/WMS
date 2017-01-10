@@ -3,7 +3,7 @@
 <script type="text/javascript">
     $(function() {
         $('#cargoborrwEditForm').form({
-            url : '${path }/borrow/edit',
+            url : '${path }/borrow/add?status='+0,
             onSubmit : function() {
                 progressLoad();
                 var isValid = $(this).form('enableValidation').form('validate');
