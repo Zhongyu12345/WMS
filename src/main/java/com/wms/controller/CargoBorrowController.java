@@ -118,12 +118,22 @@ public class CargoBorrowController extends BaseController{
             cargoBorrow.setCbStatus("2");//2代表全部借出未归还
             int result = cargoborrowservice.insert(cargoBorrow);
             if(result > 0){
-                cargoborrowservice.updateByPrimaryKey(cargoBorrow);
+                /**
+                 * 数量（数量等于货物数量-借用数量）
+                 */
+                c.setcNum(cargo.getcNum()-cargoBorrow.getCbNum().intValue());//数量
+                c.setcId(cargoBorrow.getCbId());
+                cargoService.updatenum(c);
                 return renderSuccess("添加成功");
             }
         }
         cargoBorrow.setCbStatus("1");
         int result = cargoborrowservice.updateByPrimaryKey(cargoBorrow);
+        if(result > 0){
+            c.setcNum(cargoBorrow.getCbNum().intValue());
+            c.setcId(cargoBorrow.getCbId());
+            cargoService.updatenum(c);
+        }
         return renderSuccess("归还成功");
 
     }

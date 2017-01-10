@@ -193,4 +193,10 @@
     c_totalvolume = #{cTotalvolume,jdbcType=DOUBLE}
     where c_id = #{cId,jdbcType=INTEGER}
   </update>
+  <update id="updatenum" parameterType="com.wms.bean.Cargo">
+    update cargo
+    set
+    c_num = #{cNum,jdbcType=INTEGER}
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
 </mapper>

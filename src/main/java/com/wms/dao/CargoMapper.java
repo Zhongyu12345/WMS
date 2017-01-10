@@ -23,4 +23,6 @@ public interface CargoMapper {
     int updateByPrimaryKey(Cargo record);
 
     int update(Cargo cargo);
+
+    int updatenum(Cargo cargo);
 }

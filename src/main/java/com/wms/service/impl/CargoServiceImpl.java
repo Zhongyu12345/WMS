@@ -59,4 +59,9 @@ public class CargoServiceImpl implements CargoService {
 	public int update(Cargo cargo) {
 		return cargoMapper.update(cargo);
 	}
+
+	@Override
+	public int updatenum(Cargo cargo) {
+		return cargoMapper.updatenum(cargo);
+	}
 }
