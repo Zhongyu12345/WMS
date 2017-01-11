@@ -1,6 +1,8 @@
 package com.wms.service;
 
+
 import com.wms.bean.Income;
+import com.wms.bean.vo.IncomeVo;
 
 public interface IncomeService {
 	int deleteByPrimaryKey(Integer iid);
@@ -14,4 +16,6 @@ public interface IncomeService {
     int updateByPrimaryKeySelective(Income record);
 
     int updateByPrimaryKey(Income record);
+    
+    IncomeVo selectByTime(String Timeyears);
 }

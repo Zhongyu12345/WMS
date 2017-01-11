@@ -1,10 +1,10 @@
-package com.wms.dao;
+package com.wms.service;
 
 import com.wms.bean.Pay;
 import com.wms.bean.vo.IncomeVo;
 
-public interface PayMapper {
-    int deleteByPrimaryKey(Integer pid);
+public interface PayService {
+	int deleteByPrimaryKey(Integer pid);
 
     int insert(Pay record);
 

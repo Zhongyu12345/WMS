@@ -1,6 +1,8 @@
 package com.wms.dao;
 
+
 import com.wms.bean.Income;
+import com.wms.bean.vo.IncomeVo;
 
 public interface IncomeMapper {
 	
@@ -15,4 +17,6 @@ public interface IncomeMapper {
     int updateByPrimaryKeySelective(Income record);
 
     int updateByPrimaryKey(Income record);
+    
+    IncomeVo selectByTime(String Timeyears);
 }
