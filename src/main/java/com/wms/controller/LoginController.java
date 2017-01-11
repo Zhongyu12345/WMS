@@ -11,7 +11,9 @@ import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.session.HttpServletSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -83,7 +86,7 @@ public class LoginController extends BaseController {
      */
     @PostMapping("/login")
     @ResponseBody
-    public Object loginPost(String username, String password,Model model) {
+    public Object loginPost(String username, String password,Model model,HttpServletRequest req) {
         logger.info("POST请求登录");
 
         if (StringUtils.isBlank(username)) {
@@ -99,13 +102,16 @@ public class LoginController extends BaseController {
         try {
             user.login(token);
 
+            HttpSession session = req.getSession();
             UserVo uservo = iUserService.selectByloginname(username);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            session.setAttribute("time",sdf.format(uservo.getOuttime()));
+
             User users = new User();
             users.setOuttime(new Date());
             users.setId(uservo.getId());
             iUserService.add(users);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            model.addAttribute("time",sdf.format(users.getOuttime()));
 
             return renderSuccess();
         } catch (UnknownAccountException e) {
