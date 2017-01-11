@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ page isELIgnored="false" %>
 <%@ include file="/commons/basejs.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>主页</title>
@@ -142,15 +143,17 @@
     <div id="index_layout" style="background:red;">
         <div data-options="region:'north',border:false" style=" overflow: hidden; ">
             <div>
-                <span style="float: right; padding-right: 20px; margin-top: 15px; color: #333">欢迎 
-	                <b><shiro:principal></shiro:principal></b>&nbsp;&nbsp; 
-	                <shiro:hasPermission name="/user/editPwdPage">
-	                    <a href="javascript:void(0)" onclick="editUserPwd()" class="easyui-linkbutton" plain="true" icon="icon-edit" >修改密码</a>
-	                </shiro:hasPermission>&nbsp;&nbsp;
-	                <a href="javascript:void(0)" onclick="logout()" class="easyui-linkbutton" plain="true" icon="icon-clear">安全退出</a>
+                <span style="float: right; padding-right: 20px; color: #333">
+                      欢迎<font color="red"><b><shiro:principal></shiro:principal></b></font>&nbsp;&nbsp;
+                    <shiro:hasPermission name="/user/editPwdPage">
+                        <a href="javascript:void(0)" onclick="editUserPwd()" class="easyui-linkbutton" plain="true" icon="icon-edit" >修改密码</a>
+                    </shiro:hasPermission>&nbsp;&nbsp;
+                    <a href="javascript:void(0)" onclick="logout()" class="easyui-linkbutton" plain="true" icon="icon-clear">安全退出</a>
+                    <br />
+                    上次登录时间:${time}
                 </span>
                 <div>
-                	<span class="header"></span>
+                	<span class="header" style="float: left"></span>
                 </div>
                 <div style="width:700px;float:left;padding-top:5px;">
 			    	<marquee vspace="5px" direction="left" width="100%" onmouseout="this.start()" onmouseover="this.stop()" scrollamount="4" scrolldelay="1" style="font:bold 20px '黑体';color:red;">
@@ -169,15 +172,18 @@
             <div id="index_tabs" style="overflow: hidden;">
                 <div title="首页" data-options="iconCls:'l-btn-icon icon-home',border:false" style="overflow: hidden;">
                     <div>
-                   		<div style="height:300px;padding-left:50%;padding-top:20px;">
-                    		<img alt="" src="static/style/images/p_wms.png">
-                    	</div>
-                    	<div style="letter-spacing:3px;font-size:17px;padding-top:20px;width:900px;text-indent: 2em;padding-left:10%;">
-                    	仓储管理是整个供应链管理体系中非常重要的环节，随着电商行业的不断发展，越来越多的商家开始重视仓库的管理效率，选择一套合适的仓储管理系统就是管好电商仓库的一个必要条件。
-                    	管易EC-WMS产品是一款专门针对电子商务行业的仓储管理软件，可以集中管理线上线下库存，支持多仓库、多货主等不同的业务模式，支持多部门、多角色协同办公，支持RF手持设备作业，
-                    	可以精确跟踪货物从入库到出库的整个过程。依靠灵活多变的收获策略、补货策略、批次策略、分配策略、波茨策略和出库策略，管易EC-WMS从老产品的记录型系统全面提升为专业的指导型系统，
-                    	可以满足电商企业精细化的库存管理需求，提升仓储操作的工作效率。
-                    	</div>
+                        <div style="float: right;">
+                            <iframe allowtransparency="true" frameborder="0" width="185" height="74" scrolling="no" src="//tianqi.2345.com/plugin/widget/index.htm?s=1&z=1&t=0&v=0&d=1&bd=0&k=000000&f=&q=1&e=1&a=1&c=54511&w=185&h=74&align=center"></iframe>
+                        </div>
+                        <div style="height:300px;padding-left:50%;padding-top:20px;">
+                            <img alt="" src="static/style/images/p_wms.png">
+                        </div>
+                        <div style="letter-spacing:3px;font-size:17px;padding-top:20px;width:900px;text-indent: 2em;padding-left:10%;">
+                            仓储管理是整个供应链管理体系中非常重要的环节，随着电商行业的不断发展，越来越多的商家开始重视仓库的管理效率，选择一套合适的仓储管理系统就是管好电商仓库的一个必要条件。
+                            管易EC-WMS产品是一款专门针对电子商务行业的仓储管理软件，可以集中管理线上线下库存，支持多仓库、多货主等不同的业务模式，支持多部门、多角色协同办公，支持RF手持设备作业，
+                            可以精确跟踪货物从入库到出库的整个过程。依靠灵活多变的收获策略、补货策略、批次策略、分配策略、波茨策略和出库策略，管易EC-WMS从老产品的记录型系统全面提升为专业的指导型系统，
+                            可以满足电商企业精细化的库存管理需求，提升仓储操作的工作效率。
+                        </div>
                     </div>
                 </div>、
             </div>

@@ -14,6 +14,7 @@
         <result column="organization_id" property="organizationId" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="outtime" property="outtime" jdbcType="TIMESTAMP" />
 
         <collection property="rolesList" ofType="Role">
             <id column="roleId" property="id"/>
@@ -50,7 +51,7 @@
     </select>
 
     <select id="selectByloginname" resultMap="userVoResultMap">
-        select id
+        select *
         FROM user
         <where>
           login_name = #{user}
@@ -106,4 +107,10 @@
 			user_type = 1
 		</where>
 	</select>
+
+    <update id="add">
+        update user set outtime = #{outtime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
 </mapper>

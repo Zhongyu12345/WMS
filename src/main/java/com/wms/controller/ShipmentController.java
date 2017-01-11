@@ -1,29 +1,5 @@
 package com.wms.controller;
 
-import com.wms.bean.Income;
-import com.wms.bean.Receiving;
-import com.wms.bean.Shipment;
-import com.wms.bean.Tariff;
-import com.wms.commons.base.BaseController;
-import com.wms.commons.bean.Search;
-import com.wms.commons.utils.PageInfo;
-import com.wms.commons.utils.ReadXls;
-import com.wms.commons.utils.StringUtils;
-import com.wms.commons.utils.TimeUtils;
-import com.wms.service.IncomeService;
-import com.wms.service.ReceivingService;
-import com.wms.service.ShipmentService;
-import com.wms.service.TariffService;
-
-import org.apache.commons.fileupload.util.Streams;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -32,7 +8,39 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.SimpleFormatter;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.util.Streams;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.wms.bean.Cargo;
+import com.wms.bean.Income;
+import com.wms.bean.Receiving;
+import com.wms.bean.Shipment;
+import com.wms.bean.Tariff;
+import com.wms.commons.base.BaseController;
+import com.wms.commons.bean.Search;
+import com.wms.commons.utils.ExcelToDisk;
+import com.wms.commons.utils.PageInfo;
+import com.wms.commons.utils.ReadXls;
+import com.wms.commons.utils.StringUtils;
+import com.wms.commons.utils.TimeUtils;
+import com.wms.service.CargoService;
+import com.wms.service.IncomeService;
+import com.wms.service.ReceivingService;
+import com.wms.service.ShipmentService;
+import com.wms.service.TariffService;
 
 /**
  * 实际出库表
@@ -55,6 +63,9 @@ public class ShipmentController extends BaseController {
     
     @Autowired
     private IncomeService incomeService;
+    
+    @Autowired
+    private CargoService cargoService;
 
     /** 出货单管理页面 */
     @GetMapping(value = "shipment.html")
@@ -283,5 +294,19 @@ public class ShipmentController extends BaseController {
         }
         return renderError("添加失败!");
     }
+    
+    @RequestMapping("/toexcel")
+	public void excel(String id,HttpServletResponse resp,String yuanyin){
+		Shipment shipment = shipmentService.selectById(Integer.valueOf(id));
+		Cargo c =  cargoService.selectBySkumodel(shipment.getShSkumodel());
+		shipment.setStatus(3);
+       shipmentService.updateShipment(shipment);
+		ExcelToDisk<Shipment> e = new ExcelToDisk<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+		String title[] = {"货物名称","货物型号","货主","货主号码","客户托单号","退货体积","退货数量","退货时间","退货原因"};
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+		Object obj[] = {c.getcName(),shipment.getShSkumodel(),shipment.getShStoreid(),shipment.getShPhone(),c.getcShippingno(),shipment.getShTotalvolume(),shipment.getShShnum(),f.format(new Date()),yuanyin};
+		e.Excel(obj,"退货单"+sdf.format(new Date())+".xls",title,resp);
+	}
 
 }

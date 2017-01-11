@@ -111,7 +111,6 @@ public class GodownController extends BaseController{
     	if(userList.size() != 0){
     		for(UserVo lists : userList){
     			HashMap<String, String> map = new HashMap<String,String>();
-    			System.out.println(lists.getId().toString());
     			map.put("userId", lists.getId().toString());
     			map.put("userName", lists.getName());
     			list.add(map);

@@ -1,21 +1,35 @@
 package com.wms.controller;
 
+import com.wms.bean.User;
+import com.wms.bean.vo.UserVo;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.DigestUtils;
 import com.wms.commons.utils.StringUtils;
+import com.wms.service.IUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.session.HttpServletSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.Servlet;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 登录退出
@@ -24,6 +38,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LoginController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
+
+    @Autowired
+    private IUserService iUserService;
+
     /**
      * 首页
      *
@@ -68,7 +86,7 @@ public class LoginController extends BaseController {
      */
     @PostMapping("/login")
     @ResponseBody
-    public Object loginPost(String username, String password) {
+    public Object loginPost(String username, String password,Model model,HttpServletRequest req) {
         logger.info("POST请求登录");
 
         if (StringUtils.isBlank(username)) {
@@ -83,6 +101,18 @@ public class LoginController extends BaseController {
         token.setRememberMe(true);
         try {
             user.login(token);
+
+            HttpSession session = req.getSession();
+            UserVo uservo = iUserService.selectByloginname(username);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            session.setAttribute("time",sdf.format(uservo.getOuttime()));
+
+            User users = new User();
+            users.setOuttime(new Date());
+            users.setId(uservo.getId());
+            iUserService.add(users);
+
             return renderSuccess();
         } catch (UnknownAccountException e) {
             throw new RuntimeException("账号不存在！", e);

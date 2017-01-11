@@ -12,6 +12,8 @@ public interface CargoService {
 
 	    Cargo selectByPrimaryKey(Integer cId);
 
+		Cargo selectByid(Integer cId);
+
 	   void select(PageInfo pageInfo);
 
 	    int updateByPrimaryKeySelective(Cargo record);
@@ -19,4 +21,8 @@ public interface CargoService {
 	    int updateByPrimaryKey(Cargo record);
 
 	    int update(Cargo cargo);
+
+		int updatenum(Cargo cargo);
+		
+		Cargo selectBySkumodel(String Skumodel);
 }

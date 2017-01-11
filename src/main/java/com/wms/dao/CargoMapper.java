@@ -16,6 +16,8 @@ public interface CargoMapper {
 
     Cargo selectByPrimaryKey(Integer cId);
 
+    Cargo selectByid(Integer cId);
+
     List<Cargo> select(Pagination page,Map<String,Object> map);
 
     int updateByPrimaryKeySelective(Cargo record);
@@ -23,4 +25,8 @@ public interface CargoMapper {
     int updateByPrimaryKey(Cargo record);
 
     int update(Cargo cargo);
+
+    int updatenum(Cargo cargo);
+    
+    Cargo selectBySkumodel(String Skumodel);
 }

@@ -165,11 +165,14 @@ public class makeinventoryController extends BaseController{
      */
     @RequestMapping("/ToDiskExcel")
     @ResponseBody
-    public void ToDiskExcel(@RequestParam("data") Object data[], HttpServletResponse resp){
+    public void ToDiskExcel(@RequestParam("data") String data[], HttpServletResponse resp){
         ExcelToDisk<MakeInventory> ex = new ExcelToDisk<MakeInventory>();
-        String [] title = {"ID","货物名称","货物型号","仓库编号","实际盘点数量","盘点人"};
+        String [] title = {"ID","货物名称","货物型号","仓库名称","实际盘点数量","盘点人"};
+        int id = Integer.valueOf(data[2]);
+        Cargo cargo = cargoService.selectByid(id);
+        Object arr[]={data[0],data[1],cargo.getcName(),data[3],data[4],data[5]};
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
-        ex.Excel(data,"盘点计划"+sdf.format(new Date())+".xls",title,resp);
+        ex.Excel(arr,"盘点计划"+sdf.format(new Date())+".xls",title,resp);
     }
 
     /**

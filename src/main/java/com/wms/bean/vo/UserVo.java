@@ -37,6 +37,8 @@ public class UserVo implements Serializable {
 
     private String roleIds;
 
+    private Date outtime;
+
     private Date createdateStart;
     private Date createdateEnd;
 
@@ -150,6 +152,14 @@ public class UserVo implements Serializable {
 
     public void setCreatedateEnd(Date createdateEnd) {
         this.createdateEnd = createdateEnd;
+    }
+
+    public Date getOuttime() {
+        return outtime;
+    }
+
+    public void setOuttime(Date outtime) {
+        this.outtime = outtime;
     }
 
     /**

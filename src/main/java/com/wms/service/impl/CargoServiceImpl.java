@@ -38,6 +38,11 @@ public class CargoServiceImpl implements CargoService {
 	}
 
 	@Override
+	public Cargo selectByid(Integer cId) {
+		return cargoMapper.selectByid(cId);
+	}
+
+	@Override
 	public void select(PageInfo pageInfo) {
 		Page<Cargo> page = new Page<>(pageInfo.getNowpage(),pageInfo.getSize());
 		List<Cargo> list = cargoMapper.select(page,pageInfo.getCondition());
@@ -58,5 +63,15 @@ public class CargoServiceImpl implements CargoService {
 	@Override
 	public int update(Cargo cargo) {
 		return cargoMapper.update(cargo);
+	}
+
+	@Override
+	public int updatenum(Cargo cargo) {
+		return cargoMapper.updatenum(cargo);
+	}
+
+	@Override
+	public Cargo selectBySkumodel(String Skumodel) {
+		return cargoMapper.selectBySkumodel(Skumodel);
 	}
 }

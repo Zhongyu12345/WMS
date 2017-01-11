@@ -1,9 +1,11 @@
 package com.wms.service.impl;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wms.bean.Income;
+import com.wms.bean.vo.IncomeVo;
 import com.wms.dao.IncomeMapper;
 import com.wms.service.IncomeService;
 
@@ -45,6 +47,11 @@ public class IncomeServiceImpl implements IncomeService{
 	public int updateByPrimaryKey(Income record) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public IncomeVo selectByTime(String Timeyears) {
+		return incomeMapper.selectByTime(Timeyears);
 	}
 
 }
