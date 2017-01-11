@@ -12,6 +12,12 @@
     var layout_west_tree;
 
     $(function() {
+        var a = '${mesint}';
+        alert(a);
+        if(a!=1){
+            window.location.href = '${path }/notice/message';
+        }
+
         index_layout = $('#index_layout').layout({
             fit : true
         });
@@ -149,7 +155,7 @@
                 <div style="width:700px;float:left;padding-top:5px;">
 			    	<marquee vspace="5px" direction="left" width="100%" onmouseout="this.start()" onmouseover="this.stop()" scrollamount="4" scrolldelay="1" style="font:bold 20px '黑体';color:red;">
 			    		<img src="${staticPath }/static/style/images/b143f09fd2aa8bbc5462805be70cf44e.gif" style="height:35px;"/>&nbsp;
-			    		2016-12-21 最新公告:  水平滚动字幕内容
+			    		 最新公告 *** 内容:${notice.text} *** 发布人:${notice.username} *** 发布时间:${notice.stringtime};
 			    	</marquee>
 			    </div>
             </div>
@@ -173,7 +179,7 @@
                     	可以满足电商企业精细化的库存管理需求，提升仓储操作的工作效率。
                     	</div>
                     </div>
-                </div>
+                </div>、
             </div>
         </div>
         <div data-options="region:'south',border:false" style="height: 30px;line-height:30px; overflow: hidden;text-align: center;background-color: #eee" >Copyright © 2017 技术支持 <a href="http://www.htit-china.com/" target="_blank">宏图软件教育</a></div>

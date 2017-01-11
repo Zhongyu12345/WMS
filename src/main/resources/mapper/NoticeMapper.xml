@@ -7,6 +7,19 @@
     <result column="userid" jdbcType="INTEGER" property="userid" />
     <result column="ntime" jdbcType="TIMESTAMP" property="ntime" />
     <result column="nstatus" jdbcType="INTEGER" property="nstatus" />
+
+    <collection property="users" ofType="com.wms.bean.User">
+      <id column="id" jdbcType="INTEGER" property="id"/>
+      <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+      <result column="name" jdbcType="TIMESTAMP" property="name" />
+      <result column="password" jdbcType="INTEGER" property="password" />
+      <result column="sex" jdbcType="INTEGER" property="sex" />
+      <result column="age" jdbcType="INTEGER" property="age" />
+      <result column="phone" jdbcType="INTEGER" property="phone" />
+      <result column="userType" jdbcType="INTEGER" property="userType" />
+      <result column="status" jdbcType="INTEGER" property="status" />
+      <result column="createTime" jdbcType="INTEGER" property="createTime" />
+    </collection>
   </resultMap>
   <sql id="Base_Column_List">
     nid, text, userid, ntime, nstatus
@@ -19,10 +32,15 @@
   </select>
   <!-- 分页查询 -->
   <select id="selectDataGrid" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from notice
+    select n.*,u.*
+    from notice n,user u where n.userid=u.id
   </select>
+
+  <select id="selectByDateUP" resultMap="BaseResultMap">
+    select * from notice order by ntime desc   limit 1
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from notice
     where nid = #{nid,jdbcType=INTEGER}
