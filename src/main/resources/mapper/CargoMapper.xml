@@ -25,6 +25,13 @@
     from cargo
     where c_id = #{cId,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cargo
+    where c_whid = #{cWhid,jdbcType=VARCHAR}
+  </select>
   
   <select id="selectBySkumodel" resultMap="BaseResultMap">
     select 

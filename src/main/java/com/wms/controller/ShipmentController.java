@@ -299,14 +299,14 @@ public class ShipmentController extends BaseController {
 	public void excel(String id,HttpServletResponse resp,String yuanyin){
 		Shipment shipment = shipmentService.selectById(Integer.valueOf(id));
 		Cargo c =  cargoService.selectBySkumodel(shipment.getShSkumodel());
+		shipment.setStatus(3);
+       shipmentService.updateShipment(shipment);
 		ExcelToDisk<Shipment> e = new ExcelToDisk<>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 		String title[] = {"货物名称","货物型号","货主","货主号码","客户托单号","退货体积","退货数量","退货时间","退货原因"};
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 		Object obj[] = {c.getcName(),shipment.getShSkumodel(),shipment.getShStoreid(),shipment.getShPhone(),c.getcShippingno(),shipment.getShTotalvolume(),shipment.getShShnum(),f.format(new Date()),yuanyin};
-		e.Excel(obj,"退货单"+sdf.format(new Date())+".xlsx",title,resp);
-		shipment.setStatus(3);
-		shipmentService.updateShipment(shipment);
+		e.Excel(obj,"退货单"+sdf.format(new Date())+".xls",title,resp);
 	}
 
 }
