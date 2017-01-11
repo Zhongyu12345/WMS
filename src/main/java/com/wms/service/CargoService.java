@@ -21,4 +21,6 @@ public interface CargoService {
 	    int update(Cargo cargo);
 
 		int updatenum(Cargo cargo);
+		
+		Cargo selectBySkumodel(String Skumodel);
 }
