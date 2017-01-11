@@ -190,9 +190,7 @@
     	var yuanyin = $("#yuanying").textbox('getValue');
     	window.location.href = '${path }/shipment/toexcel?id='+id+'&yuanyin='+yuanyin;
     	$("#addWin").window("close");
-    	setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
-        	window.location.reload();//页面刷新
-        	},200);
+    	
     }
 
     <!-- \\\\\\\\\\ 删除操作 \\\\\\\\\\ -->

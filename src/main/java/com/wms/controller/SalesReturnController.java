@@ -55,11 +55,11 @@ public class SalesReturnController extends BaseController {
 	@RequestMapping("/readExcle")
 	public String Excle(@RequestParam("file") MultipartFile file, HttpServletRequest request,Model model){
 		try {
-			String path = (GodownEntryController.class.getResource("/").toString()).substring(6);
+			String path = (SalesReturnController.class.getResource("/").toString()).substring(6);
 			if(!file.isEmpty()){
 				Streams.copy(file.getInputStream(),new FileOutputStream(path+"/"+file.getOriginalFilename()),true);
 			}
-			URL url = GodownEntryController.class.getResource("/"+file.getOriginalFilename());
+			URL url = SalesReturnController.class.getResource("/"+file.getOriginalFilename());
 			List<List<String>> list = ReadXls.readxls(url.getFile());
 			System.out.println(list);
 			SalesReturn s = new SalesReturn();
@@ -76,11 +76,9 @@ public class SalesReturnController extends BaseController {
 					}else{
 						s.setSrNum(Double.valueOf(obj.get(6).trim()));//数量
 					}
-//					s.setSrWhid(obj.get(7));//仓库编号
 					s.setSrTime(updateTime("".equals(obj.get(7))?null:obj.get(7)));//时间
 					s.setSrCause(obj.get(8));//退货原因
 				}
-				System.out.println(s.toString());
 				model.addAttribute("salesreturn",s );
 		} catch (Exception e) {
 			e.printStackTrace();
