@@ -70,6 +70,7 @@ public class User implements Serializable {
     @TableField(value = "create_time")
     private Date createTime;
 
+    private Date outtime;
 
     public Long getId() {
         return this.id;
@@ -154,5 +155,13 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return JsonUtils.toJson(this);
+    }
+
+    public Date getOuttime() {
+        return outtime;
+    }
+
+    public void setOuttime(Date outtime) {
+        this.outtime = outtime;
     }
 }

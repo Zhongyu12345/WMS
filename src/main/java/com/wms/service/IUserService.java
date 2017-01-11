@@ -34,4 +34,6 @@ public interface IUserService extends ISuperService<User> {
     UserVo selectByloginname(String user);
 
     List<UserVo> selectByRole();
+
+    int add(User user);
 }

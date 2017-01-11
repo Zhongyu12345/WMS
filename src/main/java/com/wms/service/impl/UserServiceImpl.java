@@ -131,4 +131,9 @@ public class UserServiceImpl extends SuperServiceImpl<UserMapper, User> implemen
         return userList;
     }
 
+    @Override
+    public int add(User user) {
+        return userMapper.add(user);
+    }
+
 }
