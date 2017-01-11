@@ -64,4 +64,9 @@ public class CargoServiceImpl implements CargoService {
 	public int updatenum(Cargo cargo) {
 		return cargoMapper.updatenum(cargo);
 	}
+
+	@Override
+	public Cargo selectBySkumodel(String Skumodel) {
+		return cargoMapper.selectBySkumodel(Skumodel);
+	}
 }

@@ -61,8 +61,9 @@ public class SalesReturnController extends BaseController {
 			}
 			URL url = GodownEntryController.class.getResource("/"+file.getOriginalFilename());
 			List<List<String>> list = ReadXls.readxls(url.getFile());
+			System.out.println(list);
 			SalesReturn s = new SalesReturn();
-			List<String> obj = list.get(2);
+			List<String> obj = list.get(1);
 				for(int j=0;j<obj.size();j++){
 					s.setSrName(obj.get(0));//货物名称
 					s.setSrSkumodel(obj.get(1));//货物型号

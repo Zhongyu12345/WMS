@@ -186,6 +186,7 @@ public class GodownEntryController extends BaseController {
 		g.setcWhid(receiving.getrWhid());
 		g.setcNum(receiving.getrNumber());
 		g.setcTotalweight(receiving.getrHeavy());
+		g.setcPhone(receiving.getrPhone());
 		int d = run(receiving);
 		int c = cargoService.insert(g);
 		if(a>0 && b>0 && c>0&&d>0){
