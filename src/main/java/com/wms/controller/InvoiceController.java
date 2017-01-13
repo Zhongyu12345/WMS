@@ -1,13 +1,14 @@
 package com.wms.controller;
 
 import com.wms.bean.Invoice;
+import com.wms.bean.Shipment;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.bean.Search;
 import com.wms.commons.utils.PageInfo;
 import com.wms.commons.utils.ReadXls;
-import com.wms.commons.utils.StringUtils;
 import com.wms.commons.utils.TimeUtils;
 import com.wms.service.InvoiceService;
+import com.wms.service.ShipmentService;
 import org.apache.commons.fileupload.util.Streams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +17,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import javax.servlet.http.HttpServletRequest;
 import java.io.FileOutputStream;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +39,9 @@ public class InvoiceController extends BaseController {
     @Autowired
     private InvoiceService invoiceService;
 
+    @Autowired
+    private ShipmentService shipmentService;
+
     /** 出货单管理页面 */
     @GetMapping(value = "invoice.html")
     public String getInvoicePage() {
@@ -45,22 +51,21 @@ public class InvoiceController extends BaseController {
     /** 分页查询 */
     @ResponseBody
     @PostMapping("dataGrid")
-    public Object dataGrid(Search search, Integer page, Integer rows, String sort, String order) {
-        PageInfo pageInfo = new PageInfo(page, rows);
-        Map<String, Object> condition = new HashMap<String, Object>();
-        if (StringUtils.isNotBlank(search.getName())) {
-            logger.getName().toString();
-            condition.put("name", search.getName());
-        }
-        if (search.getStartTime() != null) {
-            condition.put("startTime", search.getStartTime());
-        }
-        if (search.getEndTime() != null) {
-            condition.put("endTime", search.getEndTime());
-        }
-        pageInfo.setCondition(condition);
-        invoiceService.selectDataGrid(pageInfo);
-        return pageInfo;
+    public Object dataGrid(Search search, Integer page, Integer rows) {
+      PageInfo pageInfo = new PageInfo(page,rows);
+      Map<String,Object> map = new HashMap<String,Object>();
+      if(search.getName() != null){
+          map.put("name",search.getName());
+      }
+      if(search.getStartTime() != null){
+          map.put("startTime",search.getStartTime());
+      }
+      if(search.getEndTime() != null){
+          map.put("endTime",search.getEndTime());
+      }
+      pageInfo.setCondition(map);
+      invoiceService.selectDataGrid(pageInfo);
+      return pageInfo;
     }
 
     /** 查询所有实际出库表 */
@@ -88,6 +93,41 @@ public class InvoiceController extends BaseController {
         }
     }
 
+    /**
+     * @param file
+     * @param req
+     */
+    @RequestMapping("/ReadExcel")
+    public Object ReadExcel(@RequestParam("file")MultipartFile file, HttpServletRequest req,Model model){
+        try {
+            String path = (makeinventoryController.class.getResource("/").toString()).substring(6);
+            if (!file.isEmpty()) {
+                Streams.copy(file.getInputStream(), new FileOutputStream(path + "/" + file.getOriginalFilename()), true);
+            }
+            URL url = makeinventoryController.class.getResource("/" + file.getOriginalFilename());
+            List<List<String>> list = ReadXls.readxls(url.getFile());
+            Invoice invoice = new Invoice();
+            List<String> data = list.get(0);
+            for(int i = 0;i<data.size();i++){
+                invoice.setInName(data.get(0));
+                invoice.setStore(data.get(1));
+                invoice.setPhone(data.get(2));
+                invoice.setInOddnumber(data.get(3));
+                invoice.setInWhid(data.get(4));
+                invoice.setInNum(Double.valueOf(data.get(5)));
+                invoice.setInVolume(Double.valueOf(data.get(6)));
+                invoice.setTotalweigh(Double.valueOf(data.get(7)));
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MM");
+                invoice.setInTime(sdf.parse(data.get(8)));
+                invoice.setInSkumodel(data.get(9));
+            }
+            model.addAttribute("invoice",invoice);
+            }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "outbound/invoiceImport";
+    }
+
     /** 删除操作 */
     @ResponseBody
     @PostMapping(value = "invoice/delete")
@@ -111,9 +151,24 @@ public class InvoiceController extends BaseController {
     /** 更新操作 */
     @ResponseBody
     @PostMapping(value = "invoice/update")
-    public Object updateInvoice(Invoice invoice, String byTime) {
-        invoice.setInTime(TimeUtils.updateTime(byTime));
-        int result = invoiceService.updateInvoice(invoice);
+    public Object updateInvoice(Invoice invoice) {
+        Shipment shipment = new Shipment();
+        shipment.setShStoreid(invoice.getStore());
+        shipment.setShSkumodel(invoice.getInSkumodel());
+        shipment.setShPhone(invoice.getPhone());
+        shipment.setShSippingno(invoice.getInOddnumber());
+        shipment.setShWhid(invoice.getInWhid());
+        shipment.setShDamage(invoice.getDamage());
+        shipment.setShCause(invoice.getCause());
+        shipment.setShTime(new Date());
+        shipment.setShShnum(invoice.getInNum());
+        shipment.setShTotalweigh(invoice.getTotalweigh());
+        shipment.setShTotalvolume(invoice.getInVolume());
+        int result = shipmentService.addShipment(shipment);
+        Invoice invoice1 = new Invoice();
+        invoice1.setStatus(1);
+        invoice1.setInId(invoice.getInId());
+        invoiceService.updateInvoice(invoice1);
         if (result > 0) {
             return renderSuccess("更新成功!");
         } else {
@@ -126,39 +181,12 @@ public class InvoiceController extends BaseController {
         return "outbound/invoiceImport";
     }
 
-    /** 读取提交的Excel */
-    @PostMapping("readExcle")
-    public String readExcle(@RequestParam("file") MultipartFile file, Model model) {
-        String path = (AllotoutController.class.getResource("/").toString()).substring(6);
-        if (!file.isEmpty()) {
-            try {
-                Streams.copy(file.getInputStream(), new FileOutputStream(path + "/" + file.getOriginalFilename()), true);
-                URL url = GodownEntryController.class.getResource("/" + file.getOriginalFilename());
-                List<List<String>> lists = ReadXls.readxls(url.getFile());
-                Invoice invoice = new Invoice();
-                List<String> objects = lists.get(2);
-                for (int i = 0; i < objects.size(); i++) {
-                    invoice.setInName(objects.get(0));
-                    invoice.setInSkumodel(objects.get(1));
-                    invoice.setInNum(Double.valueOf(objects.get(2)));
-                    invoice.setInWhid(objects.get(3));
-                    invoice.setInOddnumber(objects.get(4));
-                    invoice.setInTime(TimeUtils.updateTime("".equals(objects.get(5)) ? null : objects.get(5)));
-                    invoice.setInVolume(Double.valueOf(objects.get(6)));
-                }
-                model.addAttribute("invoice", invoice);
-            } catch (Exception e) {
-                model.addAttribute("error", "请导入正确的数据!!!");
-                e.printStackTrace();
-            }
-        }
-        return "outbound/invoiceImport";
-    }
-
     @ResponseBody
     @PostMapping(value = "invoice.php")
     public Object importCrossDatabase(Invoice invoice, String byTime){
         invoice.setInTime(TimeUtils.updateTime(byTime));
+        invoice.setCause("");
+        invoice.setDamage(0);
         int result = invoiceService.importInvoice(invoice);
         if (result > 0) {
             return renderSuccess("添加成功!");

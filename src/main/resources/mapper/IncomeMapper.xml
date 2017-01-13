@@ -10,6 +10,22 @@
     <result column="iincome" jdbcType="DECIMAL" property="iincome" />
     <result column="ibalance" jdbcType="DECIMAL" property="ibalance" />
   </resultMap>
+  <resultMap type="com.wms.bean.vo.IncomeVo" id="IncomeMap">
+  	<result column="一月" property="one" />
+  	<result column="二月" property="two" />
+  	<result column="三月" property="three" />
+  	<result column="四月" property="four" />
+  	<result column="五月" property="five" />
+  	<result column="六月" property="six" />
+  	<result column="七月" property="seven" />
+  	<result column="八月" property="eight" />
+  	<result column="九月" property="nine" />
+  	<result column="十月" property="ten" />
+  	<result column="十一月" property="eleven" />
+  	<result column="十二月" property="twelve" />
+  	<result column="总额" property="count" />
+  </resultMap>
+  
   <sql id="Base_Column_List">
     iid, icause, itime, iabout, icount, iincome, ibalance
   </sql>
@@ -18,6 +34,18 @@
     <include refid="Base_Column_List" />
     from income
     where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByTime" resultMap="IncomeMap">
+    select 
+    sum(if(MONTH(itime)='01',iincome,0)) 一月,sum(if(MONTH(itime)='02',iincome,0)) 二月,
+       sum(if(MONTH(itime)='03',iincome,0)) 三月,sum(if(MONTH(itime)='04',iincome,0)) 四月,
+       sum(if(MONTH(itime)='05',iincome,0)) 五月,sum(if(MONTH(itime)='06',iincome,0)) 六月,
+       sum(if(MONTH(itime)='07',iincome,0)) 七月,sum(if(MONTH(itime)='08',iincome,0)) 八月,
+       sum(if(MONTH(itime)='09',iincome,0)) 九月,sum(if(MONTH(itime)='10',iincome,0)) 十月,
+       sum(if(MONTH(itime)='11',iincome,0)) 十一月,sum(if(MONTH(itime)='12',iincome,0)) 十二月,
+		sum(if(YEAR(itime)= #{Timeyears},iincome,0)) 总额
+    from income
+	where YEAR(itime)=#{Timeyears}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from income

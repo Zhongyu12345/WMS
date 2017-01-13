@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.wms.bean.Godown;
 import com.wms.bean.MakeInventory;
 import com.wms.commons.utils.ExcelToDisk;
+import com.wms.service.GodownService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +35,9 @@ public class CargoController extends BaseController{
 
     @Autowired
     private CargoService cargoService;
+
+    @Autowired
+    private GodownService godownService;
 
     /**
      * 跳转到cargo页面
@@ -138,13 +143,14 @@ public class CargoController extends BaseController{
      */
     @RequestMapping("/ToDiskExcelAll")
     @ResponseBody
-    public void ToDiskExcelAll(@RequestParam("cName") String cName,@RequestParam("cStorerid") String cStorerid,@RequestParam("cSupplierid") String cSupplierid,@RequestParam("cWhid") String cWhid,@RequestParam("cNum") String cNum,@RequestParam("cTotalweight") String cTotalweight
+    public void ToDiskExcelAll(@RequestParam("cName") String cName,@RequestParam("cStorerid") String cStorerid,@RequestParam("cWhid") String cWhid,@RequestParam("cNum") String cNum,@RequestParam("cTotalweight") String cTotalweight
             ,@RequestParam("cTotalvolume") String cTotalvolume,@RequestParam("cSkumodel") String cSkumodel,@RequestParam("cPhone") String cPhone, HttpServletResponse resp){
         ExcelToDisk<Cargo> ex = new ExcelToDisk<Cargo>();
-        String [] title = {"货物名称","货主","货主号码","供应商","出库单号","仓库编码","数量","总货毛重","总货体积","入库时间","货物型号"};
+        String [] title = {"货物名称","货主","货主号码","出库单号","仓库编码","数量","总货毛重","总货体积","入库时间","货物型号"};
         String cShippingno = OrderNumberUtil.generateOrderNo();
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Object data [] = {cName,cStorerid,cPhone,cSupplierid,cShippingno,cWhid,cNum,cTotalweight,cTotalvolume,s.format(new Date()),cSkumodel};
+        Godown godown = godownService.selectByPrimaryKey(Integer.valueOf(cWhid));
+        Object data [] = {cName,cStorerid,cPhone,cShippingno,godown.getGoWhid(),cNum,cTotalweight,cTotalvolume,s.format(new Date()),cSkumodel};
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
         ex.Excel(data,"货物出库单"+sdf.format(new Date())+".xls",title,resp);
     }

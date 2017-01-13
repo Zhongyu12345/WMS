@@ -23,4 +23,6 @@ public interface NoticeMapper {
     int updateByPrimaryKey(Notice notice);
 
     List<Notice> selectDataGrid(Pagination page, Map<String, Object> params);
+
+    Notice selectByDateUP();
 }

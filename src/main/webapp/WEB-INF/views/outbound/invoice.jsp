@@ -32,7 +32,7 @@
 </div>
 <div id="toolbar" style="display: none;">
     <shiro:hasPermission name="/invoice/import">
-        <a href="${path }/invoice/importInvoice.html" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-folder'">导入直接出库单</a>
+        <a href="${path }/invoice/importInvoice.html" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-folder'">导入出库单</a>
     </shiro:hasPermission>
     <shiro:hasPermission name="/invoice/insert">
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">手动添加</a>
@@ -50,45 +50,43 @@
             pagination: true,
             singleSelect: true,
             height: '25',
-            idField: 'id',
+            idField: 'inId',
             sortName: 'inId',
             sortOrder: 'asc',
             pageSize: 20,
             pageList: [10, 20, 30, 40, 50, 100, 200, 300, 400, 500],
-            columns: [[/*{
+            columns: [[{
                 width: '100',
-                title: '单号',
-                field: 'inId',
-                sortable: true
-            },*/ {
-                width: '150',
                 title: '货物名称',
                 field: 'inName',
                 sortable: true
             }, {
-                width: '150',
+                width: '80',
+                title: '货主',
+                field: 'store',
+                sortable: true
+            }, {
+                width: '120',
+                title: '货主号码',
+                field: 'phone',
+                sortable: true
+            },{
+                width: '100',
                 title: '货物型号',
                 field: 'inSkumodel',
                 sortable: true
             }, {
-                width: '100',
+                width: '80',
                 title: '发货数量',
                 field: 'inNum',
                 sortable: true
             }, {
-                width: '100',
+                width: '70',
                 title: '仓库',
-                field: 'godowns',
+                field: 'inWhid',
                 sortable: true,
-                formatter: function (value) {
-                    var roles = [];
-                    for(var i = 0; i< value.length; i++) {
-                        roles.push(value[i].goWhid);
-                    }
-                    return(roles.join('\n'));
-                }
             }, {
-                width: '150',
+                width: '130',
                 title: '发货单号',
                 field: 'inOddnumber',
                 sortable: true
@@ -99,20 +97,29 @@
                 sortable: true,
                 formatter: formatDatebox
             }, {
-                width: '100',
+                width: '80',
                 title: '货物体积',
                 field: 'inVolume',
+                sortable: true
+            },  {
+                width: '80',
+                title: '货物毛重',
+                field: 'totalweigh',
                 sortable: true
             }, {
                 field: 'action',
                 title: '操作',
-                width: 130,
+                width: 150,
                 formatter: function (value, row, index) {
                     var str = '';
-                    <shiro:hasPermission name="/invoice/update">
-                    str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-edit" data-options="plain:true,iconCls:\'icon-edit\'" onclick="editFun(\'{0}\');" >编辑</a>', row.inId);
+                    <shiro:hasPermission name="/crossDatabase/update">
+                    if(row.status == 0){
+                        str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-ok" data-options="plain:true,iconCls:\'icon-ok\'" onclick="editFun(\'{0}\');" >确认发货</a>', row.inId);
+                    }else{
+                        str += $.formatString('<span style="height: 24px; color:red;" href="javascript:void(0)" class="user-easyui-linkbutton-oked">已发货</span>');
+                    }
                     </shiro:hasPermission>
-                    <shiro:hasPermission name="/invoice/delete">
+                    <shiro:hasPermission name="/crossDatabase/delete">
                     str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
                     str += $.formatString('<a style="height: 24px;" href="javascript:void(0)" class="user-easyui-linkbutton-del" data-options="plain:true,iconCls:\'icon-del\'" onclick="deleteFun(\'{0}\');" >删除</a>', row.inId);
                     </shiro:hasPermission>
@@ -120,7 +127,8 @@
                 }
             }]],
             onLoadSuccess: function (data) {
-                $('.user-easyui-linkbutton-edit').linkbutton({text: '编辑', plain: true, iconCls: 'icon-edit'});
+                $('.user-easyui-linkbutton-ok').linkbutton({text: '确认发货', plain: true, iconCls: 'icon-ok'});
+                $('.user-easyui-linkbutton-oked').linkbutton({text: '已发货', plain: true, iconCls: 'icon-ok'});
                 $('.user-easyui-linkbutton-del').linkbutton({text: '删除', plain: true, iconCls: 'icon-del'});
             },
             toolbar: '#toolbar'
@@ -179,7 +187,7 @@
         parent.$.modalDialog({
             title: '修改直接出库单',
             width: 500,
-            height: 222,
+            height: 300,
             href: '${path }/invoice/getEditPage?id=' + id,
             buttons: [{
                 text: '确认提交',

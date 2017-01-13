@@ -10,7 +10,7 @@
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
 <div style="height:30px;padding:20px;">
-    <form action="${path }/invoice/readExcle" method="post" enctype="multipart/form-data" >
+    <form action="${path }/invoice/ReadExcel" method="post" enctype="multipart/form-data" >
         <input class="easyui-filebox" id="file" name="file" style="width:250px;" data-options="prompt:'请选择直接出库单...'" >
         <input class="easyui-linkbutton" style="width:100px;height:24px;" type="submit" value="导入直接出库单" />
     </form>
@@ -24,13 +24,16 @@
                 <td><input name="inSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.inSkumodel}"></td>
             </tr>
             <tr>
+                <td>货主</td>
+                <td><input name="store" type="text" placeholder="请输入货主姓名" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.store}"></td>
+                <td>货主号码</td>
+                <td><input name="phone" type="text" placeholder="请输入货主号码" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.phone}"></td>
+            </tr>
+            <tr>
                 <td>调拨数量</td>
                 <td><input name="inNum" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.inNum}"></td>
                 <td>仓库编号</td>
                 <td><input name="inWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.inWhid}"></td>
-                <!--
-                <td><input name="inWhid" id="selectCombobox" class="easyui-combobox"  data-options="required:true,validType:'length[1,10]',novalidate:true" /></td>
-                -->
             </tr>
             <tr>
                 <td>货物体积</td>
@@ -39,6 +42,8 @@
                 <td><input name="inOddnumber" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.inOddnumber}"></td>
             </tr>
             <tr>
+                <td>货物毛重</td>
+                <td><input name="totalweigh" type="text" placeholder="请输入货物毛重" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.totalweigh}"></td>
                 <td>调拨时间</td>
                 <td><input name="byTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})" readonly="readonly" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${invoice.inTime}" />"/></td>
             </tr>

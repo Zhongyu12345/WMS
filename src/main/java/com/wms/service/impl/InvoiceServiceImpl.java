@@ -53,6 +53,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    public int insert(Invoice invoice) {
+        return invoiceMapper.insert(invoice);
+    }
+
+    @Override
     public int deleteById(Integer id) {
         Invoice invoice = selectById(id);
         if (invoice != null) {
@@ -78,7 +83,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Transactional
     @Override
     public int importInvoice(Invoice invoice) {
-        //noinspection deprecation
         godownService.reduction(invoice.getInWhid(), invoice.getInVolume());
         return invoiceMapper.insert(invoice);
     }

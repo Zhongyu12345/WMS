@@ -10,6 +10,21 @@
     <result column="ppay" jdbcType="DECIMAL" property="ppay" />
     <result column="punexpense" jdbcType="DECIMAL" property="punexpense" />
   </resultMap>
+  <resultMap type="com.wms.bean.vo.IncomeVo" id="IncomeMap">
+  	<result column="一月" property="one" />
+  	<result column="二月" property="two" />
+  	<result column="三月" property="three" />
+  	<result column="四月" property="four" />
+  	<result column="五月" property="five" />
+  	<result column="六月" property="six" />
+  	<result column="七月" property="seven" />
+  	<result column="八月" property="eight" />
+  	<result column="九月" property="nine" />
+  	<result column="十月" property="ten" />
+  	<result column="十一月" property="eleven" />
+  	<result column="十二月" property="twelve" />
+  	<result column="总额" property="count" />
+  </resultMap>
   <sql id="Base_Column_List">
     pid, pcause, ptime, pabout, pcount, ppay, punexpense
   </sql>
@@ -18,6 +33,18 @@
     <include refid="Base_Column_List" />
     from pay
     where pid = #{pid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByTime" resultMap="IncomeMap">
+    select 
+    sum(if(MONTH(ptime)='01',ppay,0)) 一月,sum(if(MONTH(ptime)='02',ppay,0)) 二月,
+       sum(if(MONTH(ptime)='03',ppay,0)) 三月,sum(if(MONTH(ptime)='04',ppay,0)) 四月,
+       sum(if(MONTH(ptime)='05',ppay,0)) 五月,sum(if(MONTH(ptime)='06',ppay,0)) 六月,
+       sum(if(MONTH(ptime)='07',ppay,0)) 七月,sum(if(MONTH(ptime)='08',ppay,0)) 八月,
+       sum(if(MONTH(ptime)='09',ppay,0)) 九月,sum(if(MONTH(ptime)='10',ppay,0)) 十月,
+       sum(if(MONTH(ptime)='11',ppay,0)) 十一月,sum(if(MONTH(ptime)='12',ppay,0)) 十二月,
+		sum(if(YEAR(ptime)= #{Timeyears},ppay,0)) 总额
+    from pay
+	where YEAR(ptime)=#{Timeyears}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from pay

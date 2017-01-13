@@ -1,4 +1,7 @@
 package com.wms.controller;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +47,21 @@ public class NoticeController  extends BaseController {
         noticeService.selectDataGrid(pageinfo);
         return pageinfo;
     }
+
+    //公告查询
+
+    @RequestMapping("/message")
+    public String mes(Model mold){
+        Notice n = noticeService.selectByDateUP();
+        UserVo user = userService.selectVoById(Long.valueOf(n.getUserid()));
+        n.setUsername(user.getName());
+        n.setStringtime(updateTime(n.getNtime()));
+        mold.addAttribute("notice",n);
+        mold.addAttribute("mesint",1);
+        return "index";
+    }
+
+
 
 
 
@@ -97,6 +115,13 @@ public class NoticeController  extends BaseController {
             return renderSuccess("删除成功");
         }
         return  renderError("修改失败");
+    }
+
+    private String updateTime(Date time) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String date = null;
+        date = format.format(time);
+        return date;
     }
 
 }

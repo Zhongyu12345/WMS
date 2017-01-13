@@ -45,7 +45,7 @@
             and in_name like concat('%', #{name}, '%')
         </if>
         <if test="startTime != null">
-            <![CDATA[ and in_time >= #{startTime} ]]>
+            <![CDATA[ in_time >= #{startTime} ]]>
         </if>
         <if test="endTime != null">
             <![CDATA[ and in_time <= #{endTime} ]]>
