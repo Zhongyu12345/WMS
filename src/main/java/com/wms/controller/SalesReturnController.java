@@ -88,7 +88,7 @@ public class SalesReturnController extends BaseController {
 	
 	@PostMapping("/save")
 	@ResponseBody
-	public Object save(SalesReturn salesreturn, String time){
+	public Object save(SalesReturn salesreturn, String time,String nameWhid){
 		salesreturn.setSrTime(updateTime(time));
 		int a = salesReturnService.insert(salesreturn);
 		Godown g = godownService.selectByPrimaryKey(salesreturn.getSrWhid());
