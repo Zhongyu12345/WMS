@@ -75,7 +75,6 @@ public class TariffController extends BaseController{
 	@RequestMapping("delete")
 	@ResponseBody
 	public Object deleteTariff(@RequestParam("id")int id){
-		System.out.println("id:-------------"+id);
 		int a = tariffService.deleteByPrimaryKey(id);
 		if(a>0){
 			return renderSuccess("删除成功");

@@ -38,7 +38,7 @@
         <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">手动添加</a>
     </shiro:hasPermission>
 </div>
-<script src="${path }/static/js/formatTime.js"></script>
+
 <script>
     var dataGrid;
     $(function () {
