@@ -18,6 +18,8 @@ public interface InvoiceService {
 
     int addInvoice(Invoice invoice);
 
+    int insert(Invoice invoice);
+
     int deleteById(Integer id);
 
     int updateInvoice(Invoice invoice);

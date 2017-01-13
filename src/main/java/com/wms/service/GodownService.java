@@ -34,6 +34,6 @@ public interface GodownService {
      * @return
      * @deprecated 仓库增加仓库容量操作
      */
-    int reduction(String id, double volume);
+    int reduction(String id, Double volume);
 
 }

@@ -60,8 +60,8 @@ public class GodownServiceImpl implements GodownService {
     }
 
     @Override
-    public int reduction(String id, double volume) {
-    	Godown godowns = godownMapper.selectByWhid(id);
+    public int reduction(String id, Double volume) {
+        Godown godowns = godownMapper.selectByWhid(id);
         Godown godown = selectById(godowns.getGoId());
         godown.setGoUsevolume(godown.getGoUsevolume() - volume);
         godown.setGoRdvolume(godown.getGoRdvolume() + volume);

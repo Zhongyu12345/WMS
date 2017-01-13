@@ -66,4 +66,12 @@
         <property name="objectMapper" ref="jacksonObjectMapper" />
     </bean>
 
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <bean class="com.wms.commons.utils.DateConverter"></bean>
+        </property>
+    </bean>
+
+    <mvc:annotation-driven conversion-service="conversionService"/>
+
 </beans>

@@ -13,8 +13,7 @@
                     progressClose();
                 }
                 return isValid;
-            },
-            success: function (result) {
+            },success: function (result) {
                 progressClose();
                 result = $.parseJSON(result);
                 if (result.success) {
@@ -53,6 +52,12 @@
                     <td><input name="inSkumodel" type="text" placeholder="请输入货物型号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.inSkumodel}"></td>
                 </tr>
                 <tr>
+                    <td>货主</td>
+                    <td><input name="store" type="text" placeholder="请输入货主姓名" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.store}"></td>
+                    <td>货主号码</td>
+                    <td><input name="phone" type="text" placeholder="请输入货主号码" class="easyui-validatebox" data-options="required:true,validType:'length[1,13]',novalidate:true" value="${invoice.phone}"></td>
+                </tr>
+                <tr>
                     <td>发货数量</td>
                     <td><input name="inNum" type="text" placeholder="请输入发货数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.inNum}"></td>
                     <td>仓库编号</td>
@@ -67,6 +72,8 @@
                 <tr>
                     <td>货物体积</td>
                     <td><input name="inVolume" type="text" placeholder="请输入货物体积" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.inVolume}"></td>
+                    <td>货物毛重</td>
+                    <td><input name="totalweigh" type="text" placeholder="请输入货物毛重" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.totalweigh}"></td>
                 </tr>
             </table>
         </form>

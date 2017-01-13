@@ -6,6 +6,7 @@ import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.DigestUtils;
 import com.wms.commons.utils.StringUtils;
 import com.wms.service.IUserService;
+import javafx.application.Application;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -101,12 +102,11 @@ public class LoginController extends BaseController {
         token.setRememberMe(true);
         try {
             user.login(token);
-
-            HttpSession session = req.getSession();
+            ServletContext context = req.getSession().getServletContext();
             UserVo uservo = iUserService.selectByloginname(username);
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            session.setAttribute("time",sdf.format(uservo.getOuttime()));
+            context.setAttribute("time",sdf.format(uservo.getOuttime()));
 
             User users = new User();
             users.setOuttime(new Date());
