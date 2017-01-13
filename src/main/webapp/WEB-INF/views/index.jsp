@@ -15,7 +15,7 @@
     $(function() {
         var a = '${mesint}';
         if(a!=1){
-            window.location.href = '${path }/notice/message';
+       		window.location.href = '${path }/notice/message';
         }
 
         index_layout = $('#index_layout').layout({

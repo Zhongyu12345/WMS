@@ -58,7 +58,7 @@
     from godown_entry
     where g_id = #{gId,jdbcType=INTEGER}
   </select>
-  <select id="selectByNo" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByNo" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from godown_entry
