@@ -54,21 +54,28 @@
                 }, {
                     width : '70',
                     title : '仓库编码',
-                    field : 'cWhid',
-                    sortable : true
+                    field : 'godowns',
+                    sortable : true,
+                    formatter: function (value) {
+                        var roles = [];
+                        for(var i = 0; i< value.length; i++) {
+                            roles.push(value[i].goWhid);
+                        }
+                        return(roles.join('\n'));
+                    }
                 },{
-                    width : '60',
-                    title : '数量',
+                    width : '80',
+                    title : '数量<a style="color:blue;">(个)</a>',
                     field : 'cNum',
                     sortable : true
                 },{
-                        width : '80',
-                        title : '总货毛重',
+                        width : '90',
+                        title : '总货毛重<a style="color:blue;">(/kg)</a>',
                         field : 'cTotalweight',
                         sortable : true
                 },{
-                    width : '60',
-                    title : '总货体积',
+                    width : '90',
+                    title : '总货体积<a style="color:blue;">(m³)</a>',
                     field : 'cTotalvolume',
                     sortable : true
                 },{

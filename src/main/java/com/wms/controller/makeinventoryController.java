@@ -18,9 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.wms.bean.Adjust;
 import com.wms.bean.Cargo;
+import com.wms.bean.Godown;
 import com.wms.commons.utils.*;
 import com.wms.service.AdjustService;
 import com.wms.service.CargoService;
+import com.wms.service.GodownService;
 import jxl.Workbook;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
@@ -55,6 +57,9 @@ public class makeinventoryController extends BaseController{
 
     @Autowired
     private CargoService cargoService;
+
+    @Autowired
+    private GodownService godownService;
 
     @GetMapping("/selectpage")
     private String selectpage(){
@@ -168,9 +173,8 @@ public class makeinventoryController extends BaseController{
     public void ToDiskExcel(@RequestParam("data") String data[], HttpServletResponse resp){
         ExcelToDisk<MakeInventory> ex = new ExcelToDisk<MakeInventory>();
         String [] title = {"ID","货物名称","货物型号","仓库名称","实际盘点数量","盘点人"};
-        int id = Integer.valueOf(data[2]);
-        Cargo cargo = cargoService.selectByid(id);
-        Object arr[]={data[0],data[1],cargo.getcName(),data[3],data[4],data[5]};
+        Godown godown = godownService.selectByPrimaryKey(Integer.valueOf(data[2]));
+        Object arr[]={data[0],data[1],godown.getGoWhid(),data[3],data[4],data[5]};
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
         ex.Excel(arr,"盘点计划"+sdf.format(new Date())+".xls",title,resp);
     }
@@ -195,14 +199,20 @@ public class makeinventoryController extends BaseController{
                 Cargo cargo = cargoService.selectByPrimaryKey(Integer.valueOf(l.get(0)));
                 makeInventory.setMiId(Integer.valueOf(l.get(0)));
                 makeInventory.setMiName(l.get(1).toString());
-                makeInventory.setMiWhid(l.get(2).toString());
+                Godown godown = godownService.selectByWhid(l.get(2).toString());
+                makeInventory.setMiWhid(godown.getGoId()+"");
                 makeInventory.setMiSkumodel(l.get(3).toString());
                 makeInventory.setMiActual(Double.valueOf(l.get(4).toString()));
                 makeInventory.setMiNames(l.get(5).toString());
                 makeInventory.setMiNum(Double.valueOf(cargo.getcNum()));
                 makeInventory.setMiOrder(OrderNumberUtil.generateOrderNo());
                 makeInventory.setMiTime(new Date());
-                makeInventory.setMiStatus("0");
+                if(!Double.valueOf(l.get(4)).equals(Double.valueOf(cargo.getcNum()))){
+                    makeInventory.setMiStatus("0");
+                }else{
+                    makeInventory.setMiStatus("1");
+                }
+
             }
             makeInventoryService.insert(makeInventory);
         } catch (Exception e) {

@@ -36,12 +36,12 @@
                     sortable : true
                 },{
                     width : '100',
-                    title : '货物数量',
+                    title : '货物数量<a style="color:blue;">(个)</a>',
                     field : 'miNum',
                     sortable : true
                 },{
                     width : '100',
-                    title : '实际盘点数量',
+                    title : '实际盘点数量<a style="color:blue;">(个)</a>',
                     field : 'miActual',
                     sortable : true
                 },{
@@ -52,8 +52,15 @@
                 },{
                     width : '70',
                     title : '仓库编号',
-                    field : 'miWhid',
-                    sortable : true
+                    field : 'godowns',
+                    sortable : true,
+                    formatter: function (value) {
+                        var roles = [];
+                        for(var i = 0; i< value.length; i++) {
+                            roles.push(value[i].goWhid);
+                        }
+                        return(roles.join('\n'));
+                    }
                 },{
                     width : '130',
                     title : '盘点时间',

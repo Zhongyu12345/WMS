@@ -28,6 +28,13 @@
         from godown
         left join user on id = go_p
     </select>
+
+    <select id="selectByName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from godown
+        where go_whid=#{goWhid,jdbcType=VARCHAR}
+    </select>
 	
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
