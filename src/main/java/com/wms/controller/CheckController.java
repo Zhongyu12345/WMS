@@ -1,5 +1,6 @@
 package com.wms.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.wms.bean.GodownEntry;
 import com.wms.bean.MakeInventory;
+import com.wms.bean.Receiving;
 import com.wms.commons.base.BaseController;
 import com.wms.service.GodownEntryService;
 import com.wms.service.MakeInventoryService;
+import com.wms.service.ReceivingService;
 
 @Controller
 @RequestMapping("/check")
@@ -23,6 +26,9 @@ public class CheckController extends BaseController{
 	
 	@Autowired
 	private GodownEntryService godownEntryService;
+	
+	@Autowired
+	private ReceivingService recevingService;
 	
 	@Autowired
 	private MakeInventoryService makeinventoryService;
@@ -49,11 +55,22 @@ public class CheckController extends BaseController{
      * 入库计划差异数据
      * @return
      */
-    public Object selectReceiv(Model model,@RequestParam(value = "checknum") String checknum){
+    @GetMapping("select")
+    @ResponseBody
+    public List<Object> select(@RequestParam(value = "checknum") String checknum){
     	GodownEntry godownEntry = godownEntryService.selectByNo(checknum);
-    	model.addAttribute("godownEntry", godownEntry);
+    	Receiving receiving = recevingService.selectByNo(checknum);
+    	List<Object> list = new ArrayList<Object>();
+    	for(Object l:list){
+    		System.out.println("-------------------"+l);
+    	}
     	
-    	return null;
+    	list.add(godownEntry);
+    	list.add(receiving);
+    	ModelAndView model = new ModelAndView();
+    	model.addObject("list", list);
+    	model.setViewName("data/receivcheck");
+    	return list;
     }
     
     /**

@@ -95,8 +95,6 @@
                 rowStyler: function(value, row, index){
                     if (row.miStatus == "0"){
                         return 'color:red;';
-                    }else{
-                        return 'color:blue;';
                     }
                 },
                 onLoadSuccess:function(data){
