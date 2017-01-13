@@ -17,6 +17,11 @@
     from compay
     where caid = #{caid,jdbcType=INTEGER}
   </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from compay
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from compay
     where caid = #{caid,jdbcType=INTEGER}

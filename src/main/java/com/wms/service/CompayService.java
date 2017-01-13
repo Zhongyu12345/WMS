@@ -1,9 +1,9 @@
-package com.wms.dao;
+package com.wms.service;
 
 import com.wms.bean.Compay;
 
-public interface CompayMapper {
-    int deleteByPrimaryKey(Integer caid);
+public interface CompayService {
+	int deleteByPrimaryKey(Integer caid);
 
     int insert(Compay record);
 
