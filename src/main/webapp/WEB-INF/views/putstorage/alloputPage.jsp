@@ -53,7 +53,7 @@
                 sortable : true
             },{
                 width : '80',
-                title : '仓库编号',
+                title : '仓库',
                 align:'center',
                 field: 'godowns',
                 sortable: true,
@@ -167,7 +167,13 @@
     </script>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
-    <div data-options="region:'north',border:true" style="height: 30px; overflow: hidden;background-color: #fff">
+    <div data-options="region:'north',border:true" style="height: 100px; overflow: hidden;background-color: #fff">
+    <div style="height:20px;padding:20px;">
+		<form action="${path }/allotput/readExcle" method="post" enctype="multipart/form-data" >
+			<input class="easyui-filebox" id="file" name="file" style="width:250px;" data-options="prompt:'请选择调拨单...'" >
+			<input class="easyui-linkbutton" style="width:100px;height:24px;" type="submit" value="添加调拨单" />
+		</form>
+	</div>
         <form id="searchForm">
             <table>
                 <tr>
