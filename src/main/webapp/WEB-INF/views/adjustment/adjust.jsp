@@ -4,6 +4,7 @@
 <html>
 <head>
     <%@ include file="/commons/basejs.jsp" %>
+
     <meta http-equiv="X-UA-Compatible" content="edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>调整出入库单查询</title>
@@ -62,20 +63,21 @@
                     align:'center',
                     title : '调整时间',
                     field : 'jTime',
-                    sortable : true
+                    sortable : true,
+                    formatter: formatDatebox
                 },{
-                        width : '100',
-                        align:'center',
-                        title : '调入仓库',
-                        field : 'godowns',
-                        sortable : true,
-                        formatter: function (value) {
-                            var roles = [];
-                            for(var i = 0; i< value.length; i++) {
-                                roles.push(value[i].goWhid);
-                            }
-                            return(roles.join('\n'));
+                    width : '100',
+                    align:'center',
+                    title : '调入仓库',
+                    field : 'godowns',
+                    sortable : true,
+                    formatter: function (value) {
+                        var roles = [];
+                        for(var i = 0; i< value.length; i++) {
+                            roles.push(value[i].goWhid);
                         }
+                        return(roles.join('\n'));
+                    }
                 }, {
                         width : '80',
                         title : '货物体积<a style="color:blue;">(m³)</a>',

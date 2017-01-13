@@ -65,7 +65,8 @@
                     width : '130',
                     title : '盘点时间',
                     field : 'miTime',
-                    sortable : true
+                    sortable : true,
+                    formatter: formatDatebox
                 },{
                     width : '50',
                     title : '状态',

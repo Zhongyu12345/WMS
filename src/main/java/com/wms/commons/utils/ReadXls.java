@@ -82,57 +82,58 @@ public class ReadXls {
 		return null;
 	}
 	
-	    public static String toStringxlsx(XSSFCell cell) {
-	        switch (cell.getCellType()) {
-	            case Cell.CELL_TYPE_BLANK:
-	                return "";
-	            case Cell.CELL_TYPE_BOOLEAN:
-	                return cell.getBooleanCellValue() ? "TRUE" : "FALSE";
-	            case Cell.CELL_TYPE_ERROR:
-	                return ErrorEval.getText(cell.getErrorCellValue());
-	            case Cell.CELL_TYPE_FORMULA:
-	                return cell.getCellFormula();
-	            case Cell.CELL_TYPE_NUMERIC:
-	                if (DateUtil.isCellDateFormatted(cell)) {
-	                    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	                    return sdf.format(cell.getDateCellValue());
-	                }
-	                if(String.valueOf(cell.getNumericCellValue()).length()>8){
-						DecimalFormat df = new DecimalFormat("0");
-						return df.format(cell.getNumericCellValue());
-					}
-					return String.valueOf((int)cell.getNumericCellValue());
-	            case Cell.CELL_TYPE_STRING:
-					return cell.getRichStringCellValue().toString();
-	            default:
-	                return "Unknown Cell Type: " + cell.getCellType();
-	        }
-	    }
-	    
-	    public static String toStringxls(HSSFCell cell) {
-	        switch (cell.getCellType()) {
-	            case Cell.CELL_TYPE_BLANK:
-	                return "";
-	            case Cell.CELL_TYPE_BOOLEAN:
-	                return cell.getBooleanCellValue() ? "TRUE" : "FALSE";
-	            case Cell.CELL_TYPE_ERROR:
-	                return ErrorEval.getText(cell.getErrorCellValue());
-	            case Cell.CELL_TYPE_FORMULA:
-	                return cell.getCellFormula();
-	            case Cell.CELL_TYPE_NUMERIC:
-	                if (DateUtil.isCellDateFormatted(cell)) {
-	                    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	                    return sdf.format(cell.getDateCellValue());
-	                }
+	public static String toStringxlsx(XSSFCell cell) {
+		switch (cell.getCellType()) {
+			case Cell.CELL_TYPE_BLANK:
+				return "";
+			case Cell.CELL_TYPE_BOOLEAN:
+				return cell.getBooleanCellValue() ? "TRUE" : "FALSE";
+			case Cell.CELL_TYPE_ERROR:
+				return ErrorEval.getText(cell.getErrorCellValue());
+			case Cell.CELL_TYPE_FORMULA:
+				return cell.getCellFormula();
+			case Cell.CELL_TYPE_NUMERIC:
+				if (DateUtil.isCellDateFormatted(cell)) {
+					DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+					return sdf.format(cell.getDateCellValue());
+				}else{
 					if(String.valueOf(cell.getNumericCellValue()).length()>8){
 						DecimalFormat df = new DecimalFormat("0");
 						return df.format(cell.getNumericCellValue());
 					}
-					return String.valueOf((int)cell.getNumericCellValue());
-	            case Cell.CELL_TYPE_STRING:
-					return cell.getRichStringCellValue().toString();
-	            default:
-	                return "Unknown Cell Type: " + cell.getCellType();
-	        }
-	    }
+				}
+				return String.valueOf((int)cell.getNumericCellValue());
+			case Cell.CELL_TYPE_STRING:
+				return cell.getRichStringCellValue().toString();
+			default:
+				return "Unknown Cell Type: " + cell.getCellType();
+		}
+	}
+
+	public static String toStringxls(HSSFCell cell) {
+		switch (cell.getCellType()) {
+			case Cell.CELL_TYPE_BLANK:
+				return "";
+			case Cell.CELL_TYPE_BOOLEAN:
+				return cell.getBooleanCellValue() ? "TRUE" : "FALSE";
+			case Cell.CELL_TYPE_ERROR:
+				return ErrorEval.getText(cell.getErrorCellValue());
+			case Cell.CELL_TYPE_FORMULA:
+				return cell.getCellFormula();
+			case Cell.CELL_TYPE_NUMERIC:
+				if (DateUtil.isCellDateFormatted(cell)) {
+					DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					return sdf.format(cell.getDateCellValue());
+				}
+				if(String.valueOf(cell.getNumericCellValue()).length()>8){
+					DecimalFormat df = new DecimalFormat("0");
+					return df.format(cell.getNumericCellValue());
+				}
+				return String.valueOf((int)cell.getNumericCellValue());
+			case Cell.CELL_TYPE_STRING:
+				return cell.getRichStringCellValue().toString();
+			default:
+				return "Unknown Cell Type: " + cell.getCellType();
+		}
+	}
 }

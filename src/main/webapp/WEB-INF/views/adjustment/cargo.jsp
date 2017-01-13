@@ -69,10 +69,10 @@
                     field : 'cNum',
                     sortable : true
                 },{
-                        width : '90',
-                        title : '总货毛重<a style="color:blue;">(/kg)</a>',
-                        field : 'cTotalweight',
-                        sortable : true
+                    width : '90',
+                    title : '总货毛重<a style="color:blue;">(/kg)</a>',
+                    field : 'cTotalweight',
+                    sortable : true
                 },{
                     width : '90',
                     title : '总货体积<a style="color:blue;">(m³)</a>',
@@ -82,7 +82,8 @@
                     width : '150',
                     title : '入库时间',
                     field : 'cReceivedate',
-                    sortable : true
+                    sortable : true,
+                    formatter: formatDatebox
                 },{
                     width : '70',
                     title : '货物型号',
