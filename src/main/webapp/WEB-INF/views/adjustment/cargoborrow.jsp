@@ -61,7 +61,8 @@
                     width : '150',
                     title : '归还时间',
                     field : 'cbEndtime',
-                    sortable : true
+                    sortable : true,
+                    formatter: formatDatebox
                 },{
                     width : '90',
                     title : '是否归还',
