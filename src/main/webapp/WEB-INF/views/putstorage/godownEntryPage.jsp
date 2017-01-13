@@ -27,52 +27,62 @@
             frozenColumns : [ [ {
                 width : '80',
                 title : '货物名称',
+                align:'center',
                 field : 'gName',
                 sortable : true
             }, {
                 width : '80',
                 title : '货物型号',
+                align:'center',
                 field : 'gSkumodel',
                 sortable : true
             },  ] ],
             columns:[[{
 				    width : '80',
 				    title : '货主',
+				    align:'center',
 				    field : 'gStorerid',
 				    sortable : true
 				},{
 				    width : '100',
 				    title : '货主号码',
+				    align:'center',
 				    field : 'gPhone',
 				    sortable : true
 				},  {
 				    width : '100',
 				    title : '供应商',
+				    align:'center',
 				    field : 'gSupplierid',
 				    sortable : true,
 				}, {
 				    width : '80',
 				    title : '客户托单号',
+				    align:'center',
 				    field : 'gSippingno',
 				    sortable : true
 				}, {
 				    width : '80',
 				    title : '入库数量<a style="color:blue;">(个)</a>',
+				    align:'center',
 				    field : 'gNumber',
 				    sortable : true
 				}, {
 				    width : '80',
 				    title : '入库重量<a style="color:blue;">(/kg)</a>',
+				    align:'center',
 				    field : 'gHeavy',
 				    sortable : true
 				}, {
 				    width : '80',
 				    title : '入库体积<a style="color:blue;">(m³)</a>',
+				    align:'center',
 				    field : 'gNum',
 				    sortable : true
 				}, {
 				    width : '60',
 				    title : '是否越库',
+				    align:'center',
 				    field : 'gCrossflag',
 				    sortable : true,
 				    formatter : function(value, row, index) {
@@ -86,6 +96,7 @@
 				},  {
 				    width : '60',
 				    title : '是否整进',
+				    align:'center',
 				    field : 'gDirectflag',
 				    sortable : true,
 				    formatter : function(value, row, index) {
@@ -99,11 +110,14 @@
 				},  {
 				    width : '120',
 				    title : '计划入库时间',
+				    align:'center',
 				    field : 'gTime',
-				    sortable : true
+				    sortable : true,
+				    formatter: formatDatebox
 				},   {
 	                field : 'action',
 	                title : '操作',
+	                align:'center',
 	                width : 130,
 	                formatter : function(value, row, index) {
 	                    var str = '';

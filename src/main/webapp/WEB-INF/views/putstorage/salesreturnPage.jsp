@@ -29,31 +29,37 @@
             columns : [ [ {
                 width : '100',
                 title : '货物名称',
+                align:'center',
                 field : 'srName',
                 sortable : true
             }, {
                 width : '100',
                 title : '客户托单号',
+                align:'center',
                 field : 'srSipping',
                 sortable : true
             } , {
                 width : '80',
                 title : '客户',
+                align:'center',
                 field : 'srStorerid',
                 sortable : true
             } , {
                 width : '90',
                 title : '客户电话',
+                align:'center',
                 field : 'srPhone',
                 sortable : true
             } ,{
                 width : '100',
                 title : '货物型号',
+                align:'center',
                 field : 'srSkumodel',
                 sortable : true
             } ,{
                 width : '80',
                 title : '仓库',
+                align:'center',
                 field: 'godowns',
                 sortable: true,
                 formatter: function (value) {
@@ -66,26 +72,32 @@
             } , {
                 width : '80',
                 title : '退货数量<a style="color:blue;">(个)</a>',
+                align:'center',
                 field : 'srNum',
                 sortable : true
             } ,  {
                 width : '80',
                 title : '退货体积<a style="color:blue;">(m³)</a>',
+                align:'center',
                 field : 'srVolume',
                 sortable : true
             } ,  {
                 width : '100',
                 title : '退货原因',
+                align:'center',
                 field : 'srCause',
                 sortable : true
             } ,   {
                 width : '120',
                 title : '退货时间',
+                align:'center',
                 field : 'srTime',
-                sortable : true
+                sortable : true,
+                formatter: formatDatebox
             } ,    {
                 field : 'action',
                 title : '操作',
+                align:'center',
                 width : 130,
                 formatter : function(value, row, index) {
                     var str = '';
