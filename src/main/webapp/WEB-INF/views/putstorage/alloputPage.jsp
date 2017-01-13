@@ -29,27 +29,32 @@
             columns : [ [ {
                 width : '100',
                 title : '货物名称',
+                align:'center',
                 field : 'apName',
                 sortable : true
             }, {
                 width : '100',
                 title : '货物型号',
+                align:'center',
                 field : 'apSkumodel',
                 sortable : true
             },{
                 width : '80',
                 title : '调拨数量',
+                align:'center',
                 field : 'apNum',
                 sortable : true
             }, 
             {
                 width : '80',
                 title : '货物体积',
+                align:'center',
                 field : 'apVolume',
                 sortable : true
             },{
                 width : '80',
                 title : '仓库编号',
+                align:'center',
                 field: 'godowns',
                 sortable: true,
                 formatter: function (value) {
@@ -62,16 +67,20 @@
             },{
                 width : '100',
                 title : '调拨单号',
+                align:'center',
                 field : 'apSipping',
                 sortable : true
             },{
                 width : '120',
                 title : '调拨时间',
+                align:'center',
                 field : 'apTime',
-                sortable : true
+                sortable : true,
+                formatter: formatDatebox
             },{
                 field : 'action',
                 title : '操作',
+                align:'center',
                 width : 130,
                 formatter : function(value, row, index) {
                     var str = '';
