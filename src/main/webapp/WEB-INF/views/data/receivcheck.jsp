@@ -1,26 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/commons/global.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <%@ include file="/commons/basejs.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>入库计划差异表</title>
+<title>盘点差异表</title>
 
 <script type="text/javascript" src="${staticPath }/static/js/jquery-1.8.3.min.js"></script>
 
 <script type="text/javascript">
-	$(function () {
-	    var chart = $('#container').highcharts({
-	        data: {
-	            table: 'datatable'
-	        },
+	
+	var ochart; 
+	var options;
+	
+	
+	options ={
 	        chart: {
+	        	renderTo: 'container',
 	            type: 'column'
 	        },
 	        title: {
-	            text: '入库计划差异统计表'
+	            text: '入库计划差异统计表',
+	            	style: {  
+	                    margin: '10px 100px 0 0', // center it  
+	                    font: 'normal 25px Verdana, sans-serif'//设置标题字体的样式  
+	                } 
 	        },
+	        credits: { 
+	        	enabled: false //不显示LOGO 
+	        },
+	        xAxis: {
+                categories: ['计划入库数量','实际入库数量','差异数量']
+            },
 	        yAxis: {
 	            allowDecimals: false,
 	            title: {
@@ -28,21 +41,39 @@
 	            }
 	        },
 	        tooltip: {
-	            formatter: function () {
-	                return '<b>' + this.series.name + '</b><br/>' +
-	                    this.point.y + ' ' + this.point.name.toLowerCase();
-	            }
-	        }
-	    });
-	});
-
+	        	pointFormat: '{series.name}: <b>{point.y:.1f} </b>',
+                shared: false,//节点数据框共享
+                enabled: true,//每个节点显示数据框
+                formatter: function() {//格式化每个节点数据框
+                    return '<b>'+ this.series.name +'</b>数量: <b>'+ this.y;
+                }
+	        },
+	        series: []
+	    };
+	
     function searchFun() {
-        window.location.reload();
+    	var order = document.getElementById("num").value;
+    	ochart = new Highcharts.Chart(options);
+    	$.ajax({
+    		mothod : 'post',
+    		dataType : 'json',
+    		url :'${path}/check/select?checknum='+order,
+    		success :function(data) {
+    	            var oseries ={
+    	            	name : data[0].gName,
+    	            	data : eval("[" + parseInt(data[0].gNum) + ","+parseInt(data[1].rNum)+","+
+    	            	              (parseInt(data[1].rNum)-parseInt(data[0].gNum))+"]")
+    	            };
+   	            ochart.addSeries(oseries);     
+    		}
+    	});
+    	ochart.hideLoading();
     }
     function cleanFun() {
         $('#searchForm input').val('');
         window.location.reload();
     }
+   
 </script>		
 </head>
 <body>
@@ -54,9 +85,9 @@
         <form id="searchForm">
             <table>
                 <tr>
-                    <th>计划入库单号:</th>
+                    <th>计划单号:</th>
                     <td>
-                    <input type="text" name="checknum" placeholder="请输入单号"/>
+                    <input type="text" id="num" name="checknum" placeholder="请输入单号"/>
                     <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
                     </td>
                 </tr>
@@ -65,47 +96,5 @@
     </div>
 	<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 	
-	<table id="datatable">
-	    <thead>
-	        <tr>
-	            <th></th>
-	            <th>账上数量</th>
-	            <th>实际数量</th>
-	            <th>差异数</th>
-	        </tr>
-	    </thead>
-	    <tbody>
-	        <tr>
-	            <th>Apples</th>
-	            <td>3</td>
-	            <td>4</td>
-	            <td>1</td>
-	        </tr>
-	        <tr>
-	            <th>Pears</th>
-	            <td>2</td>
-	            <td>0</td>
-	            <td>2</td>
-	        </tr>
-	        <tr>
-	            <th>Plums</th>
-	            <td>5</td>
-	            <td>11</td>
-	            <td>6</td>
-	        </tr>
-	        <tr>
-	            <th>Bananas</th>
-	            <td>1</td>
-	            <td>1</td>
-	            <td>0</td>
-	        </tr>
-	        <tr>
-	            <th>Oranges</th>
-	            <td>2</td>
-	            <td>4</td>
-	            <td>2</td>
-	        </tr>
-	    </tbody>
-	</table>
 </body>
 </html>
