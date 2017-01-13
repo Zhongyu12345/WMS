@@ -14,6 +14,14 @@
     <result column="c_receivedate" jdbcType="TIMESTAMP" property="cReceivedate" />
     <result column="c_SKUmodel" jdbcType="VARCHAR" property="cSkumodel" />
     <result column="c_phone" jdbcType="VARCHAR" property="cPhone" />
+    <collection property="godowns" ofType="com.wms.bean.Godown">
+      <id column="go_id" jdbcType="INTEGER" property="goId"/>
+      <result column="go_whid" jdbcType="VARCHAR" property="goWhid"/>
+      <result column="go_p" jdbcType="VARCHAR" property="goP"/>
+      <result column="go_volume" jdbcType="DOUBLE" property="goVolume"/>
+      <result column="go_usevolume" jdbcType="DOUBLE" property="goUsevolume"/>
+      <result column="go_rdvolume" jdbcType="DOUBLE" property="goRdvolume"/>
+    </collection>
   </resultMap>
   <sql id="Base_Column_List">
     c_id, c_name, c_storerid, c_supplierid, c_shippingNO, c_whid, c_num, c_totalweight, 
@@ -42,20 +50,18 @@
   
   <select id="select" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from cargo
-    <where>
-      c_num != 0
+    c.*,g.*
+    from cargo c,godown g where c.c_whid= g.go_id
+       and c_num != 0
       <if test="SKM != null and SKM != ''">
          and c_SKUmodel = #{SKM}
       </if>
       <if test="start != null">
-        <![CDATA[  c_receivedate >= #{start} ]]>
+         and <![CDATA[  c_receivedate >= #{start} ]]>
       </if>
       <if test="end != null">
         <![CDATA[ and c_receivedate <= #{end} ]]>
       </if>
-    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cargo

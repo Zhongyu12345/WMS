@@ -184,7 +184,7 @@
                             可以满足电商企业精细化的库存管理需求，提升仓储操作的工作效率。
                         </div>
                     </div>
-                </div>、
+                </div>
             </div>
         </div>
         <div data-options="region:'south',border:false" style="height: 30px;line-height:30px; overflow: hidden;text-align: center;background-color: #eee" >Copyright © 2017 技术支持 <a href="http://www.htit-china.com/" target="_blank">宏图软件教育</a></div>

@@ -1,6 +1,8 @@
 package com.wms.bean;
 
 import java.util.Date;
+import java.util.List;
+
 import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -35,6 +37,8 @@ public class Cargo {
 	private Date createdateStart;
 
 	private Date createdateEnd;
+
+    private List<Godown> godowns;
 
     /**
 	 * 不要
@@ -164,5 +168,13 @@ public class Cargo {
 
     public void setcPhone(String cPhone) {
         this.cPhone = cPhone;
+    }
+
+    public List<Godown> getGodowns() {
+        return godowns;
+    }
+
+    public void setGodowns(List<Godown> godowns) {
+        this.godowns = godowns;
     }
 }

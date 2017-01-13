@@ -30,42 +30,57 @@
                 columns : [ [ {
                     width : '80',
                     title : '货物名称',
+                    align:'center',
                     field : 'jName',
                     sortable : true
                 }, {
                     width : '100',
                     title : '货物编号',
+                    align:'center',
                     field : 'jSkumodel',
                     sortable : true
                 },{
-                    width : '70',
-                    title : '调整数量',
+                    width : '80',
+                    align:'center',
+                    title : '调整数量<a style="color:blue;">(个)</a>',
                     field : 'jNum',
                     sortable : true
                 },  {
                     width : '50',
+                    align:'center',
                     title : '调整人',
                     field : 'jNames',
                     sortable : true
                 }, {
                     width : '180',
+                    align:'center',
                     title : '调整原因',
                     field : 'jCause',
                     sortable : true
                 },{
                     width : '150',
+                    align:'center',
                     title : '调整时间',
                     field : 'jTime',
                     sortable : true
                 },{
                         width : '100',
+                        align:'center',
                         title : '调入仓库',
-                        field : 'jWhid',
-                        sortable : true
+                        field : 'godowns',
+                        sortable : true,
+                        formatter: function (value) {
+                            var roles = [];
+                            for(var i = 0; i< value.length; i++) {
+                                roles.push(value[i].goWhid);
+                            }
+                            return(roles.join('\n'));
+                        }
                 }, {
-                        width : '70',
-                        title : '货物体积',
+                        width : '80',
+                        title : '货物体积<a style="color:blue;">(m³)</a>',
                         field : 'jVolum',
+                        align:'center',
                         sortable : true
                 },{
                         field : 'action',

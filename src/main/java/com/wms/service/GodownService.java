@@ -28,6 +28,8 @@ public interface GodownService {
 
     Godown selectById(int id);
 
+    Godown selectByWhid(String whid);
+
     /**
      * @param id     仓库编号
      * @param volume 货物体积

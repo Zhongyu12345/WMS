@@ -12,6 +12,14 @@
     <result column="mi_whid" jdbcType="INTEGER" property="miWhid" />
     <result column="mi_time" jdbcType="TIMESTAMP" property="miTime" />
     <result column="mi_status" jdbcType="VARCHAR" property="miStatus"/>
+    <collection property="godowns" ofType="com.wms.bean.Godown">
+      <id column="go_id" jdbcType="INTEGER" property="goId"/>
+      <result column="go_whid" jdbcType="VARCHAR" property="goWhid"/>
+      <result column="go_p" jdbcType="VARCHAR" property="goP"/>
+      <result column="go_volume" jdbcType="DOUBLE" property="goVolume"/>
+      <result column="go_usevolume" jdbcType="DOUBLE" property="goUsevolume"/>
+      <result column="go_rdvolume" jdbcType="DOUBLE" property="goRdvolume"/>
+    </collection>
   </resultMap>
   <sql id="Base_Column_List">
     mi_id, mi_name, mi_SKUmodel, mi_num,mi_Actual, mi_names, mi_whid, mi_time, mi_order,mi_status
@@ -30,19 +38,18 @@
   </select>
   <select id="select" resultMap="BaseResultMap">
     select
-      <include refid="Base_Column_List" />
-    from make_inventory
-    <where>
+      m.*,g.*
+    from make_inventory m,godown g where m.mi_whid = g.go_id
       <if test="SKM != null and SKM != ''">
-        mi_SKUmodel = #{SKM}
+         and mi_SKUmodel = #{SKM}
       </if>
       <if test="startTime != null">
-        <![CDATA[  mi_time >= #{stateTime} ]]>
+         and <![CDATA[  mi_time >= #{stateTime} ]]>
       </if>
       <if test="endTime != null">
         <![CDATA[ and mi_time <= #{endTime} ]]>
       </if>
-    </where>
+
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from make_inventory

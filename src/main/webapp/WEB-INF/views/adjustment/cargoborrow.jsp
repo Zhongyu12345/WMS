@@ -39,7 +39,7 @@
                     sortable : true
                 },{
                     width : '80',
-                    title : '数量',
+                    title : '数量<a style="color:blue;">(个)</a>',
                     field : 'cbNum',
                     sortable : true
                 },  {

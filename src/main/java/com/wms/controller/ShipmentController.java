@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.wms.bean.Cargo;
+import com.wms.bean.Compay;
 import com.wms.bean.Income;
 import com.wms.bean.Receiving;
 import com.wms.bean.Shipment;
@@ -37,6 +38,7 @@ import com.wms.commons.utils.ReadXls;
 import com.wms.commons.utils.StringUtils;
 import com.wms.commons.utils.TimeUtils;
 import com.wms.service.CargoService;
+import com.wms.service.CompayService;
 import com.wms.service.IncomeService;
 import com.wms.service.ReceivingService;
 import com.wms.service.ShipmentService;
@@ -66,6 +68,9 @@ public class ShipmentController extends BaseController {
     
     @Autowired
     private CargoService cargoService;
+    
+    @Autowired
+    private CompayService compayService;
 
     /** 出货单管理页面 */
     @GetMapping(value = "shipment.html")
@@ -215,6 +220,11 @@ public class ShipmentController extends BaseController {
     	if(result >0){
     		shipments.setStatus(2);
     		int a = shipmentService.updateShipment(shipments);
+    		Compay compay = compayService.selectAll();
+    		Compay compays = new Compay();
+    		compays.setCaid(compay.getCaid());
+    		compays.setCacount(compay.getCacount().add(income.getIincome()));
+    		compayService.updateByPrimaryKeySelective(compays);
     		if(a>0){
     			return renderSuccess("付款成功");
     		}

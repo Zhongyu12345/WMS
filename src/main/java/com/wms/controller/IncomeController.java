@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wms.bean.Tariff;
 import com.wms.bean.vo.IncomeVo;
 import com.wms.commons.base.BaseController;
+import com.wms.commons.utils.PageInfo;
 import com.wms.service.IncomeService;
 import com.wms.service.PayService;
 
@@ -86,6 +89,32 @@ public class IncomeController extends BaseController{
 			model.addAttribute("income", income);
 		}
 		return "finance/financial";
+	}
+	
+	@RequestMapping("inPage")
+	public String getPage(){
+		return "finance/income";
+	}
+	
+	@PostMapping("/dataGrid")
+    @ResponseBody
+    public Object dataGrid(Tariff tariff, Integer page, Integer rows, String sort) {
+        PageInfo pageInfo = new PageInfo(page, rows);
+        Map<String, Object> condition = new HashMap<String, Object>();
+
+        pageInfo.setCondition(condition);
+        incomeService.selectDataGrid(pageInfo);
+        return pageInfo;
+    }
+	
+	@RequestMapping("delete")
+	@ResponseBody
+	public Object deleteTariff(@RequestParam("id")int id){
+		int a = incomeService.deleteByPrimaryKey(id);
+		if(a>0){
+			return renderSuccess("删除成功");
+		}
+		return renderError("删除失败");
 	}
 	
 	@PostMapping("YearCombobox")

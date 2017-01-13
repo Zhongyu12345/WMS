@@ -60,6 +60,11 @@ public class GodownServiceImpl implements GodownService {
     }
 
     @Override
+    public Godown selectByWhid(String whid) {
+        return godownMapper.selectByWhid(whid);
+    }
+
+    @Override
     public int reduction(String id, Double volume) {
     	Godown godowns = godownMapper.selectByWhid(id);
         Godown godown = selectById(godowns.getGoId());
