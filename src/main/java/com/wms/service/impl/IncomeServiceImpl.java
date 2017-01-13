@@ -1,11 +1,15 @@
 package com.wms.service.impl;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.wms.bean.Income;
 import com.wms.bean.vo.IncomeVo;
+import com.wms.commons.utils.PageInfo;
 import com.wms.dao.IncomeMapper;
 import com.wms.service.IncomeService;
 
@@ -16,8 +20,7 @@ public class IncomeServiceImpl implements IncomeService{
 	private IncomeMapper incomeMapper;
 	@Override
 	public int deleteByPrimaryKey(Integer iid) {
-		// TODO Auto-generated method stub
-		return 0;
+		return incomeMapper.deleteByPrimaryKey(iid);
 	}
 
 	@Override
@@ -52,6 +55,14 @@ public class IncomeServiceImpl implements IncomeService{
 	@Override
 	public IncomeVo selectByTime(String Timeyears) {
 		return incomeMapper.selectByTime(Timeyears);
+	}
+
+	@Override
+	public void selectDataGrid(PageInfo pageInfo) {
+		Page<Income> page = new Page<Income>(pageInfo.getNowpage(), pageInfo.getSize());
+        List<Income> list = incomeMapper.selectDataGrid(page, pageInfo.getCondition());
+        pageInfo.setRows(list);
+        pageInfo.setTotal(page.getTotal());
 	}
 
 }

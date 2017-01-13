@@ -16,7 +16,7 @@ public class CompayServiceImpl implements CompayService{
 	@Override
 	public int deleteByPrimaryKey(Integer caid) {
 		// TODO Auto-generated method stub
-		return 0;
+		return compayMapper.deleteByPrimaryKey(caid);
 	}
 
 	@Override
@@ -39,8 +39,7 @@ public class CompayServiceImpl implements CompayService{
 
 	@Override
 	public int updateByPrimaryKeySelective(Compay record) {
-		// TODO Auto-generated method stub
-		return 0;
+		return compayMapper.updateByPrimaryKey(record);
 	}
 
 	@Override

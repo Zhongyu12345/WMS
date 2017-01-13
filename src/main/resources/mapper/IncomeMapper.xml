@@ -47,6 +47,11 @@
     from income
 	where YEAR(itime)=#{Timeyears}
   </select>
+  <select id="selectDataGrid" resultMap="BaseResultMap">
+    	select
+    	<include refid="Base_Column_List"/>
+        from income
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from income
     where iid = #{iid,jdbcType=INTEGER}
