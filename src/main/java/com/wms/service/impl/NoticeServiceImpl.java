@@ -56,4 +56,9 @@ public class NoticeServiceImpl implements NoticeService {
 		pageInfo.setRows(list);
 		pageInfo.setTotal(page.getTotal());
 	}
+
+	@Override
+	public Notice selectByDateUP() {
+		return noticeMapper.selectByDateUP();
+	}
 }

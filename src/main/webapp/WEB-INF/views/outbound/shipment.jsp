@@ -185,12 +185,22 @@
     	$("#shids").val(id);
     }
     
-    function ok(){
-    	var id = $("#shids").val();
-    	var yuanyin = $("#yuanying").textbox('getValue');
-    	window.location.href = '${path }/shipment/toexcel?id='+id+'&yuanyin='+yuanyin;
-    	$("#addWin").window("close");
-    	
+    function ok(i){
+    	var b=0;
+    	if(i == 1){
+    		var id = $("#shids").val();
+        	var yuanyin = $("#yuanying").textbox('getValue');
+        	window.location.href = '${path }/shipment/toexcel?id='+id+'&yuanyin='+yuanyin;
+        	$("#addWin").window("close");
+        	b =1;
+    	}else{
+    		b = 0;
+    	}
+    	if(b==1){
+    		setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+    			window.location.reload();
+    	    	},1000);
+    	}
     }
 
     <!-- \\\\\\\\\\ 删除操作 \\\\\\\\\\ -->
@@ -283,7 +293,7 @@
 					<td colspan="1">
 					<input style="width:100%;height:50px;" id="yuanying"  type="text" validtype="unnormal" class="easyui-textbox" data-options="multiline:true,novalidate:true" placeholder="请输入退货原因" >
 						<input type="hidden"  id="shids" />
-						<a href="javascript:void(0);"  class="easyui-linkbutton" onclick="ok();">确认退货</a>
+						<a href="javascript:void(0);"  class="easyui-linkbutton" onclick="ok(1);">确认退货</a>
 					</td>
 				</tr>
 			</table>

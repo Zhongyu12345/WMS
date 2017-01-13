@@ -26,12 +26,19 @@
             columns : [ [ {
                 width : '80',
                 title : '发布人',
-                field : '',
-                sortable : true
+                field : 'users',
+                sortable: true,
+                formatter: function (value) {
+                    var roles = [];
+                    for(var i = 0; i< value.length; i++) {
+                        roles.push(value[i].loginName);
+                    }
+                    return(roles.join('\n'));
+                }
             }, {
                 width : '120',
                 title : '公告内容',
-                field : 'text',
+                    field : 'text',
                 sortable : true
             },{
                 width : '130',
@@ -48,6 +55,7 @@
                             return '上架';
                         case 1:
                             return '下架';
+
                     }
                 }
             }, {
@@ -84,14 +92,16 @@
                 width : 500,
                 height : 300,
                 href : '${path }/notice/addPage',
-                buttons : [ {
+                buttons : [{
                     text : '确定',
                     handler : function() {
                         parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
                         var f = parent.$.modalDialog.handler.find('#noticeAddForm');
-                        f.submit();
+                        {
+                            f.submit();
+                        }
                     }
-                } ]
+                }]
             });
         }
 

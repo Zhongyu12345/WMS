@@ -21,4 +21,6 @@ public interface NoticeService {
     int updateByPrimaryKey(Notice notice);
 
     void selectDataGrid(PageInfo pageInfo);
+
+    Notice selectByDateUP();
 }

@@ -1,6 +1,7 @@
 package com.wms.bean;
 
 import java.util.Date;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
@@ -24,6 +25,41 @@ public class Notice {
 	private Date ntime;//发布时间
 	@TableField(value = "nstatus")
 	private int nstatus;//发布状态
+
+	private String username;
+
+	private List<User> users;
+
+	private String stringtime;
+
+
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+
+		this.users = users;
+	}
+
+
+	public String getStringtime() {
+		return stringtime;
+	}
+
+	public void setStringtime(String stringtime) {
+		this.stringtime = stringtime;
+	}
 
 	public int getNid() {
 		return nid;
