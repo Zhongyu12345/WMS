@@ -14,7 +14,6 @@
 
     $(function() {
         var a = '${mesint}';
-        alert(a);
         if(a!=1){
             window.location.href = '${path }/notice/message';
         }
@@ -158,7 +157,7 @@
                 <div style="width:700px;float:left;padding-top:5px;">
 			    	<marquee vspace="5px" direction="left" width="100%" onmouseout="this.start()" onmouseover="this.stop()" scrollamount="4" scrolldelay="1" style="font:bold 20px '黑体';color:red;">
 			    		<img src="${staticPath }/static/style/images/b143f09fd2aa8bbc5462805be70cf44e.gif" style="height:35px;"/>&nbsp;
-			    		 最新公告 *** 内容:${notice.text} *** 发布人:${notice.username} *** 发布时间:${notice.stringtime};
+			    		 最新公告  内容:${notice.text} ---发布时间:${notice.stringtime};
 			    	</marquee>
 			    </div>
             </div>

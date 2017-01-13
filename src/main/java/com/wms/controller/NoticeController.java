@@ -1,18 +1,15 @@
 package com.wms.controller;
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import com.wms.bean.vo.UserVo;
 import com.wms.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import com.wms.bean.Notice;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.PageInfo;
@@ -53,19 +50,17 @@ public class NoticeController  extends BaseController {
     @RequestMapping("/message")
     public String mes(Model mold){
         Notice n = noticeService.selectByDateUP();
-        UserVo user = userService.selectVoById(Long.valueOf(n.getUserid()));
-        n.setUsername(user.getName());
-        n.setStringtime(updateTime(n.getNtime()));
-        mold.addAttribute("notice",n);
-        mold.addAttribute("mesint",1);
+        if(n!= null) {
+            UserVo user = userService.selectVoById(Long.valueOf(n.getUserid()));
+            n.setUsername(user.getName());
+            n.setStringtime(updateTime(n.getNtime()));
+            mold.addAttribute("notice", n);
+            mold.addAttribute("mesint", 1);
+        }else{
+            mold.addAttribute("mesint", 1);
+        }
         return "index";
     }
-
-
-
-
-
-
 
     //添加
     @PostMapping("/add")
