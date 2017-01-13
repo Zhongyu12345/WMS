@@ -73,6 +73,7 @@ public class LoginController extends BaseController {
     public String login() {
         logger.info("GET请求登录");
         if (SecurityUtils.getSubject().isAuthenticated()) {
+
             return "redirect:/index";
         }
         return "login";
@@ -99,7 +100,7 @@ public class LoginController extends BaseController {
         Subject user = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, DigestUtils.md5Hex(password).toCharArray());
         // 默认设置为记住密码，你可以自己在表单中加一个参数来控制
-        token.setRememberMe(true);
+        token.setRememberMe(false);
         try {
             user.login(token);
             ServletContext context = req.getSession().getServletContext();
