@@ -15,7 +15,9 @@
     $(function() {
         var a = '${mesint}';
         if(a!=1){
-            window.location.href = '${path }/notice/message';
+        	setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+        		window.location.href = '${path }/notice/message';
+    	    	},100);
         }
 
         index_layout = $('#index_layout').layout({
