@@ -101,6 +101,7 @@
             </if>
         </where>
     </select>
+
 	<select id="selectByRole" resultMap="userVoResultMap">
 		select id,name from user
 		<where>

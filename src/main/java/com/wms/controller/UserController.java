@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 用户管理
@@ -95,6 +92,7 @@ public class UserController extends BaseController {
             return renderError("用户名已存在!");
         }
         userVo.setPassword(DigestUtils.md5Hex(userVo.getPassword()));
+        userVo.setOuttime(new Date());
         userService.insertByVo(userVo);
         return renderSuccess("添加成功");
     }
