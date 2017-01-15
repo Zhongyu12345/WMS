@@ -66,12 +66,12 @@
 				</tr>
 				<tr>
 					<td>年龄</td>
-					<td><input type="text" name="age" value="${user.age}" class="easyui-numberbox" data-options="width:140,height:29,editable:true,panelHeight:'auto'"/></td>
+					<td><input type="text" name="age" value="${user.age}" class="easyui-numberbox"/></td>
 				</tr>
 				<tr>
 					<td>电话</td>
 					<td>
-						<input type="text" name="phone" class="easyui-numberbox" value="${user.phone}" data-options="width:140,height:29,editable:true,panelHeight:'auto'"/>
+						<input type="text" name="phone" class="easyui-numberbox" value="${user.phone}" data-options="validType:'length[11,11]'"/>
 					</td>
 				</tr>
 				<tr>
