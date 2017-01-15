@@ -73,10 +73,9 @@ public class CargoBorrowController extends BaseController{
     @RequestMapping("/add")
     @ResponseBody
     public Object add(CargoBorrow cargoBorrow,@RequestParam("status") String status){
-        System.out.println("ID:"+cargoBorrow.getCbId());
         Cargo cargo = cargoService.selectByPrimaryKey(cargoBorrow.getCbId());
         Cargo c = new Cargo();
-        if(cargo.getcNum() != 0){
+        if(cargo.getcNum() != cargoBorrow.getCbNum().intValue()){
             if(status.equals("1")){
                 cargoBorrow.setCbStatus("0");//0代表未归还
                 int result = cargoborrowservice.insert(cargoBorrow);
@@ -90,52 +89,53 @@ public class CargoBorrowController extends BaseController{
                     c.setcTotalvolume(cargo.getcTotalvolume()-cargoBorrow.getCbNum()*(cargo.getcTotalvolume()/cargo.getcNum()));//体积
                     c.setcTotalweight(cargo.getcTotalweight()-cargoBorrow.getCbNum()*(cargo.getcTotalweight()/cargo.getcNum()));//重量
                     c.setcId(cargoBorrow.getCbId());
-                    cargoService.update(c);
+                    cargoService.updateByPrimaryKeySelective(c);
                     return renderSuccess("添加成功");
                 }else{
                     return renderError("添加失败");
                 }
-            }else{
-                cargoBorrow.setCbStatus("1");//代表已归还
-                int result = cargoborrowservice.updateByPrimaryKey(cargoBorrow);
-                if(result > 0){
-                    /**
-                     * 数量（数量等于货物数量+借用数量）
-                     * 体积（剩余数量+借用数量*单个货物体积）
-                     * 重量（剩余重量+借用数量*单个货物总量）
-                     */
-                    c.setcNum(cargo.getcNum()+cargoBorrow.getCbNum().intValue());//数量
-                    c.setcTotalvolume(cargo.getcTotalvolume()+cargoBorrow.getCbNum()*(cargo.getcTotalvolume()/cargo.getcNum()));//体积
-                    c.setcTotalweight(cargo.getcTotalweight()+cargoBorrow.getCbNum()*(cargo.getcTotalweight()/cargo.getcNum()));//重量
-                    c.setcId(cargoBorrow.getCbId());
-                    cargoService.update(c);
-                    return renderSuccess("归还成功");
-                }
-                return renderError("归还失败");
             }
-        }
-        if(status.equals("1")){
-            cargoBorrow.setCbStatus("2");//2代表全部借出未归还
-            int result = cargoborrowservice.insert(cargoBorrow);
+        }else if(status.equals("0")){
+            cargoBorrow.setCbStatus("1");//代表已归还
+            int result = cargoborrowservice.updateByPrimaryKey(cargoBorrow);
             if(result > 0){
                 /**
-                 * 数量（数量等于货物数量-借用数量）
+                 * 数量（数量等于货物数量+借用数量）
+                 * 体积（剩余数量+借用数量*单个货物体积）
+                 * 重量（剩余重量+借用数量*单个货物总量）
                  */
-                c.setcNum(cargo.getcNum()-cargoBorrow.getCbNum().intValue());//数量
+                c.setcNum(cargo.getcNum()+cargoBorrow.getCbNum().intValue());//数量
+                c.setcTotalvolume(cargo.getcTotalvolume()+cargoBorrow.getCbNum()*(cargo.getcTotalvolume()/cargo.getcNum()));//体积
+                c.setcTotalweight(cargo.getcTotalweight()+cargoBorrow.getCbNum()*(cargo.getcTotalweight()/cargo.getcNum()));//重量
                 c.setcId(cargoBorrow.getCbId());
-                cargoService.updatenum(c);
-                return renderSuccess("添加成功");
+                cargoService.updateByPrimaryKeySelective(c);
+                return renderSuccess("归还成功");
+            }
+        }else{
+            if(status.equals("1")){
+                cargoBorrow.setCbStatus("2");//2代表全部借出未归还
+                int result = cargoborrowservice.insert(cargoBorrow);
+                if(result > 0){
+                    /**
+                     * 数量（数量等于货物数量-借用数量）
+                     */
+                    c.setcNum(cargo.getcNum()-cargoBorrow.getCbNum().intValue());//数量
+                    c.setcId(cargoBorrow.getCbId());
+                    cargoService.updatenum(c);
+                    return renderSuccess("添加成功");
+                }
+            }else{
+                cargoBorrow.setCbStatus("1");
+                int result = cargoborrowservice.updateByPrimaryKey(cargoBorrow);
+                if(result > 0){
+                    c.setcNum(cargoBorrow.getCbNum().intValue());
+                    c.setcId(cargoBorrow.getCbId());
+                    cargoService.updatenum(c);
+                }
+                return renderSuccess("归还成功");
             }
         }
-        cargoBorrow.setCbStatus("1");
-        int result = cargoborrowservice.updateByPrimaryKey(cargoBorrow);
-        if(result > 0){
-            c.setcNum(cargoBorrow.getCbNum().intValue());
-            c.setcId(cargoBorrow.getCbId());
-            cargoService.updatenum(c);
-        }
-        return renderSuccess("归还成功");
-
+        return null;
     }
 
     /**

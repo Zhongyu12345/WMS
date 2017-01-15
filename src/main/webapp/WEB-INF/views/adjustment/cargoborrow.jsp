@@ -68,13 +68,13 @@
                     title : '是否归还',
                     field : 'cbStatus',
                     sortable : true,
-                    formatter : function(value, row, index) {
+                    formatter : function(value) {
                         switch (value) {
-                            case 0:
-                                return '已归还';
-                            case 1:
+                            case "0":
                                 return '未归还';
-                            case 2:
+                            case "1":
+                                return '已归还';
+                            case "2":
                                 return '未归还';
                         }
                     }
