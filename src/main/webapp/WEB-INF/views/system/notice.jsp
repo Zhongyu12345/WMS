@@ -26,6 +26,7 @@
             columns : [ [ {
                 width : '80',
                 title : '发布人',
+                align:'center',
                 field : 'users',
                 sortable: true,
                 formatter: function (value) {
@@ -38,15 +39,19 @@
             }, {
                 width : '120',
                 title : '公告内容',
-                    field : 'text',
+                field : 'text',
+                align:'center',
                 sortable : true
             },{
                 width : '130',
                 title : '发布时间',
                 field : 'ntime',
-                sortable : true
+                sortable : true,
+                align:'center',
+                formatter: formatDatebox
             },   {
                 field : 'nstatus',
+                align:'center',
                 title : '状态',
                 width : 40,
                 formatter : function(value, row, index) {
@@ -62,6 +67,7 @@
 
         field : 'action',
         title : '操作',
+                align:'center',
                 width : '130',
                     formatter : function(value, row, index) {
                         var str = '';``
@@ -130,7 +136,7 @@
             } else {//点击操作里面的删除图标会触发这个
                 dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
             }
-            parent.$.messager.confirm('询问', '您是否要删除当前广告？', function(b) {
+            parent.$.messager.confirm('询问', '您是否要删除当前公告？', function(b) {
                 if (b) {
                     progressLoad();
                     $.post('${path }/notice/delete', {

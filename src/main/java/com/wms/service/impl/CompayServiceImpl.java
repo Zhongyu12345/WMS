@@ -33,8 +33,7 @@ public class CompayServiceImpl implements CompayService{
 
 	@Override
 	public Compay selectByPrimaryKey(Integer caid) {
-		// TODO Auto-generated method stub
-		return null;
+		return compayMapper.selectByPrimaryKey(caid);
 	}
 
 	@Override
@@ -44,8 +43,7 @@ public class CompayServiceImpl implements CompayService{
 
 	@Override
 	public int updateByPrimaryKey(Compay record) {
-		// TODO Auto-generated method stub
-		return 0;
+		return compayMapper.updateByPrimaryKey(record);
 	}
 
 	@Override

@@ -34,6 +34,10 @@
     from pay
     where pid = #{pid,jdbcType=INTEGER}
   </select>
+  <!-- 分页查询 -->
+  <select id="selectDataGrid" resultMap="BaseResultMap">
+    select * from pay
+  </select>
   <select id="selectByTime" resultMap="IncomeMap">
     select 
     sum(if(MONTH(ptime)='01',ppay,0)) 一月,sum(if(MONTH(ptime)='02',ppay,0)) 二月,
@@ -51,12 +55,8 @@
     where pid = #{pid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.wms.bean.Pay">
-    insert into pay (pid, pcause, ptime, 
-      pabout, pcount, ppay, 
-      punexpense)
-    values (#{pid,jdbcType=INTEGER}, #{pcause,jdbcType=VARCHAR}, #{ptime,jdbcType=TIMESTAMP}, 
-      #{pabout,jdbcType=VARCHAR}, #{pcount,jdbcType=DECIMAL}, #{ppay,jdbcType=DECIMAL}, 
-      #{punexpense,jdbcType=DECIMAL})
+    insert into pay (pid, pcause, ptime, ppay)
+    values (#{pid,jdbcType=INTEGER}, #{pcause,jdbcType=VARCHAR}, #{ptime,jdbcType=TIMESTAMP}, #{ppay,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.wms.bean.Pay">
     insert into pay

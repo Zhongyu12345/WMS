@@ -14,17 +14,17 @@ import com.baomidou.mybatisplus.annotations.TableId;
  */
 public class Pay {
 	@TableId(type = IdType.AUTO)
-    private Integer pid;
+    private Integer pid; //id
 
-    private String pcause;
+    private String pcause;  //原因
 
-    private Date ptime;
+    private Date ptime; //时间
 
     private String pabout;
 
     private BigDecimal pcount;
 
-    private BigDecimal ppay;
+    private BigDecimal ppay;  //支付金额
 
     private BigDecimal punexpense;
 
