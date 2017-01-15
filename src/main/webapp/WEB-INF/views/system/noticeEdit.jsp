@@ -19,6 +19,8 @@
                 if (result.success) {
                     parent.$.modalDialog.openner_dataGrid.datagrid('reload');//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
                     parent.$.modalDialog.handler.dialog('close');
+                    parent.$.messager.alert('提示', result.msg, 'info');
+                    window.location.href = '${path }/notice/message';
                 } else {
                     parent.$.messager.alert('错误', result.msg, 'error');
                 }
@@ -34,23 +36,21 @@
             
             <table class="grid">
                 <tr>
-                    <td>发布人</td>
-                    <td><input name="nid" type="hidden"  value="${notice.nid}">
-                    	<input name="userid" type="text"  value="${notice.userid}">
-                    </td>
-                    <td>公告内容</td>
-                    <td><input name="text" type="text" placeholder="请输入公告内容" class="easyui-validatebox" data-options="required:true" value="${notice.text}"></td>
-                </tr>
-                <tr>
                     <td>状态</td>
                     <td><select name="nstatus" id="nstatus"  class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value="0">上架</option>
-                            <option value="1">下架</option>
+                        <option value="0">上架</option>
+                        <option value="1">下架</option>
                     </select></td>
                     <td>发布时间</td>
                     <td>
                         <input name="ntime" style="whith:100%" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"  value="<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${notice.ntime}" />" readonly="readonly" />
                     </td>
+                </tr>
+                <tr>
+                    <input name="nid" type="hidden"  value="${notice.nid}">
+                    <input name="userid" type="hidden"  value="${notice.userid}">
+                    <td>公告内容</td>
+                    <td colspan="5"><input style="width:94%;height:50px;" id="text" name="text" value="${notice.text}" type="text" validtype="unnormal" class="easyui-textbox" data-options="multiline:true,novalidate:true" placeholder="请输入公告内容" ></td>
                 </tr>
             </table>
         </form>

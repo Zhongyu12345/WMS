@@ -1,5 +1,6 @@
 package com.wms.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -68,6 +69,8 @@ public class NoticeController  extends BaseController {
     public Object add(Notice notice, @RequestParam(value = "user") String user) {
         UserVo userVo= userService.selectByloginname(user);
         notice.setUserid(userVo.getId().intValue());
+        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+        notice.setNtime(updateTime1(s.format(new Date())));
         int a = noticeService.insert(notice);
         if(a>0){
             return renderSuccess("添加成功");
@@ -116,6 +119,17 @@ public class NoticeController  extends BaseController {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String date = null;
         date = format.format(time);
+        return date;
+    }
+
+    private Date updateTime1(String time) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = format.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return date;
     }
 

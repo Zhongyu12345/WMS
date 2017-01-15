@@ -37,7 +37,7 @@
   </select>
 
   <select id="selectByDateUP" resultMap="BaseResultMap">
-    select * from notice order by ntime desc   limit 1
+    select * from notice where nstatus = 0 order by ntime desc   limit 1
   </select>
 
 
