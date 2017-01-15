@@ -1,5 +1,7 @@
 package com.wms.controller;
 
+import java.io.FileOutputStream;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,18 +10,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.util.Streams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.wms.bean.Allotput;
 import com.wms.bean.Godown;
 import com.wms.commons.base.BaseController;
 import com.wms.commons.utils.PageInfo;
+import com.wms.commons.utils.ReadXls;
 import com.wms.commons.utils.StringUtils;
 import com.wms.service.AllotputService;
 import com.wms.service.GodownService;
@@ -36,6 +44,43 @@ public class AllotputController extends BaseController {
 	
 	@GetMapping("/alloputPage")
 	public String alloputPage(){
+		return "putstorage/alloputPage";
+	}
+	
+	@RequestMapping("/readExcle")
+	public String Excle(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model) {
+		if (file != null) {
+			try {
+				String path = (AllotputController.class.getResource("/").toString()).substring(6);
+				if (!file.isEmpty()) {
+					Streams.copy(file.getInputStream(), new FileOutputStream(path + "/" + file.getOriginalFilename()),
+							true);
+				}
+				URL url = AllotputController.class.getResource("/" + file.getOriginalFilename());
+				List<List<String>> list = ReadXls.readxls(url.getFile());
+				Allotput ap = new Allotput();
+				List<String> obj = list.get(0);
+				for (int j = 0; j < obj.size(); j++) {
+					ap.setApName(obj.get(0));
+					ap.setApSkumodel(obj.get(1));
+					ap.setApNum(Double.valueOf(obj.get(2)));
+					ap.setApVolume(Double.valueOf(obj.get(3)));
+					ap.setApWhid(obj.get(4));//仓库
+					ap.setApSipping(obj.get(5));
+					ap.setApTime(updateTime(obj.get(6)));
+				}
+			 	Godown g = godownService.selectByWhid(ap.getApWhid());
+			 	ap.setApWhid(g.getGoId().toString());
+				int a = allotputService.insert(ap);
+				if(a>0){
+					model.addAttribute("msg", "添加成功");
+				}else{
+					model.addAttribute("msg", "添加失败");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return "putstorage/alloputPage";
 	}
 	
