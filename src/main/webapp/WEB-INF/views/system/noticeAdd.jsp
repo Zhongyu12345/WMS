@@ -35,25 +35,24 @@
         <form id="noticeAddForm" method="post">
             <table class="grid">
                 <tr>
-                    <td>发布人</td>
-                    <td>
-                        <input type="text" name="user" value="<shiro:principal></shiro:principal>"/>
-
-                    </td>
-                    <td>广告内容</td>
-                    <td colspan="5"><textarea name="text" rows="" cols="" ></textarea></td>
-                </tr>
-                <tr>
-                    <td>发布时间</td>
-                    <td><input name="ntime" style="whith:100%" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" /></td>
                     <td>状态</td>
                     <td>
-                        <select name="nstatus" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                        <select name="nstatus" class="easyui-combobox" data-options="width:150,height:29,editable:false,panelHeight:'auto'">
                             <option value="0">上架</option>
                             <option value="1">下架</option>
                         </select>
                     </td>
+                    <td>发布人</td>
+                    <td>
+                        <input type="text" name="user" readonly="readonly" value="<shiro:principal></shiro:principal>"/>
+
+                    </td>
                 </tr>
+                <tr>
+                    <td>公告内容</td>
+                    <td colspan="5"><input style="width:94%;height:50px;" id="text" name="text" value="${notice.text }" type="text" validtype="unnormal" class="easyui-textbox" data-options="multiline:true,novalidate:true" placeholder="请输入公告内容" ></td>
+                </tr>
+
             </table>
         </form>
     </div>
