@@ -25,4 +25,6 @@ public interface CargoService {
 		int updatenum(Cargo cargo);
 		
 		Cargo selectBySkumodel(String Skumodel);
+		
+		int deleteBySjumodel(String Skumodel);
 }

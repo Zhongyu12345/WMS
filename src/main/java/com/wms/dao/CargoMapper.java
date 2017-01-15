@@ -29,4 +29,6 @@ public interface CargoMapper {
     int updatenum(Cargo cargo);
     
     Cargo selectBySkumodel(String Skumodel);
+    
+    int deleteBySkumodel(String Skumodel);
 }

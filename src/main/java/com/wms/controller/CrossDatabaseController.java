@@ -1,5 +1,6 @@
 package com.wms.controller;
 
+import com.wms.bean.Cargo;
 import com.wms.bean.CrossDatabase;
 import com.wms.bean.Shipment;
 import com.wms.commons.base.BaseController;
@@ -8,6 +9,7 @@ import com.wms.commons.utils.PageInfo;
 import com.wms.commons.utils.ReadXls;
 import com.wms.commons.utils.StringUtils;
 import com.wms.commons.utils.TimeUtils;
+import com.wms.service.CargoService;
 import com.wms.service.CrossDatabaseService;
 import com.wms.service.ShipmentService;
 
@@ -41,6 +43,9 @@ public class CrossDatabaseController extends BaseController {
     
     @Autowired
     private ShipmentService shipmentService;
+    
+    @Autowired
+    private CargoService cargoService;
 
     /** 出货单管理页面 */
     @GetMapping(value = "crossDatabase.html")
@@ -131,8 +136,27 @@ public class CrossDatabaseController extends BaseController {
         shipment.setShShnum(crossDatabase.getCdNum());
         shipment.setShTotalweigh(crossDatabase.getTotalweigh());
         shipment.setShTotalvolume(crossDatabase.getCdVolume());
+        Cargo cargo = cargoService.selectBySkumodel(crossDatabase.getCdSkumodel());
         int a = shipmentService.addShipment(shipment);
-        
+        if(cargo.getcNum() == shipment.getShShnum().intValue()){
+        	cargoService.deleteBySjumodel(cargo.getcSkumodel());
+        }else if(cargo.getcNum()>shipment.getShShnum().intValue()){
+        	int num = cargo.getcNum()-shipment.getShShnum().intValue();
+        	Cargo cargos = new Cargo();
+        	cargos.setcId(cargo.getcId());
+        	cargos.setcName(cargo.getcName());
+        	cargos.setcNum(num);
+        	cargos.setcPhone(cargo.getcPhone());
+        	cargos.setcShippingno(cargo.getcShippingno());
+        	cargos.setcSkumodel(cargo.getcSkumodel());
+        	cargos.setcStorerid(cargo.getcStorerid());
+        	cargos.setcSupplierid(cargo.getcSupplierid());
+        	cargos.setcTotalvolume(cargo.getcTotalvolume()-shipment.getShTotalvolume());
+        	cargos.setcTotalweight(cargo.getcTotalweight()-shipment.getShTotalweigh());
+        	cargos.setcWhid(cargo.getcWhid());
+        	cargos.setcReceivedate(cargo.getcReceivedate());
+        	cargoService.updateByPrimaryKeySelective(cargos);
+        }
         if (a>0) {
         	crossDatabase.setCdTime(TimeUtils.updateTime(byTime));
             crossDatabase.setStatus(1);

@@ -50,6 +50,11 @@
                     field : 'miNames',
                     sortable : true
                 },{
+                    width : '120',
+                    title : '盘点单号',
+                    field : 'miOrder',
+                    sortable : true
+                },{
                     width : '70',
                     title : '仓库编号',
                     field : 'godowns',

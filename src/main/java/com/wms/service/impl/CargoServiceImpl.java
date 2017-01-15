@@ -74,4 +74,10 @@ public class CargoServiceImpl implements CargoService {
 	public Cargo selectBySkumodel(String Skumodel) {
 		return cargoMapper.selectBySkumodel(Skumodel);
 	}
+
+	@Override
+	public int deleteBySjumodel(String Skumodel) {
+		// TODO Auto-generated method stub
+		return cargoMapper.deleteBySkumodel(Skumodel);
+	}
 }

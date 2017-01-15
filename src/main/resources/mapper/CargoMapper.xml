@@ -67,6 +67,10 @@
     delete from cargo
     where c_id = #{cId,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteBySkumodel" parameterType="java.lang.String">
+    delete from cargo
+    where c_SKUmodel = #{Skumodel,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="com.wms.bean.Cargo">
     insert into cargo (c_id, c_name, c_storerid, 
       c_supplierid, c_shippingNO, c_whid, 

@@ -192,6 +192,7 @@ public class ShipmentController extends BaseController {
     			model.addAttribute("glt", t);
     		}
     	}
+    	System.out.println("----"+cMoney.multiply(new BigDecimal(betweenTime)));
     	model.addAttribute("cMoney", cMoney.multiply(new BigDecimal(betweenTime)));
     	model.addAttribute("gMoney", gMoney.multiply(new BigDecimal(betweenTime)));
     	model.addAttribute("shipments", shipment);
@@ -223,6 +224,7 @@ public class ShipmentController extends BaseController {
     		Compay compay = compayService.selectAll();
     		Compay compays = new Compay();
     		compays.setCaid(compay.getCaid());
+    		compays.setCamoney(compay.getCamoney());
     		compays.setCacount(compay.getCacount().add(income.getIincome()));
     		compayService.updateByPrimaryKeySelective(compays);
     		if(a>0){

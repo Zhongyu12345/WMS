@@ -11,8 +11,8 @@
 </head>
 <style>
 	.hourse{
-		width:300px;
-		height:300px;
+		width:400px;
+		height:400px;
 		background:url(../static/style/images/hourse.jpg) no-repeat 5px 5px;
 	}
 </style>
@@ -20,14 +20,14 @@
 	<h1 style="font-size:30px;margin-left:40%;align:center;">公司总金</h1>
 	<div class="hourse">
 		<table>
-			<tr><td style="height:145px;"></td></tr>
+			<tr><td style="height:195px;"></td></tr>
 			<tr>
-				<td style="width:50px;"></td>
+				<td style="width:70px;"></td>
 				<td style="font-size:21px;">本金</td>
 				<td style="font-size:21px;">${compay.camoney }元</td>
 			</tr>
 			<tr>
-				<td style="width:50px;"></td>
+				<td style="width:70px;"></td>
 				<td style="font-size:21px;">总金</td>
 				<td style="font-size:21px;">${compay.cacount }元</td>
 			</tr>

@@ -14,7 +14,7 @@
             url : '${path }/user/add',
             onSubmit : function() {
                 progressLoad();
-                var isValid = $(this).form('validate');
+                var isValid = $(this).form('enableValidation').form('validate');
                 if (!isValid) {
                     progressClose();
                 }
@@ -40,13 +40,13 @@
             <table class="grid">
                 <tr>
                     <td>登录名</td>
-                    <td><input name="loginName" type="text" placeholder="请输入登录名称" class="easyui-validatebox" data-options="required:true" value=""></td>
+                    <td><input name="loginName" type="text" placeholder="请输入登录名称" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""></td>
                     <td>姓名</td>
-                    <td><input name="name" type="text" placeholder="请输入姓名" class="easyui-validatebox" data-options="required:true" value=""></td>
+                    <td><input name="name" type="text" placeholder="请输入姓名" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""></td>
                 </tr>
                 <tr>
                     <td>密码</td>
-                    <td><input name="password" type="password" placeholder="请输入密码" class="easyui-validatebox" data-options="required:true"></td>
+                    <td><input name="password" type="password" placeholder="请输入密码" class="easyui-validatebox" data-options="required:true,novalidate:true"></td>
                     <td>性别</td>
                     <td>
                         <select name="sex" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
@@ -57,7 +57,7 @@
                 </tr>
                 <tr>
                     <td>年龄</td>
-                    <td><input type="text" name="age" class="easyui-numberbox"/></td>
+                    <td><input type="text" name="age" class="easyui-numberbox,novalidate:true"/></td>
                     <td>用户类型</td>
                     <td>
                         <select name="userType" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
@@ -69,10 +69,10 @@
                 <tr>
                     <td>电话</td>
                     <td>
-                        <input type="text" name="phone" class="easyui-numberbox"/>
+                        <input type="text" name="phone" class="easyui-numberbox,novalidate:true"/>
                     </td>
                     <td>角色</td>
-                    <td><select id="roleIds" name="roleIds" style="width: 140px; height: 29px;"></select></td>
+                    <td><select id="roleIds" name="roleIds" style="width: 140px; height: 29px;" data-options="width:140,height:29,editable:false,panelHeight:'auto'"></select></td>
                 </tr>
                 <tr>
                     

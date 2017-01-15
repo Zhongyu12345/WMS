@@ -32,7 +32,7 @@
             <tr>
                 <td>调拨数量</td>
                 <td><input name="inNum" type="text" placeholder="请输入调拨数量" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.inNum}"></td>
-                <td>仓库编号</td>
+                <td>仓库</td>
                 <td><input name="inWhid" type="text" placeholder="请输入仓库编号" class="easyui-validatebox" data-options="required:true,validType:'length[1,20]',novalidate:true" value="${invoice.inWhid}"></td>
             </tr>
             <tr>

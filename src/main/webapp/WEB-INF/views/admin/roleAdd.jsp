@@ -6,7 +6,7 @@
             url : '${path }/role/add',
             onSubmit : function() {
                 progressLoad();
-                var isValid = $(this).form('validate');
+                var isValid = $(this).form('enableValidation').form('validate');
                 if (!isValid) {
                     progressClose();
                 }
@@ -31,16 +31,16 @@
             <table class="grid">
                 <tr>
                     <td>角色名称</td>
-                    <td><input name="name" type="text" placeholder="请输入角色名称" class="easyui-validatebox span2" data-options="required:true" value=""></td>
+                    <td><input name="name" type="text" placeholder="请输入角色名称" class="easyui-validatebox span2" data-options="required:true,novalidate:true" value=""></td>
                 </tr>
                 <tr>
                     <td>排序</td>
-                    <td><input name="seq" value="0" class="easyui-numberspinner" style="width: 140px; height: 29px;" required="required" data-options="editable:false"></td>
+                    <td><input name="seq" value="0" class="easyui-numberspinner" style="width: 140px; height: 29px;" required="required" data-options="editable:false,novalidate:true"></td>
                 </tr>
                 <tr>
                     <td>状态</td>
                     <td >
-                        <select id="status" name="status" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                        <select id="status" name="status" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto',novalidate:true">
                             <option value="0">正常</option>
                             <option value="1">停用</option>
                         </select>

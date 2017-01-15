@@ -6,7 +6,7 @@
             url : '${path }/godown/edit',
             onSubmit : function() {
                 progressLoad();
-                var isValid = $(this).form('validate');
+                var isValid = $(this).form('enableValidation').form('validate');
                 if (!isValid) {
                     progressClose();
                 }
@@ -36,7 +36,7 @@
                     	<input name="goId" type="hidden" value="${godown.goId}">
                     	<input name="goVolume" type="hidden" value="${godown.goVolume}">
                     	<input name="goRdvolume" type="hidden" value="${godown.goRdvolume}">
-                    	<input name="add" type="number" placeholder="请输入需扩充容积" class="easyui-validatebox" data-options="required:true">&nbsp;m³
+                    	<input name="add" type="number" placeholder="请输入需扩充容积" class="easyui-validatebox" data-options="required:true,novalidate:true">&nbsp;m³
                     </td>
                 </tr>
             </table>

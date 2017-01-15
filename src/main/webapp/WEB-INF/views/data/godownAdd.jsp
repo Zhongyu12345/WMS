@@ -14,7 +14,7 @@
             url : '${path }/godown/add',
             onSubmit : function() {
                 progressLoad();
-                var isValid = $(this).form('validate');
+                var isValid = $(this).form('enableValidation').form('validate');
                 if (!isValid) {
                     progressClose();
                 }
@@ -40,7 +40,7 @@
             <table class="grid">
                 <tr>
                     <td>仓库名字</td>
-                    <td><input name="goWhid" type="text" placeholder="请输入仓库名称" class="easyui-validatebox" data-options="required:true" value=""></td>
+                    <td><input name="goWhid" type="text" placeholder="请输入仓库名称" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""></td>
                 </tr>
                 <tr>
                 	<td>管理员</td>
@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                     <td>仓库容积</td>
-                    <td><input name="goVolume" type="number" placeholder="请输入仓库容积" class="easyui-validatebox" data-options="required:true">&nbsp;m³</td>
+                    <td><input name="goVolume" type="number" placeholder="请输入仓库容积" class="easyui-validatebox" data-options="required:true,novalidate:true">&nbsp;m³</td>
                 </tr>
             </table>
         </form>
