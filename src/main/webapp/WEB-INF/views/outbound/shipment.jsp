@@ -13,9 +13,7 @@
     <form id="searchForm">
         <table>
             <tr>
-                <th>货物名称:</th>
-                <td><input name="name" placeholder="请输入货主"/></td>
-                <th>调整时间:</th>
+                <th>发货时间:</th>
                 <td>
                     <input name="startTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/>
                     至
@@ -33,9 +31,6 @@
 <div id="toolbar" style="display: none;">
     <shiro:hasPermission name="/shipment/import">
         <a href="${path }/shipment/importShipment.html" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-folder'">导入出货单</a>
-    </shiro:hasPermission>
-    <shiro:hasPermission name="/shipment/insert">
-        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">手动添加</a>
     </shiro:hasPermission>
 </div>
 

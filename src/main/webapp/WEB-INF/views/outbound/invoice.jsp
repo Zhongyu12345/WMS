@@ -34,9 +34,6 @@
     <shiro:hasPermission name="/invoice/import">
         <a href="${path }/invoice/importInvoice.html" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-folder'">导入出库单</a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="/invoice/insert">
-        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">手动添加</a>
-    </shiro:hasPermission>
 </div>
 <script>
     var dataGrid;
@@ -91,7 +88,7 @@
                 sortable: true
             }, {
                 width: '100',
-                title: '发货时间',
+                title: '出库时间',
                 field: 'inTime',
                 sortable: true,
                 formatter: formatDatebox

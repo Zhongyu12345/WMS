@@ -157,7 +157,7 @@
 	                        if(row.rCrossflag == '0'){
                         	<shiro:hasPermission name="/receiving/excel">
 	                        	str += '&nbsp;&nbsp;|&nbsp;&nbsp;';
-	                            str += $.formatString('<a  style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-folder" data-options="plain:true,iconCls:\'icon-folder\'" onclick="excelFun(\'{0}\');" >生成表单</a>', row.rId);
+	                            str += $.formatString('<a  style="height:24px;" href="javascript:void(0)" class="user-easyui-linkbutton-folder" data-options="plain:true,iconCls:\'icon-folder\'" onclick="excelFun(\'{0}\');" >生成越库单</a>', row.rId);
 	                        </shiro:hasPermission>
 	                        }
 	                    return str;
@@ -167,7 +167,7 @@
             onLoadSuccess:function(data){
                 $('.user-easyui-linkbutton-edit').linkbutton({text:'编辑',plain:true,iconCls:'icon-edit'});
                 $('.user-easyui-linkbutton-del').linkbutton({text:'删除',plain:true,iconCls:'icon-del'});
-                $('.user-easyui-linkbutton-folder').linkbutton({text:'生成表单',plain:true,iconCls:'icon-folder'});
+                $('.user-easyui-linkbutton-folder').linkbutton({text:'生成越库单',plain:true,iconCls:'icon-folder'});
             },
             toolbar : '#toolbar'
         });

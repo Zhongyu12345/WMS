@@ -15,7 +15,7 @@
             <tr>
                 <th>货物名称:</th>
                 <td><input name="name" placeholder="请输入货物名称"/></td>
-                <th>调整时间:</th>
+                <th>出库时间:</th>
                 <td>
                     <input name="startTime" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly"/>
                     至
@@ -33,9 +33,6 @@
 <div id="toolbar" style="display: none;">
     <shiro:hasPermission name="/crossDatabase/import">
         <a href="${path }/crossDatabase/importCrossDatabase.html" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-folder'">导入越库单</a>
-    </shiro:hasPermission>
-    <shiro:hasPermission name="/crossDatabase/insert">
-        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">手动添加</a>
     </shiro:hasPermission>
 </div>
 <script>
@@ -82,7 +79,7 @@
                 sortable: true
             }, {
                 width: '100',
-                title: '发货时间',
+                title: '出库时间',
                 field: 'cdTime',
                 sortable: true,
                 formatter: formatDatebox

@@ -6,7 +6,7 @@
             url : '${path }/tariff/add',
             onSubmit : function() {
                 progressLoad();
-                var isValid = $(this).form('validate');
+                var isValid = $(this).form('enableValidation').form('validate');
                 if (!isValid) {
                     progressClose();
                 }
@@ -32,19 +32,19 @@
             <table class="grid">
                 <tr>
                     <td>收费原因</td>
-                    <td><input name="cause" type="text" placeholder="请输入收费原因" class="easyui-validatebox" data-options="required:true" value=""></td>
+                    <td><input name="cause" type="text" placeholder="请输入收费原因" class="easyui-validatebox" data-options="required:true,novalidate:true" value=""></td>
                 </tr>
                 <tr>
                 	<td>重量范围（输入值以内）</td>
-                    <td><input name="scope" type="number" placeholder="请输入重量值" class="easyui-validatebox" data-options="required:true"></td>
+                    <td><input name="scope" type="number" placeholder="请输入重量值" class="easyui-validatebox" data-options="required:true,novalidate:true"></td>
                 </tr>
                 <tr>
                     <td>金额</td>
-                    <td><input name="money" type="number" placeholder="请输入金额" class="easyui-validatebox" data-options="required:true"></td>
+                    <td><input name="money" type="number" placeholder="请输入金额" class="easyui-validatebox" data-options="required:true,novalidate:true"></td>
                 </tr>
                 <tr>
                     <td>单位（例如:元/kg）</td>
-                    <td><input name="unit" type="text" placeholder="请输入单位" class="easyui-validatebox" data-options="required:true"></td>
+                    <td><input name="unit" type="text" placeholder="请输入单位" class="easyui-validatebox" data-options="required:true,novalidate:true"></td>
                 </tr>
             </table>
         </form>

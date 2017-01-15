@@ -38,15 +38,15 @@
                 </tr>
                 <tr>
                     <td>管理费</td>
-                    <td><input name="guanli" type="number" class="easyui-validatebox" disabled="true" data-options="required:true" value="${gMoney}">元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${glt.money }${glt.unit }</td>
+                    <td><input name="guanli" type="number" class="easyui-validatebox" disabled="true" data-options="required:true,novalidate:true" value="${gMoney}">元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${glt.money }${glt.unit }</td>
                 </tr>
                 <tr>
                 	<td>需付总费用:</td>
-                    <td><input id="countMoney" name="countMoney" type="number" class="easyui-validatebox" disabled="true" data-options="required:true" value="${cMoney+gMoney}">元</td>
+                    <td><input id="countMoney" name="countMoney" type="number" class="easyui-validatebox" disabled="true" data-options="required:true,novalidate:true" value="${cMoney+gMoney}">元</td>
                 </tr>
                 <tr>
                 	<td>付款金额</td>
-                	<td><input name="moneyed" type="number" placeholder="请输入付款金额" class="easyui-validatebox" data-options="required:true" />元</td>
+                	<td><input name="moneyed" type="number" placeholder="请输入付款金额" class="easyui-validatebox" data-options="required:true,novalidate:true" />元</td>
                 </tr>
             </table>
         </form>
