@@ -34,7 +34,7 @@
         select
         al.ao_id, al.ao_name, al.ao_SKUmodel, al.ao_num, al.ao_whid, al.ao_sippingNO, al.ao_time, al.ao_volume, g.*
         from allotout al, godown g
-        where al.ao_whid = g.go_id
+        where al.ao_whid = g.go_whid
         <if test=" name != null and name != '' ">
             and ao_name like concat('%', #{name}, '%')
         </if>

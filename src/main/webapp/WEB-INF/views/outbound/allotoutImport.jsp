@@ -73,7 +73,7 @@
                 cache: false,
                 dataType: 'json',
                 success: function () {
-                    window.location.href = "/allotout/allotout.html";
+                    window.location.href = "${path }/allotout/allotout.html";
                 }
             });
         }
