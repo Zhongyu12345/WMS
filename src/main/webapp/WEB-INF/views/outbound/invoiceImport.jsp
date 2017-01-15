@@ -78,7 +78,7 @@
                 cache: false,
                 dataType: 'json',
                 success: function () {
-                    window.location.href = "/invoice/invoice.html";
+                    window.location.href = "${path }/invoice/invoice.html";
                 }
             });
         }

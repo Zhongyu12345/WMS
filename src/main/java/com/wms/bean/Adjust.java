@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import java.util.Date;
+import java.util.List;
 
 /**
  * adjust 调整入库/出库单
@@ -41,6 +42,8 @@ public class Adjust {
     private Date createdateStart;
 
     private Date createdateEnd;
+
+    private List<Godown> godowns;
 
     public Integer getjId() {
         return jId;
@@ -128,5 +131,13 @@ public class Adjust {
 
     public void setCreatedateEnd(Date createdateEnd) {
         this.createdateEnd = createdateEnd;
+    }
+
+    public List<Godown> getGodowns() {
+        return godowns;
+    }
+
+    public void setGodowns(List<Godown> godowns) {
+        this.godowns = godowns;
     }
 }
