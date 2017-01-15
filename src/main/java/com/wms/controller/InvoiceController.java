@@ -1,5 +1,6 @@
 package com.wms.controller;
 
+import com.wms.bean.Godown;
 import com.wms.bean.Invoice;
 import com.wms.bean.Shipment;
 import com.wms.commons.base.BaseController;
@@ -7,6 +8,7 @@ import com.wms.commons.bean.Search;
 import com.wms.commons.utils.PageInfo;
 import com.wms.commons.utils.ReadXls;
 import com.wms.commons.utils.TimeUtils;
+import com.wms.service.GodownService;
 import com.wms.service.InvoiceService;
 import com.wms.service.ShipmentService;
 import org.apache.commons.fileupload.util.Streams;
@@ -41,6 +43,9 @@ public class InvoiceController extends BaseController {
 
     @Autowired
     private ShipmentService shipmentService;
+
+    @Autowired
+    private GodownService godownService;
 
     /** 出货单管理页面 */
     @GetMapping(value = "invoice.html")
@@ -165,6 +170,11 @@ public class InvoiceController extends BaseController {
         shipment.setShTotalweigh(invoice.getTotalweigh());
         shipment.setShTotalvolume(invoice.getInVolume());
         int result = shipmentService.addShipment(shipment);
+        Godown godown = new Godown();
+        godown = godownService.selectByWhid(invoice.getInWhid());
+        godown.setGoUsevolume(godown.getGoUsevolume()-invoice.getInVolume());//以用的要加
+        godown.setGoRdvolume(godown.getGoRdvolume()+invoice.getInVolume());//可用要减
+        godownService.updateByPrimaryKey(godown);
         Invoice invoice1 = new Invoice();
         invoice1.setStatus(1);
         invoice1.setInId(invoice.getInId());
