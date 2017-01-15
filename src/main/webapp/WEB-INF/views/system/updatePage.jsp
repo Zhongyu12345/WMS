@@ -8,6 +8,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>用户管理</title>
 <script type="text/javascript">
+    $(function(){
+        $("#sex").combobox('setValue','${user.sex}');
+    });
  function updateUser() {
      parent.$.modalDialog({
          title : '编辑',
@@ -43,7 +46,7 @@
 	        <td><input type="text" name="password"/></td> -->
 	        <td>性别</td>
 			<td></td>
-	        <td><select name="sex" id="sex"  class="easyui-combobox" value="${user.sex}" data-options="width:140,height:29,editable:false,panelHeight:'auto'" readonly>
+	        <td><select name="sex" id="sex"  class="easyui-combobox"  data-options="width:140,height:29,editable:false,panelHeight:'auto'" readonly>
 	                <option value="0">男</option>
 	                <option value="1">女</option>
 	        </select></td>
